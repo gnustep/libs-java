@@ -1,3 +1,9 @@
+Fri Aug 18 17:22:34 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* JIGS.h (GNUSTEP_JAVA_VERSION): Updated to 0.4.
+	(GNUSTEP_JAVA_MAJOR_VERSION), (GNUSTEP_JAVA_MINOR_VERSION),
+	(GNUSTEP_JAVA_SUBMINOR_VERSION): New preprocessor defines.
+
 Sat Aug 12 13:08:46 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGSInit.m (JIGSInit): Create an autorelease pool on entry, 
