@@ -62,6 +62,19 @@ before-$(TARGET)-all::
 	 echo "* WARNING *: Java Wrappers of static libraries are meaningless!";\
 	fi
 
+ifeq ($(BUILD_JAVA_WRAPPER_AUTOMATICALLY),yes)
+
+after-$(TARGET)-all::
+	cd $(WRAPPER_DIR); unset MAKEFLAGS; $(MAKE)
+
+install-java_wrapper::
+	cd $(WRAPPER_DIR); unset MAKEFLAGS; $(MAKE) install
+
+uninstall-java_wrapper::
+	cd $(WRAPPER_DIR); unset MAKEFLAGS; $(MAKE) uninstall
+
+endif # BUILD_JAVA_WRAPPER_AUTOMATICALLY
+
 after-$(TARGET)-all::
 
 internal-java_wrapper-install:: internal-java_wrapper-all install-java_wrapper
@@ -69,6 +82,8 @@ internal-java_wrapper-install:: internal-java_wrapper-all install-java_wrapper
 internal-install-java-dirs::
 
 install-java_wrapper:: internal-install-java-dirs
+
+uninstall-java_wrapper::
 
 #
 # The file containing instructions about which classes to wrap and how.
@@ -130,6 +145,17 @@ endif
 LIBRARY_FILE = $(LIBRARY_NAME)$(LIBRARY_NAME_SUFFIX)$(SHARED_LIBEXT)
 VERSION_LIBRARY_FILE = $(LIBRARY_FILE).$(VERSION)
 
+#
+# We copy the RPM .spec.in and .script.in files 
+#
+ifeq ($(debug),yes)
+  WRAPPER_SPEC_IN_FILE=$(PACKAGE_NAME)-wrapper-debug.spec.in
+  WRAPPER_SCRIPT_IN_FILE=$(PACKAGE_NAME)-wrapper-debug.script.spec.in
+else
+  WRAPPER_SPEC_IN_FILE=$(PACKAGE_NAME)-wrapper.spec.in
+  WRAPPER_SCRIPT_IN_FILE=$(PACKAGE_NAME)-wrapper.script.spec.in
+endif
+
 java-wrapper:: $(WRAPPER_DIR)/stamp-file
 
 $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FILE)
@@ -137,7 +163,11 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FI
 	@$(MKDIRS) $(WRAPPER_DIR)
 	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/java-wrapper.top.template          \
 	      $(WRAPPER_DIR)/GNUmakefile.tmp
-	@sed -e 's/REPLACEME/$(LIBRARY_NAME)/g' $(WRAPPER_DIR)/GNUmakefile.tmp   \
+	@sed -e 's/PACKAGEHERE/$(PACKAGE_NAME)/g' $(WRAPPER_DIR)/GNUmakefile.tmp   \
+	      > $(WRAPPER_DIR)/GNUmakefile 
+	@rm $(WRAPPER_DIR)/GNUmakefile.tmp
+	@mv $(WRAPPER_DIR)/GNUmakefile $(WRAPPER_DIR)/GNUmakefile.tmp 
+	@sed -e 's/VERSIONHERE/$(VERSION)/g' $(WRAPPER_DIR)/GNUmakefile.tmp   \
 	      > $(WRAPPER_DIR)/GNUmakefile 
 	@rm $(WRAPPER_DIR)/GNUmakefile.tmp
 	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/java-wrapper.readme.template       \
@@ -145,7 +175,6 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FI
 	@$(MKDIRS) $(JAVA_WRAPPER_DIR)
 	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/java-wrapper.java.template         \
 	      $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
-
 	@sed -e 's/DEBUGHERE/$(debug)/g'           \
 	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp        \
 	        > $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp.2
@@ -198,6 +227,14 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FI
 	  $(INSTALL_DATA) GNUmakefile.wrapper.objc.postamble         \
 	                  $(OBJC_WRAPPER_DIR)/GNUmakefile.postamble; \
         fi;
+	@if [ -f $(WRAPPER_SPEC_IN_FILE) ]; then              \
+	  echo "Copying $(WRAPPER_SPEC_IN_FILE)...";          \
+	  cp $(WRAPPER_SPEC_IN_FILE) $(WRAPPER_DIR);          \
+	fi
+	@if [ -f $(WRAPPER_SCRIPT_IN_FILE) ]; then              \
+	  echo "Copying $(WRAPPER_SCRIPT_IN_FILE)...";          \
+	  cp $(WRAPPER_SCRIPT_IN_FILE) $(WRAPPER_DIR);          \
+	fi
 	@echo Running the preprocessor on the header file...
 	$(CC) $(WRAPPER_HEADER) -E $(ALL_CPPFLAGS) $(ALL_OBJCFLAGS) \
 	      -o $(WRAPPER_DIR)/preprocessedHeader
@@ -213,9 +250,16 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FI
 	@echo Creating the stamp file...
 	@touch $(WRAPPER_DIR)/stamp-file
 	@echo 
-	@echo To compile and install the wrapper library, please go into 
-	@echo the $(WRAPPER_DIR) directory, 
-	@echo and make, make install there.
+	@if [ "$(BUILD_JAVA_WRAPPER_AUTOMATICALLY)" = "" ]; then             \
+	  echo "To compile and install the wrapper library, please go into"; \
+	  echo "the $(WRAPPER_DIR) directory,";                              \
+	  echo "and make, make install there.";                              \
+	  echo "Add \`BUILD_JAVA_WRAPPER_AUTOMATICALLY=yes' to the makefile";\
+	  echo "if you want me to do this for you automatically next time";  \
+	else                                                                 \
+	  echo "Now trying to automatically compile the wrapper library for you..."; \
+	  echo "Undefine BUILD_JAVA_WRAPPER_AUTOMATICALLY in the makefile to disable this."; \
+	fi
 	@echo
 
 #
