@@ -81,7 +81,11 @@ Java_SimpleGUI_createNew (JNIEnv *env, jclass class)
   jobject ret;
   Class objcClass;
   JIGS_ENTER;
-  
+
+  /* When wrapping a class method, you need the following call to get
+     the class to send the class method invocation to (NB: this could
+     turn out to be a subclass of the class you are wrapping, but only
+     if this method is invoked on a subclass exposed to java). */
   objcClass = JIGSClassFromThisClass (env, class);
   ret = JIGSJobjectFromId (env, [objcClass new]);
 
