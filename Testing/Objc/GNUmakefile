@@ -31,3 +31,7 @@ ADDITIONAL_OBJCFLAGS += -Wall
 include jigs.make
 include $(GNUSTEP_MAKEFILES)/tool.make
 
+
+check:: all
+	./openjavatool JavaTest
+
