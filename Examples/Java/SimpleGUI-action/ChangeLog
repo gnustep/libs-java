@@ -1,0 +1,6 @@
+Tue Oct 17 14:35:45 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* WrappingLibrary/Objc/SimpleGUI.m: Use the new
+	JIGSNSStringFromJstring function instead of the low-levelish
+	GSJNI_NSStringFromJString.
+	* WrappingLibrary/Objc/SimpleGUI.m (JNI_OnLoad): Fixed typo.
