@@ -24,7 +24,7 @@
 #include "GSJNIString.h"
 
 // Return NULL upon exception raised.
-inline NSString *GSJNI_NSStringFromASCIIJString (JNIEnv *env, jstring string)
+NSString *GSJNI_NSStringFromASCIIJString (JNIEnv *env, jstring string)
 {
   char *cString;
   NSString *gnustepString;
@@ -47,13 +47,13 @@ inline NSString *GSJNI_NSStringFromASCIIJString (JNIEnv *env, jstring string)
 }
 
 // NB: Return NULL upon exception raised.
-inline jstring GSJNI_JStringFromASCIINSString (JNIEnv *env, NSString *string)
+jstring GSJNI_JStringFromASCIINSString (JNIEnv *env, NSString *string)
 {
   return (*env)->NewStringUTF (env, [string cString]);
 }
 
 // NB: Return NULL upon exception thrown.
-inline NSString *GSJNI_NSStringFromJString (JNIEnv *env, jstring string)
+NSString *GSJNI_NSStringFromJString (JNIEnv *env, jstring string)
 {
   unichar *uniString;
   jsize length;
@@ -81,7 +81,7 @@ inline NSString *GSJNI_NSStringFromJString (JNIEnv *env, jstring string)
 }
 
 // NB: Return NULL upon exception thrown
-inline jstring GSJNI_JStringFromNSString (JNIEnv *env, NSString *string)
+jstring GSJNI_JStringFromNSString (JNIEnv *env, NSString *string)
 {
   jstring javaString;
   int length = [string length];

@@ -35,7 +35,7 @@
  * Return nil upon exception thrown.  string should not be NULL.
  * Return an autoreleased string.
  */
-inline NSString *GSJNI_NSStringFromASCIIJString (JNIEnv *env, jstring string);
+NSString *GSJNI_NSStringFromASCIIJString (JNIEnv *env, jstring string);
 
 /* Convert the NSString string to a jstring.
  * Works only with ASCII strings, but it is slightly faster 
@@ -44,20 +44,20 @@ inline NSString *GSJNI_NSStringFromASCIIJString (JNIEnv *env, jstring string);
  * Return NULL upon exception thrown.  string should not be nil.
  * Return a local reference.
  */
-inline jstring GSJNI_JStringFromASCIINSString (JNIEnv *env, NSString *string);
+jstring GSJNI_JStringFromASCIINSString (JNIEnv *env, NSString *string);
 
 /* Convert the jstring string to a NSString. 
  * Performs full UNICODE conversion.
  * Return nil upon exception thrown.  string should not be NULL.
  * Return an autoreleased string.
  */
-inline NSString *GSJNI_NSStringFromJString (JNIEnv *env, jstring string);
+NSString *GSJNI_NSStringFromJString (JNIEnv *env, jstring string);
 
 /* Convert the NSString string to a jstring. 
  * Performs full UNICODE conversion.
  * Return NULL upon exception thrown.  string should not be nil.
  * Return a local reference.
  */
-inline jstring GSJNI_JStringFromNSString (JNIEnv *env, NSString *string);
+jstring GSJNI_JStringFromNSString (JNIEnv *env, NSString *string);
 
 #endif /*__GSJNIString_h_GNUSTEP_JAVA_INCLUDE*/
