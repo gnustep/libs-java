@@ -1,0 +1,11 @@
+# Automatically generated! Do not edit.  
+
+include $(GNUSTEP_MAKEFILES)/common.make
+
+PACKAGE_NAME = REPLACEME-wrap
+
+SUBPROJECTS = Java Objc 
+
+-include GNUmakefile.preamble
+include $(GNUSTEP_MAKEFILES)/aggregate.make
+-include GNUmakefile.postamble

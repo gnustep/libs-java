@@ -1,0 +1,82 @@
+TODO: Finish to document the internals
+
+
+
+METHODS
+=======
+
+To wrap a method, create a new WCMethod using: 
+
++ (id) newWithObjcMethodDeclaration: (NSString *)objcMethodDeclaration
+			      class: (WCClass *)aClass;
+
+objcMethodDeclaration is the declaration of the method has obtained
+from the objective-C headers; WCClass is the class the method belongs
+to.
+
+TYPES 
+=====
+
+The main work of the tool is to map java types to/from objective-C types. 
+This part of the tool has been designed to be easily extensible.
+
+Type is an abstract class. 
+Objects of class Type represent types to be converted. 
+In particular, each object of class Type responds to the following methods: 
+
+- (NSString *) javaType;
+
+- (NSString *) objcType;
+
+- (NSString *) jniType;
+
+- (NSString *) codeToConvertToObjc: (NSString *)jniArgument
+		      givingResult: (NSString *)objcResult;
+
+- (NSString *) codeToConvertToJava: (NSString *)objcArgument
+		      givingResult: (NSString *)jniResult;
+
+These methods return all you would need to convert a specific type: 
+how to declare a variable of that type, in java/objc/jni, and how to 
+convert a certain variable from jni to objc and vice versa.
+The abstract class Type does not implement these methods, except 'objcType'. 
+An object of class Type is identified by its objcType.  
+The class Type keeps an array of all the existing types (instances of Type).  
+When a new Type of any subclass is initialized, in the -initXXX method, 
+the initializer -initWithObjcType: of Type is invoked, which 
+registers the newly initialized instance in the array.  No two types with 
+the same objcType can exist.  
+Types are shared; you get the one you need by calling [Type 
++sharedTypeWithObjcType:], which returns the existing Type, if any, or 
+invokes TypeLoader to create a new Type for the objcType you need.  
+
+All information about which concrete subclass is needed for each
+objcType is stored in the TypeLoader class code.  The TypeLoader code 
+is the only one to know all the concrete Type subclasses which can be created 
+and which decides when to use one rather than the other.  It also passes 
+to each class the appropriate flags.  TypeLoader is also 
+responsible for creating the default Types, such as <the one with objcType> 
+NSString *, and parsing .jigs files to get information on how to create 
+new types, when needed.
+
+Currently, the TypeLoader performs a series of search to know the
+concrete subclass and the parameters to pass during initialization of
+the subclass; upon failing, it falls back on the default, which is to
+create an ObjectType.  ObjectType represents the type of an objective-C
+class which has been (or is being) wrapped.
+
+In general, the interface of the Type mechanism to the other parts of the library 
+is pretty simple: 
+
+for example, to convert an 'int', you do: 
+
+Type *t = [Type typeWithObjcType: @"int"];
+
+and then you use the four methods above of class Type to generate 
+the code you need to declare an int in the various languages, and to convert it.
+
+Be careful when getting types for objects, that you need to do:
+
+Type *t = [Type typeWithObjcType: @"NSString *"];
+
+Please mind the "*".
