@@ -1,3 +1,8 @@
+Tue Sep 26 15:47:18 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Java/NSTaskTest.java: Added test for NSTask.
+	* Java/GNUmakefile: Added the new test.
+	
 Tue Sep 26 12:55:46 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Java/NSDateTest.java: Added a quick test for the NSTimeInterval 
