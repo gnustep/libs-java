@@ -1,4 +1,0 @@
-Fri Oct  6 13:03:12 2000  Nicola Pero  <nicola@brainstorm.co.uk>
-
-	* main.m (main): Added test for loading in overloaded methods.
-
