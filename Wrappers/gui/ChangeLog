@@ -1,3 +1,10 @@
+Mon May 21 02:31:19 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* README: Updated.
+	* GNUmakefile: Rewritten for new java-wrapper.make.
+	* libgnustep-gui.jigs: Renamed to gnustep-gui.jigs.
+	* gnustep-gui.h: Removed.
+
 Wed Nov 15 17:19:57 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* libgnustep-gui.jigs (enumerations): Added NSButtonType,
