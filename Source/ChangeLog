@@ -1,3 +1,14 @@
+Wed Sep 12 12:17:50 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* JIGSInit.m (JIGSInitFromJava): New function.
+	(JIGSInit): Moved code to set program arguments into
+	JIGSInitFromJava, because it is code which must only be executed
+	from Java.  Do not create an autorelease pool if we are executing
+	no code.
+	* JIGSInit.h (JIGSInitFromJava): Declare the new function.
+	* JIGS.m (Java_gnu_gnustep_java_JIGS_initialize): Call
+	JIGSInitFromJava rather than JIGSInit.
+	
 Fri Jul 27 14:50:12 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGSInit.m (JIGSInit): Setup JIGS_DEBUG according to whether we
