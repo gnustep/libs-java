@@ -1,0 +1,8 @@
+To compile the tests, type 'make'.
+To run them, do as in the following example:
+
+  java NSObjectTest 
+
+Or, if you don't have ./ in your CLASSPATH, 
+
+  CLASSPATH=./:$CLASSPATH java NSObjectTest
