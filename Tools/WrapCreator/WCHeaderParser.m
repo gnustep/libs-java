@@ -95,6 +95,96 @@ static inline void skipObjcType (NSScanner *scanner)
     }
 }
 
+/* This facility is used by WCClass.  It's here because it is a
+   separate facility and it makes more sense to put it here (in a
+   parser class) than elsewhere. */
++ (NSString *) methodNameFromMethodDeclaration: (NSString *)declaration
+{
+  NSScanner *scanner = [NSScanner scannerWithString: declaration];
+  NSString *string;
+  NSMutableString *methodName;
+  int argument;
+
+  /* Skip spaces */
+  [scanner scanCharactersFromSet: whiteSpace intoString: NULL];
+
+  /* Read the +/- */
+  [scanner scanCharactersFromSet: plusMinusOrEndClass intoString: &string];
+
+  if (([string isEqualToString: @"+"] == NO) 
+      && ([string isEqualToString: @"-"] == NO))
+    {
+      [NSException raise: @"WCHeaderParserException"
+		   format: @"A method declaration must begin with either + or -, while `%@' does not", 
+		   declaration];
+    }
+
+  /* Skip return type */
+  skipObjcType (scanner);
+  methodName = [NSMutableString new];
+  argument = 0;
+  while (1)
+    {
+      if ([scanner isAtEnd])
+	{
+	  break;
+	}
+      
+      /* Skip spaces */
+      [scanner scanCharactersFromSet: whiteSpace intoString: NULL];
+
+      if ([scanner isAtEnd])
+	{
+	  break;
+	}
+      
+      /* Read method name component */
+      [scanner scanUpToCharactersFromSet: argOrEndMethod  
+	       intoString: &string];
+      
+      [methodName appendString: [string stringByTrimmingSpaces]];
+      
+      [scanner scanCharactersFromSet: argOrEndMethod intoString: &string];
+      if ((argument == 0) && [string isEqualToString: @";"])
+	{
+	  break;
+	}
+      else if ([string isEqualToString: @":"])
+	{
+	  [methodName appendString: @":"];
+	}
+      else /* Something's wrong ! */
+	{
+	  [NSException raise: @"WCHeaderParserException"
+		       format: @"Error parsing method declaration `%@'", 
+		       declaration];
+	}
+      
+      /* Skip argument type */
+      skipObjcType (scanner);
+      
+      /* Skip spaces */
+      [scanner scanCharactersFromSet: whiteSpace intoString: NULL];
+      
+      /* Skip argument name */
+      [scanner scanUpToCharactersFromSet: whiteSpaceOrEndMethod 
+	       intoString: &string];
+      
+      /* Skip spaces */
+      [scanner scanCharactersFromSet: whiteSpace intoString: NULL];
+      
+      /* Now check if next character it is a ; */
+      if ([scanner scanCharactersFromSet: endMethod 
+		   intoString: &string] == YES)
+	{
+	  break;
+	}
+      argument++;
+    }
+
+  return methodName;
+}
+
 + (id) newWithHeaderFile: (NSString *)fileName
 {
   return [[self alloc] initWithHeaderFile: fileName];
