@@ -26,7 +26,9 @@ include $(GNUSTEP_MAKEFILES)/common.make
 JAVA_PACKAGE_NAME = gnu.gnustep.java-test
 
 gnu.gnustep.java-test_JAVA_FILES = \
-    NSObjectTest.java
+    NSObjectTest.java              \
+    NSObjectSubclassTest.java
+
 
 include $(GNUSTEP_MAKEFILES)/java.make
 
