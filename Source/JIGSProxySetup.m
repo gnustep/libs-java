@@ -331,15 +331,8 @@ BOOL _JIGS_prepare_method_struct
 
   types = (char *)alloca (sizeof (char) * numberOfArguments + 4);
   types[0] = convertSignature (cSignature[0]);
-  if (isStatic == YES)
-    {
-      types[1] = _C_CLASS;
-    }
-  else // isStatic == NO
-    {
-      types[1] = _C_ID;
-    }  
-
+  /* NB - the compiler always uses _C_ID here.  */
+  types[1] = _C_ID;
   types[2] = ':';
 
   for (i = 3; i < numberOfArguments + 3; i++)
