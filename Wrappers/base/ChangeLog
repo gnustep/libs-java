@@ -1,3 +1,8 @@
+Tue Jul 24 11:51:19 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* gnustep-base.jigs (enumerations): Removed as now WrapCreator
+	manages enumerations automatically.
+
 Mon Jul 16 13:31:49 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GNUmakefile (GNUSTEP_INSTALLATION_DIR): Install in
