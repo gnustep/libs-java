@@ -270,19 +270,24 @@ void JIGSRaiseJException (JNIEnv *env, NSString *name, NSString *reason)
 
 void JIGSRaiseJExceptionFromNSException (JNIEnv *env, NSException *le)
 { 
-  NSString *name;
-  NSString *reason;
+  NSString *name = nil;
+  NSString *reason = nil;
 
-  if (le == nil)
-    {
-      name = NSGenericException;
-      reason = @"Unknown Reason";
-    }
-  else
+  if (le != nil)
     {
       name = [le name];
       reason = [le reason];
     }
+
+  if (name == nil)
+    {
+      name = NSGenericException;
+    }
+
+  if (reason == nil)
+    {
+      reason = @"Unknown Reason";
+    }  
 
   JIGSRaiseJException (env, name, reason);
 }

@@ -1,3 +1,8 @@
+Wed Jan  2 12:15:39 2002  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* JIGSException.m (JIGSRaiseJExceptionFromNSException): Make 
+	sure we can manage the case of null name or reason.
+
 Thu Dec  6 16:05:46 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GSJNIString.m (GSJNI_JStringFromNSString): Allocate temporary
