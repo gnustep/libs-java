@@ -26,8 +26,11 @@ package gnu.gnustep.java;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
+import java.util.Vector;
 
-class GSJNIMethods
+public class GSJNIMethods
 {
   /*
    * Return the static methods of a class
@@ -190,4 +193,202 @@ class GSJNIMethods
     
     return str.toString ();
   }
+
+  /* Now methods used to build the argument signature used in morphing 
+     of selectors.  This is not the one used in dispatching, and we need 
+     full information about the class of object arguments. */
+  
+  public static String jniSignatureOfClass (Class cl)
+  {
+    // A generic object
+    if ((cl.isPrimitive ()) == false)
+      {
+	if ((cl.isArray ()) == false)
+	  {
+	    return "L" + cl.getName () + ";";
+	  }
+	else
+	  {
+	    return cl.getName ();
+	  }
+      }
+    else // A primitive type
+      {
+	if (cl == Boolean.TYPE)
+	  {
+	    return "Z";
+	  }
+	else if (cl == Character.TYPE)
+	  {
+	    return "C";
+	  }
+	else if (cl == Byte.TYPE)
+	  {
+	    return "B";
+	  }
+	else if (cl == Short.TYPE)
+	  {
+	    return "S";
+	  }
+	else if (cl == Integer.TYPE)
+	  {
+	    return "I";
+	  }
+	else if (cl == Long.TYPE)
+	  {
+	    return "J";
+	  }
+	else if (cl == Float.TYPE)
+	  {
+	    return "F";
+	  }
+	else if (cl == Double.TYPE)
+	  {
+	    return "D";
+	  }
+	else if (cl == Void.TYPE)
+	  {
+	    return "V";
+	  }
+      }
+    return "?";
+  }
+
+  public static String getMethodArgumentSignature (Method method)
+  {
+    Class [] args;
+
+    args = method.getParameterTypes ();
+    return argumentSignature (args);
+  }
+
+  public static String argumentSignature (Class[] parameterTypes)
+  {
+    StringBuffer str = new StringBuffer ();
+    int i;
+
+    for (i = 0; i < parameterTypes.length; i++)
+      {
+	if (i != 0)
+	  str.append (" ");
+
+	str.append (GSJNIMethods.jniSignatureOfClass (parameterTypes[i]));
+      }
+    
+    return str.toString ();
+  }
+
+  /* Converts back */
+  public static Class[] parameterTypes (String argumentSignature)
+    throws ClassNotFoundException
+  {
+    Vector vector = new Vector ();
+    StringCharacterIterator iterator;
+    Class newClass;
+    boolean done = false;
+
+    iterator = new StringCharacterIterator (argumentSignature);
+
+    while (!done)
+      {
+	newClass = nextClassFromJniSignature (iterator, argumentSignature);
+	if (newClass == null)
+	  {
+	    done = true;
+	  }
+	else
+	  {
+	    vector.add (newClass);
+	  }
+	iterator.next ();
+      }
+
+    return (Class[])(vector.toArray (new Class[] { }));
+  }
+
+  /* 
+   * Read next class signature from the string pointed to by the iterator.
+   * After the operation, the iterator points to the next useful character 
+   * in the string.
+   */
+  public static Class nextClassFromJniSignature (StringCharacterIterator 
+						 iterator, 
+						 String argumentSignature)
+    throws ClassNotFoundException
+  {
+    char c;
+    int beginIndex, endIndex;
+    int tmpBeginIndex;
+    String className;
+    
+    c = iterator.current ();
+    switch (c)
+      {
+      case CharacterIterator.DONE: return null;
+      case 'Z': return (Boolean.class);
+      case 'C': return (Character.class);
+      case 'B': return (Byte.class);
+      case 'S': return (Short.class);
+      case 'I': return (Integer.class);
+      case 'J': return (Long.class);
+      case 'F': return (Float.class);
+      case 'D': return (Double.class);
+      case '[': // ARRAY
+	{
+	  /* We need code simply to find out where the array name ends */
+	  int i;
+	  beginIndex = iterator.getIndex ();
+	  /* First, we jump all the [ */
+	  while ((c != CharacterIterator.DONE) && c == '[')
+	    {
+	      c = iterator.next ();
+	    }
+	  /* Now, we jump the class declaration */
+	  switch (c) 
+	    {
+	    case CharacterIterator.DONE: 
+	      System.err.println ("Parsing error, end of signature inside array signature");
+	      break;
+	    case 'Z': 
+	    case 'C': 
+	    case 'B': 
+	    case 'S': 
+	    case 'I': 
+	    case 'J': 
+	    case 'F': 
+	    case 'D': 
+	      break;
+	    case 'L': 
+	      /* Find where the class name ends */
+	      tmpBeginIndex = iterator.getIndex () + 1;
+	      endIndex = argumentSignature.indexOf (';', tmpBeginIndex);
+	      /* Move on till the endIndex */
+	      iterator.setIndex (endIndex);
+	      break;
+	    }
+	  // Here we are, 
+	  endIndex = iterator.getIndex () + 1;
+	  className = argumentSignature.substring (beginIndex, endIndex);
+	  /* Get the class from the name */
+	  return (Class.forName (className));
+	}
+      case 'L':
+	/* Find where the class name ends */
+	beginIndex = iterator.getIndex () + 1;
+	endIndex = argumentSignature.indexOf (';', beginIndex);
+	/* Move on till the endIndex */
+	iterator.setIndex (endIndex);
+	/* Get the class name */
+	className = argumentSignature.substring (beginIndex, endIndex);
+	/* Get the class from the name */
+	return Class.forName (className);
+      case 'V': /* That's worrying */
+      case '?': /* That's even more worrying */
+      default:  /* Finally, default is the most worrying one */
+	System.err.println ("Parsing error, unknown character `" + c + "' found while parsing signature");
+	return (Object.class);
+      }
+  }
 }
+
+
