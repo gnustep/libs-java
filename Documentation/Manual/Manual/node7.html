@@ -26,11 +26,11 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 </HEAD>
 
 <BODY BGCOLOR="#FFFFFF" text="#000000" link="#0000FF" vlink="#4444FF" alink="#3388FF">
-<B> Next: <A NAME="tex2html174"
+<B> Next: <A NAME="tex2html176"
   HREF="node8.html">3.2 Accessing the GNUstep</A> </B>
-<B>Up: <A NAME="tex2html172"
+<B>Up: <A NAME="tex2html174"
   HREF="node6.html">3. Programming GNUstep in</A>  </B>
-<B> Previous: <A NAME="tex2html166"
+<B> Previous: <A NAME="tex2html168"
   HREF="node6.html">3. Programming GNUstep in</A> </B>
 <BR> <P>
 
@@ -39,14 +39,16 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 <A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
 
 <UL>
-<LI><A NAME="tex2html175"
-  HREF="node7.html#SECTION00411000000000000000">3.1.1 Compiling a Single Class</A>
-<LI><A NAME="tex2html176"
-  HREF="node7.html#SECTION00412000000000000000">3.1.2 Compiling Classes Belonging to a Package</A>
 <LI><A NAME="tex2html177"
-  HREF="node7.html#SECTION00413000000000000000">3.1.3 Installing Java classes where you like</A>
+  HREF="node7.html#SECTION00411000000000000000">3.1.1 Compiling a Single Class</A>
 <LI><A NAME="tex2html178"
-  HREF="node7.html#SECTION00414000000000000000">3.1.4 Documenting Classes Using Javadoc</A>
+  HREF="node7.html#SECTION00412000000000000000">3.1.2 Compiling Classes Belonging to a Package</A>
+<LI><A NAME="tex2html179"
+  HREF="node7.html#SECTION00413000000000000000">3.1.3 Installing Java classes where you like</A>
+<LI><A NAME="tex2html180"
+  HREF="node7.html#SECTION00414000000000000000">3.1.4 Creating Java Tools</A>
+<LI><A NAME="tex2html181"
+  HREF="node7.html#SECTION00415000000000000000">3.1.5 Documenting Classes Using Javadoc</A>
 </UL>
 <!--End of Table of Child-Links-->
 <HR>
@@ -66,26 +68,26 @@ Even without JIGS, the GNUstep make package has builtin support for
 compilation of generic java projects.
 
 <P>
-As an example, consider the following java program: 
+As an example, consider the following java class: 
 <PRE>
 import java.lang.*;
 
 class Pisa
 { 
-  public static void main (String[] args) 
+  public static void printQuote ()
     throws Throwable
   {
     System.out.println ("Ahi Pisa, vituperio de le genti");
   }
 }
 </PRE>
-This program just prints out the famous quote by Dante about the
-Italian city of Pisa; it makes only use of the standard java classes,
-so there is no need to have JIGS to compile or run it.
+This class just prints out the famous quote by Dante about the Italian
+city of Pisa; it makes only use of the standard java classes, so there
+is no need to have JIGS to compile or run it.
 
 <P>
-Compiling this program can be quite easily done directly, but we want 
-to start learning how to use the GNUstep make package facilities for 
+Compiling this class can be quite easily done directly, but we want to
+start learning how to use the GNUstep make package facilities for
 java, so we write the following <TT>GNUmakefile</TT>:
 <PRE>
 include $(GNUSTEP_MAKEFILES)/common.make
@@ -95,8 +97,6 @@ test_JAVA_FILES = Pisa.java
 
 include $(GNUSTEP_MAKEFILES)/java.make
 </PRE>
-
-<P>
 The makefile is straightforward: the <TT>JAVA_PACKAGE_NAME</TT> is
 just a name identifying the package (any name would do);
 <TT>JAVA_FILES</TT> is a list of java files to be compiled.
@@ -119,8 +119,7 @@ Since the GNUstep initialization script - usually
 </PRE>
 - adds <TT>/usr/GNUstep/Local/Libraries/Java</TT> to the
 <TT>CLASSPATH</TT>, after you have installed <TT>Pisa.class</TT>, you
-can just type
-<TT>java Pisa</TT> from any directory, and your little program will be run.
+can just access <TT>java Pisa</TT> from any Java program automatically.
 
 <P>
 This can be unfortunate, because if you install many different
@@ -146,7 +145,7 @@ import java.lang.*;
 
 class Pisa
 { 
-  public static void main (String[] args) 
+  public static void printQuote ()
     throws Throwable
   {
     System.out.println ("Ahi Pisa, vituperio de le genti");
@@ -172,12 +171,8 @@ Typing <TT>make</TT> will compile the <TT>misc.quotes.Pisa</TT> class
 as usual.
 
 <P>
-To execute the class, or to include it in other classes, we need now 
-to always specify the full package name, as in (the command line command) 
-<PRE>
-java misc.quotes.Pisa
-</PRE>
-or as in (the java import statement)
+To include the class in other classes, we need now to always specify
+the full package name, as in 
 <PRE>
 import misc.quotes.Pisa;
 </PRE>
@@ -196,18 +191,10 @@ In my case, this means that it is installed into:
 </PRE>
 
 <P>
-From any directory on your system you can now run your little program
-by typing at the prompt <TT>java misc.quotes.Pisa</TT>.  The good
-thing is that you can always import it as easily, by adding at the
-beginning of your java code the line <TT>import
-misc.quotes.Pisa;</TT>.
-
-<P>
-It is important to understand that the GNUstep make package does not
-know about java packages, but just preserves the relative paths of the
-classes when installing.  This means that it is perfectly correct to
-compile and install classes belonging to different java packages with
-the same <TT>GNUmakefile</TT>, as in the following example:
+Since the GNUstep make package does not really know about java
+packages, it is perfectly correct to compile and install classes
+belonging to different java packages with the same
+<TT>GNUmakefile</TT>, as in the following example:
 <PRE>
 include $(GNUSTEP_MAKEFILES)/common.make
 
@@ -240,12 +227,13 @@ Compiled Java classes are automatically installed into
 <PRE>
 $GNUSTEP_LOCAL_ROOT/Libraries/Java/
 </PRE>
-and this makes sure that they are always in the <TT>CLASSPATH</TT>.
+and this makes sure that they are always in the classpath.  This is
+what you normally want.
 
 <P>
-Sometimes you might need to modify this behaviour.  For example, if
-you are writing Java servlets, you might want to install them in a
-special place.  To do this, you may set the
+But sometimes you might need to modify this behaviour.  For example,
+if you are writing Java servlets, you might want to install them in a
+special, different place.  To do this, you may set the
 <TT>JAVA_INSTALLATION_DIR</TT> variable in your makefile:
 
 <P>
@@ -267,7 +255,60 @@ This GNUmakefile will compile your servlet, and install it into
 <P>
 
 <H2><A NAME="SECTION00414000000000000000">
-3.1.4 Documenting Classes Using Javadoc</A>
+3.1.4 Creating Java Tools</A>
+</H2>
+
+<P>
+In GNUstep, a tool is a program which is run directly from the command
+line.  The GNUstep make package 
+(version greater than 1.0.0) supports natively Java tools.
+
+<P>
+As an example, we now show how to turn our Pisa class into a Java
+tool.  We modify the code to be:
+<PRE>
+import java.lang.*;
+
+class Pisa
+{ 
+  public static void main (String[] args)
+    throws Throwable
+  {
+    System.out.println ("Ahi Pisa, vituperio de le genti");
+  }
+}
+</PRE>
+and we replace the <TT>GNUmakefile</TT> with the following one:
+<PRE>
+include $(GNUSTEP_MAKEFILES)/common.make
+
+JAVA_TOOL_NAME = Pisa
+Pisa_JAVA_FILES = Pisa.java
+Pisa_PRINCIPAL_CLASS = Pisa
+
+include $(GNUSTEP_MAKEFILES)/java-tool.make
+</PRE>
+There are some differences with the <TT>GNUmakefile</TT> we use
+before.  We include <TT>java-tool.make</TT> rather than
+<TT>java.make</TT> because we want to create a Java tool rather than a
+generic Java class.
+<TT>JAVA_TOOL_NAME</TT> is the name of the tool - this is quite important 
+now, because it is the name we will use to invoke the tool from the
+command line: when you install the tool, GNUstep make will generate
+and install a shell script in <TT>$GNUSTEP_LOCAL_ROOT/Tools</TT>
+with that name (<TT>Pisa</TT> in this case), which runs your java
+program (setting up the class path and the library path if needed).
+So, once you have installed the Java tool, just typing <TT>Pisa</TT>
+at the shell prompt will run your it.
+<TT>JAVA_FILES</TT> are, as usual, the Java source files for the tool.  
+<TT>PRINCIPAL_CLASS</TT> is the class which implements the <TT>main</TT> 
+method - the GNUstep make package needs this information, so that it
+can prepare the shell script to run this class.
+
+<P>
+
+<H2><A NAME="SECTION00415000000000000000">
+3.1.5 Documenting Classes Using Javadoc</A>
 </H2>
 
 <P>
@@ -277,7 +318,7 @@ facility, please read on.  Otherwise, you may safely skip this
 section.
 
 <P>
-Here is an example of the same <TT>GNUmakefile</TT> with added
+Here is an example of the usual <TT>GNUmakefile</TT> with added
 documentation using javadoc:
 <PRE>
 include $(GNUSTEP_MAKEFILES)/common.make
@@ -357,17 +398,17 @@ you want to learn more about the sourcepath.
 </OL>
 
 <P>
-<HR><B> Next: <A NAME="tex2html174"
+<HR><B> Next: <A NAME="tex2html176"
   HREF="node8.html">3.2 Accessing the GNUstep</A> </B>
-<B>Up: <A NAME="tex2html172"
+<B>Up: <A NAME="tex2html174"
   HREF="node6.html">3. Programming GNUstep in</A> </B>
-<B> Previous: <A NAME="tex2html166"
+<B> Previous: <A NAME="tex2html168"
   HREF="node6.html">3. Programming GNUstep in</A> </B>
 
 <!--End of Navigation Panel-->
 <ADDRESS>
 Nicola Pero
-2001-04-25
+2001-04-27
 </ADDRESS>
 </BODY>
 </HTML>
