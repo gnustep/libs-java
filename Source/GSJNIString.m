@@ -87,16 +87,10 @@ GSJNI_NSStringFromJString (JNIEnv *env, jstring string)
 inline jstring
 GSJNI_JStringFromNSString (JNIEnv *env, NSString *string)
 {
-  unichar *uniString;
-  int length;
   jstring javaString;
+  int length = [string length];
+  unichar uniString[length];
 
-  // Get length of string
-  length = [string length];
-
-  // Allocate buffer
-  uniString = NSZoneMalloc (NSDefaultMallocZone (), 
-			    length * sizeof (unichar));
   // Get a unicode representation of the string in the buffer
   [string getCharacters: uniString];
 
@@ -104,9 +98,6 @@ GSJNI_JStringFromNSString (JNIEnv *env, NSString *string)
   javaString = (*env)->NewString (env, uniString, length);
   // NB: if javaString is NULL, an exception has been thrown.
 
-  // Release the buffer
-  NSZoneFree (NSDefaultMallocZone (), uniString);
-  
   return javaString;
 }
 
