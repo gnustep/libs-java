@@ -1,0 +1,41 @@
+IMPORTANT WARNING:
+==================
+
+THE TEST IN THIS DIRECTORY IS ALPHA CODE WHICH WILL *NOT* LINK AND/OR
+RUN OUT OF THE BOX.
+
+The problem is not with the Jigs engine and/or the code or the API;
+the problem is simply with getting the correct flags and libraries to
+link and run an objective-C tool running a java virtual machine inside
+it.  These flags and libraries seem to be system-dependent.
+ 
+At present, to link in a java virtual machine you have to plug in
+manually the system-dependent options needed on your system to link
+with the java virtual machine library.
+
+In the future, this should be done automatically by a jigs.make file.
+The very alpha draft of that file is in this directory; when a better
+somewhat portable version will be ready, it could be installed with
+the standard makefiles.
+
+After compiling, there is still another problem: you need to add the
+java virtual machine library path to your library path when running
+your executable, otherwise the dynamic loader will not find the java
+virtual machine library.  A drafty tool to do it is the openjavatool
+script in this directory.  This is by no means definitive.
+
+SKETCHY INSTRUCTIONS
+====================
+
+Well, you may try compiling at once, by typing `make'. 
+
+If this does not work, edit manually the file `jigs.make' putting in the right 
+library paths and libraries needed on your system to link against a java virtual 
+machine library.  Try again till it compiles.
+
+This will create a JavaTest tool (inside the shared_obj or
+shared_debug_obj directory).  To run this tool, issue the command
+`openjavatool JavaTest'.  If this does not work because the java
+virtual machine library could not be found, edit the `openjavatool'
+file manually to set your library path appropriately (you need to put
+in the same library paths which you used to compile it).

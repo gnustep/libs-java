@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+# Temporary wrapper to opentool for jigs-enabled objective-C tools
+#
+# Copyright (C) 2000 Free Software Foundation, Inc.
+#
+# Author: Nicola Pero <nicola@brainstorm.co.uk>
+# Date: September 2000
+# 
+# This file is part of the GNUstep Makefile Package.
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+# 
+# You should have received a copy of the GNU General Public
+# License along with this library; see the file COPYING.LIB.
+# If not, write to the Free Software Foundation,
+# 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+JAVA_HOME=/usr/local/jdk1.2.2/
+JAVA_CPU=i386
+JAVA_THREAD_TYPE=native_threads
+
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/$JAVA_CPU/:$JAVA_HOME/jre/lib/$JAVA_CPU/$JAVA_THREAD_TYPE/:$JAVA_HOME/jre/lib/$JAVA_CPU/classic opentool $1
+
+
