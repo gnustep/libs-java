@@ -59,18 +59,26 @@ GNUstep based java packages or apps.]
 
 6) Compile JIGS: 
 
-make 
+    make 
 
-7) Install JIGS: 
-
-  * Become root, then type:
+7) Install JIGS: Become root, then type:
 
     make install
 
-8) Play with JIGS.  The directory Examples/ contains examples of JIGS
-in action.  You probably want to have a look at WrapCreator and its
-examples, which you find in Tools/WrapCreator/.  The directory
-Wrappers contains a first attempt at a wrapper for the gnustep base
-library.
+8) Create and Compile the base library wrapper: Go into Wrappers/, and
+   type:
+
+   make
+
+[Warning: you need to have installed JIGS (step 7) before you can
+compile any wrapper]
+
+9) Install the base library wrapper:  Become root, then type: 
+
+   make install
+
+10) Play with JIGS.  The best place to start is the Testing/Java
+    directory.  See the README there for more info.
+
 
 
