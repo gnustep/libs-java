@@ -24,17 +24,20 @@
 
 include $(GNUSTEP_MAKEFILES)/common.make
 
+GNUSTEP_INSTALLATION_DIR = $(GNUSTEP_USER_ROOT)
+
 JAVA_PACKAGE_NAME = gnu.gnustep.java
 CLASSPATH := $(CLASSPATH):./
 
-gnu.gnustep.java_JAVA_FILES =           \
-   gnu/gnustep/java/GSJNIMethods.java   \
-   gnu/gnustep/java/JIGS.java           \
-   gnu/gnustep/base/NSException.java    \
-   gnu/gnustep/base/NSObject.java       \
-   gnu/gnustep/base/NSPoint.java        \
-   gnu/gnustep/base/NSRange.java        \
-   gnu/gnustep/base/NSRect.java         \
+gnu.gnustep.java_JAVA_FILES =                 \
+   gnu/gnustep/java/GSJNIMethods.java         \
+   gnu/gnustep/java/JIGS.java                 \
+   gnu/gnustep/base/NSException.java          \
+   gnu/gnustep/base/NSObject.java             \
+   gnu/gnustep/base/GSInitializationType.java \
+   gnu/gnustep/base/NSPoint.java              \
+   gnu/gnustep/base/NSRange.java              \
+   gnu/gnustep/base/NSRect.java               \
    gnu/gnustep/base/NSSize.java        
 
 gnu.gnustep.java_JAVA_JNI_FILES =       \
