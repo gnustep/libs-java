@@ -1,3 +1,10 @@
+Tue Jul 24 12:21:26 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* WCHeaderParser.m ([-parseEnumBodyUsingScanner:]): Fixed problem
+	with enumerations having a comma after the last item.
+	* WCClass.m ([-outputWrappers]): Improved indentation of javadoc
+	comments for enumerations.
+	
 Tue Jul 24 11:43:03 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	Implemented parsing ObjC header file for enumerations, and
