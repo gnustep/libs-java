@@ -29,7 +29,7 @@ include $(GNUSTEP_MAKEFILES)/jni.make
 
 # GNUstep-Java.sh should have set JIGS_VM_LIBDIRS and JIGS_VMLIBS
 ifeq ($(JIGS_VM_LIBS),)
-  $(error You need to source GNUstep-Java.sh before compiling!)
+  $(error You need to source $(GNUSTEP_MAKEFILES)/GNUstep-Java.sh before compiling!)
 endif
 
 ADDITIONAL_LIB_DIRS += $(JIGS_VM_LIBDIRS)
