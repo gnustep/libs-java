@@ -30,6 +30,7 @@
   self = [super initWithObjcType: @"BOOL"];
   javaType = @"boolean";
   jniType = @"jboolean";
+  javaArgumentType =@"Z";
   
   return self;
 }
