@@ -162,6 +162,7 @@ classes = (
     "attributes",
     "content",
     "document",
+    "escapedContent",
     "firstAttribute",
     "firstChild",
     "firstChildElement",
@@ -258,7 +259,7 @@ classes = (
   "java name" = "gnu.gnustep.base.GSXPathNodeSet";
   
   "instance methods" = (
-    "length",
+    "count",
     "nodeAtIndex:"
   );
 },
