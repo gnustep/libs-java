@@ -76,4 +76,5 @@ after-install::
 	$(INSTALL_DATA) Makefiles/java-wrapper.readme.template $(JIGS_MAKE_DIR)
 	$(INSTALL_DATA) Makefiles/java-wrapper.objc.template $(JIGS_MAKE_DIR)
 	$(INSTALL_DATA) Makefiles/java-wrapper.java.template $(JIGS_MAKE_DIR)
-
+	$(INSTALL_DATA) Makefiles/search_header.sh $(JIGS_MAKE_DIR)
+	chmod a+x $(JIGS_MAKE_DIR)/search_header.sh
