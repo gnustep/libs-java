@@ -134,6 +134,12 @@ ifeq ($(verbose), no)
   SILENT_FLAGS = --no-verbose
 endif
 
+# Ask WrapCreator not to generate javadoc comments if `javadoc=no' was passed
+# on the make command line
+ifeq ($(javadoc), no)
+  SILENT_FLAGS = --no-javadoc
+endif
+
 # The following should override, if needed: 
 # JIGS_FILE, WRAPPER_DIR, WRAPPER_HEADER
 -include GNUmakefile.wrapper
@@ -187,8 +193,16 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FI
 	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp.2        \
 	        > $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
 	@rm $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp.2
-	@sed -e 's/REPLACEME/$(LIBRARY_NAME)/g'           \
+	@sed -e 's/JAVADOCHERE/$(javadoc)/g'           \
 	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp        \
+	        > $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp.2
+	@rm $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
+	@sed -e 's/PACKAGEHERE/$(PACKAGE_NAME)/g'      \
+	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp.2   \
+	       > $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp 
+	@rm $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp.2
+	@sed -e 's/REPLACEME/$(LIBRARY_NAME)/g'           \
+	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp          \
 	        > $(JAVA_WRAPPER_DIR)/GNUmakefile
 	@rm $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
 	@$(MKDIRS) $(OBJC_WRAPPER_DIR)
