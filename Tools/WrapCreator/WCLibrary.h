@@ -61,6 +61,11 @@
 
 + (NSString *) selectorMapFileForClass: (NSString *)objcClassName;
 
+/* The following will look into our class list, and then into 
+   class name mappings specified by the `hints' entries in the 
+   .jigs file */
++ (NSString *) javaClassNameForObjcClassName: (NSString*)objcClassName;
+
 @end
 
 #endif
