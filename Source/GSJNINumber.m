@@ -26,7 +26,6 @@
 
 /* Our little cache of classes.  Initialized by _GSJNI_ClassCacheInit () */
 
-static jclass booleanClass = NULL;
 static jclass byteClass = NULL;
 static jclass shortClass = NULL;
 static jclass intClass = NULL;
@@ -36,7 +35,7 @@ static jclass doubleClass = NULL;
 
 static void _GSJNI_ClassCacheInit (JNIEnv *env)
 {
-  if (booleanClass != NULL)
+  if (byteClass != NULL)
     {
       return;
     }
@@ -49,7 +48,6 @@ if (VAR == NULL)                                        \
     return;                                            \
   }
 
-  NEW_CLASS_CACHE (booleanClass, java/lang/Boolean); 
   NEW_CLASS_CACHE (byteClass, java/lang/Byte);  
   NEW_CLASS_CACHE (floatClass, java/lang/Float);  
   NEW_CLASS_CACHE (doubleClass, java/lang/Double);  
@@ -61,41 +59,14 @@ if (VAR == NULL)                                        \
 
 #define _JIGS_check_null(variable) if (variable == NULL) return nil;
 
-NSNumber *GSJNI_NSNumberFromJBoolean (JNIEnv *env, jobject object)
-{
-  jmethodID jid;
-  jclass objectClass;
-  jboolean value;
-
-  /* object might belong to a subclass of java.lang.Boolean so we
-     can't cache the jclass or the jmethodID */
-  objectClass = (*env)->GetObjectClass (env, object);
-  jid = (*env)->GetMethodID (env, objectClass, "booleanValue", "()Z");
-  _JIGS_check_null (jid);
-  
-  value = (*env)->CallBooleanMethod (env, object, jid);
-  
-  if ((*env)->ExceptionCheck (env))
-    {
-      return nil;
-    }
-  
-  if (value == JNI_FALSE)
-    {
-      return [NSNumber numberWithBool: NO];
-    }
-  else
-    {
-      return [NSNumber numberWithBool: YES];
-    }
-}
-
 static NSNumber *GSJNI_NSNumberFromJByte (JNIEnv *env, jobject object)
 {
   jmethodID jid;
   jclass objectClass;
   jbyte value;
 
+  /* Object might belong to a subclass, so we can't cache the class or
+     jmethodID */
   objectClass = (*env)->GetObjectClass (env, object);
   jid = (*env)->GetMethodID (env, objectClass, "byteValue", "()B");
   _JIGS_check_null (jid);
@@ -203,8 +174,6 @@ static NSNumber *GSJNI_NSNumberFromJShort (JNIEnv *env, jobject object)
   jclass objectClass;
   jshort value;
 
-  /* object might belong to a subclass of java.lang.Boolean so we
-     can't cache the jclass or the jmethodID */
   objectClass = (*env)->GetObjectClass (env, object);
   jid = (*env)->GetMethodID (env, objectClass, "shortValue", "()S");
   _JIGS_check_null (jid);
@@ -225,7 +194,7 @@ static NSNumber *GSJNI_NSNumberFromJShort (JNIEnv *env, jobject object)
 
 NSNumber *GSJNI_NSNumberFromJNumber (JNIEnv *env, jobject object)
 {
-  if (booleanClass == NULL)
+  if (byteClass == NULL)
     {
       _GSJNI_ClassCacheInit (env);
     }
@@ -275,7 +244,6 @@ NSNumber *GSJNI_NSNumberFromJNumber (JNIEnv *env, jobject object)
 
 /* This is a little cache for the constructors for the java
    classes. */
-static jmethodID booleanId = NULL;
 static jmethodID byteId = NULL;
 static jmethodID shortId = NULL;
 static jmethodID intId = NULL;
@@ -290,7 +258,7 @@ jobject GSJNI_JNumberFromNSNumber (JNIEnv *env, NSNumber *object)
   jvalue value;
   jobject result = NULL;
 
-  if (booleanClass == NULL)
+  if (byteClass == NULL)
     {
       _GSJNI_ClassCacheInit (env);
     }
@@ -303,9 +271,9 @@ jobject GSJNI_JNumberFromNSNumber (JNIEnv *env, NSNumber *object)
     case _C_CHR:
       {
 #if CHAR_MIN == 0 
-	/* non signed chars */	
-	value.z = [object charValue];
-	jtype = 'z';
+	/* non signed chars - but don't use 'z' or 'c' */	
+	value.s = [object charValue];
+	jtype = 's';
 	break;
 #else 
 	/* signed chars */
@@ -318,8 +286,8 @@ jobject GSJNI_JNumberFromNSNumber (JNIEnv *env, NSNumber *object)
     case _C_UCHR:
       {
 	/* non signed chars */	
-	value.z = [object charValue];
-	jtype = 'z';
+	value.s = [object charValue];
+	jtype = 's';
 	break;
       }
       
@@ -503,14 +471,8 @@ jobject GSJNI_JNumberFromNSNumber (JNIEnv *env, NSNumber *object)
     {
     case 'z':
       {
-	if (booleanId == NULL)
-	  {
-	    booleanId = (*env)->GetMethodID (env, booleanClass, 
-					     "<init>", "(Z)V");
-	    _JIGS_check_null (booleanId);
-	  }
-	
-	result = (*env)->NewObject (env, booleanClass, booleanId, value.z);
+	NSLog (@"Internal Error - numbers should never be morphed to bools");
+	result = NULL;
 	break;
       }
     case 'b':
