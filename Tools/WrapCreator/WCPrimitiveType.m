@@ -48,6 +48,11 @@
   return jniType;
 }
 
+- (NSString *) javaArgumentType
+{
+  return javaArgumentType;
+}
+
 - (NSString *) codeToConvertToObjc: (NSString *)jniArgument
 		      givingResult: (NSString *)objcResult
 {
