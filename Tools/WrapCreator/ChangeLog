@@ -1,3 +1,9 @@
+Wed Aug 29 13:36:47 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* WCMethod.m ([-outputJniMethodName]): In the warning for the
+	unresolved class name, give an example of a class name mapping
+	hints.
+
 Wed Aug 29 13:26:19 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* WCMethod.m ([-outputJniMethodName]): Made warning produced when
