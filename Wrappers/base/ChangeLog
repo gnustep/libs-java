@@ -1,5 +1,10 @@
 Wed Jan 02 14:16:00 2001  Richard Frith-Macdonald <richard@brainstorm.co.uk>
 
+	* gnustep-base.jigs: GSXMLDocument API modified for consistency etc
+	Added GSMime wrappers too.
+
+Wed Jan 02 14:16:00 2001  Richard Frith-Macdonald <richard@brainstorm.co.uk>
+
 	* gnustep-base.jigs: GSXMLDocument API modified for consistency
 	Corrected error in last modification.
 	
