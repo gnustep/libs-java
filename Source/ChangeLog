@@ -1,7 +1,3 @@
-Tue Jul 25 11:27:07 2000  Nicola Pero  <n.pero@mi.flashnet.it>
-
-	* GSJNI.h: Include NSJavaVirtualMachine.h too.
-
 Mon Jul 24 11:19:34 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* GSJNIClass.m (GSJNI_NSStringFromClassOfObject): Simplified; removed 

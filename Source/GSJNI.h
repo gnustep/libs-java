@@ -31,6 +31,5 @@
 #include "GSJNIClass.h"
 #include "GSJNIDebug.h"
 #include "GSJNIString.h"
-#include "NSJavaVirtualMachine.h"
 
 #endif /*__GSJNI_h_GNUSTEP_JAVA_INCLUDE*/
