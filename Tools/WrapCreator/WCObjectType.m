@@ -22,6 +22,7 @@
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA. */
 
 #include "WCObjectType.h"
+#include "WCLibrary.h"
 
 @implementation WCObjectType 
 
@@ -29,6 +30,7 @@
 - (id) initWithObjcType: (NSString *)aType
 {
   NSMutableString *type;
+  NSString *name;
 
   self = [super initWithObjcType: aType];
 
@@ -37,8 +39,28 @@
   [type deleteCharactersInRange:  NSMakeRange ([type length] - 1, 1)];
   /* Remove remaining spaces */
   [type trimTailSpaces];
-  /* Store it for later use */
-  ASSIGN (javaType, type);
+  /* Now ask the library to do the mapping - this returns a full 
+     java name (such as gnu.gnustep.gui.NSCell) or nil. */
+  name = [WCLibrary javaClassNameForObjcClassName: type];
+  if (name == nil)
+    {
+      /* No luck.  Use the objc name for the short java name, 
+	 leave the long java name unknown.  This usually is not of 
+	 particular harm. */
+      ASSIGN (javaType, type);
+      longJavaType = nil;
+    }
+  else
+    {
+      /* Lucky !  We have both the short and the long java name */
+      ASSIGN (javaType, [name pathExtension]);
+      if ([javaType isEqual: @""])
+	{
+	  ASSIGN (javaType, name);
+	}
+
+      ASSIGN (longJavaType, name);
+    }
 
   return self;
 }
@@ -55,26 +77,9 @@
 
 - (NSString *) javaArgumentType
 {
-  /* We hard-code the most basic and common guesses at all */
-  if ([javaType isEqualToString: @"NSArray"])
+  if (longJavaType != nil)
     {
-      return @"Lgnu.gnustep.base.NSArray;";
-    }
-  else if ([javaType isEqualToString: @"NSDictionary"])
-    {
-      return @"Lgnu.gnustep.base.NSDictionary;";
-    }
-  else if ([javaType isEqualToString: @"NSMutableArray"])
-    {
-      return @"Lgnu.gnustep.base.NSMutableArray;";
-    }
-  else if ([javaType isEqualToString: @"NSMutableDictionary"])
-    {
-      return @"Lgnu.gnustep.base.NSMutableDictionary;";
-    }
-  else if ([javaType isEqualToString: @"NSNotification"])
-    {
-      return @"Lgnu.gnustep.base.NSNotification;";
+      return [NSString stringWithFormat: @"L%@;", longJavaType];
     }
 
   /* This has to be determined at run-time */
