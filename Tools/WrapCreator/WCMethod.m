@@ -667,9 +667,12 @@ static NSString *convertToJNI (NSString *string)
 		  printf ("Can not determine the full java name of class `%s'\n",
 			  [[t javaType] cString]);
 		  printf ("Please add a `class name mapping hints' to your .jigs file\n");
-		  printf ("telling me how to map that name!  Otherwise, your java code\n");
-		  printf ("will crash whenever you try accessing the method wrapping\n");
-		  printf ("`%s'\n\n", [methodName cString]);
+		  printf ("telling me how to map that name, as in the following example:\n");
+		  printf ("\n");
+		  printf ("\"class name mapping hints\" = { \"NSData\" = \"gnu.gnustep.base.NSData\"; };\n");
+		  printf ("\n");
+		  printf ("Otherwise, your java code will crash whenever you try accessing the method\n");
+		  printf ("wrapping `%s'\n\n", [methodName cString]);
 		  printf ("* IF YOU IGNORE THIS WARNING, YOUR WRAPPER LIBRARY WILL BE BROKEN *\n\n\n");
 		}
 	      [output appendString: convertToJNI ([t javaArgumentType])];
