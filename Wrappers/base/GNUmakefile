@@ -22,7 +22,7 @@
 
 PACKAGE_NAME = gnustep-base
 # NB: This version needs/should not be in sync with JIGS version
-VERSION = 1.1.0
+VERSION = 1.1.1
 
 internal-all ::
 
