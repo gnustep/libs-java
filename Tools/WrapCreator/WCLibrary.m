@@ -70,6 +70,7 @@ static BOOL verboseOutput;
 		   libraryName: (NSString *)libName
 		 verboseOutput: (BOOL)verbOut
 {
+  verboseOutput = verbOut;
   headerParser = [WCHeaderParser newWithHeaderFile: headerFileName];
   if (headerParser == nil)
     {
@@ -88,7 +89,6 @@ static BOOL verboseOutput;
   ASSIGN (wrapDir, wrapDirectory);
   ASSIGN (libraryName, libName);
   ASSIGN (libraryHeader, libHeader);
-  verboseOutput = verbOut;
 }
 
 + (void)outputWrappers
