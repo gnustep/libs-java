@@ -1,3 +1,8 @@
+Mon May  7 03:38:24 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* NSDictionary.m.add: Fixed - variables declared of type NSArray *
+	instead of NSDictionary *.
+
 Fri Apr 27 12:54:04 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GNUmakefile: Abort with an error if the gnustep-base library
