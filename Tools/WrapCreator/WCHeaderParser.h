@@ -29,6 +29,8 @@
 @interface WCHeaderParser : NSObject
 {
   NSString *header;
+  NSMutableDictionary *classMethods;
+  NSMutableDictionary *instanceMethods;
 }
 + (id) newWithHeaderFile: (NSString *)fileName;
 
