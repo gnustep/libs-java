@@ -604,6 +604,61 @@ effect on your program's performance if you pass very big strings --
 and (or) a huge number of them -- through the interface, while normally 
 it doesn't make any appreciable difference in terms of performance.
 
+\subsection{Numbers}
+
+Numbers (instances of \texttt{java.lang.Number} and subclasses) are
+transparently morphed through the interface, in the same way as
+strings are.  Again, this simply means that if an Objective-C method
+takes as argument (or returns) an Objective-C \texttt{NSNumber}
+object, the method in Java will take as argument (or return) a Java
+\texttt{Number} object; the interface will automatically take care of
+the conversion.
+
+\subsubsection{Details of Number Mapping}
+
+This section explains the internals of the number morphing; it's quite
+technical and for most people it's not really useful nor interesting,
+so you may safely skip it at a first reading.
+
+Internally, the situation is more complicated than in the case of
+strings, because there are many public subclasses of
+\texttt{java.lang.Number}, which hold considerably different types of
+numbers each; and \texttt{NSNumber}, according to its Objective-C
+type, can hold very different types of numbers as well.  
+
+When the interface has to convert a Java \texttt{Number} object to an
+Objective-C \texttt{NSNumber} object, it will check if the
+\texttt{Number} object belongs to one of the standard Java number
+classes (\texttt{Byte}, \texttt{Short}, \texttt{Int}, \texttt{Long},
+\texttt{Float}, \texttt{Double}); in this case, it will extract the
+value of the number in the appropriate precision (for example, by
+using \texttt{byteValue} for a \texttt{Byte}, or by using
+\texttt{longValue} for a \texttt{Long}), and create a corresponding
+\texttt{NSNumber} object with an Objective-C type which is big enough
+to hold the value.  If the \texttt{Number} object instead is of a
+non-standard class (such as a class you implemented), the interface
+will extract the value of the number by using \texttt{doubleValue},
+and create a \texttt{NSNumber} object big enough to hold this double
+value.  This can obviously result in loss of precision or conversion
+problems if the Java number object is holding a value which can't be
+represented with a double.
+
+When, viceversa, the interface has to convert an Objective-C
+\texttt{NSNumber} object into a Java \texttt{Number} object, it will
+check the Objective-C type of the Objective-C object (only a finite,
+documented number of number types are possible); it will extract the
+value using the appropriate method (such as \texttt{longValue} is the
+number is of type \texttt{long}), and create a Java \texttt{Number}
+object of a standard class which can hold the value.
+
+Please notice that an Objective-C \texttt{NSNumber} object can hold a
+\texttt{BOOL} (boolean) value; this type is morphed into a small Java
+\texttt{Number} object (usually a \texttt{Short}) holding \texttt{0}
+for \texttt{NO}, and \texttt{1} for \texttt{YES}.  It can't be morphed
+into a Java \texttt{Boolean} object, because in Java \texttt{Boolean}
+objects are not numbers, and the whole point of morphing is that a
+\texttt{NSNumber} is morphed exactly into a Java \texttt{Number}.
+
 \subsection{Exceptions}
 
 Exception generated during calls to the GNUstep Objective-C code are
