@@ -34,7 +34,7 @@ Java_gnu_gnustep_base_NSObject_NSObject_1alloc (JNIEnv *env, jobject this)
 
   JIGS_ENTER;
 
-  objectClass = JIGSClassOfThis (env, this);  
+  objectClass = _JIGSAllocClassForThis (env, this);
   objc = [objectClass alloc];
   _JIGSMapperAddJavaProxy (env, objc, this);
 
@@ -51,7 +51,7 @@ Java_gnu_gnustep_base_NSObject_NSObject_1new (JNIEnv *env, jobject this)
 
   JIGS_ENTER;
 
-  objectClass = JIGSClassOfThis (env, this);  
+  objectClass = _JIGSAllocClassForThis (env, this);
   objc = [objectClass new];
   _JIGSMapperAddJavaProxy (env, objc, this);
 
