@@ -88,7 +88,7 @@ BOOL ObjcUtilities_new_class (const char *name, const char *superclassName,
   Quick HOWTO: 
   A. alloc a MethodList using ObjcUtilities_alloc_method_list.
   B. insert the methods you want to register in the MethodList using 
-     ObjcUtilities_alloc_method_list. 
+     ObjcUtilities_insert_method_in_list.
      To get the objective-C runtime type for a method, you may want to use 
      ObjcUtilities_build_runtime_Objc_signature
   C. register your method list with the objective-C runtime using 
