@@ -114,7 +114,7 @@ int main (void)
   imp = (getPropIMP)[javaLangSystem methodForSelector: selector];
   printf ("ok\n");
 
-  printf ("Calling it with arguments various arguments:...\n"); 
+  printf ("Calling it to get some system properties:\n"); 
 
   result = imp (javaLangSystem, selector, @"java.version");
   printf (" java.vm.version == %s\n", [result cString]);
