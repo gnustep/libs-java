@@ -1,3 +1,8 @@
+Mon Jul 16 13:34:28 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* GNUmakefile (GNUSTEP_INSTALLATION_DIR): Install into
+	GNUSTEP_SYSTEM_ROOT.
+
 Mon May 21 02:31:19 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* README: Updated.

@@ -1,3 +1,8 @@
+Mon Jul 16 13:32:20 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* GNUmakefile (GNUSTEP_INSTALLATION_DIR): Install in
+	GNUSTEP_SYSTEM_ROOT.
+
 Wed May 23 13:18:40 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Foundation.jigs: Provide explicit declaration of

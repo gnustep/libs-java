@@ -1,3 +1,8 @@
+Mon Jul 16 13:31:49 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* GNUmakefile (GNUSTEP_INSTALLATION_DIR): Install in
+	GNUSTEP_SYSTEM_ROOT.
+
 Wed Jun 20 16:45:34 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* gnustep-base.jigs (NSDate): Exposed
