@@ -1,3 +1,8 @@
+Mon Nov 20 14:47:23 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* gnu/gnustep/java/JIGS.java (loadLibrary): Synchronized 
+	access to critical section.
+
 Fri Oct  6 17:14:53 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* gnu/gnustep/java/GSJNIMethods.java (signatureOfClass): 
