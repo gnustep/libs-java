@@ -69,7 +69,6 @@ Java_gnu_gnustep_base_NSObject_equals (JNIEnv *env, jobject this,
 { 
   id we, they;
   jboolean return_value;
-
   JIGS_ENTER;
 
   we = JIGSIdFromThis (env, this);
@@ -90,15 +89,9 @@ Java_gnu_gnustep_base_NSObject_equals (JNIEnv *env, jobject this,
  * tables ... then we save ObjC objects to be released in a little
  * array ... once every forty calls we actually register the thread,
  * create an autorelease pool, and release all the objects in the
- * array.  
+ * array.  Warning - all this trick is tricky ... concrete risks
+ * of generating deadlocks or other strange bugs.
  */
-
-
-/*** FIXME - I think the following implementation might cause a dead lock 
-     if when we RELEASE an object, that causes the release of another 
-     object which ends up calling finalize again ... I think we should 
-     detect that the lock is already taken, and if it is, we release
-     immediately ... without using the list ... ***/
 
 objc_mutex_t JIGSFinalizeListLock = NULL;
 
@@ -114,56 +107,98 @@ Java_gnu_gnustep_base_NSObject_finalize_1native (JNIEnv *env,
 {
   static int count = 0;
   static id list[40];
+  int lock_count;
 
   /* Remove the object from our tables.  */
   id objc = JIGS_JLONG_TO_ID (IDpointer);
   _JIGSMapperRemoveJavaProxy (env, objc);
   
   /* Now release the object/mark it as needing to be released.  */
-  objc_mutex_lock (JIGSFinalizeListLock);
-  
-  /* Save the object in the list of objects to be released.  */
-  list[count] = objc;
-  count++;
-  
-  /* Full - need to release the objects.  */
-  if (count == 40)
-    {
-      /* Setting up the autorelease pool and registering the current
-	 thread is a lenghty process ... the whole purpose of having
-	 the list is to do it once rather than forty times.  */
-      BOOL registeredThread = GSRegisterCurrentThread ();
-      NSAutoreleasePool *pool = [JIGSAutoreleasePoolClass new];
-      volatile int i = 0;
-      
-      for (i = 0; i < 40; i++)
-	{
-	  NS_DURING
-	    {
-	      RELEASE (list[i]);
-	    }
-	  NS_HANDLER
-	    {
-	      /* Ignored - exceptions in finalize() are ignored by Java
-		 anyway so why raising it.  */
-	      ;
-	    }
-	  NS_ENDHANDLER
 
-          /* Not really needed, just for safety.  */
-	  list[i] = nil;
-	}
-      
-      count = 0;
-      
-      RELEASE (pool);
-      if (registeredThread) 
-	{
-	  GSUnregisterCurrentThread ();
-	}	
-    }
+  /* Only use the list if nobody else (not even this thread) holds the
+     lock.  This is to prevent concurrent and recursive calls from 
+     messing all up.  */
+  lock_count = objc_mutex_trylock (JIGSFinalizeListLock);
   
-  objc_mutex_unlock (JIGSFinalizeListLock);
+  if (lock_count == 1)
+    {
+      /* Ok - standard case - we got the lock - go on with our list
+         hack.  */
+
+      /* Save the object in the list of objects to be released.  */
+      list[count] = objc;
+      count++;
+      
+      /* Full - need to release the objects.  */
+      if (count == 40)
+	{
+	  /* Setting up the autorelease pool and registering the current
+	     thread is a lenghty process ... the whole purpose of having
+	     the list is to do it once rather than forty times.  */
+	  BOOL registeredThread = GSRegisterCurrentThread ();
+	  NSAutoreleasePool *pool = [JIGSAutoreleasePoolClass new];
+	  volatile int i = 0;
+	  
+	  for (i = 0; i < 40; i++)
+	    {
+	      NS_DURING
+		{
+		  RELEASE (list[i]);
+		}
+	      NS_HANDLER
+		{
+		  /* Ignored - exceptions in finalize() are ignored by Java
+		     anyway so why raising them.  */
+		  ;
+		}
+	      NS_ENDHANDLER
+
+              /* Not really needed, just for safety.  */
+              list[i] = nil;
+	    }
+	  
+	  count = 0;
+	  
+	  RELEASE (pool);
+	  if (registeredThread) 
+	    {
+	      GSUnregisterCurrentThread ();
+	    }	
+	}
+      objc_mutex_unlock (JIGSFinalizeListLock);
+    }
+  else
+    {
+      if (lock_count > 1)
+	{
+	  /* We locked it but we don't want to ... release the lock.  */
+	  objc_mutex_unlock (JIGSFinalizeListLock);
+	}
+
+      /* Release the object immediately and manually.  */
+      {
+	BOOL registeredThread = GSRegisterCurrentThread ();
+	NSAutoreleasePool *pool = [JIGSAutoreleasePoolClass new];
+	
+	NS_DURING
+	  {
+	    RELEASE (objc);
+	  }
+	NS_HANDLER
+	  {
+	    /* Ignored - exceptions in finalize() are ignored by Java
+	     anyway so why raising them.  */
+	    ;
+	  }
+	NS_ENDHANDLER
+
+        RELEASE (pool);
+	if (registeredThread) 
+	  {
+	    GSUnregisterCurrentThread ();
+	  }
+      }
+    }
 }
 
 
