@@ -1,3 +1,9 @@
+Fri Jul 27 14:50:12 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* JIGSInit.m (JIGSInit): Setup JIGS_DEBUG according to whether we
+	are debugging or non-debugging, to prevent crashes when the engine
+	is started from the Objective-C side, and JIGS_DEBUG is not set.
+
 Fri Jul 27 13:10:04 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGSProxyIMP.m (DO_PROCESS_ARGS): Fixed processing of multiple
