@@ -72,6 +72,25 @@
 		    );
 		 },
 
+		{
+		  "java name" = "gnu.gnustep.base.NSData";
+
+		  "instance methods" = 
+		    (
+		      "subdataWithRange:",
+		      "isEqualToData:",
+		      "length",
+		      "writeToFile:atomically:"
+		    );
+
+		  "initializers" = 
+		    (
+		      "init", 
+		      "initWithContentsOfFile:",
+		      "initWithData:"
+		    );
+		 },
+
                 {
                   "java name" = "gnu.gnustep.base.NSDate";
 
@@ -173,6 +192,29 @@
 		                    "initWithContentsOfFile:");
                 },
 
+		{
+		  "java name" = "gnu.gnustep.base.NSMutableData";
+
+		  "instance methods" = 
+		    (
+		      "increaseLengthBy:",
+		      "setLength:",
+		      "appendData:",
+		      "resetBytesInRange:",
+		      "setData:",
+		      "capacity",
+		      "setCapacity:"
+		    );
+
+		  "initializers" = 
+		    (
+		      "init", 
+		      "initWithContentsOfFile:",
+		      "initWithData:",
+		      "initWithLength:"
+		    );
+		 },
+
                 {
                   "java name" = "gnu.gnustep.base.NSMutableDictionary";
 
@@ -267,7 +309,9 @@
                   "java name" = "gnu.gnustep.base.NSPropertyListSerialization";
 
 		  "class methods" = ("propertyListFromString:",
-		  		     "stringFromPropertyList:");
+		  		     "stringFromPropertyList:",
+				     "dataFromPropertyList:",
+				     "propertyListFromData:");
                 },
 
                 {
