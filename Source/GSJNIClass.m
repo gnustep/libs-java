@@ -181,6 +181,7 @@ NSString *GSJNI_SuperclassNameFromClassName (JNIEnv *env, NSString *className)
   class = (*env)->FindClass (env, cClassName);
   if (class == NULL)
     {
+      (*env)->PopLocalFrame (env, NULL);
       // Exception thrown
       return nil;
     }
@@ -189,6 +190,7 @@ NSString *GSJNI_SuperclassNameFromClassName (JNIEnv *env, NSString *className)
   superClass = (*env)->GetSuperclass (env, class);
   if (superClass == NULL)
     {
+      (*env)->PopLocalFrame (env, NULL);
       // Root Class - no exception thrown
       return nil;
     }
