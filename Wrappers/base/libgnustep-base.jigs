@@ -218,8 +218,36 @@
                     //"notificationWithName:object:", 
 		    "notificationWithName:object:userInfo:");
 
-		  "instance methods" = ("name", "object", "userInfo");		   
+		  "instance methods" = ("name", "object", "userInfo");	   
                 },
+
+		{
+		  "java name" = "gnu.gnustep.base.NSNotificationCenter";
+
+		  "class methods" = ("defaultCenter");
+
+		  "instance methods" = (
+		    "addObserver:selector:name:object:",
+		    //"removeObserver:",
+		    "removeObserver:name:object:",
+		    //"postNotification:",
+		    //"postNotificationName:object:",
+		    "postNotificationName:object:userInfo:");
+		  /* As a special exception, we need to declare this stuff 
+                     because the declarations conflict with 
+                     NSDistributedNotificationCenter's ones. */
+		  "method declarations" = (
+		    "- (void) addObserver: (id)anObserver  
+                                 selector: (SEL)aSelector  
+                                     name: (NSString *)notificationName  
+                                   object: (id)anObject",
+		    "- (void) postNotificationName: (NSString*)name  
+                                            object: (id)object;",
+		    "- (void) postNotificationName: (NSString*)name  
+		                            object: (id)object
+                                          userInfo: (NSDictionary*)info;"
+		  );
+        	},
 
                 {
                   "java name" = "gnu.gnustep.base.NSProcessInfo";
