@@ -11,7 +11,7 @@ classes = (
   "java name" = "gnu.gnustep.base.GSMimeHeader";
   
   "class methods" = (
-    "makeQuoted:",
+    "makeQuoted:always:",
     "makeToken:"
   );
   "instance methods" = (
@@ -70,6 +70,7 @@ classes = (
     "headerNamed:",
     "headersNamed:",
     "makeContentID",
+    "makeMessageID",
     "rawMimeData",
     "rawMimeData:",
     "setContent:",
