@@ -123,6 +123,8 @@
  * be provided in an additional category in another file.
  *
  */
+
++ (void) JIGSInit;
 @end
 
 /*

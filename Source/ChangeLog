@@ -1,3 +1,11 @@
+Thu Jul 26 19:44:00 2001  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* NSJavaVirtualMachine.m: New class method - 'JIGSInit' as
+	convenience for guile ... so we don't have to all the JIGSInit()
+	function.
+	* JIGSInit.m: Added code to use _objc_lookup_class hook in the
+	runtime to automatically load in java classes when needed.
+
 Tue Jul 24 13:14:33 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GNUmakefile, JIGS.h: Version is now 1.5.0.
