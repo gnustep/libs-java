@@ -38,8 +38,6 @@ endif
 #
 all: base #gui
 
-export BUILD_JAVA_WRAPPER_AUTOMATICALLY=yes
-
 base:
 	cd base && $(MAKE)
 gui:
