@@ -62,7 +62,7 @@ You may also want to consider using
 <PRE>
 -include $(GNUSTEP_MAKEFILES)/java-wrapper.make
 </PRE>
-which will cause java-wrapper.make (and thus code for wrapper
+which will cause <TT>java-wrapper.make</TT> (and thus code for wrapper
 generation) to be included if and only if it can be found (which
 should happen if and only if jigs is installed), without complaining
 if it can't.
@@ -71,6 +71,21 @@ if it can't.
 To correctly generate the java wrappers, you will actually need to
 instruct JIGS about what classes and methods you want exposed, and
 how.  This will be discussed in detail in the following sections.
+
+<P>
+As a last comment, you may want to stop JIGS from automatically trying
+to compile the java wrapper after creating them, and from installing
+it automatically after installing your library.  To do this, you just
+need to add
+<PRE>
+BUILD_JAVA_WRAPPER_AUTOMATICALLY=no
+</PRE>
+to your library's GNUmakefile.  Then - JIGS will still create the java
+wrapper source, but will not automatically compile it.  When you want
+to compile it, you have to <TT>cd</TT> into the java wrapper
+directory, and type <TT>make</TT> there.  Similarly, to install the
+java wrappers <TT>cd</TT> into the java wrapper directory, and type
+<TT>make install</TT> (you probably need to be root).
 
 <P>
 <HR><B> Next: <A NAME="tex2html267"
@@ -83,7 +98,7 @@ how.  This will be discussed in detail in the following sections.
 <!--End of Navigation Panel-->
 <ADDRESS>
 Nicola Pero
-2001-01-08
+2001-01-25
 </ADDRESS>
 </BODY>
 </HTML>

@@ -71,18 +71,23 @@ In this case, when you type <TT>make</TT>, the Objective-C will be
 compiled as usual; after it is compiled, JIGS will automatically
 create a directory called <TT>JavaWrapper</TT> (or
 <TT>JavaWrapper_debug</TT> if you are compiling with debug enabled),
-and generate inside this directory source code for the wrappers.  To
-compile the wrappers, you just need to enter the <TT>JavaWrapper</TT>
-directory, and type <TT>make</TT> there.
+and generate inside this directory source code for the wrappers.  It
+will then enter into this directory, and compile the wrapper source
+code (which has just been generated).
 
 <P>
 It is quite important to understand that at this point you have two
 different entities: the original Objective-C library, and the Java
-wrappers for this library.  The two things can be compiled and
+wrappers for this library.  While the default JIGS setup is to manage
+all automatically for you, the two things can be compiled and
 installed separately.  To access your library from Objective-C you
 only need to have compiled and installed your original library, while
 to access it from Java you need to have compiled and installed both
 the original library and the wrappers.
+
+<P>
+In the default setup, when you install the library, JIGS automatically
+installs the wrapper library too.
 
 <P>
 
@@ -172,7 +177,7 @@ types, etc.
 <!--End of Navigation Panel-->
 <ADDRESS>
 Nicola Pero
-2001-01-08
+2001-01-25
 </ADDRESS>
 </BODY>
 </HTML>
