@@ -42,19 +42,22 @@ public class JIGS
 
   /* List of loaded libraries */
   static Vector loadedLibraries = new Vector ();
-
+  
   /* The main method used by outside */
   static public void loadLibrary (String name)
-    {
-      if (loadedLibraries.contains (name))
-	return;
-      
-      /* We do not give second chances :) */
-      loadedLibraries.add (name);
-      
-      JIGSLibraryLoader.loadLibrary (name);
-    }
-
+  {
+    synchronized (loadedLibraries)
+      {
+	if (loadedLibraries.contains (name))
+	  return;
+	
+	/* We do not give second chances :) */
+	loadedLibraries.add (name);
+      }
+    
+    JIGSLibraryLoader.loadLibrary (name);
+  }
+  
   /*
    * It is safe (but useless) to call the following more than once.
    * It is exactly the same as JIGSInit.
