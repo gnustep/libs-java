@@ -1,3 +1,19 @@
+Thu Dec 13 11:13:03 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Makefiles/java-wrapper.make ($(WRAPPER_DIR)/stamp-file): Use 
+	cp, not INSTALL_DATA, to copy templates into the WRAPPER_DIR.
+
+Thu Dec 13 10:27:50 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Makefiles/java-wrapper.make (internal-java_wrapper-install):
+	Pass down GNUSTEP_INSTALLATION_DIR.
+	(internal-java_wrapper-uninstall): Idem.
+	($(WRAPPER_DIR)/stamp-file): Do not replace INSTALL_AS_USER and 
+	INSTALL_AS_GROUP - now automatically exported by gnustep-make; do 
+	not replace GNUSTEP_INSTALLATION_DIR - now passed down directly.
+	* Makefiles/java-wrapper.top.template: Updated for changes.
+	* Makefiles/java-wrapper.top.debug.template: Idem
+
 Wed Dec 12 16:45:28 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* Makefiles/java-wrapper.make ($(WRAPPER_DIR)/stamp-file): Replace
