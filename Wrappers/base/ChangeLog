@@ -1,3 +1,8 @@
+Mon Nov 19 12:20:00 2001  Richard Frith-Macdonald <richard@brainstorm.co.uk>
+
+	* gnustep-base.jigs: Wrapped NSCalendarDate, NSCharacterSet,
+	NSDistriibutedLock, NSMutableCharacterSet, NSFileHandle, NSPipe
+
 Tue Jul 24 11:51:19 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* gnustep-base.jigs (enumerations): Removed as now WrapCreator
