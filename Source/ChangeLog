@@ -1,6 +1,6 @@
 Mon Jul 31 11:17:28 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
-	* GNUmakefile Install by default in $(GNUSTEP_SYSTEM_ROOT);
+	* GNUmakefile: Install by default in $(GNUSTEP_SYSTEM_ROOT);
 	changed header installation directory to be gnustep/java;
 	(LIBRARIES_DEPEND_UPON): Use $(OBJC_LIBS), $(FND_LIBS).
 
