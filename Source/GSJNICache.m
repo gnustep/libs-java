@@ -24,7 +24,7 @@
 #include "GSJNICache.h"
 
 // Return NULL upon exception raised
-jclass GSJNI_NewGlobalClassCache (JNIEnv *env, const char *className)
+jclass GSJNI_NewClassCache (JNIEnv *env, const char *className)
 {
   jclass tmp_local_ref;
   jclass ret_global_ref;

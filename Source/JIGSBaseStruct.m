@@ -61,7 +61,7 @@ void _JIGSBaseStructInitialize (JNIEnv *env)
   if (range_length == NULL)
     {
       // NSPoint
-      nspoint = GSJNI_NewGlobalClassCache (env, "gnu/gnustep/base/NSPoint");
+      nspoint = GSJNI_NewClassCache (env, "gnu/gnustep/base/NSPoint");
       _JIGS_check_null (nspoint);
       
       new_point = (*env)->GetMethodID (env, nspoint, "<init>", "(FF)V");
@@ -74,7 +74,7 @@ void _JIGSBaseStructInitialize (JNIEnv *env)
       _JIGS_check_null (point_y);  
       
       // NSSize
-      nssize = GSJNI_NewGlobalClassCache (env, "gnu/gnustep/base/NSSize");
+      nssize = GSJNI_NewClassCache (env, "gnu/gnustep/base/NSSize");
       _JIGS_check_null (nssize);
       
       new_size = (*env)->GetMethodID (env, nssize, "<init>", "(FF)V");
@@ -87,7 +87,7 @@ void _JIGSBaseStructInitialize (JNIEnv *env)
       _JIGS_check_null (size_height);  
       
       // NSRect
-      nsrect = GSJNI_NewGlobalClassCache (env, "gnu/gnustep/base/NSRect");
+      nsrect = GSJNI_NewClassCache (env, "gnu/gnustep/base/NSRect");
       _JIGS_check_null (nsrect);
       
       new_rect = (*env)->GetMethodID (env, nsrect, "<init>", "(FFFF)V");
@@ -106,7 +106,7 @@ void _JIGSBaseStructInitialize (JNIEnv *env)
       _JIGS_check_null (rect_height);
       
       // NSRange
-      nsrange = GSJNI_NewGlobalClassCache (env, "gnu/gnustep/base/NSRange");
+      nsrange = GSJNI_NewClassCache (env, "gnu/gnustep/base/NSRange");
       _JIGS_check_null (nsrange);
       
       new_range = (*env)->GetMethodID (env, nsrange, "<init>", "(II)V");

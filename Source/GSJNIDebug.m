@@ -139,7 +139,7 @@ NSString *GSJNI_DescriptionOfJClass (JNIEnv *env, jclass class)
   // Initialize java_lang_Class if needed
   if (java_lang_Class == NULL)
     {
-      java_lang_Class = GSJNI_NewGlobalClassCache (env, "java/lang/Class");
+      java_lang_Class = GSJNI_NewClassCache (env, "java/lang/Class");
       if (java_lang_Class == NULL)
 	{
 	  NSLog (@"WARNING! Could not get global reference to ");
