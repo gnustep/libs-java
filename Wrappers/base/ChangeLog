@@ -1,3 +1,7 @@
+Mon Feb 19 11:17:41 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* GNUmakefile: Fixed setting VERSION at the right moment.
+
 Fri Feb  9 16:22:27 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* NSDictionary.java.add: New file.
