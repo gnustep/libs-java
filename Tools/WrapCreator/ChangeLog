@@ -1,3 +1,9 @@
+Sun May  6 23:49:20 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* WCLibrary.m ([WCLibrary +initializeWithOptions:]): Set
+	verboseOutput at the beginning, so that WCHeaderParser can access
+	it during initialization.
+	
 Sun May  6 15:55:43 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* WCShortType.h: New file.
