@@ -47,12 +47,14 @@
  *
  * or 
  *
- * JIGS_EXIT_WITH_FAIL_VALUE (failure_value);
+ * JIGS_EXIT_WITH_VALUE (ret_value);
  *
- * failure_value will be returned upon an exception.
+ * Important: `ret_value' must be a simple variable whose value was
+ * computed inside the JIGS_ENTER/JIGS_EXIT_WITH_VALUE tags, not an
+ * expression or a function call.
  * 
  * And (important) you need to call the JNIEnv * argument of your
- * native call 'env'.
+ * native call 'env'.  
  */
 
 #define JIGS_ENTER                                   \
@@ -65,14 +67,12 @@ JIGSRaiseJExceptionFromNSException (env, localException);    \
 NS_ENDHANDLER                                                \
 RELEASE (pool);
 
-#define JIGS_EXIT_WITH_FAIL_VALUE(failure_value)             \
+#define JIGS_EXIT_WITH_VALUE(ret_value)                      \
 NS_HANDLER                                                   \
 JIGSRaiseJExceptionFromNSException (env, localException);    \
-RELEASE (pool);                                              \
-return (failure_value);                                      \
+RELEASE (pool); return (0);                                  \
 NS_ENDHANDLER                                                \
-RELEASE (pool);
-
+RELEASE (pool); return (ret_value);
      
 
 #endif /*__JIGSNative_h_GNUSTEP_JAVA_INCLUDE*/
