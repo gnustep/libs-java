@@ -1,3 +1,10 @@
+Thu Nov 22 01:20:38 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* GNUmakefile (CVS_MODULE_NAME): Define.
+	(CVS_FLAGS): Define.
+	(RELEASE_DIR): Define.
+	* make-release: Modified to simply invoke `make cvs-snapshot'.
+	
 Tue Jul 24 13:12:25 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GNUmakefile (VERSION): 1.5.0.
