@@ -1,5 +1,7 @@
 # Automatically generated! Do not edit.  
 
+# SETINSTALLATIONDIRHERE
+
 include $(GNUSTEP_MAKEFILES)/common.make
 
 # When building the RPM, only include in the file list what is in the
