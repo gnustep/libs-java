@@ -1,3 +1,12 @@
+Release Notes for JIGS version 1.5
+==================================
+
+New advanced support for exposing enumeration: the wrapper tool can
+now recognize and parse enumeration declarations in the Objective-C
+header files, so it automatically maps them to ints, and upon request
+can expose any enumeration you want using static Java constants in a
+class.
+
 Release Notes for JIGS version 1.4
 ==================================
 
