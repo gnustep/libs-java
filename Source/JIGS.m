@@ -28,8 +28,7 @@
 JNIEXPORT void JNICALL 
 Java_gnu_gnustep_java_JIGS_initialize (JNIEnv *env, jclass this)
 {
-  CREATE_AUTORELEASE_POOL (JIGSInitPool);
+  /* NB: JIGSInit is already protected by an autorelease pool */
   JIGSInit (env);
-  RELEASE (JIGSInitPool);
 }
 
