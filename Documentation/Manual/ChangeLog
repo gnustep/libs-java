@@ -1,6 +1,7 @@
 Mon Nov 27 16:10:49 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
-	* GNUmakefile: New file.
+	* .latex2html-init: New file.
+	* GNUmakefile: Idem.
 	* Manual.tex: Idem.
 	* TitlePage.tex: Idem.
 	* Introduction.tex: Idem.
