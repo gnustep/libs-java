@@ -1,0 +1,20 @@
+Release: 	1
+Source: 	ftp://ftp.gnustep.org/pub/gnustep/core/%{gs_name}-%{gs_version}.tar.gz
+Copyright: 	LGPL
+Group: 		Development/Libraries
+Summary: 	GNUstep Java Interface
+Packager:	Adam Fedor <fedor@gnu.org>
+Vendor:		The GNUstep Project
+URL:		http://www.gnustep.it/jigs/
+
+%description
+JIGS stands for Java Interface for GnuStep. It is a package allowing
+integration between Java and Objective-C. The main purpose of JIGS is
+to allow Java programmers to use the GNUstep libraries from Java.
+JIGS is more than a set of bindings for GNUstep from Java; JIGS takes
+advantage of the fact that Objective-C and Java are very similar
+languages to make it possible to use Objective-C classes from Java
+using exactly the same API (and vice versa). You have to learn the
+GNUstep API only once, and then you can use it both from Objective-C
+and from Java in the same way! Moreover, JIGS can generate
+automatically wrappers for your own Objective-C GNUstep libraries.
