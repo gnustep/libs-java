@@ -45,7 +45,7 @@ classes = (
 			"root",
 			"save:",
 			"setRoot:",
-			"stringValue",
+			"writeToFile:atomically:",
 			"version");
   "initializers" = ("initWithVersion:" );
 },
