@@ -1,3 +1,14 @@
+Sat Jul 29 12:25:42 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* GNUmakefile: New file.
+	* JIGSMapper.m: New file.
+	* JIGSMapper.h: New file.
+	* NSObject.m: New file.
+	* JIGS.h: include NSJavaVirtualMachine.h too.
+	* JIGSProxy.m (_java_lang_Object__dealloc_): Updated function name
+	to match the one in JIGSMapper.
+	* JIGSProxyIMP.m (_JIGS_id_IMP_JavaMethod): Idem.
+	
 Fri Jul 28 15:30:12 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGS.h: New file.
