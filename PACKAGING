@@ -28,10 +28,8 @@ directory.
 
   install the RPM for JIGS first
 
+  cd Wrappers/base
   Edit the Wrappers/base/gnustep-base-wrapper.spec.in file
-  cd Wrappers
-  make
-  cd base/JavaWrapper
   su
   export RPM_TOPDIR=/usr/src/redhat
   make rpm
@@ -40,13 +38,11 @@ directory.
 
   install the RPM for JIGS first
 
+  cd Wrappers/base
   Edit the Wrappers/base/gnustep-base-wrapper-debug.spec.in file
-  cd Wrappers
-  make debug=yes
-  cd base/JavaWrapper_debug
   su
   export RPM_TOPDIR=/usr/src/redhat
-  make rpm
+  make debug=yes rpm
 
 
 Packaging JIGS into DEB
