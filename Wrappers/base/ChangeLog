@@ -1,3 +1,8 @@
+2003-02-21  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* gnustep-base.jigs: Wrapped NSDistributedNotificationCenter and
+	NSNotificationQueue
+
 2003-01-09  Richard Frith-Macdonald <rfm@gnu.org>
 
 	* gnustep-base.jigs: Add NSCalendar date weekOfYear method.
