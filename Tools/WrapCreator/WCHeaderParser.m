@@ -845,7 +845,19 @@ if ([scanner isAtEnd]) break;
       skipSpaces;
       
       /* It is an identifier - read it into the key */
-      [scanner scanUpToCharactersFromSet: endEnumBodyKey  intoString: &key];
+      if (![scanner scanUpToCharactersFromSet: endEnumBodyKey  
+		    intoString: &key])
+	  {
+	      /* Ops - no identifier - should mean it's finished -
+                 usually it happens if your last enum entry has got 
+		 a comma after it, as in 
+
+		 enum hello { nicola, ettore, };
+
+		 we just try to sneak out */
+	      [scanner setScanLocation: ([scanner scanLocation] + 1)];
+	      break;
+	  }
       if ([scanner isAtEnd])
 	{
 	  break;
