@@ -1,0 +1,39 @@
+The library is organized as follows: 
+
+ObjcRuntimeUtilities
+====================
+
+Utilities to programmatically add classes and methods to the runtime
+while it is running.  ObjcRuntimeUtilities is a little library in
+itself, depending in no way on Java, and could be used in other
+projects needing to add classes and methods at the runtime while it is
+running.  It provides functions, which are prefixed by "ObjcUtilitites_".
+
+GSJNI
+=====
+
+Utilities to program JNI (Java Native Interface) using GNUstep.  These
+utilities are a little library in itself, and could be used in other
+projects needing to implement JNI methods in Objective-C using
+GNUstep.  It is independent of ObjcRuntimeUtilities.  It provides
+functions, which are prefixed by "GSJNI_".
+
+The library contains:
+[Objective-C:]
+GSJNICache : utilities to cache JNI references.
+GSJNIClass : utilities to manage class names.
+GSJNIDebug : utilities to make debugging easier.
+GSJNIException : utilties to manage JNI/GNUstep exception and convert
+                 one into the other and viceversa.
+GSJNIString : utilities to convert ASCII and UNICODE strings between
+                GNUstep and Java.
+[Java:]
+gnu.gnustep.java.GSJNIUtilites : Some utilities to get info on a class methods.
+
+JIGS
+====
+
+The real GNUstep Java Interface engine, built on top of
+ObjcRuntimeUtilities and GSJNI.  Most of it is written in Objective-C,
+but parts are in Java.  The Java parts are in ../Java/. 
+
