@@ -1,0 +1,4 @@
+Mon Nov 27 16:10:14 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* GNUmakefile: New file.
+	* Manual/: New directory.
