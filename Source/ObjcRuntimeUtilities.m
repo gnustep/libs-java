@@ -42,6 +42,7 @@
 #define	OBJC_VERSION	8
 
 #include "ObjcRuntimeUtilities.h"
+#include <string.h>
 
 BOOL ObjcUtilities_new_class (const char *name, 
 			      const char *superclassName, 
