@@ -1,3 +1,11 @@
+Mon May 21 02:58:23 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* GNUmakefile (VERSION): Version is now 1.4.0.
+	* NEWS: Added news for 1.4.0.
+	* INSTALL: Updated instructions to compile wrappers.
+	* PACKAGING: Updated for new, simpler, way of packaging wrappers.
+	* FAQ: Added comment about the gui library wrapping not working.
+	
 Sun May  6 00:49:16 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* NEWS: Updated/fixed news for 1.3.
