@@ -1,3 +1,20 @@
+Mon Jul 16 13:27:08 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* GNUmakefile: Install into GNUSTEP_SYSTEM_ROOT.
+
+Mon Jul 16 13:21:43 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Makefiles/java-wrapper.top.template (SETINSTALLATIONDIRHERE):
+	Added.
+	* Makefiles/java-wrapper.top.debug.template
+	(SETINSTALLATIONDIRHERE): Added.
+	* Makefiles/java-wrapper.make ($(WRAPPER_DIR)/stamp-file): Replace
+	SETINSTALLATIONDIRHERE with the GNUSTEP_INSTALLATION_DIR in the
+	top GNUmakefile so that GNUSTEP_INSTALLATION_DIR can be specified
+	in the wrapper makefile, and it gets propagated to the wrapper
+	makefiles.  Rearranged management of temporary files in sed rules
+	to be simpler to understand.
+
 Mon Jun 18 13:06:48 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* WCLibrary.m ([WCLibrary +javaClassNameForObjcClassName:]): Added
