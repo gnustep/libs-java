@@ -73,16 +73,15 @@ classes = (
   );
   "instance methods" = (
     "data",
-    "document",
     "expectNoHeaders",
     "isComplete",
+    "isHttp",
     "isInBody",
     "isInHeaders",
+    "mimeDocument",
     "parse:",
-    "parseHeader:"
-  );
-  "method declarations" = (
-    "- (id) document"
+    "parseHeader:",
+    "setIsHttp"
   );
 },
 
@@ -160,7 +159,6 @@ classes = (
   /* The following conflicts with other classes */
   "method declarations" = (
     "- (id) content",
-    "- (id) document",
     "- (GSXMLNode *)next",
     "- (GSXMLNode *)previous"
   );
