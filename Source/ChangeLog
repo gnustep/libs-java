@@ -1,3 +1,7 @@
+Mon Nov 27 16:37:13 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* JIGS.h: Version is now 1.0.0.
+
 Tue Nov 21 14:05:38 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* JIGS.m (Java_gnu_gnustep_java_JIGS_forceMultithreading): Native 
