@@ -1,3 +1,8 @@
+Mon Nov 20 15:13:29 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* WCLibrary.m ([+outputWrappers]): Output the new macros
+	JIGS_ONLOAD_ENTER and JIGS_ONLOAD_EXIT for thread safety.
+
 Fri Nov  3 15:30:13 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* WCClass.m ([-initWithDictionary:]): Read the `hardcoded
