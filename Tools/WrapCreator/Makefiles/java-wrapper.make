@@ -187,7 +187,7 @@ endif
 # Ask WrapCreator not to generate javadoc comments if `javadoc=no' was passed
 # on the make command line
 ifeq ($(javadoc), no)
-  SILENT_FLAGS = --no-javadoc
+  SILENT_FLAGS += --no-javadoc
 endif
 
 ifeq ($(debug),yes)
@@ -292,7 +292,7 @@ endif
 	                --preprocessed-header $(WRAPPER_DIR)/preprocessedHeader \
 	                --library-name $(LIBRARY_NAME) \
 	                --library-header $(HEADER_FILE) \
-	         	$(SILENT_FLAGS)
+	                $(SILENT_FLAGS)
 	@echo Removing the temporary preprocessor header...
 	@rm $(WRAPPER_DIR)/preprocessedHeader
 	@echo Creating the stamp file...
