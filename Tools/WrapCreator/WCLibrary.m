@@ -227,6 +227,9 @@ static NSMutableArray *classList;
       if (verboseOutput == YES)
 	{
 	  printf ("Wrapping class %s\n", [[class objcName] cString]);
+	  /*	  printf ("Wrapping class %s, %s\n",
+		  [[class objcName] cString],
+		  [[class description] cString]); */
 	}
       [class outputWrappers];
 
