@@ -77,7 +77,23 @@ NS_ENDHANDLER                                                \
 RELEASE (pool);                                              \
 if (registeredThread) [NSThread unregisterCurrentThread];    \
 return (ret_value);
-     
+
+
+/*
+ * Use the following when entering the JNI_OnLoad function of 
+ * a library (where usually the classes and selectors of the library 
+ * are registered).  It is particularly important because JNI_OnLoad  
+ * might be called from an arbitrary Java thread.
+ *
+ */
+#define JIGS_ONLOAD_ENTER                                 \
+BOOL registeredThread = [NSThread registerCurrentThread]; \
+NSAutoreleasePool *pool = [NSAutoreleasePool new];        
+
+#define JIGS_ONLOAD_EXIT                                     \
+RELEASE (pool);                                              \
+if (registeredThread) [NSThread unregisterCurrentThread];    \
+return JNI_VERSION_1_2;
 
 #endif /*__JIGSNative_h_GNUSTEP_JAVA_INCLUDE*/
 
