@@ -26,6 +26,12 @@ import java.lang.reflect.*;
 // For the private part
 import gnu.gnustep.java.GSJNIMethods;
 
+/**
+ * This class wraps Objective-C <B>selectors</B>.  In Java a selector is
+ * univocally identified by the method name and the type of its
+ * arguments (which is an array of Class objects).
+ */
+
 public final class NSSelector extends Object 
   implements Cloneable
 {
@@ -41,6 +47,11 @@ public final class NSSelector extends Object
 
   // NB: This restriction should not be removed - and btw can't be removed
   // without breaking the internals of JIGS.
+  /**
+   * Constructs a selector with method name aMethodName, and 
+   * accepting an array of parameters of types specified by 
+   * someParameterTypes.
+   */
   public NSSelector (String aMethodName, Class[] someParameterTypes)
   {
     super ();
@@ -48,8 +59,11 @@ public final class NSSelector extends Object
     parameterTypes = someParameterTypes;
   }
 
-  /* This is the selector we invoke from objective-C when morphing 
-     an objective-C selector */
+  /**
+   * This is the constructor JIGS invokes from objective-C when
+   * morphing an objective-C selector - from Java it's much easier 
+   * to use the other constructor.
+   */
   public NSSelector (String aMethodName, String argumentSignature)
     throws ClassNotFoundException
   {
@@ -65,6 +79,10 @@ public final class NSSelector extends Object
     return (NSSelector)super.clone ();
   }
 
+  /**
+   * Returns true if and only if otherObject is a NSSelector with 
+   * the same method name, and argument types.
+   */
   public boolean equals (Object otherObject)
   {
     if (otherObject instanceof NSSelector)
@@ -98,6 +116,10 @@ public final class NSSelector extends Object
   }
   
   // Instance methods - new methods
+  /**
+   * Returns true if targetClass implements this selector (that is, if
+   * it implements a method with this name and taking these parameter
+   * types).  */
   public boolean implementedByClass (Class targetClass)
   {
     boolean implemented = true;
@@ -114,6 +136,11 @@ public final class NSSelector extends Object
     return implemented;
   }
 
+  /**
+   * Returns true if the class of target implements this selector
+   * (that is, if it implements a method with this name and taking
+   * these parameter types).  
+   */
   public boolean implementedByObject (Object target)
   {
     boolean implemented = true;
