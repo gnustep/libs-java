@@ -1,6 +1,7 @@
 {
   "types" = { 
               NSTimeInterval = double;
+              RunLoopEventType = int;
             };
   "classes" = (
                 {
@@ -288,6 +289,36 @@
         	},
 
                 {
+                  "java name" = "gnu.gnustep.base.NSNull";
+
+		  "class methods" = ("null");
+                },
+
+                {
+                  "java name" = "gnu.gnustep.base.NSPort";
+
+		  "class methods" = ("port");
+
+		  "initializers" = ("init");
+
+		  "instance methods" =  (
+		    "invalidate",
+		    "isValid",
+		    "setDelegate:",
+		    "delegate",
+		    "close",
+		    //"addConnection:toRunLoop:forMode:",
+		    //"removeConnection:fromRunLoop:forMode:",
+		    "reservedSpaceLength",
+		    "sendBeforeDate:msgid:components:from:reserved:");
+
+		  /* Just for safety, because NSUrl defines 
+		     "- (NSNumber *) port" */
+   		  "method declarations" = ("+ (NSPort *) port");
+                },
+
+
+                {
                   "java name" = "gnu.gnustep.base.NSProcessInfo";
 
 		  "class methods" = ("processInfo");		  
@@ -309,6 +340,34 @@
 				     "dataFromPropertyList:",
 				     "propertyListFromData:");
                 },
+
+                {
+                  "java name" = "gnu.gnustep.base.NSRunLoop";
+
+		  "class methods" = ("currentRunLoop");
+
+		  "initializers" = ("init");
+
+		  "instance methods" = (
+		    "acceptInputForMode:beforeDate:",
+		    "addTimer:forMode:",
+		    "currentMode",
+		    "limitDateForMode:",
+		    "run",
+		    "runMode:beforeDate:",
+		    "runUntilDate:",
+		    "addPort:forMode:",
+		    "cancelPerformSelector:target:argument:",
+		    "configureAsServer",
+		    "performSelector:target:argument:order:modes:",
+		    "removePort:forMode:"
+		    // "removeTimerForMode" (APPLE) ??
+		    // "containsTimerForMode" (APPLE) ??
+		    // "timersForMode" (APPLE) ??
+		    // "containsPortForMode" (APPLE) ??
+		    // "portsForMode" (APPLE) ??
+		  );
+        	},
 
                 {
                   "java name" = "gnu.gnustep.base.NSSet";
@@ -364,6 +423,27 @@
 		},
 
                 {
+                  "java name" = "gnu.gnustep.base.NSTimer";
+
+		  "class methods" = (
+                    //"scheduledTimerWithTimeInterval:invocation:repeats:",
+		    "scheduledTimerWithTimeInterval:target:selector:userInfo:repeats:",
+		    //"timerWithTimeInterval:invocation:repeats:",
+		    "timerWithTimeInterval:target:selector:userInfo:repeats:"
+		  );
+
+		  "initializers" = ("init");
+
+		  "instance methods" = (
+		    "fire", 
+		    "invalidate", 
+		    "isValid", 
+		    "timeInterval",
+		    "fireDate",
+		    "userInfo");
+		},
+
+                {
                   "java name" = "gnu.gnustep.base.NSUserDefaults";
 
 		  /* FIXME: NSUserDefaults will always use for the application
@@ -406,8 +486,16 @@
               );
    "method name mapping" = {
                              "description" = "toString";
+                             "null" = "nullValue";
+			     "addTimer:forMode:" = "addTimerForMode";
+			     "runMode:beforeDate:" = "runModeBeforeDate";
+			     "addPort:forMode:" = "addPortForMode";
+			     "removePort:forMode:" = "removePortForMode";
                             };
 }
+
+
+
 
 
 
