@@ -1,3 +1,8 @@
+Fri Nov  3 15:58:13 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Java/NSArrayTest.java: Test the NSArray.NotFound constant.
+	* Java/NSWindowTest.java: Use the new NSWindow constants.
+
 Wed Nov  1 16:18:12 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* Java/NSWindowTest.java: New test.
