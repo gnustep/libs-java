@@ -229,7 +229,6 @@ void JIGSRegisterJavaRootClass (JNIEnv *env)
 void JIGSRegisterJavaClass (JNIEnv *env, NSString *className)
 {
   NSString *superclassName;
-  const char *cClassName;
 
   // If class exists in Objc, return.
   if (NSClassFromString (className) != Nil)
