@@ -1,3 +1,12 @@
+Mon Sep 24 12:04:56 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* ObjcRuntimeUtilities.m (objc_EXPORT): Define it if not defined.
+	(ObjcUtilities_new_class): Use `objc_EXPORT' rather than simply
+	`extern' to access libobjc internals symbols.
+	(ObjcUtilities_register_method_list): Idem.
+	* JIGSProxySetup.m (objc_mutex_allocate): Do not declare as it is
+	declared in objc/thr.h which we include.
+
 Wed Sep 12 12:17:50 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGSInit.m (JIGSInitFromJava): New function.
