@@ -1,3 +1,13 @@
+Tue May 22 02:51:39 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Objc/GNUstep-Java.sh: New script which sets up everything to
+	link and run stuff which starts a JVM.
+	* Objc/jigs.make: Trivialized - most code now in GNUstep-Java.sh.
+	* Objc/openjavatool: Removed.
+	* Objc/GNUmakefile: Do not run openjavatool, but execute the file
+	directly.
+	* Objc/README: Rewritten.
+	
 Mon May  7 04:40:37 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* Objc/main.m: For libFoundation, redefine lossyCString to be
