@@ -1,6 +1,7 @@
 { /* -*-c-*- */
 types = { 
   NSTimeInterval = double;
+  unichar = short;
 };
 classes = (
 {
@@ -211,6 +212,101 @@ classes = (
   },
 
   {
+    "java name" = "gnu.gnustep.base.NSCalendarDate";
+    
+    "class methods" = (
+      "calendarDate",  
+      "dateWithTimeIntervalSinceNow:",  
+      "dateWithString:",  
+      "dateWithString:calendarFormat:",  
+      "dateWithString:calendarFormat:locale:",  
+      "dateWithNaturalLanguageString:",  
+      "dateWithNaturalLanguageString:locale:",  
+      "dateWithTimeIntervalSinceReferenceDate:",  
+      "dateWithTimeIntervalSince1970:",  
+      "dateWithYear:month:day:hour:minute:second:timeZone:",  
+      "distantFuture", 
+      "distantPast" 
+      //"timeIntervalSinceReferenceDate"
+    );
+    
+    "initializers" = (
+      "initWithTimeIntervalSinceNow:", 
+      "initWithString:",
+      "initWithString:calendarFormat:",
+      "initWithString:calendarFormat:locale:",
+      "initWithTimeInterval:sinceDate:",
+      "initWithYear:month:day:hour:minute:second:timeZone:",
+      "init"
+      //"initWithTimeIntervalSinceReferenceDate:"
+    );
+    
+    "instance methods" = (
+      "addTimeInterval:",
+      "addYear:month:day:hour:minute:second:",
+      "calendarFormat",
+      "dateByAddingYears:months:days:hours:minutes:seconds:",
+      "dayOfCommonEra",
+      "dayOfMonth",
+      "dayOfWeek",
+      "dayOfYear",
+      "description", 
+      "descriptionWithLocale:",
+      "descriptionWithCalendarFormat:timeZone:locale:",
+      "earlierDate:", 
+      "hourOfDay",
+      "isEqualToDate:", 
+      "laterDate:", 
+      "minuteOfHour",
+      "monthOfYear",
+      "secondOfMinute",
+      "setCalendarFormat:",
+      "setTimeZone:",
+      "timeIntervalSinceDate:", 
+      "timeIntervalSinceNow", 
+      "timeIntervalSinceReferenceDate", 
+      "timeIntervalSince1970",
+      "timeZone",
+      "yearOfCommonEra"
+      //"compare:"
+      //"dateWithCalendarFormat:timeZone:"
+    );
+  },
+
+  {
+    "java name" = "gnu.gnustep.base.NSCharacterSet";
+    
+    "class methods" = (
+      "alphanumericCharacterSet",
+      "characterSetWithBitmapRepresentation:",
+      "characterSetWithCharactersInString:",
+      "characterSetWithContentsOfFile:",
+      "characterSetWithRange:",
+      "controlCharacterSet",
+      "decimalDigitCharacterSet",
+      "decomposableCharacterSet",
+      "illegalCharacterSet",
+      "letterCharacterSet",
+      "lowercaseLetterCharacterSet",
+      "nonBaseCharacterSet",
+      "punctuationCharacterSet",
+      "symbolAndOperatorCharacterSet",
+      "uppercaseLetterCharacterSet",
+      "whitespaceAndNewlineCharacterSet",
+      "whitespaceCharacterSet"
+    );
+    
+    "initializers" = (
+    );
+    
+    "instance methods" = (
+      "bitmapRepresentation",
+      "characterIsMember:",
+      "invertedSet"
+    );
+  },
+
+  {
     "java name" = "gnu.gnustep.base.NSCountedSet";
 
     "file to include in java code" = "NSCountedSet.java.add";
@@ -316,6 +412,25 @@ classes = (
   },
     
   {
+    "java name" = "gnu.gnustep.base.NSDistributedLock";
+    
+    "class methods" = (
+      "lockWithPath:"
+    );
+    
+    "initializers" = (
+      "initWithPath:"
+    );
+    
+    "instance methods" = (
+      "breakLock",
+      "lockDate",
+      "tryLock",
+      "unlock"
+    );
+  },
+
+  {
     "java name" = "gnu.gnustep.base.NSEnumerator";
     
     "instance methods" = (//"allObjects",
@@ -323,6 +438,86 @@ classes = (
     "method name mapping" = { "nextObject" = "nextElement"; };
   },
     
+  {
+    "java name" = "gnu.gnustep.base.NSFileHandle";
+    
+    "class methods" = (
+      "fileHandleForReadingAtPath:",
+      "fileHandleForWritingAtPath:",
+      "fileHandleForUpdatingAtPath:",
+      "fileHandleWithStandardError",
+      "fileHandleWithStandardInput",
+      "fileHandleWithStandardOutput",
+      "fileHandleWithNullDevice",
+      "fileHandleAsServerAtAddress:service:protocol:",
+      "fileHandleAsClientAtAddress:service:protocol:",
+      "fileHandleAsClientInBackgroundAtAddress:service:protocol:",
+      "fileHandleAsClientInBackgroundAtAddress:service:protocol:forModes:"
+    );
+    
+    "initializers" = (
+    );
+    
+    "instance methods" = (
+      "acceptConnectionInBackgroundAndNotify",
+      "acceptConnectionInBackgroundAndNotifyForModes:",
+      "availableData",
+      "closeFile",
+      "offsetInFile",
+      "readDataOfLength:",
+      "readDataToEndOfFile",
+      "readInBackgroundAndNotify",
+      "readInBackgroundAndNotifyForModes:",
+      "readInProgress",
+      "readToEndOfFileInBackgroundAndNotify",
+      "readToEndOfFileInBackgroundAndNotifyForModes:",
+      "seekToEndOfFile",
+      "seekToFileOffset:",
+      "socketAddress",
+      "socketProtocol",
+      "socketService",
+      "sslConnect",
+      "sslDisconnect",
+      "sslSetCertificate:privateKey:PEMpasswd:",
+      "synchronizeFile",
+      "truncateFileAtOffset:",
+      "useCompression",
+      "waitForDataInBackgroundAndNotify",
+      "waitForDataInBackgroundAndNotifyForModes:",
+      "writeData:",
+      "writeInBackgroundAndNotify:",
+      "writeInBackgroundAndNotify:forModes:",
+      "writeInProgress"
+    );
+    "method declarations" = (
+      "- (void) writeData: (NSData*)item"
+    );
+    "hardcoded constants" = (
+      "String NSFileHandleConnectionAcceptedNotification
+	= \"NSFileHandleConnectionAcceptedNotification\"",
+      "String NSFileHandleDataAvailableNotification
+	= \"NSFileHandleDataAvailableNotification\"",
+      "String NSFileHandleReadCompletionNotification
+	= \"NSFileHandleReadCompletionNotification\"",
+      "String NSFileHandleReadToEndOfFileCompletionNotification
+	= \"NSFileHandleReadToEndOfFileCompletionNotification\"",
+      "String NSFileHandleNotificationDataItem
+	= \"NSFileHandleNotificationDataItem\"",
+      "String NSFileHandleNotificationFileHandleItem
+	= \"NSFileHandleNotificationFileHandleItem\"",
+      "String NSFileHandleNotificationMonitorModes
+	= \"NSFileHandleNotificationMonitorModes\"",
+      "String NSFileHandleOperationException
+	= \"NSFileHandleOperationException\"",
+      "String GSFileHandleConnectCompletionNotification
+	= \"GSFileHandleConnectCompletionNotification\"",
+      "String GSFileHandleWriteCompletionNotification
+	= \"GSFileHandleWriteCompletionNotification\"",
+      "String GSFileHandleNotificationError
+	= \"GSFileHandleNotificationError\""
+     );
+  },
+
   {
     "java name" = "gnu.gnustep.base.NSMutableArray";
     
@@ -351,6 +546,26 @@ classes = (
 		      "initWithContentsOfFile:");
   },
     
+  {
+    "java name" = "gnu.gnustep.base.NSMutableCharacterSet";
+    
+    "class methods" = (
+    );
+    
+    "initializers" = (
+    );
+    
+    "instance methods" = (
+      "addCharactersInRange:",
+      "addCharactersInString:",
+      "formUnionWithCharacterSet:",
+      "formIntersectionWithCharacterSet:",
+      "removeCharactersInRange:",
+      "removeCharactersInString:",
+      "invert"
+    );
+  },
+
   {
     "java name" = "gnu.gnustep.base.NSMutableData";
     "file to include in java code" = "NSMutableData.java.add";
@@ -457,6 +672,19 @@ classes = (
     "class methods" = ("null");
   },
     
+  {
+    "java name" = "gnu.gnustep.base.NSPipe";
+    
+    "class methods" = ("pipe");
+    
+    "initializers" = ();
+    
+    "instance methods" =  (
+      "fileHandleForReading",
+      "fileHandleForWriting"
+    );
+  },
+
   {
     "java name" = "gnu.gnustep.base.NSPort";
     
