@@ -1,3 +1,10 @@
+Release Notes for JIGS version 1.4
+==================================
+
+In this release, the makefiles for wrapping an objective-c library
+have been rewritten to decouple the process of wrapping from the
+process of building the original library.
+
 Release Notes for JIGS version 1.3
 ==================================
 
