@@ -1,0 +1,79 @@
+\chapter{Accessing Java from Objective-C}
+
+In this chapter we are going to learn how to use JIGS to start a Java
+Virtual Machine inside a GNUstep Objective-C program, and execute Java
+code from Objective-C.
+
+\section{Overview of the libgnustep-java library}
+
+To proficiently use Java from Objective-C, you are likely to need a
+more detailed insight about the internals of JIGS's core, which is
+provided by the \texttt{libgnustep-java} library.
+
+The \texttt{libgnustep-java} library is an Objective-C library
+providing a set of functions and classes which allow to start and
+manage the interface between Java and Objective-C.
+
+For technical reasons, a little auxiliary C library,
+\texttt{libgnustep-java-loader}, is also used when \texttt{libgnustep-java} 
+is loaded from Java.  This tiny C library is always compiled with
+debugging disabled, and is used by JIGS, when started from Java, to
+decide whether to load the debugging or the non-debugging version of 
+\texttt{libgnustep-java}.  You can safely ignore this when using JIGS 
+from Objective-C.
+
+\texttt{libgnustep-java} makes use of the Java Native Interface (JNI) 
+to interact with the Java Virtual Machine from native code.
+
+\texttt{libgnustep-java} provides the following functionalities:
+\begin{enumerate}
+\item A little set of utility functions to support JNI programming
+from GNUstep (functions prefixed with \texttt{GSJNI});
+\item A little set of utility functions (ObjcRuntimeUtilities) to add
+programmatically classes and methods to the Objective-C runtime (you
+should never need to use these functions directly if you are using the
+higher layers);
+\item An integrated Java-to-Objective-C interfacing engine built on
+top of the previous layers.  This is the core of JIGS.  The engine:
+\begin{enumerate}
+\item provides the root proxy classes;
+\item can automatically create Objective-C proxy classes for Java
+classes at run-time, by inspecting the Java classes using the Java
+Reflection API, and creating on the fly an Objective-C class whose
+objects are proxies for corresponding Java real objects, and forward
+all requests to the real objects;
+\item provides functions which can be assembled to create Java proxy
+classes for Objective-C classes; these classes can not be created at
+run-time -- because Java does not allow this -- so the wrapping has to
+be done manually (or with an automated tool such as WrapCreator, see
+below) at compile-time by putting together calls to these functions;
+\item provides an engine mapping Objective-C selectors to Java
+selectors and viceversa;
+\item provides facilities to convert Java exceptions from GNUstep
+exceptions and vice versa;
+\item provides morphing of the basic GNUstep library structs
+(\texttt{NSRange}, \texttt{NSPoint}, \texttt{NSSize}, \texttt{NSRect})
+into java classes;
+\item provides high-level functions to access all the mappings and
+conversions managed by the engine;
+\item provides the Objective-C class \texttt{NSJavaVirtualMachine},
+which provides a high-level API (integrated with the rest of JIGS) to
+start a java virtual machine inside a GNUstep program.
+\end{enumerate}
+\end{enumerate}
+
+To access Java from a pure Objective-C program, you need to link
+against the \texttt{libgnustep-java} library, and any library needed
+on your machine to start a java virtual machine from native
+environment using JNI.
+
+Then, you can use the functions and classes provided by
+\texttt{libgnustep-java} to start a Java Virtual Machine in your
+Objective-C program, and to easily create and access java objects.
+
+\section{NSJavaVirtualMachine}
+
+This is the class which allows you to start a Java virtual machine 
+
+\par
+{\bf TODO}: Finish this chapter.

@@ -1,0 +1,629 @@
+\chapter{Wrapping Objective-C Libraries}
+
+In this chapter we are going to learn how to use JIGS to expose an
+existing Objective-C library to Java.  Technically, we call this
+procedure {\sl wrapping} the library.  
+
+\section{Compiling the Wrappers of an Already Configured Library}
+We start by reviewing the simplest case: you download the source code
+of a library which is already configured to generate java wrappers
+when it is compiled.  You can try the discussion out by using any
+example in the \texttt{Tools/WrapCreator/Examples/} directory.
+
+\subsection{Creating and Compiling the Wrappers}
+
+In this case, when you type \texttt{make}, the Objective-C will be
+compiled as usual; after it is compiled, JIGS will automatically
+create a directory called \texttt{JavaWrapper} (or
+\texttt{JavaWrapper\_debug} if you are compiling with debug enabled),
+and generate inside this directory source code for the wrappers.  To
+compile the wrappers, you just need to enter the \texttt{JavaWrapper}
+directory, and type \texttt{make} there.
+
+It is quite important to understand that at this point you have two
+different entities: the original Objective-C library, and the Java
+wrappers for this library.  The two things can be compiled and
+installed separately.  To access your library from Objective-C you
+only need to have compiled and installed your original library, while
+to access it from Java you need to have compiled and installed both
+the original library and the wrappers.
+
+\subsection{Structure of the Wrappers}\label{wrapper-structure}
+
+It's not strictly necessary for you to know the structure of the
+wrappers to create or use them, so you may safely skip this section.
+
+In the following discussion, we consider wrappers for an imaginary
+library called \texttt{libexample.so}.
+
+The wrappers for the library are composed of two parts: a set of Java
+classes, and a native Objective-C library, called
+\texttt{libexample.A.so} in the example.  This is called after the 
+original library (\texttt{libexample.so}) with a \texttt{.A} appended
+to the name.
+
+If you go into the \texttt{JavaWrapper} directory, you can inspect
+these parts yourself.  There are two main subdirectories in the
+\texttt{JavaWrapper} directory, the \texttt{Java} and the
+\texttt{Objc} subdirectories.
+
+\subsubsection{The Java Subdirectory}
+
+The \texttt{Java} subdirectory contains the Java classes.  All methods
+which are not explicitly marked as \texttt{public} in these classes
+are to be considered internal to the JIGS engine and you should not
+access them directly (you probably will not be allowed to anyway).
+
+All these classes contain a static initializer of the following form:
+\begin{verbatim}
+ static
+  {
+    JIGS.loadLibrary ("example.A");
+  }
+\end{verbatim}
+This will load the native library \texttt{libexample.A.so} as soon as
+the first Java class is accessed (\texttt{libexample.A.so} will
+implicitly load \texttt{libexample.so}).
+
+Then, most methods are \texttt{native}, as in the following example: 
+\begin{verbatim}
+  public native void start ();
+\end{verbatim}
+
+The implementation of the Java methods marked as \texttt{native} will
+be found by the JVM inside the native library \texttt{libexample.A.so}.
+
+\subsubsection{The Objc Subdirectory}
+
+The \texttt{Objc} subdirectory contains the Objective-C library 
+\texttt{libexample.A.so}, which provides to Java the implementation 
+of all the \texttt{native} methods in the Java classes.  The
+implementation of these methods will call the corresponding methods in
+the (pure Objective-C) \texttt{libexample.so} library, by using the
+JIGS core engine to catch exceptions, convert arguments and return
+types, etc.
+
+\section{Turning on Generation of Java Wrappers}
+We assume that your library is an objective-C library which is managed
+using the GNUstep make package.
+
+To turn on the generation of the java wrappers for your objective-C
+library, all you need to do is to add the line
+\begin{verbatim}
+include $(GNUSTEP_MAKEFILES)/java-wrapper.make
+\end{verbatim}
+after including \texttt{library.make}, that is, after the line
+\begin{verbatim}
+include $(GNUSTEP_MAKEFILES)/library.make
+\end{verbatim}
+
+When you now compile your library (by typing \texttt{make}), JIGS will
+try to generate the java wrappers.  In this way, you can simply turn
+off and on generation of the java wrappers by commenting and
+uncommenting the inclusion of \texttt{java-wrapper.make}.  To
+correctly generate the java wrappers, you will actually need to
+instruct JIGS about what classes and methods you want exposed, and
+how.  This will be discussed in detail in the following sections.
+
+\section{Specifying the Main Library Header}
+JIGS automatically parses your library headers to determine the exact
+method declarations of the methods you want to expose.  
+
+You need to specify a single header file for your library which
+includes all the header files for your library.  JIGS tries to
+determine it in the following way: it takes the name of your library 
+(the one you set by setting the \texttt{LIBRARY\_NAME}), removes 
+the trailing \texttt{lib}, then looks for a header file with that name 
+in the directory \texttt{HEADER\_FILES\_DIR}. 
+
+For example, if the GNUmakefile for your library is the following:
+
+\begin{verbatim}
+include $(GNUSTEP_MAKEFILES)/common.make
+
+LIBRARY_NAME = libGame
+
+libGame_OBJC_FILES = Alien.m Fuel.m SpaceShip.m Sprite.m
+
+libGame_HEADER_FILES_DIR = Headers
+libGame_HEADER_FILES_INSTALL_DIR = /Game
+libGame_HEADER_FILES = Alien.h Game.h Fuel.h SpaceShip.h Sprite.h
+
+include $(GNUSTEP_MAKEFILES)/library.make
+
+# Comment the following line to disable java wrappers
+include $(GNUSTEP_MAKEFILES)/java-wrapper.make
+\end{verbatim}
+%$ [fool emac's buggy TeX mode]
+
+Then your library name is \texttt{libGame}, which is shortened to
+\texttt{Game}.  The header file dir is \texttt{Headers}, so that 
+by default JIGS will (try to) parse the file \texttt{Headers/Game.h}
+as the library header file.  This header file should include all the
+header files which might be need to compile code against your library.
+
+If the header which JIGS needs to parse is not correctly determined in
+this way, you can override it by adding a \texttt{GNUmakefile.wrapper}
+to your project, and defining \texttt{WRAPPER\_HEADER} manually there.
+For example, if the header you want to be parsed is called
+\texttt{game.h} rather than \texttt{Game.h}, you can add the following 
+\texttt{GNUmakefile.wrapper} to fix this: 
+\begin{verbatim}
+WRAPPER_HEADER = Headers/game.h
+\end{verbatim}
+The \texttt{GNUmakefile.wrapper} is automatically included (if present) 
+by JIGS at the correct stage.
+
+The other variables you may want to set in the
+\texttt{GNUmakefile.wrapper} are \texttt{JIGS\_FILE} and
+\texttt{WRAPPER\_DIR}.  We will talk about these in the next section.
+
+\section{The Wrapper Directory}
+JIGS generates full code for the java wrappers into a specific
+directory, which we call the wrapper directory.  By default, this
+directory is called \texttt{JavaWrapper} (or
+\texttt{JavaWrapper\_debug} if you are compiling with debugging
+enabled), but you can change the name of the directory by simply
+setting the \texttt{WRAPPER\_DIR} variable in your
+\texttt{GNUmakefile.wrapper}.  This is not very common.
+
+To determine if the wrappers are to be rebuilt or not, JIGS keeps a
+stamp file in the wrapper directory.
+
+Everything which is inside the wrapper directory is automatically
+generated -- this means that
+\begin{enumerate}
+\item you can always remove the wrapper directory without loosing anything, 
+since you can always regenerate the wrappers;
+\item you should not edit or modify directly the contents of the wrapper 
+directory, because when the wrappers are recreated, the content of the 
+directory is destroyed.
+\end{enumerate}
+
+\section{The .jigs File}
+
+\subsection{Determining which .jigs file to read}
+After running the preprocessor on the header file, JIGS will read a
+configuration file to know which wrappers to generate, and how.  By
+default, the file is called \texttt{\$(LIBRARY\_NAME).jigs}.  In the
+case described before, this file would be called
+\texttt{libGame.jigs}.  You can override this choice by setting the
+\texttt{JIGS\_FILE} variable in your \texttt{GNUmakefile.wrapper}, 
+but you shouldn't usually need to.
+
+\subsection{Overview of the .jigs file}
+The \texttt{.jigs} file is the main file from which you can control
+the way the wrapping is done.  In this file, you need to list all the
+classes of your library which you want to expose, and for each class,
+which methods.  The \texttt{.jigs} file is in a format called 
+\emph{property list} -- please refer to the GNUstep Base Library tutorials 
+and documentation if you need more help on property lists.  The
+\texttt{.jigs} file is a big dictionary.  Each entry in the dictionary 
+is to be thought of as of a different section; the key to the section
+is the section name, the value is an array or a dictionary containing
+the information referring to that section.  For example, we have the
+\texttt{classes} section (containing an array of classes to be wrapped), the
+\texttt{types} section (containing a dictionary of mapping of custom C 
+types to already known C types), the \texttt{enumerations} section
+(containing an array listing enumeration types), the \texttt{method
+name mapping} section (containing a dictionary of mappings from
+objective-C method names to Java method names, to be used for the
+whole library).  Here is an example:
+\begin{verbatim}
+{
+  classes = (
+    {
+      "java name" = "gnu.gnustep.GreatGameLibrary.GGLSprite";
+      "objective-c name" = GGLSprite;
+      "instance methods" = (speed, "setSpeed:");
+      initializers = (init);
+     }
+   );
+  
+  "method name mapping" = {
+    speed = getSpeed;
+  };
+}
+\end{verbatim}
+
+In this example, we only have the \texttt{classes} and \texttt{method
+name mapping} sections.  We now examine in detail each section of the
+\texttt{.jigs} file.
+
+\subsection{The Classes Section}
+Probably the most important section in the file is the
+\texttt{classes} section, where you list all the classes you want to
+be wrapped, and how.  This section is an array, each entry in the
+array being a different class to be wrapped.  Here is an example 
+of this section:
+\begin{verbatim}
+classes = (
+  {
+    "java name" = "gnu.gnustep.GreatGameLibrary.GGLScore";
+    "objective-c name" = "GGLScore";
+
+    "initializers" = ("init"); 
+    "instance methods" = ("setPoints:", "points");
+    "class methods" = ("bestScore", "bestTenScores");
+  },
+
+  {
+    "java name" = "gnu.gnustep.GreatGameLibrary.GGLPlayer";
+    "objective-c name" = "GGLPlayer";
+
+    "class methods" = ("computerPlayer");
+    "instance methods" = ("name", "score", "addPoints:");
+    "initializers" = ("init", "initWithName:");                 
+  }
+);
+\end{verbatim}
+In this example, we want to generate wrappers for two classes:
+\texttt{GGLScore} and \texttt{GGLPlayer}.  Information about each 
+class is represented by a dictionary.  Any entry in this dictionary
+(except the `\texttt{java name}' entry) can be omitted, in which case
+a default value will be used.  We briefly now review the use of each
+entry.
+
+\subsubsection{java name}
+This is a string -- the name that is to be used in Java for the class
+you want to wrap.  This is the only compulsory entry for each class.
+You need to specify the full Java name of the class, such as
+\begin{verbatim}
+"java name" = "gnu.gnustep.base.NSArray";
+\end{verbatim}
+You can decide to use a different name in Java than the name the class
+has in Objective-C.  It's generally better to avoid this, but it
+should work fine if you ever need to do it.  
+
+\subsubsection{objective-c name}
+This is a string -- the Objective-C name of the class you want to
+wrap, such as 
+\begin{verbatim}
+"objective-c name" = "NSArray";
+\end{verbatim}
+If this entry is not present, it is guessed by taking the last part of
+\texttt{java name}.  For example, if \texttt{java name} is 
+\texttt{gnu.gnustep.base.NSArray}, then JIGS will use \texttt{NSArray} 
+as Objective-C name if you don't specify an Objective-C name.
+
+\subsubsection{initializers}
+This is an array -- the list of \texttt{init} methods you want to
+wrap, such as
+\begin{verbatim}
+"initializers" = ("init", "initWithName:", "initWithArray:", "initWithName:array:");
+\end{verbatim}
+Each method in the \texttt{initializers} list will be exposed as a
+constructor.  The Objective-C name of each initializer is discarded 
+in Java, so you must make sure that these methods have all different 
+signatures.
+
+\subsubsection{class methods}
+This is an array -- the list of class methods you want to wrap, such as 
+\begin{verbatim}
+"class methods" = (
+  "contentRectForFrameRect:styleMask:", 
+  "frameRectForContentRect:styleMask:", 
+  "minFrameWidthWithTitle:styleMask:",
+  "removeFrameUsingName:");
+\end{verbatim}
+Each of these methods is exposed as a static method in Java.  Unless
+you use a method mapping (explained below), the Java name of each of
+these methods will be obtained by removing from the Objective-C name
+everything which comes after the first `\texttt{:}'.  For example, the
+methods in the example would be wrapped as:
+\begin{verbatim}
+public static native NSRect contentRectForFrameRect (NSRect arg0, long arg1);
+public static native NSRect frameRectForContentRect (NSRect arg0, long arg1);
+public static native NSRect minFrameWidthWithTitle (String arg0, long arg1);
+public static native void removeFrameUsingName (String arg0);
+\end{verbatim}
+
+Please make sure you do not include any methods of the \texttt{new}
+family in the \texttt{class methods} list.  \texttt{new} methods can not
+be wrapped because they allocate and return non-autoreleased objects
+-- it should not be a problem anyway, because if you need that
+constructor in Java, you can get it by simply wrapping the
+corresponding \texttt{init} method.
+
+\subsubsection{instance methods}
+This is an array -- the list of instance methods you want to wrap,
+such as 
+\begin{verbatim}
+"instance methods" = (
+  "arguments",
+  "environment",
+  "hostName",
+  "processName",
+  "globallyUniqueString",
+  "setProcessName:");
+\end{verbatim}
+Each of these methods is exposed as an instance method in Java.  The
+Java names for these methods are obtained in the same way as for class
+methods.
+
+Make sure you do not include any method of the \texttt{copy} and 
+\texttt{mutableCopy} family in this list.  Methods of these families 
+can not be wrapped like the other ones because they return
+newly-created non-autoreleased objects.  It is possible that in the
+future JIGS could provide a way to expose these methods; at present,
+you can not expose them -- except the ones exposed by \texttt{NSObject}: 
+\texttt{NSObject} exposes \texttt{copy} (as \texttt{clone}) and 
+\texttt{mutableCopy} (as \texttt{mutableClone}) to Java, so if your 
+Objective-C class implements \texttt{copy} and \texttt{mutableCopy},
+they will automatically be made available to Java by the
+\texttt{NSObject} wrapper without any need to do anything.
+
+\subsubsection{method declarations}
+This is an array -- a list of explicit method declarations which you
+can use to override the declarations found by the wrapper tool in the
+header file if you think the wrapper tool did not use the correct
+declaration -- this usually happens only if in your library the same
+method is declared in different classes or protocols with different
+arguments or return types (this case is infrequent, but it happens
+sometime) -- in this case the wrapper tool is likely not to pick up
+the correct declaration, because it is designed for the standard case,
+when the same signature is used across all classes.  By adding the
+correct declaration for your class in the \texttt{method declaration}
+section, you can make sure that the declaration you want is used.  For
+example, in the gui library the following explicit declaration is used
+when wrapping
+\texttt{NSBox}:
+\begin{verbatim}
+"method declarations" = (
+   "- (void) setContentView: (NSView*)aView");
+\end{verbatim}
+This is because \texttt{NSScrollView} uses a conflicting declaration
+for this method, taking a \texttt{NSClipView *} argument.
+
+Please note that, while in Objective-C these problems are harmless,
+and usually the worst it can happen is that the compiler warns you at
+compile time, after you expose your methods to Java these problems
+become first-rate problems, because in Java casts are dramatic and
+your program can crash if a method expecting a \texttt{NSClipView}
+argument receives a generic \texttt{NSView} instead.
+
+\subsubsection{hardcoded constants}
+This is an array -- a list of declaration of constants which will be
+added as static constants to the Java class, as in the following
+example:
+\begin{verbatim}
+"hardcoded constants" = ("int NotFound = 0x7fffffff");
+\end{verbatim}
+This \texttt{hardcoded constants} section will generate the following
+code in the Java class:
+\begin{verbatim}
+public static int NotFound = 0x7fffffff;
+\end{verbatim}
+This example is taken from the wrapping instructions for
+\texttt{NSArray}; it allows the Java programmer to access this
+constant simply as \texttt{NSArray.NotFound}.  The value of this
+constant is of course the value of the C constant \texttt{NSNotFound}
+which is returned by many GNUstep Base Library methods when something
+is not found.
+
+If your Objective-C library defines some constants, and some methods
+which you expose to Java return or accept these constants, you may
+want to make these constants available to Java as well by using the
+\texttt{hardcoded constants} section.
+
+\subsection{Method Name Mapping}
+This section is a dictionary -- mapping Objective-C method names 
+to Java method names, as in the following example:
+\begin{verbatim}
+"method name mapping" = {
+  "null" = "nullValue";
+  "addTimer:forMode:" = "addTimerForMode";
+};
+\end{verbatim}
+Try to avoid method mappings, because they are confusing!  But
+sometimes you can't do without, as in the case of \texttt{null} which
+can't be exposed with this name to Java because \texttt{null} is a
+reserved keyword in Java.  In this case, you use the method mapping.
+Please note that JIGS needs to keep a global table of method name
+mappings while running in order to map selectors between Java and
+Objective-C; for this reason, you need to use the same mappings in all
+the classes.
+
+\subsection{Prerequisite Libraries}
+Sometimes, the wrappers for your library need the wrappers of some
+other GNUstep Objective-C library to work correctly.  For example, you
+can't use the wrappers for the GNUstep Gui Library without the
+wrappers for the GNUstep Base Library.  If this is the case for your
+library, you need to add a \texttt{prerequisite libraries} section,
+containing a list of GNUstep libraries whose wrappers you want to be
+loaded at run-time when the wrappers for your library are initialized.
+For example, in \texttt{libgnustep-gui.jigs} there is
+\begin{verbatim}
+"prerequisite libraries" = ("gnustep-base");
+\end{verbatim}
+You will probably usually need at least this line.  Please note that
+the library is specified using the simplest possible name; JIGS at
+run-time will add the correct prefixes (\texttt{lib}) and suffixes
+(things like \texttt{\_d} for debug version -- if needed -- and
+\texttt{.A} for the wrappers) to load in the library.
+
+\subsection{Types}
+The wrapper tool can parse and manage a certain set of C types.  For
+example, upon finding \texttt{BOOL} in the Objective-C headers, the
+wrapper tool knows how to manage it.
+
+In the \texttt{types} section you can specify a list of C types
+specific to your library, and for each of them, a corresponding
+(known) C type.  The wrapper tool will know it has to convert to/from
+Java the first C type in the same way as it does with the second.  For
+example, in the \texttt{libgnustep-base.jigs} file, there is the
+following line:
+\begin{verbatim}
+types = { NSTimeInterval = double; };
+\end{verbatim}
+This simply tells to the wrapper tool that whenever it finds an argument 
+of type \texttt{NSTimeInterval} in an Objective-C method declaration, it 
+has to treat it in the same way as if it were a \texttt{double}.
+
+\subsection{Enumerations}
+The \texttt{enumerations} section is simply a short-hand to make
+wrapping enumerations simpler.  This section contains an array, in
+which you can list all the new enumeration types in your Objective-C
+library that you want to be exposed:
+\begin{verbatim}
+enumerations = (NSTitlePosition);
+\end{verbatim}
+The enumeration types are exposed in the same way as \texttt{int}s
+are.  In other words, this is completely equivalent to putting
+\texttt{NSTitlePosition} in the \texttt{types} section mapping it to
+the \texttt{int} type:
+\begin{verbatim}
+types = { NSTitlePosition = int; };
+\end{verbatim}
+Using the \texttt{enumerations} section rather than mixing
+enumerations with the other types makes simply the wrapping file
+clearer to read, and lets you type less.
+
+Usually, after declaring an enumeration in the \texttt{enumerations} 
+section, you need to add the various values as hardcoded constants 
+in one of your Java classes.  For example, in the GNUstep Gui 
+Library, after having declared \texttt{NSTitlePosition} as an 
+enumeration, the following entry is added to the \texttt{NSBox} 
+class entry:
+\begin{verbatim}
+"hardcoded constants" = (
+   "int NoTitle = 0",
+   "int AboveTop = 1",
+   "int AtTop = 2",
+   "int BelowTop = 3",
+   "int AboveBottom = 4",
+   "int AtBottom = 5",
+   "int BelowBottom = 6");
+\end{verbatim}
+This will generate the following code in the Java \texttt{NSBox} class:
+\begin{verbatim}
+/* Constants */
+
+public static int NoTitle = 0;
+public static int AboveTop = 1;
+public static int AtTop = 2;
+public static int BelowTop = 3;
+public static int AboveBottom = 4;
+public static int AtBottom = 5;
+public static int BelowBottom = 6;
+\end{verbatim}
+This makes sure the various values for \texttt{NSTitlePosition}
+arguments are available from Java quite simply as \texttt{NSBox.NoTitle} 
+etc.
+
+\section{Useful Make Options when Creating Wrappers}
+
+At this point, typing \texttt{make} should be enough to generate
+wrappers for your library.  
+
+\subsection{Silencing the Wrapper Generator}
+
+By default, wrapper generation is quite verbose -- it tells you
+exactly what it is doing -- for example, it lists all the classes and
+methods which are being wrapped.  If you find this annoying, you can
+turn it off by compiling with the \texttt{verbose=no} option, as in:
+\begin{verbatim}
+make verbose=no
+\end{verbatim}
+
+\subsection{Enabling Debugging}
+
+If you are compiling your library with debugging enabled  -- ie, typing
+\begin{verbatim}
+make debug=yes
+\end{verbatim}
+the wrapper library will also be generated with debugging enabled.
+This means that the GNUmakefiles for the wrapping library will
+always automatically use \texttt{debug=yes} when the wrapping library
+is compiled.  The wrapping code itself will be generated in the
+\texttt{JavaWrapper\_debug} directory rather than in the \texttt{JavaWrapper}, 
+to allow you to keep the two versions.
+
+\subsection{Debugging or Non-Debugging}
+
+When Objective-C GNUstep libraries are loaded from Java using JIGS,
+all the libraries must be of the same type -- or debugging libraries
+or non-debugging libraries.  
+
+In general, the simplest way you can manage this issue is by
+consistently using only libraries of one of the two kind on your
+system; ie, compile everything (from the GNUstep Base Library up) with
+`\texttt{make}', or compile everything with `\texttt{make debug=yes}'.
+
+If you don't, then you need to read carefully the following part.
+
+\subsubsection{The Fine Prints About Debugging}
+
+JIGS will decide whether to use debugging or non-debugging libraries
+at run-time, when it is first initialized from Java.  Debugging
+libraries are easy to tell because the name ends with \texttt{\_d}.
+For example, the core JIGS library is
+\texttt{libgnustep-java}; if you compile it without debugging, it will 
+be in the file 
+\begin{verbatim}
+libgnustep-java.so
+\end{verbatim}
+but if you compile it with debugging, it will be in the file 
+\begin{verbatim}
+libgnustep-java_d.so
+\end{verbatim}
+Because the name is different, you can have both versions on your
+system.  JIGS will choose to load debugging or non-debugging libraries
+in the following way:
+\begin{enumerate}
+\item If you have only one version of JIGS installed (ie, only the debugging 
+or the non-debugging, but not both), there is no choice -- JIGS will
+load libraries of the same kind as itself.  This means if you have a
+debugging version of JIGS installed, you will need to have a version
+of all libraries you need with debugging enabled.  If you only have a
+non-debugging version of JIGS installed, you will need to have a
+version of all libraries you need without debugging.
+\item If you have both version of JIGS (the debugging and the non-debugging), 
+JIGS will decide at run-time which version of itself to use (and
+consequently, which version of all other libraries to use).  By
+default, it will load the non-debugging version.  This is the default
+because the idea is that using a debugger to debug libraries when
+accessed from Java in this way is so difficult that most people will
+not want to do it (I actually don't know how to do it myself).  But
+you can override the default by setting the \texttt{JIGS\_DEBUG}
+environment variable.  Setting it to \texttt{YES} or \texttt{yes} will
+give priority to the debugging libraries.
+\end{enumerate}
+Once JIGS has chosen an option, it will follow it consistently.  For
+example, if it decided to load debugging libraries, it will ignore all
+non-debugging libraries.
+
+\section{Including Special Code in the Wrapper GNUmakefiles}
+
+This section describes a feature which is usually not needed, so you
+may skip it at a first reading.  As a prerequisite, you probably need
+to have read the section \ref{wrapper-structure} to make any use of
+this section.
+
+It is possible that you may need/want to insert special code in the
+GNUmakefile.preamble and GNUmakefile.postamble for the wrappers.  For
+example, some special flags required to compile an Objective-C library
+(the Objective-C wrapper library for your library) against your
+Objective-C library.
+
+JIGS itself by default does not generate GNUmakefile.preamble and
+GNUmakefile.postamble at all; but it will look in the library
+directory for the files 
+\begin{verbatim}
+GNUmakefile.wrapper.objc.preamble
+GNUmakefile.wrapper.objc.postamble
+GNUmakefile.wrapper.java.preamble
+GNUmakefile.wrapper.java.postamble
+\end{verbatim}
+and, if any of them is present, copy them into the \texttt{JavaWrapper} 
+directory, in the following way:
+\begin{verbatim}
+GNUmakefile.wrapper.objc.preamble --> JavaWrapper/Objc/GNUmakefile.preamble
+GNUmakefile.wrapper.objc.postamble --> JavaWrapper/Objc/GNUmakefile.postamble
+GNUmakefile.wrapper.java.preamble --> JavaWrapper/Java/GNUmakefile.preamble
+GNUmakefile.wrapper.java.postamble --> JavaWrapper/Java/GNUmakefile.postamble
+\end{verbatim}
+
+In this way, by adding one of these files to your library's directory,
+you can have it copied into the generated wrappers in the appropriate
+place.
