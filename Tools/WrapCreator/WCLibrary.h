@@ -25,6 +25,7 @@
 #define __WCLibrary_h_GNUSTEP_WrapCreator_INCLUDE
 
 #include <Foundation/Foundation.h>
+#include "Compatibility.h"
 
 @class WCHeaderParser;
 
