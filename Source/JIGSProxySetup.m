@@ -105,8 +105,10 @@ convertSignature (char signature)
       return _C_ID;
     case 'v': 
       return _C_VOID;
+    case ':':
+      return _C_SEL;
     default:
-      return '?';
+      return signature;
     }
 }
 
