@@ -125,9 +125,11 @@ jobject JIGSCreateNewJavaProxy (JNIEnv *env, id proxiedObject);
  * class.  We then send our class message to that class.  (For the programmer, 
  * all this simply amounts at calling JIGSClassFromThisClass).
  *
+ * Registering a java proxy class is now also automatically used when
+ * 'resolving' a java method signature.  See JIGSSelectorMapping.
+ *
  * In your library wrapper, you should call in JNI_OnLoad this
- * function for each class you have wrapped.
- */
+ * function for each class you have wrapped.  */
 
 void JIGSRegisterJavaProxyClass (JNIEnv *env, NSString *fullJavaClassName, 
 				 NSString *objcClassName);
@@ -212,6 +214,12 @@ inline void _JIGSMapperRemoveObjcProxy (JNIEnv *env, jobject java);
  */
 Class _JIGSAllocClassForThis (JNIEnv *env, jobject this);
 
+/*
+ * The following is used by JIGSSelectorMapping to resolve java short
+ * class names into long ones.  
+ */
+NSString *_JIGSLongJavaClassNameForObjcClassName (JNIEnv *env, 
+						  NSString *className);
 #endif /* __JIGSMapper_h_GNUSTEP_JAVA_INCLUDE */
 
 
