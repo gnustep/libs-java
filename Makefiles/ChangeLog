@@ -1,3 +1,8 @@
+Thu Jun  7 17:32:30 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* jigs.make (ADDITIONAL_OBJC_LIBS): Link -lgnustep-java before
+	the jre libraries.
+
 Mon Jun  4 17:44:52 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* GNUmakefile (distclean): Remove *~.
