@@ -24,10 +24,10 @@
 #ifndef __JIGS_h_GNUSTEP_JAVA_INCLUDE
 #define __JIGS_h_GNUSTEP_JAVA_INCLUDE
 
-#define GNUSTEP_JAVA_VERSION 0.6.3
+#define GNUSTEP_JAVA_VERSION 0.7.0
 #define GNUSTEP_JAVA_MAJOR_VERSION 0
-#define GNUSTEP_JAVA_MINOR_VERSION 6
-#define GNUSTEP_JAVA_SUBMINOR_VERSION 3
+#define GNUSTEP_JAVA_MINOR_VERSION 7
+#define GNUSTEP_JAVA_SUBMINOR_VERSION 0
 
 #include <jni.h>
 #include <Foundation/Foundation.h>
@@ -38,6 +38,7 @@
 #include "JIGSNative.h"
 #include "JIGSMapper.h"
 #include "JIGSProxy.h"
+#include "JIGSSelectorMapping.h"
 #include "NSJavaVirtualMachine.h"
 
 #endif /*__JIGS_h_GNUSTEP_JAVA_INCLUDE*/
