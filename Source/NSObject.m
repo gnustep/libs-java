@@ -163,6 +163,46 @@ Java_gnu_gnustep_base_NSObject_toString (JNIEnv *env, jobject this)
 }
 
 JNIEXPORT void JNICALL 
+Java_gnu_gnustep_base_NSObject_takeValueForKey
+(JNIEnv *env, jobject this, jobject value, jstring key)
+{
+  id thisObject;
+  id objc_value;
+  NSString *objc_key;
+
+  JIGS_ENTER;
+  
+  thisObject = JIGSIdFromThis (env, this);
+  objc_value = JIGSIdFromJobject (env, value);
+  objc_key = GSJNI_NSStringFromJString (env, key);
+
+  [thisObject takeValue: objc_value  forKey: objc_key];
+    
+  JIGS_EXIT;  
+}
+
+JNIEXPORT jobject JNICALL 
+Java_gnu_gnustep_base_NSObject_valueForKey
+(JNIEnv *env, jobject this, jstring key)
+{
+  id thisObject;  
+  NSString *objc_key;
+  id objc_value;
+  jobject result;
+
+  JIGS_ENTER;
+  
+  thisObject = JIGSIdFromThis (env, this);
+  objc_key = GSJNI_NSStringFromJString (env, key);
+  
+  objc_value = [thisObject valueForKey: objc_key];
+    
+  result = JIGSJobjectFromId (env, objc_value);
+  
+  JIGS_EXIT_WITH_VALUE (result);
+}
+
+JNIEXPORT void JNICALL 
 Java_gnu_gnustep_base_NSObject_retainObject 
 (JNIEnv *env, jclass this, jobject object)
 {
