@@ -105,9 +105,9 @@ WRAP_CREATOR = opentool WrapCreator
 LIBRARY_FILE = $(LIBRARY_NAME)$(LIBRARY_NAME_SUFFIX)$(SHARED_LIBEXT)
 VERSION_LIBRARY_FILE = $(LIBRARY_FILE).$(VERSION)
 
-java-wrapper:: $(WRAPPER_DIR)/GNUmakefile
+java-wrapper:: $(WRAPPER_DIR)/stamp-file
 
-$(WRAPPER_DIR)/GNUmakefile:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FILE)
+$(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FILE)
 	@echo Creating the Wrapper Directories and GNUmakefiles...
 	@$(MKDIRS) $(WRAPPER_DIR)
 	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/java-wrapper.top.template          \
@@ -167,6 +167,8 @@ $(WRAPPER_DIR)/GNUmakefile:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_F
 	                --library-header $(WRAPPER_HEADER)
 	@echo Removing the temporary preprocessor header...
 	@rm $(WRAPPER_DIR)/preprocessedHeader
+	@echo Creating the stamp file...
+	@touch $(WRAPPER_DIR)/stamp-file
 
 #
 # Cleaning targets
