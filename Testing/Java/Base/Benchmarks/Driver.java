@@ -23,104 +23,34 @@
 
 class Driver
 {
-  static int warmUpIterations = 5000;
-  static int iterations = 1000000;
+  static int warmUpIterations = 2000;
+  static int iterations = 100000;
   static double baseline;
 
   public static void main (String[] args) 
     throws Throwable
   {
-    System.out.println ("== Initializing ==");
-    System.out.println ("Running loops of " + iterations + " iterations.");
-    System.out.println ("Trying how much it takes to run an empty loop ... ");
+    if (args.length < 1)
+      {
+	System.out.println ("Usage: Driver <BenchmarkName>");
+	System.exit (1);
+      }
+    
+
+    /* First determine how long it takes an empty loop.  */
+
     /* Run it five times to make sure we warm up.   */
     baseline = runLoop (new EmptyBenchmark ());
     baseline = runLoop (new EmptyBenchmark ());
     baseline = runLoop (new EmptyBenchmark ());
     baseline = runLoop (new EmptyBenchmark ());
     baseline = runLoop (new EmptyBenchmark ());
-    System.out.println ("It takes " + baseline + " milliseconds.");
-    System.out.println ("We will silently remove this time from all benchmarks.");
+    /* It takes baseline milliseconds.  */
 
-    System.out.println ("\n== Note on the benchmarks ==");
-    System.out.println ("The number displayed after each benchmark is the number of milliseconds");
-    System.out.println ("required to perform that operation " + iterations 
-			+ " times.");
-    System.out.println ("The time taken to perform the loop has already been taken account for.");
-    System.out.println ("A star (*) after a number means we really run only "
-			+ (int)(iterations/10));
-    System.out.println ("iterations and multiplied the resulting time by 10.");
-    System.out.println ("Results with a star (*) are much less precise.");
-    System.out.println ("\n== Running benchmarks ==");
+    /* We will silently remove this time from all benchmarks.  */
 
-    /* 
-     * Basic Java benchmarks to get the feeling.  
-     */
-    System.out.println ("<* Basic Java benchmarks *>");
-
-    /* Integers, arrays.  */
-    runLoopAndPrintResult (new ArrayBenchmark ());
-
-    /* Strings.  */
-    runLoopAndPrintResult (new StringConcatenationBenchmark ());
-    runLoopAndPrintResult (new StringComparisonBenchmark ());
-
-    /*
-     * Methods, Java vs ObjC.
-     */
-    System.out.println ("<* Direct method invocations *>");
-
-    /* Method invocations.  */
-    runLoopAndPrintResult (new JavaMethodBenchmark ());
-    runLoopAndPrintResult (new ObjCMethodBenchmark ());
-
-    /* Constructors.  */
-    runLoopAndPrintResult (new JavaNewObjectBenchmark ());
-    runShortLoopAndPrintResult (new ObjCNewObjectBenchmark ());
-
-    /* Descriptions.  */
-    runShortLoopAndPrintResult (new JavaToStringBenchmark ());
-    runShortLoopAndPrintResult (new ObjCToStringBenchmark ());
-
-    /*
-     *  NSMutableArray vs Vector.  
-     */
-    System.out.println ("<* NSMutableArray *>");
-    runShortLoopAndPrintResult (new NSArray0Benchmark ());
-    runShortLoopAndPrintResult (new NSArray1Benchmark ());
-    runShortLoopAndPrintResult (new NSArray2Benchmark ());
-    runShortLoopAndPrintResult (new NSArray3Benchmark ());
-    runShortLoopAndPrintResult (new NSArray4Benchmark ());
-    runShortLoopAndPrintResult (new NSArray5Benchmark ());
-    runLoopAndPrintResult (new NSArray6Benchmark ());
-    runShortLoopAndPrintResult (new NSArray7Benchmark ());
-
-    System.out.println ("<* Vector *>");
-    runLoopAndPrintResult (new Vector0Benchmark ());
-    runLoopAndPrintResult (new Vector1Benchmark ());
-    runLoopAndPrintResult (new Vector2Benchmark ());
-    runLoopAndPrintResult (new Vector3Benchmark ());
-    runLoopAndPrintResult (new Vector4Benchmark ());
-    runLoopAndPrintResult (new Vector5Benchmark ());
-    runLoopAndPrintResult (new Vector6Benchmark ());
-    runLoopAndPrintResult (new Vector7Benchmark ());
-
-  }
-
-  static void runShortLoopAndPrintResult (Benchmark b)
-  {
-    /* Try to remove garbage.  */
-    System.gc ();
-
-    /* Warm up.  */
-    runWarmUpLoop (b);
-
-    /* Now run the real loop.  */
-    double time = (runShortLoop (b) * 10) - baseline;
-    System.out.println (" " + b.name () + ": " + (int)time + "(*)");
-
-    /* Try to remove garbage.  */
-    System.gc ();
+    Class benchmark = Class.forName (args[0]);
+    runLoopAndPrintResult ((Benchmark)(benchmark.newInstance ()));
   }
 
   static void runLoopAndPrintResult (Benchmark b)
@@ -133,6 +63,10 @@ class Driver
 
     /* Now run the real loop.  */
     double time = runLoop (b) - baseline;
+    if (time < 0)
+      {
+	time = 0;
+      }
     System.out.println (" " + b.name () + ": " + (int)time);
 
     /* Try to remove garbage.  */
@@ -145,6 +79,10 @@ class Driver
     int i;
     Object unused;
 
+    System.gc ();
+    System.gc ();
+    System.gc ();
+
     start = System.currentTimeMillis ();
 
     for (i = 0; i < warmUpIterations; i++)
@@ -152,26 +90,10 @@ class Driver
 	unused = b.executeBasicOperation ();
       }
     
-    stop = System.currentTimeMillis ();
+    System.gc ();
+    System.gc ();
+    System.gc ();
 
-    return (stop - start);
-  }
-
-  static double runShortLoop (Benchmark b)
-  {
-    double start, stop;
-    int i;
-    Object unused;
-
-    int j = (int)(iterations / 10);
-
-    start = System.currentTimeMillis ();
-
-    for (i = 0; i < j; i++)
-      {
-	unused = b.executeBasicOperation ();
-      }
-    
     stop = System.currentTimeMillis ();
 
     return (stop - start);
@@ -183,12 +105,22 @@ class Driver
     int i;
     Object unused;
 
+    System.gc ();
+    System.gc ();
+    System.gc ();
+
     start = System.currentTimeMillis ();
 
     for (i = 0; i < iterations; i++)
       {
 	unused = b.executeBasicOperation ();
       }
+
+    /* Garbaging collecting the objects created is part of the test
+       and must be measured.  */
+    System.gc ();
+    System.gc ();
+    System.gc ();
     
     stop = System.currentTimeMillis ();
 
