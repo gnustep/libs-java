@@ -207,12 +207,12 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE)
 	 fi;
 	@echo Creating the Wrapper Directories and GNUmakefiles...
 	@$(MKDIRS) $(WRAPPER_DIR)
-	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/$(JAVA_WRAPPER_TOP_TEMPLATE) \
+	@cp $(GNUSTEP_MAKEFILES)/$(JAVA_WRAPPER_TOP_TEMPLATE) \
 	                 $(WRAPPER_DIR)/GNUmakefile
-	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/java-wrapper.readme.template \
+	@cp $(GNUSTEP_MAKEFILES)/java-wrapper.readme.template \
 	                 $(WRAPPER_DIR)/README
 	@$(MKDIRS) $(JAVA_WRAPPER_DIR)
-	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/java-wrapper.java.template \
+	@cp $(GNUSTEP_MAKEFILES)/java-wrapper.java.template \
 	                 $(JAVA_WRAPPER_DIR)/GNUmakefile
 	@mv $(JAVA_WRAPPER_DIR)/GNUmakefile $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
 	@sed -e 's/DEBUGHERE/$(debug)/g'           \
@@ -235,7 +235,7 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE)
 	        > $(JAVA_WRAPPER_DIR)/GNUmakefile
 	@rm $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
 	@$(MKDIRS) $(OBJC_WRAPPER_DIR)
-	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/java-wrapper.objc.template \
+	@cp $(GNUSTEP_MAKEFILES)/java-wrapper.objc.template \
 	      $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp 
 	@sed -e 's/DEBUGHERE/$(debug)/g'           \
 	       $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp        \
@@ -263,19 +263,19 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE)
 	@rm $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2
 	@echo Copying Custom GNUmakefiles...
 	@if [ -f GNUmakefile.wrapper.java.preamble ]; then           \
-	  $(INSTALL_DATA) GNUmakefile.wrapper.java.preamble         \
+	  cp GNUmakefile.wrapper.java.preamble         \
 	                  $(JAVA_WRAPPER_DIR)/GNUmakefile.preamble; \
         fi;
 	@if [ -f GNUmakefile.wrapper.java.postamble ]; then           \
-	  $(INSTALL_DATA) GNUmakefile.wrapper.java.postamble         \
+	  cp GNUmakefile.wrapper.java.postamble         \
 	                  $(JAVA_WRAPPER_DIR)/GNUmakefile.postamble; \
         fi;
 	@if [ -f GNUmakefile.wrapper.objc.preamble ]; then           \
-	  $(INSTALL_DATA) GNUmakefile.wrapper.objc.preamble         \
+	  cp GNUmakefile.wrapper.objc.preamble         \
 	                  $(OBJC_WRAPPER_DIR)/GNUmakefile.preamble; \
         fi;
 	@if [ -f GNUmakefile.wrapper.objc.postamble ]; then           \
-	  $(INSTALL_DATA) GNUmakefile.wrapper.objc.postamble         \
+	  cp GNUmakefile.wrapper.objc.postamble         \
 	                  $(OBJC_WRAPPER_DIR)/GNUmakefile.postamble; \
         fi;
 	@echo Running the preprocessor on the header file...
