@@ -1,3 +1,9 @@
+Thu Jan 25 12:01:28 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* GNUmakefile: Added PACKAGE_NAME and VERSION.
+	* gnustep-base-wrapper.spec.in: New file.
+	* gnustep-base-wrapper-debug.spec.in: New file.
+
 Thu Nov 30 11:26:14 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* libgnustep-base.jigs (RunLoopEventType): Fixed typo reported by
