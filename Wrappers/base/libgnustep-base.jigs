@@ -20,13 +20,13 @@
                                         "objectAtIndex:", 
 					"objectEnumerator", 
 					"reverseObjectEnumerator", 
-					//"makeObjectsPerformSelector:"
+					"makeObjectsPerformSelector:",
 					//"makeObjectsPerformSelector:withObject:"
 					"firstObjectCommonWithArray:",
                                         "isEqualToArray:",
                                         "arrayByAddingObject:",
                                         "arrayByAddingObjectsFromArray:",
-                                        //"sortedArrayUsingSelector:"
+                                        "sortedArrayUsingSelector:",
                                         "subarrayWithRange:",
                                         "componentsJoinedByString:",
                                         "pathsMatchingExtensions:",
@@ -121,7 +121,7 @@
 					"allKeysForObject:",
 					"allValues",
 					"keyEnumerator",
-					//"keysSortedByValueUsingSelector:",
+					"keysSortedByValueUsingSelector:",
 					"objectEnumerator",
 					"objectForKey:",
 					"objectsForKeys:notFoundMarker:",
@@ -164,8 +164,8 @@
                      "removeObjectIdenticalTo:",
                      //"removeObjectIdenticalTo:inRange:",
                      "removeObjectsInArray:",
-                     "removeObjectsInRange:"
-                     //"sortUsingSelector:"
+                     "removeObjectsInRange:",
+                     "sortUsingSelector:"
                      );
                   "initializers" = ("init", 
                                     "initWithCapacity:", 
@@ -243,7 +243,7 @@
 		     "allObjects",
 		     "anyObject",
 		     "containsObject:",
-		     //"makeObjectsPerform:",
+		     "makeObjectsPerform:",
 		     //"makeObjectsPerform:withObject:",
 		     "member:",
 		     "objectEnumerator",
@@ -329,6 +329,9 @@
                   "initializers" = ("init", "initWithUser:"); 
                 }
               );
+   "method name mapping" = {
+                             "description" = "toString";
+                            };
 }
 
 
