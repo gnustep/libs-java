@@ -34,11 +34,13 @@
     {
       javaType = @"boolean";
       jniType = @"jboolean";
+      javaArgumentType = @"Z";
     }
   else 
     {
       javaType = @"byte";
       jniType = @"jbyte";
+      javaArgumentType = @"B";
     }
   return self;
 }
