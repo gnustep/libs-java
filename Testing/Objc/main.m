@@ -187,6 +187,44 @@ int main (int argc, char **argv, char **penv)
   printf ("Now testing overloaded methods by loading in the java.lang.StringBuffer class...");
   JIGSRegisterJavaClass (env, @"java.lang.StringBuffer");
   printf ("ok\n");
+  
+#if 0
+  /* Testing morphing of numbers - used to debug JIGS internals */
+  printf ("Internal hackish JIGS testing - testing morphing of numbers\n");
+  
+#define TEST_NUMBER_MORPH(CREATION,TYPE) \
+({ NSNumber *number; jobject jnumber; \
+   number = [NSNumber CREATION]; \
+   printf ("Morphing: " #TYPE " %s --> ", [[number description] lossyCString]); \
+   jnumber = GSJNI_JNumberFromNSNumber (env, number); \
+   printf ("%s\n", [GSJNI_DescriptionOfJObject (env, jnumber)  lossyCString]); \
+})
+
+  TEST_NUMBER_MORPH(numberWithBool: YES, Bool); 
+  TEST_NUMBER_MORPH(numberWithBool: NO, Bool);
+  TEST_NUMBER_MORPH(numberWithChar: 'a', Char); 
+  TEST_NUMBER_MORPH(numberWithChar: 'A', Char);
+  TEST_NUMBER_MORPH(numberWithUnsignedShort: 4, UnsignedShort); 
+  TEST_NUMBER_MORPH(numberWithUnsignedShort: 456, UnsignedShort);
+  TEST_NUMBER_MORPH(numberWithShort: (short)-1, Short);
+  TEST_NUMBER_MORPH(numberWithShort: (short)2345, Short);
+  TEST_NUMBER_MORPH(numberWithInt: 12, Int);
+  TEST_NUMBER_MORPH(numberWithInt: 0, Int);
+  TEST_NUMBER_MORPH(numberWithInt: -134, Int);
+  TEST_NUMBER_MORPH(numberWithInt: -13434, Int);
+  TEST_NUMBER_MORPH(numberWithLong: 1200345L, Long);
+  TEST_NUMBER_MORPH(numberWithLong: -1200345L, Long);
+  TEST_NUMBER_MORPH(numberWithUnsignedLong: 1200345UL, UnsignedLong);
+  TEST_NUMBER_MORPH(numberWithUnsignedLong: 0, UnsignedLong);
+  TEST_NUMBER_MORPH(numberWithFloat: 1.2, Float);
+  TEST_NUMBER_MORPH(numberWithFloat: 1.2345, Int);
+  TEST_NUMBER_MORPH(numberWithFloat: -4.2, Float);
+  TEST_NUMBER_MORPH(numberWithFloat: 0.2, Float);
+  TEST_NUMBER_MORPH(numberWithDouble: 1.234566666e-5, Double);
+  TEST_NUMBER_MORPH(numberWithDouble: -4.2e-1, Double);
+  TEST_NUMBER_MORPH(numberWithDouble: 0, Double);
+  printf ("ok (possibly)\n");
+#endif 0
 
   printf ("And that's enough for today: test passed.\n");
 
