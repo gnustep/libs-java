@@ -26,7 +26,7 @@ include $(GNUSTEP_MAKEFILES)/common.make
 
 PACKAGE_NAME = jigs
 # Keep it in sync manually with Source/JIGS.h and Source/GNUmakefile
-VERSION = 1.2.3
+VERSION = 1.2.4
 
 GNUSTEP_INSTALLATION_DIR=$(GNUSTEP_SYSTEM_ROOT)
 RPM_DISABLE_RELOCATABLE=YES
