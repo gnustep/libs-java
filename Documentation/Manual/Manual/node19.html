@@ -7,8 +7,8 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
   Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
 <HTML>
 <HEAD>
-<TITLE>4.8 Generating RPMs for the Wrapper Library</TITLE>
-<META NAME="description" CONTENT="4.8 Generating RPMs for the Wrapper Library">
+<TITLE>4.8 Controlling the Quick Reference Documentation</TITLE>
+<META NAME="description" CONTENT="4.8 Controlling the Quick Reference Documentation">
 <META NAME="keywords" CONTENT="Manual">
 <META NAME="resource-type" CONTENT="document">
 <META NAME="distribution" CONTENT="global">
@@ -19,17 +19,18 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 
 <LINK REL="STYLESHEET" HREF="Manual.css">
 
+<LINK REL="next" HREF="node20.html">
 <LINK REL="previous" HREF="node18.html">
 <LINK REL="up" HREF="node11.html">
 <LINK REL="next" HREF="node20.html">
 </HEAD>
 
 <BODY BGCOLOR="#FFFFFF" text="#000000" link="#0000FF" vlink="#4444FF" alink="#3388FF">
-<B> Next: <A NAME="tex2html349"
-  HREF="node20.html">About this document ...</A> </B>
-<B>Up: <A NAME="tex2html347"
+<B> Next: <A NAME="tex2html372"
+  HREF="node20.html">4.9 Generating RPMs for</A> </B>
+<B>Up: <A NAME="tex2html370"
   HREF="node11.html">4. Wrapping Objective-C Libraries</A>  </B>
-<B> Previous: <A NAME="tex2html343"
+<B> Previous: <A NAME="tex2html364"
   HREF="node18.html">4.7 Including Special Code</A> </B>
 <BR> <P>
 
@@ -38,99 +39,81 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 <A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
 
 <UL>
-<LI><A NAME="tex2html350"
-  HREF="node19.html#SECTION00581000000000000000">4.8.1 Standard RPMs</A>
-<LI><A NAME="tex2html351"
-  HREF="node19.html#SECTION00582000000000000000">4.8.2 Debugging RPMs</A>
+<LI><A NAME="tex2html373"
+  HREF="node19.html#SECTION00581000000000000000">4.8.1 Generating Documentation for Packages</A>
+<LI><A NAME="tex2html374"
+  HREF="node19.html#SECTION00582000000000000000">4.8.2 Installation Directory</A>
 </UL>
 <!--End of Table of Child-Links-->
 <HR>
 
 <H1><A NAME="SECTION00580000000000000000">
-4.8 Generating RPMs for the Wrapper Library</A>
+4.8 Controlling the Quick Reference Documentation</A>
 </H1>
 
 <P>
-Please make sure you are confident about how the GNUstep make package
-manages generating RPMs in the standard case before you read this
-section.
+This section documents special options which control the quick
+reference documentation which JIGS automatically generates with the
+wrappers.  You may safely skip this section at a first reading.  You
+need to read the section <A HREF="node18.html#special-code-in-GNUmakefiles">4.7</A> before
+reading this one.
 
 <P>
 
 <H2><A NAME="SECTION00581000000000000000">
-4.8.1 Standard RPMs</A>
+4.8.1 Generating Documentation for Packages</A>
 </H2>
+By default, JIGS will treat the Java classes as separate classes, and
+document them accordingly.  If you are rather creating a complete
+package you may want javadoc documentation for the package.  This is
+not very different, it just additionally includes a useful index with 
+the list of all the classes in the package.
 
 <P>
-The RPM for the wrapper library are generated independently from the
-RPM for the library itself.  For example, suppose the library is
-packaged in a package called <TT>hippo</TT>.  You have a
-<TT>hippo.spec.in</TT> file in the hippo project directory to generate 
-the RPM for the <TT>hippo</TT> package.  To generate an RPM for the 
-wrapper, you need to add a 
-<PRE> 
-hippo-wrapper.spec.in
-</PRE>
-file in the library directory, following the same syntax you use for the 
-normal <TT>hippo.spec.in</TT> file.  You can also add a 
+To get this behaviour, you need to write a 
 <PRE>
-hippo-wrapper.script.spec.in
+GNUmakefile.wrapper.java.preamble
 </PRE>
-file if you need.  These two files are automatically copied into the
-<TT>JavaWrapper</TT> directory when JIGS generates it; JIGS uses these two 
-files to set all up and ready to generate the RPM for the wrapper.
-
-<P>
-The RPM package for the wrappers will have name
-<TT>hippo-wrapper</TT>, and the same version number as <TT>hippo</TT>.
-
-<P>
-To create the RPM, you need to <TT>cd</TT> into the wrapper directory,
-and use the standard commands to build it (usually simply
+and set <TT>Reference_JAVADOC_FILES</TT> in it.  For example, when 
+wrapping the GNUstep Base Library we do:
 <PRE>
-su
-export RPM_TOPDIR=/usr/src/redhat
-make rpm
+Reference_JAVADOC_FILES = gnu.gnustep.base
 </PRE>
-(replace <TT>/usr/src/redhat</TT> with the appropriate directory for
-your system).
 
 <P>
 
 <H2><A NAME="SECTION00582000000000000000">
-4.8.2 Debugging RPMs</A>
+4.8.2 Installation Directory</A>
 </H2>
-
-<P>
-When you create the debugging wrapper, the package is called
-<TT>hippo-wrapper-debug</TT>; and the files which are copied into the
-<TT>JavaWrapper_debug</TT> directory have different names:
+By default, JIGS will install the quick reference documentation into 
 <PRE>
-hippo-wrapper-debug.spec.in
-hippo-wrapper-debug.script.spec.in
+$(GNUSTEP_INSTALLATION_DIR)/Developer/libMyLibrary/Java/Reference/
+</PRE>where of course <TT>libMyLibrary</TT> is replaced with your library name.
+If you want to change it, you need to write a 
+<PRE>
+GNUmakefile.wrapper.java.preamble
 </PRE>
-
+and set <TT>Reference_DOC_INSTALL_DIR</TT> in it.  For example, 
+when compiling the GNUstep Base Library wrappers we use
+<PRE>
+Reference_DOC_INSTALL_DIR = Developer/Base/Java/
+</PRE>
+which installs the documentation into
+<PRE>
+$(GNUSTEP_INSTALLATION_DIR)/Developer/Base/Java/Reference/
+</PRE>
 <P>
-The debugging wrapper will not contain the Java classes, and it will
-depend on having installed the non debugging wrapper package first.
-
-<P>
-Hint on a counter-intuitive trick: make sure you type <TT>make
-rpm</TT> and not <TT>make debug=yes rpm</TT> inside
-<TT>JavaWrapper_debug</TT> when building the RPM.
-
-<P>
-<HR><B> Next: <A NAME="tex2html349"
-  HREF="node20.html">About this document ...</A> </B>
-<B>Up: <A NAME="tex2html347"
+<HR><B> Next: <A NAME="tex2html372"
+  HREF="node20.html">4.9 Generating RPMs for</A> </B>
+<B>Up: <A NAME="tex2html370"
   HREF="node11.html">4. Wrapping Objective-C Libraries</A> </B>
-<B> Previous: <A NAME="tex2html343"
+<B> Previous: <A NAME="tex2html364"
   HREF="node18.html">4.7 Including Special Code</A> </B>
 
 <!--End of Navigation Panel-->
 <ADDRESS>
 Nicola Pero
-2001-01-25
+2001-02-07
 </ADDRESS>
 </BODY>
 </HTML>

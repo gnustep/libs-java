@@ -26,11 +26,11 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 </HEAD>
 
 <BODY BGCOLOR="#FFFFFF" text="#000000" link="#0000FF" vlink="#4444FF" alink="#3388FF">
-<B> Next: <A NAME="tex2html327"
+<B> Next: <A NAME="tex2html347"
   HREF="node18.html">4.7 Including Special Code</A> </B>
-<B>Up: <A NAME="tex2html325"
+<B>Up: <A NAME="tex2html345"
   HREF="node11.html">4. Wrapping Objective-C Libraries</A>  </B>
-<B> Previous: <A NAME="tex2html319"
+<B> Previous: <A NAME="tex2html339"
   HREF="node16.html">4.5 The .jigs File</A> </B>
 <BR> <P>
 
@@ -39,16 +39,19 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 <A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
 
 <UL>
-<LI><A NAME="tex2html328"
+<LI><A NAME="tex2html348"
   HREF="node17.html#SECTION00561000000000000000">4.6.1 Silencing the Wrapper Generator</A>
-<LI><A NAME="tex2html329"
+<LI><A NAME="tex2html349"
   HREF="node17.html#SECTION00562000000000000000">4.6.2 Enabling Debugging</A>
-<LI><A NAME="tex2html330"
+<LI><A NAME="tex2html350"
   HREF="node17.html#SECTION00563000000000000000">4.6.3 Debugging or Non-Debugging</A>
 <UL>
-<LI><A NAME="tex2html331"
+<LI><A NAME="tex2html351"
   HREF="node17.html#SECTION00563100000000000000">4.6.3.1 The Fine Prints About Debugging</A>
-</UL></UL>
+</UL>
+<LI><A NAME="tex2html352"
+  HREF="node17.html#SECTION00564000000000000000">4.6.4 Turning off the Generation of Quick Reference Doc</A>
+</UL>
 <!--End of Table of Child-Links-->
 <HR>
 
@@ -163,17 +166,31 @@ example, if it decided to load debugging libraries, it will ignore all
 non-debugging libraries.
 
 <P>
-<HR><B> Next: <A NAME="tex2html327"
+
+<H2><A NAME="SECTION00564000000000000000">
+4.6.4 Turning off the Generation of Quick Reference Doc</A>
+</H2>
+
+<P>
+To stop JIGS from automatically generating minimal javadoc comments
+and the quick reference documentation from them, it's enough to
+compile using <TT>javadoc=no</TT>, as in:
+<PRE>
+make javadoc=no
+</PRE>
+
+<P>
+<HR><B> Next: <A NAME="tex2html347"
   HREF="node18.html">4.7 Including Special Code</A> </B>
-<B>Up: <A NAME="tex2html325"
+<B>Up: <A NAME="tex2html345"
   HREF="node11.html">4. Wrapping Objective-C Libraries</A> </B>
-<B> Previous: <A NAME="tex2html319"
+<B> Previous: <A NAME="tex2html339"
   HREF="node16.html">4.5 The .jigs File</A> </B>
 
 <!--End of Navigation Panel-->
 <ADDRESS>
 Nicola Pero
-2001-01-25
+2001-02-07
 </ADDRESS>
 </BODY>
 </HTML>

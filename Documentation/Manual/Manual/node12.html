@@ -26,11 +26,11 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 </HEAD>
 
 <BODY BGCOLOR="#FFFFFF" text="#000000" link="#0000FF" vlink="#4444FF" alink="#3388FF">
-<B> Next: <A NAME="tex2html259"
+<B> Next: <A NAME="tex2html276"
   HREF="node13.html">4.2 Turning on Generation</A> </B>
-<B>Up: <A NAME="tex2html257"
+<B>Up: <A NAME="tex2html274"
   HREF="node11.html">4. Wrapping Objective-C Libraries</A>  </B>
-<B> Previous: <A NAME="tex2html251"
+<B> Previous: <A NAME="tex2html268"
   HREF="node11.html">4. Wrapping Objective-C Libraries</A> </B>
 <BR> <P>
 
@@ -39,14 +39,14 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 <A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
 
 <UL>
-<LI><A NAME="tex2html260"
+<LI><A NAME="tex2html277"
   HREF="node12.html#SECTION00511000000000000000">4.1.1 Creating and Compiling the Wrappers</A>
-<LI><A NAME="tex2html261"
+<LI><A NAME="tex2html278"
   HREF="node12.html#SECTION00512000000000000000">4.1.2 Structure of the Wrappers</A>
 <UL>
-<LI><A NAME="tex2html262"
+<LI><A NAME="tex2html279"
   HREF="node12.html#SECTION00512100000000000000">4.1.2.1 The Java Subdirectory</A>
-<LI><A NAME="tex2html263"
+<LI><A NAME="tex2html280"
   HREF="node12.html#SECTION00512200000000000000">4.1.2.2 The Objc Subdirectory</A>
 </UL></UL>
 <!--End of Table of Child-Links-->
@@ -144,12 +144,30 @@ implicitly load <TT>libexample.so</TT>).
 <P>
 Then, most methods are <TT>native</TT>, as in the following example: 
 <PRE>
+ /**
+   * Wraps the Objective-C method
+   * &lt;B&gt;start&lt;/B&gt;
+   */
   public native void start ();
 </PRE>
 
 <P>
 The implementation of the Java methods marked as <TT>native</TT> will
-be found by the JVM inside the native library <TT>libexample.A.so</TT>.
+be found by the JVM inside the native library <TT>libexample.A.so</TT>
+(see next section).
+
+<P>
+As it is shown in the example, each class and public method has a tiny
+minimal javadoc description.  When the java classes are compiled,
+quick reference documentation for the classes will be generated from
+these comments by using javadoc, and put into the subdirectory
+<TT>Reference</TT>.  This documentation is minimal, and basically
+consists in the list of all Java wrapper classes and methods which
+were compiled, and for each one, a comment explaining which
+Objective-C class or method it wraps.  While minimal, this
+documentation can be quite useful for someone already knowing the
+Objective-C API (or having the Objective-C documentation to refer to)
+and wanting to use the library from Java.
 
 <P>
 
@@ -167,17 +185,17 @@ JIGS core engine to catch exceptions, convert arguments and return
 types, etc.
 
 <P>
-<HR><B> Next: <A NAME="tex2html259"
+<HR><B> Next: <A NAME="tex2html276"
   HREF="node13.html">4.2 Turning on Generation</A> </B>
-<B>Up: <A NAME="tex2html257"
+<B>Up: <A NAME="tex2html274"
   HREF="node11.html">4. Wrapping Objective-C Libraries</A> </B>
-<B> Previous: <A NAME="tex2html251"
+<B> Previous: <A NAME="tex2html268"
   HREF="node11.html">4. Wrapping Objective-C Libraries</A> </B>
 
 <!--End of Navigation Panel-->
 <ADDRESS>
 Nicola Pero
-2001-01-25
+2001-02-07
 </ADDRESS>
 </BODY>
 </HTML>
