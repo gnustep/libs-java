@@ -208,6 +208,7 @@ process_argument (JNIEnv *env, const char *tmptype, va_list ap)
     }
   else if (*tmptype == _JAVA_FLOAT)
     {                  
+      /* FIXME: on gcc 2.91-66 this must be "va_arg (ap, jfloat)" */
       ret.f = (jfloat)(va_arg (ap, double)); 
     }
   else if (*tmptype == _JAVA_DOUBLE) 
