@@ -2,7 +2,7 @@
 
    Copyright (C) 2000 Free Software Foundation, Inc.
    
-   Written by:  Nicola Pero <nicola@brainstorm.co.uk>
+   Written by:  Nicola Pero <n.pero@mi.flashnet.it>
    Date: June 2000
    
    This file is part of the GNUstep Java Interface Library.
@@ -103,7 +103,15 @@ public class GSJNIMethods
     // A generic object
     if ((cl.isPrimitive ()) == false)
       {
-	return "l";
+	if ((cl.getName ()).equals ("gnu.gnustep.base.NSSelector"))
+	  {
+	    /* A selector */
+	    return ":";
+	  }
+	else
+	  {
+	    return "l";
+	  }
       }
     else // A primitive type
       {
