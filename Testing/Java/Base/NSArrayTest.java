@@ -143,6 +143,22 @@ class NSArrayTest
 
     compareJavaArrays (objects, newObjects, true);
 
+    /* Now trying to create an NSArray using the special constructor 
+       taking a java array as argument */
+    System.out.println ("");
+    System.out.println ("Now trying to create an NSArray from a big java array");
+    String longArray[] = new String [8193];
+    
+    for (int i = 0; i < 8193; i++)
+      {
+	longArray[i] = "nicola";
+      }
+    arrayOne = new NSArray (longArray);
+
+    compareJavaArrays (longArray, arrayOne.objects (), true);
+    
+    
+
     /* Happy end */
     System.out.println ("test passed");
   }
