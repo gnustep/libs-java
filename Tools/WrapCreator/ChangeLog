@@ -1,4 +1,4 @@
-Mon May 21 02:02:16 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+Mon May 21 02:15:06 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	Building java wrappers made independent from building the library.
 	* Makefiles/java-wrapper.make: Rewritten.
@@ -9,7 +9,8 @@ Mon May 21 02:02:16 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 	Removed.  (ADDITIONAL_INCLUDE_DIRS): Updated for new
 	java-wrapper.make.
 	* Makefiles/search_header.sh: New tool to search for headers.
-
+	* GNUmakefile (after-install): Install search_header.sh.
+	
 Fri May 18 01:08:45 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	Made a backup of the old java-wrapper makefiles before the planned
