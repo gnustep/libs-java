@@ -55,6 +55,7 @@ after-install::
 	$(MKDIRS) $(JIGS_MAKE_DIR)
 	$(INSTALL_DATA) Makefiles/java-wrapper.make $(JIGS_MAKE_DIR)
 	$(INSTALL_DATA) Makefiles/java-wrapper.top.template $(JIGS_MAKE_DIR)
+	$(INSTALL_DATA) Makefiles/java-wrapper.top.debug.template $(JIGS_MAKE_DIR)
 	$(INSTALL_DATA) Makefiles/java-wrapper.readme.template $(JIGS_MAKE_DIR)
 	$(INSTALL_DATA) Makefiles/java-wrapper.objc.template $(JIGS_MAKE_DIR)
 	$(INSTALL_DATA) Makefiles/java-wrapper.java.template $(JIGS_MAKE_DIR)
