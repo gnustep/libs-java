@@ -32,8 +32,8 @@
   NSString *javaType;   /* eg @"String" */
   NSString *jniType;    /* eg @"jstring" */
   NSString *javaArgumentType; /* eg @"java.lang.String" */
-  NSString *javaToObjcFunction;  /* eg @"GSJNI_NSStringFromJString" */
-  NSString *objcToJavaFunction;  /* eg @"GSJNI_JStringFromNSString" */
+  NSString *javaToObjcFunction;  /* eg @"JIGSNSStringFromJstring" */
+  NSString *objcToJavaFunction;  /* eg @"JIGSJstringFromNSString" */
 }
 
 - (id) initWithObjcType: (NSString *)name
