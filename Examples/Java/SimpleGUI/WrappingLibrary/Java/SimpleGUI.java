@@ -27,6 +27,7 @@
 
 /* REQUIRED: This is always needed */
 import gnu.gnustep.base.*;
+import gnu.gnustep.java.JIGS;
 
 /* REQUIRED: Must extend NSObject */
 class SimpleGUI extends NSObject
@@ -34,7 +35,7 @@ class SimpleGUI extends NSObject
   /* REQUIRED: Load the native library */
   static
   {
-    System.loadLibrary ("SimpleGUI.A");
+    JIGS.loadLibrary ("SimpleGUI.A");
   }
 
   /* REQUIRED: This magic code should be in all wrapper classes */
