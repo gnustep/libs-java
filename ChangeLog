@@ -1,3 +1,7 @@
+Sun May  6 00:49:16 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* NEWS: Updated/fixed news for 1.3.
+
 Sat May  5 21:47:51 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* GNUmakefile (VERSION): Version is now 1.3.0
