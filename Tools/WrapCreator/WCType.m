@@ -158,6 +158,12 @@ NSString *normalizeObjcType (NSString *objcType)
   return nil;
 }
 
+- (NSString *) javaArgumentType
+{
+  [self subclassResponsibility: _cmd];
+  return nil;
+}
+
 - (BOOL) isVoidType
 {
   return NO;
