@@ -33,16 +33,19 @@ include $(GNUSTEP_MAKEFILES)/jni.make
 LIBRARY_NAME = libSimpleGUI.A
 libSimpleGUI.A_OBJC_FILES =  SimpleGUI.m
 
+# 
+# TODO: Refine the following code and move it somewhere in the make
+# package; create a java-wrap-library.make which simply includes
+# library.make + the following ?
 #
-# TODO: Refine the following code and move it somewhere in the make package
-# A java-wrap-library.make which simply includes library.make + the following ?
-#
+
+# We *need* to use LIBRARIES_DEPEND_UPON.
 
 # Libraries any .A library depends upon
-LIBRARIES_DEPEND_UPON += -lgnustep-java -lgnustep-base -lobjc -lc
+LIBRARIES_DEPEND_UPON += -lgnustep-java $(FND_LIBS) $(OBJC_LIBS)
 
 # Libraries that a gui .A library depends upon
-LIBRARIES_DEPEND_UPON += -lgnustep-gui -lgmodel -lgnustep-xgps 
+LIBRARIES_DEPEND_UPON += $(GUI_LIBS) $(BACKEND_LIBS)
 
 # Any .A library depends upon the library it is wrapping
 LIBRARIES_DEPEND_UPON += -lSimpleGUI
