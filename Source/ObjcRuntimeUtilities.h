@@ -119,8 +119,8 @@ MethodList *ObjcUtilities_alloc_method_list (int count);
  */
 
 void ObjcUtilities_insert_method_in_list (MethodList *ml, 
-					    int index, const char *name, 
-					    const char *types, IMP imp);
+					  int index, const char *name, 
+					  const char *types, IMP imp);
 
 /*
  * ObjcUtilities_build_runtime_Objc_signature:
