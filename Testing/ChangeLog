@@ -1,3 +1,7 @@
+Fri Sep 29 18:39:04 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Objc/main.m (main): Improved message.
+
 Fri Sep 29 17:59:18 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Objc: New directory.
