@@ -24,6 +24,7 @@
 #include "WCClass.h"
 #include "WCMethod.h"
 #include "WCType.h"
+#include "WCLibrary.h"
 
 static NSCharacterSet *whiteSpace = nil;
 static NSCharacterSet *plusMinus = nil;
@@ -301,8 +302,20 @@ static NSString *convertToJNI (NSString *string)
 {
   NSMutableString *output;
 
-  output = [NSMutableString stringWithString: @"  public "];
-      
+  if ([WCLibrary outputJavadoc])
+    {
+      output = [NSMutableString stringWithString: @"  /**\n"];
+      [output appendString: @"   * Wraps the Objective-C method\n"];
+      [output appendString: @"   * <B>"];
+      [output appendString: methodName];
+      [output appendString: @"</B>\n   */\n"];
+      [output appendString: @"  public "];
+    }
+  else
+    {
+      output = [NSMutableString stringWithString: @"  public "];
+    }
+
   if (isConstructor == YES) /* A constructor */
       {
 	/* Here we need to ouput something like: 

@@ -4,10 +4,17 @@
 
 override debug=DEBUGHERE
 override profile=PROFILEHERE
+override javadoc=JAVADOCHERE
 
 include $(GNUSTEP_MAKEFILES)/common.make
 
 JAVA_PACKAGE_NAME = REPLACEME-java
+
+DOCUMENT_NAME = PACKAGEHERE
+# If you need, override the following in your 
+# GNUmakefile.wrapper.java.preamble
+PACKAGEHERE_JAVADOC_FILES = $(shell find -name "*.java")
+PACKAGEHERE_DOC_INSTALL_DIR = Developer/Java/Wrappers/
 
 include GNUmakefile.files
 
@@ -16,4 +23,9 @@ REPLACEME-java_JNI_FILES  = $(JW_FILE_LIST)
 
 -include GNUmakefile.preamble
 include $(GNUSTEP_MAKEFILES)/java.make
+
+ifneq ($(javadoc),no)
+  include $(GNUSTEP_MAKEFILES)/documentation.make
+endif
+
 -include GNUmakefile.postamble
