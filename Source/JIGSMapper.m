@@ -59,6 +59,9 @@ void _JIGSMapperAddJavaProxy (JNIEnv *env, id objc, jobject java)
   objc_mutex_unlock (_JIGSProxiedObjcMapLock);
 }
 
+/* Warning - the following might be called by finalize without an
+   autoreleasepool in place and without the ObjC runtime knowing about
+   the current thread ... you can't execute any ObjC code in here.  */
 void _JIGSMapperRemoveJavaProxy (JNIEnv *env, id objc)
 {
   jobject weak_java;
@@ -384,6 +387,8 @@ void _JIGSMapperInitialize (JNIEnv *env)
   _JIGSProxiedJavaMapLock = objc_mutex_allocate ();
 
   _JIGSProxiedObjCClassMapWriteLock = objc_mutex_allocate ();
+
+  JIGSFinalizeInit ();
   
   gnu_gnustep_base_NSObject = GSJNI_NewClassCache 
     (env, "gnu/gnustep/base/NSObject");
@@ -792,4 +797,3 @@ id JIGSIdFromThis (JNIEnv *env, jobject this)
 {
   return JIGS_JLONG_TO_ID((*env)->GetLongField (env, this, fidRealObject));
 }
-
