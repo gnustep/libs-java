@@ -58,6 +58,9 @@ else
 internal-java_wrapper-all:: before-$(TARGET)-all java-wrapper after-$(TARGET)-all
 
 before-$(TARGET)-all::
+	@if [ "$(shared)" = "no" ]; then \
+	 echo "* WARNING *: Java Wrappers of static libraries are meaningless!";\
+	fi
 
 after-$(TARGET)-all::
 
@@ -73,9 +76,25 @@ install-java_wrapper:: internal-install-java-dirs
 #
 JIGS_FILE = $(LIBRARY_NAME).jigs
 
+
+# The suffix to use for the wrapper library directory.
+# NB: debug/profile refer to the library we are wrapping; the wrapper 
+# library for simplicity is compiled with exactly the same flags.
+TMP_LONG_SUFFIX = 
+
+ifeq ($(debug), yes)
+  TMP_LONG_SUFFIX =_debug
+endif
+
+ifeq ($(profile), yes)
+  TMP_LONG_SUFFIX +=_profile
+endif
+
+JIGS_LONG_SUFFIX = $(shell echo $(TMP_LONG_SUFFIX) | sed 's/ //g')
+
 # The directory to create and where to put the automatically generated 
 # wrapper library
-WRAPPER_DIR = $(shell pwd)/JavaWrapper
+WRAPPER_DIR = $(shell pwd)/JavaWrapper$(JIGS_LONG_SUFFIX)
 # The subdirs containing the java and the objc code
 JAVA_WRAPPER_DIR = $(WRAPPER_DIR)/Java
 OBJC_WRAPPER_DIR = $(WRAPPER_DIR)/Objc
@@ -120,6 +139,15 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FI
 	@$(MKDIRS) $(JAVA_WRAPPER_DIR)
 	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/java-wrapper.java.template         \
 	      $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
+
+	@sed -e 's/DEBUGHERE/$(debug)/g'           \
+	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp        \
+	        > $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp.2
+	@rm $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
+	@sed -e 's/PROFILEHERE/$(profile)/g'           \
+	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp.2        \
+	        > $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
+	@rm $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp.2
 	@sed -e 's/REPLACEME/$(LIBRARY_NAME)/g'           \
 	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp        \
 	        > $(JAVA_WRAPPER_DIR)/GNUmakefile
@@ -127,6 +155,14 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FI
 	@$(MKDIRS) $(OBJC_WRAPPER_DIR)
 	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/java-wrapper.objc.template         \
 	      $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp 
+	@sed -e 's/DEBUGHERE/$(debug)/g'           \
+	       $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp        \
+	        > $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2
+	@rm $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp
+	@sed -e 's/PROFILEHERE/$(profile)/g'           \
+	       $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2        \
+	        > $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp
+	@rm $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2
 	@sed -e 's/REPLACEME/$(LIBRARY_NAME)/g' \
 	      $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp \
 	      > $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2
@@ -169,6 +205,11 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FI
 	@rm $(WRAPPER_DIR)/preprocessedHeader
 	@echo Creating the stamp file...
 	@touch $(WRAPPER_DIR)/stamp-file
+	@echo 
+	@echo To compile and install the wrapper library, please go into 
+	@echo the $(WRAPPER_DIR) directory, 
+	@echo and make, make install there.
+	@echo
 
 #
 # Cleaning targets
@@ -177,6 +218,10 @@ internal-java_wrapper-clean::
 	rm -Rf $(WRAPPER_DIR)
 
 internal-java_wrapper-distclean::
+	-rm -Rf $(shell pwd)/JavaWrapper
+	-rm -Rf $(shell pwd)/JavaWrapper_debug
+	-rm -Rf $(shell pwd)/JavaWrapper_profile
+	-rm -Rf $(shell pwd)/JavaWrapper_debug_profile
 
 endif # INTERNAL_java_wrapper_NAME
 
