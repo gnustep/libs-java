@@ -34,5 +34,5 @@ libSimpleGUI_OBJC_FILES = SimpleGUI.m
 include $(GNUSTEP_MAKEFILES)/library.make
 
 # Uncomment this line to disable automatic wrapping
-include $(GNUSTEP_MAKEFILES)/java-wrapper.make
+include $(GNUSTEP_MAKEFILES)/old-java-wrapper.make
 
