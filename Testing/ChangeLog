@@ -1,3 +1,9 @@
+Tue Sep 26 12:55:46 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Java/NSDateTest.java: Added a quick test for the NSTimeInterval 
+	mapping to double.
+	* Java/GNUmakefile: Added the new test.
+
 Wed Sep  6 01:35:55 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Java/NSApplicationTest.java: New file.
