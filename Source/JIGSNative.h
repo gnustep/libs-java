@@ -28,6 +28,9 @@
 #include <Foundation/Foundation.h>
 #include "GSJNI.h"
 
+/* Initialized to be [NSAutoreleasePool class] in JIGSInit.m.  */
+extern Class JIGSAutoreleasePoolClass;
+
 /*
  * Clean things upon entering and exiting a native implementation 
  * of a java method.
@@ -59,7 +62,7 @@
 
 #define JIGS_ENTER                                   \
 BOOL registeredThread = GSRegisterCurrentThread ();  \
-NSAutoreleasePool *pool = [NSAutoreleasePool new];   \
+NSAutoreleasePool *pool = [JIGSAutoreleasePoolClass new];   \
 NS_DURING
 
 #define JIGS_EXIT                                            \
@@ -88,7 +91,7 @@ return (ret_value);
  */
 #define JIGS_ONLOAD_ENTER                                 \
 BOOL registeredThread = GSRegisterCurrentThread ();       \
-NSAutoreleasePool *pool = [NSAutoreleasePool new];        
+NSAutoreleasePool *pool = [JIGSAutoreleasePoolClass new];
 
 #define JIGS_ONLOAD_EXIT                                     \
 RELEASE (pool);                                              \
