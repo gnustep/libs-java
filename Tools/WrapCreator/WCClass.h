@@ -41,6 +41,9 @@
   NSMutableDictionary *classMethodDeclarations;  
   NSMutableDictionary *instanceMethodDeclarations;
   NSArray *hardcodedConstants;
+  NSString *fileWithPreambleJavaCode;
+  NSString *fileWithIncludedJavaCode;
+  NSString *fileWithIncludedObjcCode;
 }
 + (id) newWithDictionary: (NSDictionary *)dict;
 
