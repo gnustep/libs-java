@@ -1,3 +1,8 @@
+Sat May  5 16:09:02 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Java/Base/test-base: Log output from tests to test-base.log.
+	* Java/Base/NSProcessInfoTest.java: Fixed typo in output string.
+
 Fri Feb  9 15:40:34 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Java/Base/NSDictionaryTest.java: New test.
