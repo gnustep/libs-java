@@ -3,7 +3,8 @@ Release Notes for JIGS version 0.8
 
 This release is mainly a bug fix release.  In particular, exposing
 different objc methods as overloaded java methods has been finally
-fixed.
+fixed.  You can now create windows using the gui library from 
+Java!
 
 Release Notes for JIGS version 0.7
 ==================================
