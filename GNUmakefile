@@ -27,7 +27,7 @@ include $(GNUSTEP_MAKEFILES)/common.make
 PACKAGE_NAME = gstep-java
 
 # NB: "Java" must come before "Source"
-SUBPROJECTS = Java Source #Tools 
+SUBPROJECTS = Java Source Tools
 
 include $(GNUSTEP_MAKEFILES)/aggregate.make
 
