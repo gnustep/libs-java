@@ -224,18 +224,20 @@ mapJavaMethodName (const char *javaName, const char *className,
 	}
       
       cObjcName = [objcName cString];
-      // Check that selector is not yet in use. 
+      // Check that selector is not already in use. 
       selector = sel_get_any_typed_uid (cObjcName);
       if (selector != NULL)
 	{
 	  /* NSLog (@"Selector not null"); */
-	  if ((sel_get_type (selector) == NULL) 
-	      || (strcmp (types, sel_get_type (selector))))
+	  /*	  if ((sel_get_type (selector) == NULL) 
+		  || (strcmp (types, sel_get_type (selector))))*/
+	  if ((sel_get_type (selector) != NULL) 
+	      && (strcmp (types, sel_get_type (selector))))
 	    {
 	      /* NSLog (@"Oh oh - problem - selector %s is already in use "
-			@"with another type!", [objcName cString]);
+		 @"with another type!", [objcName cString]);
 		 NSLog (@"New selector type is %s, old one is %s", types, 
-	                sel_get_type (selector)); */
+		 sel_get_type (selector)); */
 	      isOK = NO;
 	    }	  
 	}
