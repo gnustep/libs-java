@@ -31,6 +31,8 @@
   NSString *header;
   NSMutableDictionary *classMethods;
   NSMutableDictionary *instanceMethods;
+  NSMutableDictionary *enumerations;
+  NSMutableDictionary *unresolvedTypedefs;
 }
 
 + (NSString *) methodNameFromMethodDeclaration: (NSString *)declaration;
@@ -43,6 +45,11 @@
 		     isClassMethod: (BOOL)flag;
 
 - (NSString *) getSuperclassOfClass: (NSString *)objcClassName;
+
+- (NSArray *) enumerationTypes; 
+
+- (NSDictionary *) dictionaryForEnumeration: (NSString *)enumeration;
+
 @end
 
 #endif
