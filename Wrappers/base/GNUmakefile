@@ -23,7 +23,7 @@
 include $(GNUSTEP_MAKEFILES)/common.make
 
 PACKAGE_NAME = gnustep-base-java-wrapper
-VERSION = 1.0.0
+VERSION = 1.0.2
 
 JAVA_WRAPPER_NAME = gnustep-base
 gnustep-base_HEADER_FILES = gnustep-base.h
