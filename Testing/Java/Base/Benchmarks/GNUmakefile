@@ -28,15 +28,19 @@ gnu.gnustep.base-benchmark_JAVA_FILES =       \
     Driver.java                               \
     Benchmark.java                            \
     EmptyBenchmark.java                       \
+    SecondaryThreadBenchmark.java             \
     ArrayBenchmark.java                       \
     StringConcatenationBenchmark.java         \
     StringComparisonBenchmark.java            \
     ObjCMethodBenchmark.java                  \
+    ObjCMethodSecondThreadBenchmark.java      \
     JavaMethodBenchmark.java                  \
     JavaNewObjectBenchmark.java               \
     ObjCNewObjectBenchmark.java               \
+    ObjCNewObjectSecondThreadBenchmark.java   \
     JavaToStringBenchmark.java                \
     ObjCToStringBenchmark.java                \
+    ObjCToStringSecondThreadBenchmark.java    \
     NSArray0Benchmark.java                    \
     NSArray1Benchmark.java                    \
     NSArray2Benchmark.java                    \
@@ -57,7 +61,7 @@ gnu.gnustep.base-benchmark_JAVA_FILES =       \
 include $(GNUSTEP_MAKEFILES)/java.make
 
 benchmark:: all
-	@CLASSPATH="./:${CLASSPATH}" java Driver
+	./benchmark-base
 
 
 
