@@ -50,7 +50,7 @@ static const struct morphType
   NSString *objc2java; 
 } defaultMorphTypes[DEFAULT_MORPHTYPES_NUMBER] = {
   { @"NSString *", @"String", @"jstring", @"Ljava.lang.String;", 
-    @"GSJNI_NSStringFromJString", @"GSJNI_JStringFromNSString" },
+    @"JIGSNSStringFromJstring", @"JIGSJstringFromNSString" },
 
   { @"NSPoint", @"NSPoint", @"jobject", @"Lgnu.gnustep.base.NSPoint;", 
     @"JIGSNSPointConvertToStruct", @"JIGSNSPointConvertToJobject" },
