@@ -1,3 +1,19 @@
+Sun Nov 25 01:38:45 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Java/Base/Benchmarks/benchmark-base: New file.
+	* Java/Base/Benchmarks/Driver.java: Rewritten to run with an
+	argument and run that single benchmark ... to avoid interferences
+	between benchmarks due to the garbage collector.
+	* Java/Base/Benchmarks/SecondaryThreadBenchmark.java: New file.
+	* Java/Base/Benchmarks/ObjCMethodSecondThreadBenchmark.java:
+	New file.
+	* Java/Base/Benchmarks/ObjCToStringSecondThreadBenchmark.java:
+	New file.
+	* Java/Base/Benchmarks/ObjCNewObjectSecondThreadBenchmark.java:
+	New file.
+	* Java/Base/Benchmarks/GNUmakefile: Compile the new secondary
+	thread benchmakrs; use benchmark-base to run `make benchmark'.
+
 Sat Nov 24 16:00:05 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* Java/Base/NSArrayTest.java: Added test creating a big array.
