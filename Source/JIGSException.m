@@ -43,6 +43,8 @@ void JIGSRaiseNSExceptionFromJException (JNIEnv *env)
   NSString *exceptionName;
   NSString *exceptionDescription;
 
+  // NB: This is a local reference we will need to delete !
+  // We can't use PushLocalFrame because there is a pending exception
   exc = (*env)->ExceptionOccurred (env);
   if (exc == NULL)
     {
@@ -54,14 +56,12 @@ void JIGSRaiseNSExceptionFromJException (JNIEnv *env)
     }
 
   // We need to clear the exception before doing anything else. 
-  // This should not (not yet) garbage-collect the local reference to 
-  // the exception object !
   (*env)->ExceptionClear (env);
-  
+
   exceptionName = GSJNI_NSStringFromClassOfObject (env, exc);
 
   // NB: We don't do the same for subclasses  
-  if ([exceptionName isEqualToString: @"NSException"]);
+  if ([exceptionName isEqualToString: @"NSException"])
   {
     if (gnu_gnustep_base_NSException == NULL)
       {
@@ -70,6 +70,7 @@ void JIGSRaiseNSExceptionFromJException (JNIEnv *env)
 	
       if (gnu_gnustep_base_NSException == NULL)
 	{
+	  (*env)->DeleteLocalRef (env, exc);
 	  // Describing the exception has the side effect
 	  // of clearing it.
 	  (*env)->ExceptionDescribe (env); 
@@ -85,6 +86,7 @@ void JIGSRaiseNSExceptionFromJException (JNIEnv *env)
 				     "name", "Ljava/lang/String;");
 	  if (jfid == NULL)
 	    {
+	      (*env)->DeleteLocalRef (env, exc);
 	      (*env)->ExceptionDescribe (env); 
 	      [NSException raise: GSJNIException
 			   format: @"Could not get name field ID of "
@@ -123,6 +125,7 @@ void JIGSRaiseNSExceptionFromJException (JNIEnv *env)
       
       if (java_lang_Exception == NULL)
 	{
+	  (*env)->DeleteLocalRef (env, exc);
 	  (*env)->ExceptionDescribe (env); 
 	  [NSException raise: GSJNIException
 		       format: @"Could not get global reference to "
@@ -130,20 +133,22 @@ void JIGSRaiseNSExceptionFromJException (JNIEnv *env)
 		       exceptionName];
 	}
     }
-  
+
   jid = (*env)->GetMethodID (env, java_lang_Exception, "getMessage", 
 			     "()Ljava/lang/String;");
   if (jid == NULL)
     {
+      (*env)->DeleteLocalRef (env, exc);
       (*env)->ExceptionDescribe (env);
       [NSException raise: GSJNIException 
 		   format: @"Could not get the jmethodID of getMessage"
 		   @"of java/lang/Exception to describe exception: %@", 
 		   exceptionName];
     }
-  
+ 
   if ((*env)->PushLocalFrame (env, 1) < 0)
     {
+      (*env)->DeleteLocalRef (env, exc);
       (*env)->ExceptionDescribe (env);
       [NSException raise: GSJNIException 
 		   format: @"Could not create enough JNI local references "
@@ -153,7 +158,9 @@ void JIGSRaiseNSExceptionFromJException (JNIEnv *env)
   
   // Get the message
   jstr = (*env)->CallObjectMethod (env, exc, jid);
-  
+
+  (*env)->DeleteLocalRef (env, exc);
+
   exception = (*env)->ExceptionOccurred (env);
   if (exception)  // Oh oh - something is really wrong here
     {
@@ -175,15 +182,13 @@ void JIGSRaiseNSExceptionFromJException (JNIEnv *env)
   exceptionDescription = GSJNI_NSStringFromJString (env, jstr);
   if (exceptionDescription == nil)
     {
-      (*env)->ExceptionDescribe (env);
       (*env)->PopLocalFrame (env, NULL);
       [NSException raise: GSJNIException 
 		   format: @"Exception while converting string of "
 		   @"exception: %@", exceptionName];
     }
-  
+
   (*env)->PopLocalFrame (env, NULL);
-  
   [NSException raise: exceptionName  format: exceptionDescription];
 }
 
