@@ -181,6 +181,14 @@ inline void _JIGSMapperRemoveObjcProxy (JNIEnv* env, jobject java)
 static NSMapTable* _JIGSProxiedObjcClassMap = NULL;
 static objc_mutex_t _JIGSProxiedObjcClassMapLock = NULL;
 
+/*
+ * The same map in reverse, mapping a jclass reference to
+ * gnu/gnustep/base/NSObject to a pointer to the NSObject class.
+ * Protected by the same lock.
+ */
+
+static NSMapTable* _JIGSProxiedObjcClassReverseMap = NULL;
+
 /* We only insert in the table, never remove */
 void JIGSRegisterJavaProxyClass (JNIEnv *env, NSString *fullJavaClassName, 
 				 NSString *objcClassName)
@@ -209,63 +217,86 @@ void JIGSRegisterJavaProxyClass (JNIEnv *env, NSString *fullJavaClassName,
 
   objc_mutex_lock (_JIGSProxiedObjcClassMapLock);
   NSMapInsert (_JIGSProxiedObjcClassMap, objcClass, javaClass);
+  NSMapInsert (_JIGSProxiedObjcClassReverseMap, javaClass, objcClass);
   objc_mutex_unlock (_JIGSProxiedObjcClassMapLock);
+
   RELEASE (pool);
 }
 
+/* Please call the following only in the top-most local reference frame. 
+   Otherwise, DeleteLocalRef will do nothing and for very deep class trees 
+   you could get an out-of-memory error because of excessive local refs 
+   creation.  
+
+   Also, beware that this function call wants a local reference as 
+   argument, and it destroys it during processing ! 
+*/
 inline static Class _JIGSFirstJavaProxySuperClass (JNIEnv *env, 
-						   NSString *className)
+						   jclass inClass)
 {
-  NSString *shortClassName;
-  Class class;
+  Class outClass;
 
   objc_mutex_lock (_JIGSProxiedObjcClassMapLock); 
 
+  /* Keep an eye on leakages of local references */
+  if ((*env)->EnsureLocalCapacity (env, 2) < 0)
+    {
+      /* Exception thrown */
+      return Nil;
+    }
+  
   while (1)
     {
-      shortClassName = GSJNI_ShortClassNameFromLongClassName (className);
-      class = NSClassFromString (shortClassName);
+      outClass = NSMapGet (_JIGSProxiedObjcClassReverseMap, inClass);
 
-      if (class == Nil)
+      if (outClass != NULL)
 	{
-	  className = GSJNI_SuperclassNameFromClassName (env, className);
-	  if (className == nil)
-	    {
-	      class = Nil;
-	      NSLog (@"Could not find a real objective-C class for class %@", 
-		     className);
-	      break;
-	    }
+	  break;
 	}
       else
 	{
-	  if (NSMapGet (_JIGSProxiedObjcClassMap, class) != NULL)
+	  jclass superClass = (*env)->GetSuperclass (env, inClass);
+	  if (superClass == NULL)
 	    {
+	      // Root Class - no exception thrown
+	      NSLog (@"Could not find a real objective-C class");
+	      outClass = Nil;
 	      break;
 	    }
-	  className = NSStringFromClass (class_get_super_class (class));
+
+	  (*env)->DeleteLocalRef (env, inClass);
+	  inClass = superClass;
 	}
     }
 
+  (*env)->DeleteLocalRef (env, inClass);
   objc_mutex_unlock (_JIGSProxiedObjcClassMapLock);
-  return class;
+
+  return outClass;
 }
 
 Class JIGSClassFromThisClass (JNIEnv *env, jclass class)
 {
-  NSString *className;
 
-  className = GSJNI_NSStringFromJClass (env, class);
-  return _JIGSFirstJavaProxySuperClass (env, className);
+  /* The new local ref we create is destroyed by the function call itself */
+  return _JIGSFirstJavaProxySuperClass (env, (*env)->NewLocalRef (env, class));
 }
 
 Class _JIGSAllocClassForThis (JNIEnv *env, jobject this)
 {
-  NSString *className;
   Class class;
+  jclass objectClass;
 
-  className = GSJNI_NSStringFromClassOfObject (env, this); 
-  class = _JIGSFirstJavaProxySuperClass (env, className);
+  if ((*env)->EnsureLocalCapacity (env, 1) < 0)
+    {
+      /* Exception thrown */
+      return Nil;
+    }
+  /* The following local ref is destroyed by _JIGSFirstJavaProxySuperclass */
+  objectClass  = (*env)->GetObjectClass (env, this);
+
+  class = _JIGSFirstJavaProxySuperClass (env, objectClass);
+
   return class;
 }
 
@@ -306,7 +337,6 @@ void _JIGSMapperInitialize (JNIEnv *env)
 					  20);
   _JIGSProxiedObjcMapLock = objc_mutex_allocate ();
   
-  
   JIGSJavaReferenceMapKeyCallBacks = NSNonOwnedPointerMapKeyCallBacks;
   JIGSJavaReferenceMapKeyCallBacks.isEqual = _JIGSProxyJavaIsEqual;
   JIGSJavaReferenceMapKeyCallBacks.hash = _JIGSProxyJavaHash;
@@ -318,6 +348,10 @@ void _JIGSMapperInitialize (JNIEnv *env)
   
   _JIGSProxiedObjcClassMap 
     = NSCreateMapTable (NSNonOwnedPointerMapKeyCallBacks, 
+			NSNonOwnedPointerMapValueCallBacks, 
+			20);
+  _JIGSProxiedObjcClassReverseMap 
+    = NSCreateMapTable (JIGSJavaReferenceMapKeyCallBacks,
 			NSNonOwnedPointerMapValueCallBacks, 
 			20);
   _JIGSProxiedObjcClassMapLock = objc_mutex_allocate ();
