@@ -61,6 +61,13 @@ void JIGSInit (JNIEnv *env)
       [NSProcessInfo initializeWithArguments: args
 				       count: 1
 				 environment: environ]; 
+#elif defined(LIB_FOUNDATION_LIBRARY)
+      extern char **environ;
+      static char  *args[2] = { "java", 0 };
+      
+      [NSProcessInfo initializeWithArguments: args
+		                       count: 1
+                   		 environment: environ];
 #endif
       JIGS = GSJNI_NewClassCache (env, "gnu/gnustep/java/JIGS");
 
