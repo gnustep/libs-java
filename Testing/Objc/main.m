@@ -225,6 +225,7 @@ int main (int argc, char **argv, char **penv)
   NSAutoreleasePool *pool;
   JNIEnv *env;
   Class javaLangSystem;
+  Class bogusJavaLangSystem;
   SEL selector;
   typedef NSString *(*getPropIMP)(id, SEL, NSString *);
   getPropIMP imp;
@@ -273,11 +274,15 @@ int main (int argc, char **argv, char **penv)
   JIGSInit (env);
   printf ("ok\n");
 
+/** registering the class manually is no longer needed **/
+
+/*
   printf ("Now loading the java.lang.System class...");
   JIGSRegisterJavaClass (env, @"java.lang.System");
   printf ("ok\n");
+*/
 
-  printf ("Now asking for its class pointer...");
+  printf ("Now asking for the java.lang.System class pointer...");
   javaLangSystem = NSClassFromString (@"java.lang.System");
 
   if (javaLangSystem == Nil)
@@ -289,6 +294,21 @@ int main (int argc, char **argv, char **penv)
   else
     {
       printf ("Got %s\n", [[javaLangSystem description] cString]);
+    }
+    
+    
+  printf ("Now asking for the java.lang.BogusSystem class pointer...");
+  bogusJavaLangSystem = NSClassFromString (@"java.lang.BogusSystem");
+
+  if (bogusJavaLangSystem != Nil)
+    {
+      printf ("Could get it ==> test failed\n");
+      RELEASE (pool);
+      return 0;
+    }
+  else
+    {
+      printf ("Not found (and not crashed!) ==> test passed\n");
     }
 
   printf ("Asking for the selector of getProperty:...");
