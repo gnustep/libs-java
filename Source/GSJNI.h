@@ -31,6 +31,7 @@
 #include "GSJNICache.h"
 #include "GSJNIClass.h"
 #include "GSJNIDebug.h"
+#include "GSJNINumber.h"
 #include "GSJNIString.h"
 
 #endif /*__GSJNI_h_GNUSTEP_JAVA_INCLUDE*/
