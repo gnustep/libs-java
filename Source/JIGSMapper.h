@@ -74,9 +74,11 @@ inline id JIGSIdFromThis (JNIEnv *env, jobject this);
  * declared of type String, using JIGSJstringFromNSString should be
  * safe.  
  *
+ * The other exception is JIGSJbyteArratFromNSData etc which is useful
+ * mainly in the wrapping of NSData itself.
+ *
  * To morph a java object of class NSPoint, NSSize, NSRect or NSRange
- * into a C struct, use the appropriate functions in JIGSBaseStruct.  
- */
+ * into a C struct, use the appropriate functions in JIGSBaseStruct.  */
 
 jobject JIGSJobjectFromId (JNIEnv *env, id object);
 
@@ -85,6 +87,10 @@ id JIGSIdFromJobject (JNIEnv *env, jobject object);
 inline jstring JIGSJstringFromNSString (JNIEnv *env, NSString *string);
 
 inline NSString *JIGSNSStringFromJstring (JNIEnv *env, jstring string);
+
+jbyteArray JIGSJbyteArrayFromNSData (JNIEnv *env, NSData *data);
+
+NSData *JIGSNSDataFromJbyteArray (JNIEnv *env, jbyteArray bytes);
 
 /*
  * Create new proxies. 

@@ -571,17 +571,49 @@ id JIGSIdFromJobject (JNIEnv *env, jobject object)
 inline jstring JIGSJstringFromNSString (JNIEnv *env, NSString *string)
 {
   if (string == nil)
-    return NULL;
+    {
+      return NULL;
+    }
   else
-    return GSJNI_JStringFromNSString (env, string);
+    {
+      return GSJNI_JStringFromNSString (env, string);
+    }
 }
 
 inline NSString *JIGSNSStringFromJstring (JNIEnv *env, jstring string)
 {
   if (string == NULL)
-    return nil;
+    {
+      return nil;
+    }
   else
-    return GSJNI_NSStringFromJString (env, string);
+    {
+      return GSJNI_NSStringFromJString (env, string);
+    }
+}
+
+jbyteArray JIGSJbyteArrayFromNSData (JNIEnv *env, NSData *data)
+{
+  if (data == nil)
+    {
+      return NULL;
+    }
+  else
+    {
+      return GSJNI_jbyteArrayFromNSData (env, data);
+    }
+}
+
+NSData *JIGSNSDataFromJbyteArray (JNIEnv *env, jbyteArray bytes)
+{
+  if (bytes == NULL)
+    {
+      return nil;
+    }
+  else
+    {
+      return GSJNI_NSDataFromJbyteArray (env, bytes);
+    }
 }
 
 inline id JIGSIdFromThis (JNIEnv *env, jobject this)
