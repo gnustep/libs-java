@@ -22,7 +22,7 @@
    */ 
 
 #include "JIGS.h"
-#include "NSJavaVirtualMachine.h"
+#include "JIGSSelectorMapping.h"
 
 /* A global reference to the JIGS class. 
    Global thread locking could be done with respect to this class. 
@@ -79,6 +79,8 @@ void JIGSInit (JNIEnv *env)
 	  return;	  
 	}
       [NSJavaVirtualMachine registerJavaVM: jvm];
+
+      _JIGSSelectorMappingInitialize (env);
 
       // Create the basic java wrapper
       JIGSRegisterJavaRootClass (env);
