@@ -76,8 +76,28 @@ _jigs_lookup_class (const char* name)
   NS_DURING
     {
       NSString	*className = [NSString stringWithCString: name];
-      JIGSRegisterJavaClass (JIGSJNIEnv (), className);
+
+      // If class exists in Objc, use it.
       c = NSClassFromString (className);
+      if (c == Nil)
+        {
+          JNIEnv        *env = JIGSJNIEnv ();
+
+          // Lookup supercalss name as a test to see if the java class exists.
+          GSJNI_SuperclassNameFromClassName (env, className);
+
+          // If a java exception was thrown, that means probably the java
+          // class does not exist.
+          if ((*env)->ExceptionCheck (env))
+            {
+              (*env)->ExceptionClear (env);
+            }
+          else
+            {
+              JIGSRegisterJavaClass (env, className);
+              c = NSClassFromString (className);
+            }
+        }
     }
   NS_HANDLER
     {
