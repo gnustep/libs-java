@@ -3,8 +3,8 @@ JNIEXPORT jlong JNICALL
 Java_gnu_gnustep_base_NSDictionary_initWithObjectsForKeys 
 (JNIEnv *env, jobject this, jobjectArray objects, jobjectArray keys)
 {
-  NSArray *we;
-  NSArray *objc_new;
+  NSDictionary *we;
+  NSDictionary *objc_new;
   jlong java;
   
   JIGS_ENTER;
