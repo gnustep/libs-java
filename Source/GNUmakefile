@@ -31,6 +31,8 @@ SUBPROJECTS = loader
 
 LIBRARY_NAME = libgnustep-java
 
+VERSION = 1.0.2
+
 libgnustep-java_HEADER_FILES = \
 ObjcRuntimeUtilities.h \
 GSJNI.h \
