@@ -150,7 +150,7 @@ BOOL _JIGS_prepare_method_struct
   // The following is used to exit upon exception
 #define CLEAN_FAIL_EXIT  { (*env)->PopLocalFrame (env, NULL); return NO; }
   
-  if ((*env)->PushLocalFrame (env, 2) < 0)
+  if ((*env)->PushLocalFrame (env, 3) < 0)
     {
       return NO; // Exception thrown
     }
@@ -351,19 +351,60 @@ BOOL _JIGS_prepare_method_struct
 
   method_types = ObjcUtilities_build_runtime_Objc_signature (types);
   /*  NSLog (@"Mapped types to %s", method_types);  */
-  method_name = mapJavaMethodName (tmpName, className, numberOfArguments, 
-				   tmpToString, method_types, isConstructor);
   
-  for (i = 0; i < count; i++)
+  if (isConstructor)
     {
-      if (!strcmp ((char *)classTable->selIDTable[i].selector, method_name))
+      if (numberOfArguments == 0)
 	{
-	  method_name = strim (tmpToString, isConstructor);
-	  break;
-	}      
+	  method_name = "init";
+	}
+      else
+	{
+	  method_name =  JIGSLongSelectorName (tmpToString, isConstructor);
+	}
     }
+  else
+    {
+      /* We ask for the (java name, java argument signature) */
+      static jmethodID GSJNIMethods_getMethodArgumentSignature = NULL;
+      jstring argSignature;
+      const char*cArgSignature;
 
-  /*  NSLog (@"Mapped method to %s", method_name); */
+      if (GSJNIMethods_getMethodArgumentSignature == NULL)
+	{
+	  GSJNIMethods_getMethodArgumentSignature = (*env)->GetStaticMethodID 
+	    (env, GSJNIMethods, "getMethodArgumentSignature", 
+	     "(Ljava/lang/reflect/Method;)Ljava/lang/String;");
+	  if (GSJNIMethods_getMethodArgumentSignature == NULL)
+	    {
+	      NSLog (@"Could not get method argument signature");
+	      free (tmpName);
+	      free (tmpToString);
+	      CLEAN_FAIL_EXIT;
+	    }
+	}
+
+      argSignature = (*env)->CallStaticObjectMethod 
+	(env, GSJNIMethods, GSJNIMethods_getMethodArgumentSignature, jmethod);
+      if ((*env)->ExceptionCheck (env))
+	{
+	  NSLog (@"Exception while getting method argument signature");
+	  free (tmpName);
+	  free (tmpToString);
+	  CLEAN_FAIL_EXIT;
+	}
+
+      cArgSignature = [GSJNI_NSStringFromASCIIJString (env, argSignature) 
+						      cString];
+
+      /* NSLog (@"Got arg signature of: %s", cArgSignature); */
+
+      method_name = JIGSRegisterObjcProxySelector (env, tmpToString, tmpName, 
+						   cArgSignature, method_types,
+						   numberOfArguments, 
+						   isStatic);
+    }
+  /* NSLog (@"Mapped method to %s", method_name); */
   
   if (types[0] == _C_ID)
     {
