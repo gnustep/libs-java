@@ -195,7 +195,9 @@ classes = (
 {
   "java name" = "gnu.gnustep.base.GSXMLParser";
   
-  "class methods" = ("loadEntity:at:" );
+  "class methods" = (
+    "loadEntity:at:"
+   );
   "instance methods" = ("document",
 			"doValidityChecking:",
 			"errNo",
@@ -204,9 +206,12 @@ classes = (
 			"parse",
 			"parse:",
 			"substituteEntities:");
-  "initializers" = ("initWithSAXHandler:",
-	"initWithSAXHandler:withData:",
-	"initWithSAXHandler:withContentsOfFile:");
+  "initializers" = (
+    "init",
+    "initWithSAXHandler:",
+    "initWithSAXHandler:withData:",
+    "initWithSAXHandler:withContentsOfFile:"
+  );
 },
 
 {
