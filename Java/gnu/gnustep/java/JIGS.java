@@ -2,7 +2,7 @@
    Copyright (C) 2000 Free Software Foundation, Inc.
 
    Written by:  Nicola Pero <nicola@brainstorm.co.uk>
-   Date: July 2000
+   Date: July 2000, September 2000
    
    This file is part of the GNUstep Java Interface Library.
 
@@ -22,14 +22,39 @@
 
 package gnu.gnustep.java;
 
+import java.lang.*;
+import java.util.*;
+
 public class JIGS
 {
   static
-  {
-    System.loadLibrary ("gnustep-java");
-  }
+    {
+      /* The following loads libgnustep-java.so or libgnustep-java_d.so 
+	 according to the environment variable JIGS_DEBUG and to which 
+	 of the two libraries is actually available. */
+      JIGSLibraryLoader.initialize ();
+      /* Safety check */
+      initialize ();
+    }
+
+  /* List of loaded libraries */
+  static Vector loadedLibraries = new Vector ();
+
+  /* The main method used by outside */
+  static public void loadLibrary (String name)
+    {
+      if (loadedLibraries.contains (name))
+	return;
+      
+      /* We do not give second chances :) */
+      loadedLibraries.add (name);
+      
+      JIGSLibraryLoader.loadLibrary (name);
+    }
+
   /*
    * It is safe (but useless) to call the following more than once.
    */
   static native public void initialize ();
 }
+
