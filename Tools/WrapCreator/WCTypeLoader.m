@@ -38,30 +38,34 @@
 #include "WCVoidType.h"
 
 /* Default morphing types.  Oh - it would be nice to have constant objects */
-#define DEFAULT_MORPHTYPES_NUMBER 5
+#define DEFAULT_MORPHTYPES_NUMBER 6
 
 static const struct morphType
 { 
   NSString *objcName; 
   NSString *javaName; 
   NSString *jniName;
+  NSString *javaArgumentType;
   NSString *java2objc; 
   NSString *objc2java; 
 } defaultMorphTypes[DEFAULT_MORPHTYPES_NUMBER] = {
-  { @"NSString *", @"String", @"jstring", 
-    @"GSJNI_NSStringFromJString", @"GSJNI_JStringFromNSString"},
+  { @"NSString *", @"String", @"jstring", @"Ljava.lang.String;", 
+    @"GSJNI_NSStringFromJString", @"GSJNI_JStringFromNSString" },
 
-  { @"NSPoint", @"NSPoint", @"jobject", 
-    @"JIGSNSPointConvertToStruct", @"JIGSNSPointConvertToJobject"},
+  { @"NSPoint", @"NSPoint", @"jobject", @"Lgnu.gnustep.base.NSPoint;", 
+    @"JIGSNSPointConvertToStruct", @"JIGSNSPointConvertToJobject" },
 
-  { @"NSSize", @"NSSize", @"jobject", 
-    @"JIGSNSSizeConvertToStruct", @"JIGSNSSizeConvertToJobject"},
+  { @"NSSize", @"NSSize", @"jobject", @"Lgnu.gnustep.base.NSSize;", 
+    @"JIGSNSSizeConvertToStruct", @"JIGSNSSizeConvertToJobject" },
 
-  { @"NSRect", @"NSRect", @"jobject", 
-    @"JIGSNSRectConvertToStruct", @"JIGSNSRectConvertToJobject"},
+  { @"NSRect", @"NSRect", @"jobject", @"Lgnu.gnustep.base.NSRect;", 
+    @"JIGSNSRectConvertToStruct", @"JIGSNSRectConvertToJobject" },
 
-  { @"NSRange", @"NSRange", @"jobject", 
-    @"JIGSNSRangeConvertToStruct", @"JIGSNSRangeConvertToJobject"}
+  { @"NSRange", @"NSRange", @"jobject", @"Lgnu.gnustep.base.NSRange;", 
+    @"JIGSNSRangeConvertToStruct", @"JIGSNSRangeConvertToJobject" },
+
+  { @"SEL", @"NSSelector", @"jobject", @"Lgnu.gnustep.base.NSSelector;", 
+    @"JIGSSELFromNSSelector", @"JIGSNSSelectorFromSEL" }
   
 };
 
@@ -107,12 +111,14 @@ static const struct morphType
     return [[WCCharType alloc] initWithObjcType: name  signed: YES];
 
   if ([name isEqualToString: @"char"] == YES)
+    {
 #if CHAR_MIN == 0
-    return [[WCCharType alloc] initWithObjcType: name  signed: NO];
+      return [[WCCharType alloc] initWithObjcType: name  signed: NO];
 #else
-  return [[WCCharType alloc] initWithObjcType: name  signed: YES];
+      return [[WCCharType alloc] initWithObjcType: name  signed: YES];
 #endif
-  
+    }
+
   if ([name isEqualToString: @"float"] == YES)
     return [[WCFloatType alloc] initWithObjcType: name];
 
@@ -128,6 +134,7 @@ static const struct morphType
 	  return [[WCMorphType alloc] initWithObjcType: name
 				      javaType: morph.javaName
 				      jniType: morph.jniName
+				      javaArgumentType: morph.javaArgumentType
 				      javaToObjcFunction: morph.java2objc
 				      objcToJavaFunction: morph.objc2java];
 	}
