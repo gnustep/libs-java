@@ -79,6 +79,8 @@ static NSMutableArray *classList;
   NSEnumerator *enumerator;
   NSString *customType;
   NSString *primitiveType;
+  NSArray *enumTypes;
+  NSString *enumType;
   NSDictionary *classInfo;
   
   verboseOutput = verbOut;
@@ -126,6 +128,31 @@ static NSMutableArray *classList;
 	 type. */
       [[WCCustomType alloc] initWithObjcType: customType
 			    primitiveType: primitiveType];
+    }
+  [pool release];
+
+  /* Load enumeration types */
+  pool = [NSAutoreleasePool new];
+  enumTypes = [wrappingPreferences objectForKey: @"enumerations"];
+  
+  enumerator = [enumTypes objectEnumerator];
+  
+  while (1)
+    {
+      enumType = [enumerator nextObject];
+      if (enumType == nil)
+	{
+	  break;
+	}
+      if (verboseOutput == YES)
+	{
+	  printf ("Loading enum %s\n", [enumType cString]);
+	}
+      /* Allocating the type registers it in WCType's internal table
+	 so it will be returned next time WCType's is asked for this
+	 type. */
+      [[WCCustomType alloc] initWithObjcType: enumType
+			    primitiveType: @"int"];
     }
   [pool release];
 
