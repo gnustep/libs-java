@@ -1,3 +1,10 @@
+Fri Feb  9 09:50:38 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* NSObject.m (Java_gnu_gnustep_base_NSObject_NSObject_1alloc): Do
+	not add the object to the mapping tables.  This must now be done
+	by wrappers for init methods - which should put in the tables the
+	result of the init method.
+
 Tue Feb  6 18:25:33 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGS.h, GNUmakefile: Version is now 1.2.0.
