@@ -31,17 +31,23 @@
 #include <Foundation/Foundation.h>
 
 /* 
- * This code could be reused for building interfaces to other languages.
- *
- * It mainly deals with facilities useful for creating Objective-C
- * classes of objects which can act as proxies to objects in other
- * languages.
- *
+ * This code is by no means tidied to Java.  
+
+ * It provides facilities to programmatically add classes and methods
+ * to the objc runtime, while the runtime is already running.
+
+ * It could be reused for building interfaces to other languages.
+
  * At present this code only works with the GNU Objective-C Runtime, 
  * because we need to access the runtime internal structures to add 
  * classes and methods. 
- *  
  */
+
+/*
+
+  Creating a new class
+
+  */
 
 /*
  * GSJavaInterface_new_class:
@@ -70,34 +76,59 @@
  * Return NO upon failure (because the class already exists or the
  * superclass does not exist), and YES upon success.
  
- * This method is completely general and could be used in other 
- * interfaces.  */
+ */
 
 BOOL GSJavaInterface_new_class (const char *name, const char *superclassName, 
 				int ivarNumber, ...);
 
 /*
- * GSJavaInterface_add_method_list:
+
+  Adding new methods to a class
+
+  Quick HOWTO: 
+  A. alloc a MethodList using GSJavaInterface_alloc_method_list.
+  B. insert the methods you want to register in the MethodList using 
+     GSJavaInterface_alloc_method_list. 
+     To get the objective-C runtime type for a method, you may want to use 
+     GSJavaInterface_build_runtime_Objc_signature
+  C. register your method list with the objective-C runtime using 
+     GSJavaInterface_register_method_list.
+  */
+
+/*
+ * GSJavaInterface_alloc_method_list:
  *
- * Add the list `ml' of methods to an existing Class `class'.
- * They are registered as instance methods. 
- * To add class methods, you simply need to pass the meta class 
- * [(Class)class->class_pointer] instead of the class.
+ * Allocate a MethodList capable of containing `count' methods. 
+ * A pointer to the allocated list is returned. 
  *
- * This method is completely general and could be used in other
- * interfaces.  Actually, it could be in the objc runtime itself.
- * 
  */
 
-void GSJavaInterface_add_method_list (Class class, MethodList *ml);
+MethodList *GSJavaInterface_alloc_method_list (int count);
+
+/*
+ * GSJavaInterface_insert_method_in_list:
+ *
+ * Insert a method definition in a MethodList.  `ml' is a pointer to
+ * the MethodList.  `index' is the index of the method to add.  `name'
+ * is the name of the method; `types' is the objective-C run-time
+ * signature of the method (see below for a facility to create this
+ * automatically), `imp' is the IMP (ie, the actual implementation of
+ * the method).  `imp' must be a pointer to a function taking the
+ * correct arguments and returning the correct type; cast it to an IMP 
+ * then before calling this function.
+ */
+
+void GSJavaInterface_insert_method_in_list (MethodList *ml, 
+					    int index, const char *name, 
+					    const char *types, IMP imp);
 
 /*
  * GSJavaInterface_build_runtime_Objc_signature:
  *
  * This method creates a runtime objc signature which can be used 
  * to describe type for a selector *on this machine* (you need this 
- * signature for example to build the MethodList to pass to the 
- * GSJavaInterface_add_method_list above).
+ * signature for example to insert a method description in a method list,
+ * using the GSJavaInterface_insert_method_in_list function above).
  *
  * It takes as argument a 'naive' objc signature, in the form of 
  * a string obtained by concatenating the following strings: 
@@ -123,26 +154,18 @@ void GSJavaInterface_add_method_list (Class class, MethodList *ml);
 
 inline const char *GSJavaInterface_build_runtime_Objc_signature (const char *);
 
+/*
+ * GSJavaInterface_register_method_list:
+ *
+ * Add the list `ml' of methods to an existing Class `class'.
+ * They are registered as instance methods. 
+ * To add class methods, you simply need to pass the meta class 
+ * [(Class)class->class_pointer] instead of the class.
+ *
+ * *Never* release or modify a method list after registering it with
+ * *the objective-C runtime.  
+ */
+
+void GSJavaInterface_register_method_list (Class class, MethodList *ml);
+
 #endif /* __ObjcRuntimeUtilitis_h_GNUSTEP_JAVA_INCLUDE */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
