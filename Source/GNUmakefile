@@ -22,12 +22,10 @@
 #  Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
 #
 
+GNUSTEP_INSTALLATION_DIR=$(GNUSTEP_SYSTEM_ROOT)
+
 include $(GNUSTEP_MAKEFILES)/common.make
 include $(GNUSTEP_MAKEFILES)/jni.make
-
-LIBRARIES_DEPEND_UPON = -lgnustep-base -lobjc -lc
-ADDITIONAL_INCLUDE_DIRS += -I../Java/
-ADDITIONAL_OBJCFLAGS += -Wall
 
 LIBRARY_NAME = libgnustep-java
 
@@ -49,7 +47,7 @@ JIGSMapper.h \
 JIGSProxy.h \
 java.lang.Object.h
 
-libgnustep-java_HEADER_FILES_INSTALL_DIR = /java
+libgnustep-java_HEADER_FILES_INSTALL_DIR = /gnustep/java
 
 libgnustep-java_OBJC_FILES = \
 ObjcRuntimeUtilities.m \
@@ -69,6 +67,12 @@ NSJavaVirtualMachine.m \
 JIGS.m \
 NSObject.m     
 
+LIBRARIES_DEPEND_UPON = $(FND_LIBS) $(OBJC_LIBS) 
+ADDITIONAL_INCLUDE_DIRS += -I../Java/
+ADDITIONAL_OBJCFLAGS += -Wall
+
 include $(GNUSTEP_MAKEFILES)/library.make
+
+
 
 
