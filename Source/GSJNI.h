@@ -27,6 +27,7 @@
 
 #include <jni.h>
 #include <Foundation/Foundation.h>
+#include "GSJNIArray.h"
 #include "GSJNICache.h"
 #include "GSJNIClass.h"
 #include "GSJNIDebug.h"
