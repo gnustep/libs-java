@@ -36,7 +36,7 @@ static NSCharacterSet *atSymbol = nil;
 static NSCharacterSet *endClassName = nil;
 static NSCharacterSet *subclassSymbol = nil;
 
-static void skipObjcType (NSScanner *scanner)
+static inline void skipObjcType (NSScanner *scanner)
 {
   /* Skip spaces */
   [scanner scanCharactersFromSet: whiteSpace intoString: NULL];
@@ -102,7 +102,11 @@ static void skipObjcType (NSScanner *scanner)
 
 - (id) initWithHeaderFile: (NSString *)fileName
 {
+  NSScanner *scanner;
   NSString *string;
+  NSMutableString *methodName;
+  int startIndex;
+  BOOL isClassMethod = NO;
 
   string = [NSString stringWithContentsOfFile: fileName];
   if (string == nil)
@@ -112,16 +116,13 @@ static void skipObjcType (NSScanner *scanner)
 
   ASSIGN (header, string);
 
-  return self;
-}
+  classMethods = RETAIN ([NSMutableDictionary new]);
+  instanceMethods = RETAIN ([NSMutableDictionary new]);
 
-- (NSString *) declarationOfMethod: (NSString *)objcMethodName
-		     isClassMethod: (BOOL)flag
-{
-  NSScanner *scanner;
-  NSString *string;
-  NSMutableString *methodName;
-  int startIndex;
+  if ([WCLibrary verboseOutput] == YES)
+    {
+      printf ("Parsing header file...\n");
+    }
 
   scanner = [NSScanner scannerWithString: header];
 
@@ -130,24 +131,31 @@ static void skipObjcType (NSScanner *scanner)
     {
       if ([scanner isAtEnd] == YES)
 	{
-	  return nil;
+	  break;
 	}
 
       /* Scan up to next class interface declaration */
       [scanner scanUpToCharactersFromSet: atSymbol intoString: NULL];
-
+      
       [scanner scanUpToCharactersFromSet: whiteSpace intoString: &string];
-
+      
       if (([string isEqualToString: @"@interface"] == NO) 
 	  && ([string isEqualToString: @"@protocol"] == NO))
-	{
+	{ 
 	  continue;
 	}
-
+     
+      if ([WCLibrary verboseOutput] == YES)
+	{
+	  printf ("X");
+	  fflush (stdout);
+	}
+ 
       /* Loop on the list of methods */
-      while (1)	{
+      while (1)	
+	{
 	  int argument;
-
+	  
 	  /* Look for method declaration */
 	  [scanner scanUpToCharactersFromSet: plusMinusOrEndClass intoString: NULL];
 	  /* Save the starting index */
@@ -174,19 +182,16 @@ static void skipObjcType (NSScanner *scanner)
 	    }
 	  if ([string isEqualToString: @"+"] == YES)
 	    {
-	      if (flag == NO)
-		continue;
+	      isClassMethod = YES;
 	    }
 	  else if ([string isEqualToString: @"-"] == YES)
 	    {
-	      if (flag == YES)
-		continue;
+	      isClassMethod = NO;
 	    }
 	  else
 	    {
 	      [NSException raise: @"WCHeaderParserException"
-			   format: @"Could not find method %@ in the header file", 
-			   objcMethodName];
+			   format: @"Could not parse the header file"];
 	    }
 	  /* Skip return type */
 	  skipObjcType (scanner);
@@ -247,26 +252,64 @@ static void skipObjcType (NSScanner *scanner)
 		    {
 
 		      [NSException raise: @"WCHeaderParserException"
-				   format: @"Error while parsing method %@ "
-				   @"in the header file", 
-				   objcMethodName];
+				   format: @"Error while parsing the header file"];
 		    }
 		}
 	      argument++;
 	    }
-	  if ([methodName isEqualToString: objcMethodName] == YES)
+	  if (methodName != nil)
 	    {
 	      NSRange methodDeclarationRange;
 	      int endIndex = [scanner scanLocation];
 	      
 	      methodDeclarationRange = NSMakeRange (startIndex, 
 						    (endIndex - startIndex));
-	     
-
-	      return [header substringWithRange: methodDeclarationRange];
+	      
+	      
+	      string = [header substringWithRange: methodDeclarationRange];
+	      
+	      if (isClassMethod == YES)
+		{
+		  [classMethods setObject: string  forKey: methodName];
+		}
+	      else
+		{
+		  [instanceMethods setObject: string  forKey: methodName];
+		}
 	    }
-      }
+	}
     }
+
+  if ([WCLibrary verboseOutput] == YES)
+    {
+      printf ("\n");
+    }
+
+  return self;
+}
+
+- (NSString *) declarationOfMethod: (NSString *)objcMethodName
+		     isClassMethod: (BOOL)flag
+{
+  NSString *returnString = nil;
+
+  if (flag == YES)
+    {
+      returnString = [classMethods objectForKey: objcMethodName];
+    }
+  else
+    {
+      returnString = [instanceMethods objectForKey: objcMethodName];
+    }
+  
+  if (returnString == nil)
+    {
+      [NSException raise: @"WCHeaderParserException"
+		   format: @"Could not find method %@ in the header file", 
+		   objcMethodName];
+    }
+
+  return returnString;
 }
 
 - (NSString *) getSuperclassOfClass: (NSString *)objcClassName
