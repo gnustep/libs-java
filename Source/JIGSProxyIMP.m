@@ -184,19 +184,19 @@ process_argument (JNIEnv *env, const char *tmptype, va_list ap)
     }
   else if (*tmptype == _JAVA_BOOLEAN) 
     {                  
-      ret.z = (va_arg (ap, jboolean)); 
+      ret.z = (unsigned char)(va_arg (ap, int /*jboolean*/)); 
     }
   else if (*tmptype == _JAVA_BYTE) 
     {                  
-      ret.b = (va_arg (ap, jbyte)); 
+      ret.b = (unsigned char)(va_arg (ap, int /*jbyte*/)); 
     }
   else if (*tmptype == _JAVA_CHAR) 
     {                  
-      ret.c = (va_arg (ap, jchar)); 
+      ret.c = (signed char)(va_arg (ap, int /*jchar*/)); 
     }
   else if (*tmptype == _JAVA_SHORT) 
     {                  
-      ret.s = (va_arg (ap, jshort)); 
+      ret.s = (short)(va_arg (ap, int /*jshort*/)); 
     }
   else if (*tmptype == _JAVA_INT) 
     {                  
@@ -208,7 +208,7 @@ process_argument (JNIEnv *env, const char *tmptype, va_list ap)
     }
   else if (*tmptype == _JAVA_FLOAT) 
     {                  
-      ret.f = (va_arg (ap, jfloat)); 
+      ret.f = (float)(va_arg (ap, double /*jfloat*/)); 
     }
   else if (*tmptype == _JAVA_DOUBLE) 
     {                  

@@ -1,3 +1,9 @@
+2001-06-07 Rcihard Frith-Macdonald <rfm@gnu.org>
+
+	* JIGSProxyIMP.m: process_argument() changed vararg types to stop
+	GCC-3.0 objecting and aborting.  It doesn't like us specifying the
+	original types, but wants the promoted types to be given.
+
 Mon May 21 02:58:05 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* GNUmakefile, JIGS.h: Version is now 1.4.0.
