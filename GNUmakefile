@@ -24,7 +24,12 @@
 
 include $(GNUSTEP_MAKEFILES)/common.make
 
-PACKAGE_NAME = gstep-java
+PACKAGE_NAME = gnustep-java
+# Keep it in sync manually with Source/JIGS.h and Source/GNUmakefile
+VERSION = 1.0.2
+
+GNUSTEP_INSTALLATION_DIR=$(GNUSTEP_SYSTEM_ROOT)
+RPM_DISABLE_RELOCATABLE=YES
 
 # NB: "Java" must come before "Source"
 SUBPROJECTS = Java Source Tools Documentation
