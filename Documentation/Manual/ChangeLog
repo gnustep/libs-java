@@ -1,3 +1,11 @@
+Thu Jan 25 12:37:59 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* WrappingObjcLibraries.tex (Creating and Compiling the Wrappers):
+	Updated for the fact that now JIGS automatically compiles and
+	installs the wrappers for you.  (Turning on Generation of Java
+	Wrappers): Explain how to stop JIGS from automatically try to
+	compile/install the java wrappers.
+
 Mon Jan  8 15:49:42 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* WrappingObjcLibraries.tex (Turning on Generation of Java
