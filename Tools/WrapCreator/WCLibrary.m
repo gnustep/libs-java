@@ -89,6 +89,12 @@ static NSMutableArray *classList;
   NSString *jigsFileName;
   NSString *headerFileName;
 
+  /* Set these options first so that WCHeaderParser can access them */
+  [(NSValue *)[options objectForKey: @"VerboseOutput"] 
+	      getValue: &verboseOutput];
+  [(NSValue *)[options objectForKey: @"OutputJavadoc"] 
+	      getValue: &outputJavadoc];
+
   headerFileName = [options objectForKey: @"PreprocessedHeaderFileName"];
 
   headerParser = [WCHeaderParser newWithHeaderFile: headerFileName];
@@ -111,10 +117,6 @@ static NSMutableArray *classList;
   ASSIGN (libraryHeader, [options objectForKey: @"HeaderFile"]);  
   ASSIGN (wrapDir, [options objectForKey: @"WrapDirectory"]);
   ASSIGN (libraryName, [options objectForKey: @"LibraryName"]);
-  [(NSValue *)[options objectForKey: @"VerboseOutput"] 
-	      getValue: &verboseOutput];
-  [(NSValue *)[options objectForKey: @"OutputJavadoc"] 
-	      getValue: &outputJavadoc];
 
   /* Load custom types */
   pool = [NSAutoreleasePool new];
