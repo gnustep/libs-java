@@ -23,31 +23,6 @@
 
 include $(GNUSTEP_MAKEFILES)/common.make
 
-JAVA_PACKAGE_NAME = gnu.gnustep.java-test
+SUBPROJECTS = Base
 
-#
-# Keep the gui tests after the base tests so that people can 
-# compile all the base tests anyway if they don't use the gui
-#
-gnu.gnustep.java-test_JAVA_FILES =       \
-    NSObjectTest.java                    \
-    NSObjectSubclassTest.java            \
-    NSArrayTest.java                     \
-    NSProcessInfoTest.java               \
-    NSDataTest.java                      \
-    NSDateTest.java                      \
-    NSTaskTest.java                      \
-    NSNotificationCenterTest.java        \
-    NSSelectorTest.java                  \
-    NSPropertyListSerializationTest.java \
-    ThreadsTest.java                     \
-    NSApplicationTest.java               \
-    NSButtonTest.java                    \
-    NSButtonTest2.java                   \
-    NSWindowTest.java
-
-
-
-include $(GNUSTEP_MAKEFILES)/java.make
-
-
+include $(GNUSTEP_MAKEFILES)/aggregate.make
