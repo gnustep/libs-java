@@ -42,8 +42,6 @@ static jclass GSJNIMethods = NULL;
 struct _JIGSSelectorIDTable *_JIGS_selIDTable = NULL;
 objc_mutex_t _JIGS_selIDTableLock = NULL;
 
-extern objc_mutex_t objc_mutex_allocate (void);
-
 /*
  * Each of these variables store the @encoding for that particular 
  * type on this machine.
