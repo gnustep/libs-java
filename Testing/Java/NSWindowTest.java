@@ -49,7 +49,11 @@ class NSWindowTest
   {
     NSRect rect = new NSRect (0, 0, 400, 200);
 
-    window = new NSWindow (rect, 15, 0, false);
+    window = new NSWindow (rect, NSWindow.TitledWindowMask 
+			   | NSWindow.ClosableWindowMask 
+			   | NSWindow.MiniaturizableWindowMask 
+			   | NSWindow.ResizableWindowMask, 
+			   NSWindow.Retained, false);
     window.setTitle ("GNUstep GUI working from Java");
   }
   
