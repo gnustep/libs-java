@@ -1,3 +1,9 @@
+Wed Jul 23 18:35:06 2003  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* JIGSMapper.m: Create local reference to existing proxied object
+	before attempting to return it, so it can't be garbage collected
+	by another thread before we are done with it.
+
 Sun May 11 07:21:06 2003  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* JIGSInit.m (_jigs_lookup_class): Check to see if class exists
