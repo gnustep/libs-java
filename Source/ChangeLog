@@ -1,3 +1,16 @@
+Thu Jul 27 11:44:13 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* JIGSProxyIMP.h: New file.
+	* JIGSProxyIMP.m: New file.
+	* JIGSProxySetup.m: New file.
+	* JIGSProxySetup.h: New file.
+	* JIGSProxy.h: New file.
+	* JIGSProxy.m: New file.
+
+Thu Jul 27 11:36:59 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* ObjcRuntimeUtilities.m: Added missing include.
+
 Thu Jul 27 11:33:40 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* GSJNICache.h (GSJNI_NewClassCache): Renamed function 
