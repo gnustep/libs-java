@@ -32,6 +32,9 @@
   NSMutableDictionary *classMethods;
   NSMutableDictionary *instanceMethods;
 }
+
++ (NSString *) methodNameFromMethodDeclaration: (NSString *)declaration;
+
 + (id) newWithHeaderFile: (NSString *)fileName;
 
 - (id) initWithHeaderFile: (NSString *)fileName;
