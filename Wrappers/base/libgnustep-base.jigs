@@ -5,6 +5,142 @@ types = {
 enumerations = (RunLoopEventType);
 classes = (
 {
+  "java name" = "gnu.gnustep.base.GSXMLAttribute";
+  
+  "class methods" = ("descriptionFromType:",
+			"typeFromDescription:" );
+  "instance methods" = ("children",
+			"content",
+			"doc",
+			"makeChildWithNamespace:name:content:",
+			"makeComment:",
+			"makePI:content:",
+			"name",
+			"next",
+			"ns",
+			"nsDef",
+			"parent",
+			"prev",
+			"properties",
+			"propertiesAsDictionary",
+			"setProp:value:",
+			"type",
+			"typeDescription",
+			"value");
+  "initializers" = ("initWithNamespace:name:",
+    "initWithNode:name:value:" );
+},
+
+{
+  "java name" = "gnu.gnustep.base.GSXMLDocument";
+  
+  "instance methods" = ("encoding",
+			"makeNodeWithNamespace:name:content:",
+			"root",
+			"save:",
+			"setRoot:",
+			"stringValue",
+			"version");
+  "initializers" = ("initWithVersion:" );
+},
+
+{
+  "java name" = "gnu.gnustep.base.GSXMLNamespace";
+  
+  "class methods" = ("descriptionFromType:",
+			"typeFromDescription:" );
+  "instance methods" = ("href",
+			"next",
+			"prefix",
+			"type",
+			"typeDescription");
+  "initializers" = ("initWithNode:href:prefix:" );
+},
+
+{
+  "java name" = "gnu.gnustep.base.GSXMLNode";
+  
+  "class methods" = ("descriptionFromType:",
+			"typeFromDescription:" );
+  "instance methods" = ("children",
+			"content",
+			"doc",
+			"makeChildWithNamespace:name:content:",
+			"makeComment:",
+			"makePI:content:",
+			"name",
+			"next",
+			"ns",
+			"nsDef",
+			"parent",
+			"prev",
+			"properties",
+			"propertiesAsDictionary",
+			"setProp:value:",
+			"type",
+			"typeDescription");
+  "initializers" = ("initWithNamespace:name:" );
+},
+
+{
+  "java name" = "gnu.gnustep.base.GSXMLParser";
+  
+  "class methods" = ("loadEntity:at:" );
+  "instance methods" = ("doc",
+			"doValidityChecking:",
+			"errNo",
+			"getWarnings:",
+			"keepBlanks:",
+			"parse",
+			"parse:",
+			"substituteEntities:");
+  "initializers" = ("initWithSAXHandler:",
+	"initWithSAXHandler:withData:",
+	"initWithSAXHandler:withContentsOfFile:");
+},
+
+{
+  "java name" = "gnu.gnustep.base.GSSAXHandler";
+  
+  "class methods" = ("handler" );
+  "instance methods" = (
+			"attribute:value:",
+			"attributeDecl:name:type:typeDefValue:defaultValue:",
+			"cdataBlock:",
+			"characters:",
+			"comment:",
+			"elementDecl:type:",
+			"endDocument",
+			"endElement:",
+			"entityDecl:type:public:system:content:",
+			"error:",
+			"error:colNumber:lineNumber:",
+			"externalSubset:externalID:systemID:",
+			"fatalError:",
+			"fatalError:colNumber:lineNumber:",
+			"getEntity:",
+			"getParameterEntity:",
+			"globalNamespace:href:prefix:",
+			"hasExternalSubset",
+			"hasInternalSubset",
+			"ignoreWhitespace:",
+			"internalSubset:externalID:systemID:",
+			"isStandalone",
+			"loadEntity:at:",
+			"namespaceDecl:href:prefix:",
+			"notationDecl:public:system:",
+			"parser",
+			"processInstruction:data:",
+			"reference:",
+			"startDocument",
+			"startElement:attributes:",
+			"unparsedEntityDecl:public:system:notationName:",
+			"warning:",
+			"warning:colNumber:lineNumber:" );
+  "initializers" = ("init" );
+},
+
+{
   "java name" = "gnu.gnustep.base.NSArray";
   
   "file to include in java code" = "NSArray.java.add";

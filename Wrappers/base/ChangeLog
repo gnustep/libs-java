@@ -1,3 +1,8 @@
+Thu Apr 26 12:20:00 2001  Richard Frith-Macdonald <richard@brainstorm.co.uk>
+
+	* libgnustep-base.jigs: Wrap GSXML classes.
+	* gnustep-base.h: include GSXML.h.
+
 Wed Apr 25 12:20:03 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GNUmakefile (VERSION): Simply set this variable to
