@@ -40,8 +40,10 @@ void GSUnregisterCurrentThread (void);
  * Calling this more than once is safe, but useless.
  * It can return with a GSJNIException.
  *
- * From Java, you may call it by calling gnu.gnustep.java.JIGS.initialize ().
- * This is automatically done whenever the class NSObject.java is loaded 
+ * From Java, you may call it (implicitly) by calling
+ * gnu.gnustep.java.JIGS.initialize () {that will call
+ * JIGSInitFromJava (see below) which ends up calling JIGSInit}.  This
+ * is automatically done whenever the class NSObject.java is loaded
  * into your java application.
  *
  * To call JIGSInit from Objective-C, you first need to start a Java 
@@ -56,6 +58,11 @@ void GSUnregisterCurrentThread (void);
 
  */
 void JIGSInit (JNIEnv *env);
+
+/* JIGSInitFromJava is called only by
+   gnu.gnustep.java.JIGS.initialize.  It performs some little java
+   specific initialization, then calls the normal JIGSInit. */
+void JIGSInitFromJava (JNIEnv *env);
 
 #endif /*__JIGSInit_h_GNUSTEP_JAVA_INCLUDE*/
 
