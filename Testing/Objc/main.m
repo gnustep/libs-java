@@ -200,7 +200,7 @@ int main (int argc, char **argv, char **penv)
    printf ("%s\n", [GSJNI_DescriptionOfJObject (env, jnumber)  lossyCString]); \
 })
 
-  TEST_NUMBER_MORPH(numberWithBool: YES, Bool); 
+  TEST_NUMBER_MORPH(numberWithBool: YES, Bool);
   TEST_NUMBER_MORPH(numberWithBool: NO, Bool);
   TEST_NUMBER_MORPH(numberWithChar: 'a', Char); 
   TEST_NUMBER_MORPH(numberWithChar: 'A', Char);
@@ -226,12 +226,78 @@ int main (int argc, char **argv, char **penv)
   printf ("ok (possibly)\n");
 #endif 0
 
+#if 0
+  /* Testing key/value coding for Java objects - ahm - well - we want
+     to test accessing instance variables of Java objects - the only
+     library object I found which had a declared field was
+     java.io.StringReader - we set the field (which should be a lock)
+     to a string - not very useful but it's just to check that it
+     works. */
+  {
+    Class javaIOStringReader;
+    NSObject *instance;
+    typedef NSObject *(*newReaderIMP)(id, SEL, NSString *);
+    newReaderIMP imp_;
+    
+    printf ("Now loading the java.io.StringReader class...");
+    JIGSRegisterJavaClass (env, @"java.io.StringReader");
+    printf ("ok\n");
+    
+    printf ("Now asking for its class pointer...");
+    javaIOStringReader = NSClassFromString (@"java.io.StringReader");
+    
+    if (javaIOStringReader == Nil)
+      {
+	printf ("Could not get it ==> test failed\n");
+	RELEASE (pool);
+	return 0;
+      }
+    else
+      {
+	printf ("Got %s\n", [[javaIOStringReader description] cString]);
+      }
+
+    printf ("Now creating an instance:\n");
+    
+    /* Alloc it */
+    instance = [javaIOStringReader alloc];
+    /* Get the constructor with a single String argument */
+    selector = NSSelectorFromString (@"java.io.StringReader (java.lang.String)");
+    imp_ = (newReaderIMP)[instance methodForSelector: selector];
+    /* Call it on the instance to initialize it <this is when the java
+       object is really allocated> */
+    instance = imp_ (instance, selector, @"Test");
+
+    printf ("Got instance %s\n", [[instance description] cString]);
+
+    /* Access its 'lock' field using valueForKey */
+    printf ("Getting the lock using key/value coding...\n");
+    printf ("Got %s\n", 
+	    [[[instance valueForKey: @"lock"] description] cString]);
+    
+    /* Set it - not really meaningful as we set it to a string anyway */
+    printf ("Setting the lock to `Hi' using key/value coding...\n");
+    [instance takeValue: @"Hi" forKey: @"lock"];
+
+    /* Checking that we set it right */
+    printf ("Getting the lock using key/value coding...\n");
+    printf ("Got %s\n", 
+	    [[[instance valueForKey: @"lock"] description] cString]);
+
+    if (![[instance valueForKey: @"lock"] isEqualToString: @"Hi"])
+      {
+	printf ("Didn't work :-( -- test FAILED\n");
+	abort ();
+      }
+  }
+#endif   
+
   printf ("And that's enough for today: test passed.\n");
 
+  
   /*
    * The following crashes Sun's JVM because they have not implemented 
-   * destroying a virtual machine; moreover their thread support is buggy,
-   * which doesn't allow us to catch the exception, so better comment it out.
+   * destroying a virtual machine.
    */
 
   /*
