@@ -1,3 +1,8 @@
+Sun Nov 25 12:13:00 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* NSObject.m (Java_gnu_gnustep_base_NSObject_finalize_1native): 
+	#ifdefed out the new code ... better use the stable one for now.
+
 Sun Nov 25 02:23:14 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* NSObject.m (Java_gnu_gnustep_base_NSObject_finalize_1native):
