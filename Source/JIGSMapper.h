@@ -153,6 +153,12 @@ Class JIGSClassFromThisClass (JNIEnv *env, jclass class);
  *
  */
 
+#if defined(LIB_FOUNDATION_LIBRARY)
+#  ifndef GS_SIZEOF_VOIDP
+#    define GS_SIZEOF_VOIDP 4
+#  endif
+#endif
+
 /*
  * We store pointers to the real object in the java proxy, 
  * in its realObject ivar, which is of type jlong (64 bit).  
