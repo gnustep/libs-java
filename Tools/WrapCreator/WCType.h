@@ -76,7 +76,7 @@
 /*
  * Eg: if StringType is the shared Type for strings, 
  * [StringType codeToConvertToObjc: @"var1" givingResult: @"var0"]; will output: 
- * @"var1 = GSJNI_NSStringFromJString (env, var0);"
+ * @"var1 = JIGSNSStringFromJstring (env, var0);"
  *
  */
 - (NSString *) codeToConvertToObjc: (NSString *)jniArgument
@@ -85,7 +85,7 @@
 /*
  * Eg: if StringType is the shared Type for strings, 
  * [StringType codeToConvertToJava: @"var1" givingResult: @"var0"]; will output: 
- * @"var1 = GSJNI_JStringFromNSString (env, var0);"
+ * @"var1 = JIGSJstringFromNSString (env, var0);"
  *
  */
 - (NSString *) codeToConvertToJava: (NSString *)objcArgument
