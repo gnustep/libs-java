@@ -302,11 +302,8 @@ endif
 	  echo "To compile and install the wrapper library, please go into"; \
 	  echo "the $(WRAPPER_DIR) directory,";                              \
 	  echo "and make, make install there.";                              \
-	  echo "Add \`BUILD_JAVA_WRAPPER_AUTOMATICALLY=yes' to the makefile";\
-	  echo "if you want me to do this for you automatically next time";  \
 	else                                                                 \
-	  echo "Now trying to automatically compile the wrapper library for you..."; \
-	  echo "Add \`BUILD_JAVA_WRAPPER_AUTOMATICALLY=no' in the makefile to disable this."; \
+	  echo "Now automatically compiling the wrapper library for you..."; \
 	fi
 	@echo
 
