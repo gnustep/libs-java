@@ -1,3 +1,14 @@
+Tue Oct 10 17:33:26 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* JIGSMapper.m: New table to make reverse class
+	mapping. (_JIGSFirstJavaProxySuperClass): Rewritten.  Now
+	everything should work when class names are mapped from objc to
+	java in not-trivial ways.  (_JIGSMapperInitialize): Create the new
+	reverse table.  (JIGSClassFromThisClass),
+	(_JIGSAllocClassForThis): Rewritten to use the new
+	_JIGSFirstJavaProxyClass.  (JIGSRegisterJavaProxyClass): Insert
+	the class mapping in the reverse table too.
+
 Fri Oct  6 17:16:51 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* JIGSProxySetup.m (convertSignature): Manage ':' for 
