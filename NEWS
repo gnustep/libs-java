@@ -1,3 +1,10 @@
+Release Notes for JIGS version 1.0
+==================================
+
+This release provides documentation.  A first version of the JIGS
+manual, covering programming in GNUstep from Java and wrapping
+Objective-C libraries, is included.
+
 Release Notes for JIGS version 0.9
 ==================================
 
