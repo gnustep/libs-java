@@ -46,6 +46,7 @@ classes = (
     "charsetFromEncoding:",
     "decodeBase64:",
     "decodeBase64String:",
+    "documentWithContent:type:name:",
     "encodeBase64:",
     "encodeBase64String:",
     "encodingFromCharset:"
@@ -76,7 +77,6 @@ classes = (
     "rawMimeData:",
     "setContent:",
     "setContent:type:name:",
-    "setContent:type:subtype:name:",
     "setHeader:"
   );
   "initializers" = (
