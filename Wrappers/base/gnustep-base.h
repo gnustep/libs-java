@@ -3,3 +3,4 @@
 #include <GNUstepBase/GSXML.h>
 #include <GNUstepBase/GSCategories.h>
 #include "NSPropertyListSerialization.h"
+#include "GSDebug.h"

@@ -7,6 +7,16 @@ types = {
 
 classes = (
 
+  {
+    "java name" = "gnu.gnustep.base.GSDebug";
+    "file to include in objective-c code" 
+      = "GSDebug.m.add";
+
+    "class methods" = ("setDebugAllocationActive:",
+		       "printAllocationList",
+		       "printAllocationListSinceLastCheck");
+  },
+
 {
   "java name" = "gnu.gnustep.base.GSMimeHeader";
   
