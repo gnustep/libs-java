@@ -1,3 +1,15 @@
+Mon May 21 02:02:16 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	Building java wrappers made independent from building the library.
+	* Makefiles/java-wrapper.make: Rewritten.
+	* Makefiles/java-wrapper.top.template: Do not set PACKAGE_NAME and
+	VERSION.
+	* Makefiles/java-wrapper.debug.top.template: Idem.
+	* Makefiles/java-wrapper.objc.template (ADDITIONAL_LIB_DIRS):
+	Removed.  (ADDITIONAL_INCLUDE_DIRS): Updated for new
+	java-wrapper.make.
+	* Makefiles/search_header.sh: New tool to search for headers.
+
 Fri May 18 01:08:45 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	Made a backup of the old java-wrapper makefiles before the planned
