@@ -39,12 +39,17 @@ void JIGSInit (JNIEnv *env)
 {
   NSAutoreleasePool *pool = [NSAutoreleasePool new]; 
   
-  NSDebugLog (@"JIGSInit");
-  
   if (JIGS == NULL)
     {
       JavaVM *jvm;
+#if	defined(GS_FAKE_MAIN) || defined(GS_PASS_ARGUMENTS)
+      extern char**	environ;
+      static char	*args[2] = { "java", 0 };
       
+      [NSProcessInfo initializeWithArguments: args
+				       count: 1
+				 environment: environ]; 
+#endif
       JIGS = GSJNI_NewClassCache (env, "gnu/gnustep/java/JIGS");
 
       if (JIGS == NULL)
