@@ -27,6 +27,7 @@
 #include "ObjcRuntimeUtilities.h"
 #include "java.lang.Object.h"
 #include "NSJavaVirtualMachine.h"
+#include "JIGSMapper.h"
 
 // This is roughly the implementation of 'dealloc' of our java.lang.Object 
 // class.  When the class is created at run-time, this method is added to it.
@@ -39,6 +40,7 @@ void _java_lang_Object__dealloc_ (id rcv, SEL sel)
   // Delete Global Reference to realObject so that the java garbage
   // collector can free it
   realObject = ((_java_lang_Object *)(rcv))->realObject;
+  _JIGSMapperRemoveProxiedJava (realObject);
   (*env)->DeleteGlobalRef (env, realObject);
 
   // Following code is the equivalent of [super dealloc]
