@@ -31,7 +31,7 @@ SUBPROJECTS = loader
 
 LIBRARY_NAME = libgnustep-java
 
-VERSION = 1.5.4
+VERSION = 1.5.5
 
 libgnustep-java_HEADER_FILES = \
 ObjcRuntimeUtilities.h \

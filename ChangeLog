@@ -1,3 +1,7 @@
+Mon Feb 10 13:31:15 2003  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* GNUmakefile (VERSION): Version 1.5.5.
+
 Thu Nov 22 01:20:38 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* GNUmakefile (CVS_MODULE_NAME): Define.
