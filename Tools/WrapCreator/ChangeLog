@@ -1,3 +1,43 @@
+Tue Feb  6 18:04:39 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+	
+	* main.m (main): Added --no-javadoc option; use new WCLibrary
+	initializer.  (print_help_and_exit): Added explanation of
+	--no-javadoc option.
+	* WCLibrary.m ([+initializeWithOptions:]): Replaces the old
+	initialize method to make it easier to add options.  Also, added 
+	outputJavadoc support.
+	* WCLibrary.m ([+outputJavadoc]): New method.
+	* WCLibrary.h: Updated.
+	* WCClass.m ([-outputWrappers]): If output of javadoc is turned
+	on, output tiny javadoc comment on the class as being a wrapper
+	for the corresponding objective-C class.
+	* WCMethod.m ([WCMethod -outputJavaWrapper]): If output of javadoc
+	is turned on, output tiny javadoc comment on the method as being a
+	wrapper for the corresponding objective-c method.
+	* Makefiles/java-wrapper.make: Pass the javadoc=no option down to
+	WrapCreator.  ($(WRAPPER_DIR)/stamp-file): Substitute JAVADOCHERE
+	and PACKAGEHERE in the Java GNUmakefile.
+	* Makefiles/java-wrapper.java.template: set javadoc variable; 
+	Set DOCUMENT_NAME, xxx_JAVADOC_FILES, xxx_DOC_INSTALL_DIR; 
+	include documentation.make if javadoc is not no.
+	
+Mon Feb  5 15:09:27 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* WCLibrary.m (topLevelDirectory): New static variable to hold the
+	top level directory.
+	* WCLibrary.m ([+initializeWithJigsFile:preprocessedHeaderFile:
+	headerFile:wrapDirectory:libraryName:verboseOutput:]): Set the new
+	static variable.
+	* WCLibrary.h ([-fileWithRelativePath:]): New method.
+	* WCLibrary.m ([-fileWithRelativePath:]): Idem.
+
+	* WCClass.h (fileWithPreambleJavaCode, fileWithIncludedJavaCode,
+	fileWithIncludedObjcCode): New ivars.
+	* WCClass.m ([-initWithDictionary:]): Set the new ivars by reading
+	them from the .jigs file.
+	* WCClass.m ([-outputWrappers]): Read the files and include the
+	custom code.
+	
 Thu Jan 25 15:46:30 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Makefiles/java-wrapper.make ($(WRAPPER_DIR)/stamp-file): Output
