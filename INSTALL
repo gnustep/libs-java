@@ -56,6 +56,8 @@ You will now need to recompile any Objective-C binary.
 
 1) Recompile and reinstall GNUstep from scratch.  The shared libobjc
 should be used.  Make sure everything works fine before going on.
+Please note that you need a recent gnustep-make package (GNUstep 0.6.6
+at least) to build and use JIGS.
 
 2) Make sure your java environment is well configured.  
 At least one of the following should be true: 
