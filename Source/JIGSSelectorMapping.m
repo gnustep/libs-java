@@ -403,7 +403,7 @@ static SEL JIGSSelectorMappingFindClassJavaMethod (JNIEnv *env,
       if (!strcmp (((JIGSClassSelMapTable[i]).javaSelector)->name, 
 		   javaName))
 	{    
-	  if (((JIGSInstanceSelMapTable[i]).javaSelector)->unresolved == YES)
+	  if (((JIGSClassSelMapTable[i]).javaSelector)->unresolved == YES)
 	    {
 	      (JIGSClassSelMapTable[i]).javaSelector = 
 		resolveJavaSelector (env, 
