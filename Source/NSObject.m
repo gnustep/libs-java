@@ -93,6 +93,13 @@ Java_gnu_gnustep_base_NSObject_equals (JNIEnv *env, jobject this,
  * array.  
  */
 
+
+/*** FIXME - I think the following implementation might cause a dead lock 
+     if when we RELEASE an object, that causes the release of another 
+     object which ends up calling finalize again ... I think we should 
+     detect that the lock is already taken, and if it is, we release
+     immediately ... without using the list ... ***/
+
 objc_mutex_t JIGSFinalizeListLock = NULL;
 
 void JIGSFinalizeInit ()
