@@ -28,13 +28,20 @@
 # tests by hand and look at the output to make sure they make sense, 
 # but anyway it is a first check
 
+log_file=test-base.log
+
 tests_to_run="NSArrayTest NSDataTest NSDateTest NSDictionaryTest NSNotificationCenterTest NSObjectSubclassTest NSObjectTest NSProcessInfoTest NSPropertyListSerializationTest NSSelectorTest NSTaskTest ThreadsTest"
 
 failed=no
 
+rm -f $log_file
+
 for file in $tests_to_run; do 
-  echo "Running test $file..."
-  if ! CLASSPATH=./:$CLASSPATH java $file >/dev/null 2>/dev/null; then
+  echo "Running test $file...";
+  echo " " >> $log_file;
+  echo " === Test $file ===" >> $log_file;
+  echo " " >> $log_file;
+  if ! CLASSPATH=./:$CLASSPATH java $file >>$log_file 2>>$log_file; then
     echo " * Test $file FAILED ! *";
     failed=yes;
   fi
