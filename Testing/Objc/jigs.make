@@ -44,6 +44,9 @@ JAVA_CPU = i386
 # SUN JDK 1.2.2
 JAVA_VM_LIBS = -ljava -ljvm -lhpi
 
+# SUN JDK 1.3
+#JAVA_VM_LIBS = -ljava -ljvm -lhpi -lverify
+
 # BLACKDOWN JDK 1.3.0
 #JAVA_VM_LIBS = -ljava -ljvm -lhpi -lverify
 
