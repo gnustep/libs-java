@@ -1,3 +1,8 @@
+Fri Apr 27 12:54:04 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* GNUmakefile: Abort with an error if the gnustep-base library
+	is too old.
+
 Thu Apr 26 12:20:00 2001  Richard Frith-Macdonald <richard@brainstorm.co.uk>
 
 	* libgnustep-base.jigs: Wrap GSXML classes.
