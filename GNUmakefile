@@ -24,7 +24,7 @@
 
 include $(GNUSTEP_MAKEFILES)/common.make
 
-PACKAGE_NAME = gnustep-java
+PACKAGE_NAME = jigs
 # Keep it in sync manually with Source/JIGS.h and Source/GNUmakefile
 VERSION = 1.0.2
 
