@@ -84,13 +84,40 @@ jobject JIGSJobjectFromId (JNIEnv *env, id object);
 
 id JIGSIdFromJobject (JNIEnv *env, jobject object);
 
+
 inline jstring JIGSJstringFromNSString (JNIEnv *env, NSString *string);
 
 inline NSString *JIGSNSStringFromJstring (JNIEnv *env, jstring string);
 
+
 jbyteArray JIGSJbyteArrayFromNSData (JNIEnv *env, NSData *data);
 
 NSData *JIGSNSDataFromJbyteArray (JNIEnv *env, jbyteArray bytes);
+
+/* Special method - initialize an already allocated data object by
+   using the bytes from the jbyteArray.  Return the result of
+   initWithBytes:length:.  data could also be a NSMutableData. */
+NSData *JIGSInitNSDataFromJbyteArray (JNIEnv *env, NSData *data, 
+				      jbyteArray bytes);
+
+/*
+ * Return a local reference to a java array containing the objects in
+ * the NSArray array.  Each objects is passed through the mapper
+ * before putting it into the Java array.  */
+jobjectArray JIGSJobjectArrayFromNSArray (JNIEnv *env, NSArray *array);
+
+/*
+ * Return an autoreleased NSArray containing the objects objects.  Each 
+ * object in the java array is passed through the mapper to get the 
+ * corresponding Objective-C object before putting it into the NSArray.
+ */
+NSArray *JIGSNSArrayFromJobjectArray (JNIEnv *env, jobjectArray objects);
+
+/* Special method - initialize an already allocated array object by
+   using the objects from the jobjectArray.  Return the result of
+   initWithObjects:count:.  array could also be mutable. */
+NSArray *JIGSInitNSArrayFromJobjectArray (JNIEnv *env, NSArray *array, 
+					  jobjectArray objects);
 
 /*
  * Create new proxies. 

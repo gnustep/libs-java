@@ -616,6 +616,115 @@ NSData *JIGSNSDataFromJbyteArray (JNIEnv *env, jbyteArray bytes)
     }
 }
 
+NSData *JIGSInitNSDataFromJbyteArray (JNIEnv *env, NSData *data, 
+				      jbyteArray bytes)
+{
+  if (bytes == NULL)
+    {
+      return nil;
+    }
+  else
+    {
+      return GSJNI_initNSDataFromJbyteArray (env, data, bytes);
+    }
+}
+
+/* These functions managing jobjectArray can't be in GSJNI because they 
+   need to map objects */
+jobjectArray JIGSJobjectArrayFromNSArray (JNIEnv *env, NSArray *array)
+{
+  if (array == nil)
+    {
+      return NULL;
+    }
+  else
+    {
+      unsigned i, length;
+      id *gnustepObjects;
+      jobjectArray javaArray;
+      static jclass Object_class = NULL;
+      
+      if (Object_class == NULL)
+	{
+	  Object_class = GSJNI_NewClassCache (env, "java/lang/Object");
+	  if (Object_class == NULL)
+	    {
+	      return NULL;
+	    }
+	}
+
+      length = [array count];
+      gnustepObjects = malloc (sizeof (id) * length);
+      if (gnustepObjects == NULL)
+	{
+	  return NULL;
+	}
+      [array getObjects: gnustepObjects];
+      
+      javaArray = (*env)->NewObjectArray (env, length, Object_class, NULL);
+      if (javaArray == NULL)
+	{
+	  /* OutOfMemory exception thrown */
+	  return NULL;
+	}
+      
+      for (i = 0; i < length; i++)
+	{
+	  jobject object;
+
+	  object = JIGSJobjectFromId (env, gnustepObjects[i]);
+	  (*env)->SetObjectArrayElement (env, javaArray, i, object);
+	}
+
+      free (gnustepObjects);
+      
+      return javaArray;
+    }
+}
+
+NSArray *JIGSInitNSArrayFromJobjectArray (JNIEnv *env, NSArray *array, 
+					  jobjectArray objects)
+{
+  if (array == NULL)
+    {
+      return nil;
+    }
+  else
+    {
+      NSArray *returnArray;
+      unsigned i, length;
+      id *gnustepObjects;
+
+      length = (*env)->GetArrayLength (env, objects);
+      
+      gnustepObjects = malloc (sizeof (id) * length);
+      if (gnustepObjects == NULL)
+	{
+	  return nil;
+	}
+
+      /* Get the objects and convert them to GNUstep objects */
+      for (i = 0; i < length; i++)
+	{
+	  jobject object;
+	  
+	  object = (*env)->GetObjectArrayElement (env, objects, i);
+	  gnustepObjects[i] = JIGSIdFromJobject (env, object);
+	}
+
+      returnArray = [array initWithObjects: gnustepObjects  count: length];
+      free (gnustepObjects);
+
+      return returnArray;
+    }  
+}
+
+NSArray *JIGSNSArrayFromJobjectArray (JNIEnv *env, jobjectArray objects)
+{
+  return AUTORELEASE (JIGSInitNSArrayFromJobjectArray (env, [NSArray alloc],
+						       objects));
+}
+
 inline id JIGSIdFromThis (JNIEnv *env, jobject this)
 {
   return JIGS_JLONG_TO_ID((*env)->GetLongField (env, this, fidRealObject));
