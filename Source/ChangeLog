@@ -1,3 +1,7 @@
+Thu Jan 25 11:23:28 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* GNUmakefile (VERSION): New variable.
+
 Thu Jan 11 11:33:38 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* GNUmakefile (LIBRARIES_DEPEND_UPON): Update for changes in the
