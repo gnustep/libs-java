@@ -20,10 +20,6 @@
 #  Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
 #
 
-PACKAGE_NAME = gnustep-base
-# NB: This version needs/should not be in sync with JIGS version
-VERSION = 1.2.0
-
 internal-all ::
 
 install :: 
@@ -45,6 +41,9 @@ install ::
 
 include $(GNUSTEP_MAKEFILES)/common.make
 
+PACKAGE_NAME = gnustep-base
+# NB: This version needs/should not be in sync with JIGS version
+VERSION = 1.2.0
 
 LIBRARY_NAME = libgnustep-base
 
