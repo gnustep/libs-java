@@ -1,3 +1,9 @@
+Fri Sep 29 15:46:53 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* gnu/gnustep/java/JIGS.java: Don't call JIGS.initialize () 
+	to avoid a recursive loop when JIGSInit () is called from 
+	objective-C.
+
 Thu Sep 28 12:39:24 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* gnu/gnustep/java/JIGS.java: Added support for debug libraries.
