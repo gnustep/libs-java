@@ -286,7 +286,7 @@ endif
 	                  $(OBJC_WRAPPER_DIR)/GNUmakefile.postamble; \
         fi;
 	@echo Running the preprocessor on the header file...
-	$(CC) $(WRAPPER_HEADER) -E $(ALL_CPPFLAGS) $(ALL_OBJCFLAGS) \
+	$(CC) $(WRAPPER_HEADER) -E -P $(ALL_CPPFLAGS) $(ALL_OBJCFLAGS) \
 	      -o $(WRAPPER_DIR)/preprocessedHeader
 	@echo Generating the code with Wrap Creator...
 	$(WRAP_CREATOR) --jigs-file $(JIGS_FILE) \
