@@ -1,3 +1,8 @@
+Tue Oct 31 13:32:59 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Java/NSPropertyListSerializationTest.java: Added demo of 
+	converting to/from NSData.
+
 Fri Oct 20 17:31:09 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* Java/NSPropertyListSerializationTest.java: New test.
