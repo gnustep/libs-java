@@ -1,3 +1,15 @@
+Fri Feb  9 15:14:16 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* NSMutableData.java.add: Simplified.
+	* NSMutableData.m.add: Removed.
+	* NSMutableArray.java.add: Simplified.
+	* NSMutableArray.m.add: Removed.
+	* NSSet.m.add: New file.
+	* NSSet.java.add: New file.
+	* NSMutableSet.java.add: New file.
+	* NSCountedSet.java.add: New file.
+	* libgnustep-base.jigs: Updated.
+
 Fri Feb  9 15:04:20 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* *.handmade: Changed extension from .handmade to .add.
