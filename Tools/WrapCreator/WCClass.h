@@ -38,6 +38,8 @@
   NSArray *instanceMethods;
   NSDictionary *methodNameMapping;
   NSArray *prerequisiteLibraries;
+  NSMutableDictionary *classMethodDeclarations;  
+  NSMutableDictionary *instanceMethodDeclarations;
 }
 + (id) newWithDictionary: (NSDictionary *)dict;
 
@@ -54,6 +56,9 @@
 - (NSString *) shortJavaName;
 
 - (NSString *)javaMethodForObjcMethod: (NSString *)methodName;
+
+- (NSString *) declarationOfMethod: (NSString *)methodName
+		     isClassMethod: (BOOL)flag;
 
 - (NSArray *)prerequisiteLibraries;
 
