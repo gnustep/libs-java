@@ -35,3 +35,6 @@
  O Support for automatically wrapping functions and methods of other classes
 
  O Support for automatically get the value of constants from source code
+
+ O Investigate the problem with Java methods taking a (java) float argument;
+   in Source/JIGSProxyIMP.m where we have the va_arg for a jfloat.
