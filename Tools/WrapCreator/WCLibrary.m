@@ -193,6 +193,15 @@ static BOOL verboseOutput;
   return [methodNameMapping objectForKey: methodName];
 }
 
++ (NSArray *)prerequisiteLibraries
+{
+  NSArray *libraries;
+
+  libraries = [wrappingPreferences objectForKey: @"prerequisite libraries"]; 
+
+  return libraries;
+}
+
 + (void) createJavaDirectoryForClass: (NSString *)fullJavaClassName
 {
   NSString *javaPath;
