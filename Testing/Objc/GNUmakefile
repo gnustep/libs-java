@@ -32,7 +32,7 @@ JavaTest_OBJC_FILES = main.m
 
 ADDITIONAL_OBJCFLAGS += -Wall
 
-include jigs.make
+include $(GNUSTEP_MAKEFILES)/jigs.make
 include $(GNUSTEP_MAKEFILES)/tool.make
 
 
