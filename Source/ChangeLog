@@ -1,3 +1,16 @@
+Fri Oct  6 11:38:30 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* JIGS.h: Include JIGSSelectorMapping.h.  Version is now 0.7.0.
+	* JIGSInit.m (JIGSInit): Call _JIGSSelectorMappingInitialize.
+	* JIGSMapper.m, JIGSMapper.h
+	(_JIGSLongJavaClassNameForObjcClassName): New function.
+	* JIGSProxySetup.m (_JIGS_prepare_method_struct): Manage 
+	constructor method names here; they are always strimmed, 
+	except for the one without arguments.  Use the new selector 
+	mapping API for mapping the selectors.
+	* JIGSSelectorMapping.h, JIGSSelectorMapping.m: Implemented full
+	selector mapping functionality.
+
 Mon Oct  2 15:59:56 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGSSelectorMapping.m (strim): Do not output the 
