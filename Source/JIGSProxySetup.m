@@ -30,6 +30,7 @@
 #include "NSJavaVirtualMachine.h"
 #include "java.lang.Object.h"
 #include <string.h>
+#include "JIGSSelectorMapping.h"
 
 static jclass GSJNIMethods = NULL;
 
@@ -72,207 +73,6 @@ static void initialize_c_to_java_mapping_of_types (void)
   _JAVA_LONG    = (@encode (jlong))[0];
   _JAVA_FLOAT   = (@encode (jfloat))[0];
   _JAVA_DOUBLE  = (@encode (jdouble))[0];  
-}
-
-/*
- * The following method (descriptive fantasy name "strim") 
- * converts a full java name: 
-
- * public int java.lang.String.length()
-
- * to a simplified form, 
-
- * int length ()
- 
- * [NB: We do add a space between the function and the brackets and also 
- * a space after the commas for arguments: "int length (String, boolean)"]
-
- */
-
-static const char *strim (const char *fullName, BOOL isConstructor)
-{
-  static NSCharacterSet *whitespace = nil;
-  static NSCharacterSet *openBracket = nil;
-  static NSCharacterSet *closeBracket = nil;
-  static NSArray *modifiers = nil;
-  NSString *inputString = [NSString stringWithCString: fullName];
-  NSScanner *scanner = [NSScanner scannerWithString: inputString];
-  NSMutableString *outputString = [NSMutableString new];
-  NSString *word;
-  NSString *tmp;
-  unsigned int scanLocation = 0;
-
-  if (whitespace == nil)
-    {
-      whitespace = [NSCharacterSet whitespaceCharacterSet];
-      openBracket = [NSCharacterSet characterSetWithCharactersInString: @"("];
-      closeBracket = [NSCharacterSet characterSetWithCharactersInString: @")"];
-      modifiers = [NSArray arrayWithObjects: @"private", @"protected", 
-			   @"public", @"final", @"native", @"synchronized", 
-			   @"transient", @"volatile", nil];
-      RETAIN (whitespace);
-      RETAIN (openBracket);
-      RETAIN (closeBracket);
-      RETAIN (modifiers);
-    }
-
-  // Parse modifiers
-  while (1)
-    {
-      scanLocation = [scanner scanLocation];
-      //
-      // Get next word
-      //
-      [scanner scanUpToCharactersFromSet: whitespace  intoString: &word];
-      // If it's one of the modifiers we want to discard
-      if ([modifiers containsObject: word])
-	{
-	  continue;
-	}
-      if ([word isEqualToString: @"static"])
-	{
-	  // Then append it and go on
-	  [outputString appendString: @"static "];
-	  continue;
-	}
-      // Else, it is something else: get out
-      break;
-    }
-
-  if (isConstructor == NO)
-    {
-      // What we now have is the return type.
-      [outputString appendString: word];
-      
-      [outputString appendString: @" "];
-    }
-  else // what we already have is the {method name + args}; rewind
-    {
-      [scanner setScanLocation: scanLocation];
-    }
-
-  [scanner scanUpToCharactersFromSet: openBracket  intoString: &word];
-
-  // else, word is already the method name
-
-  if (isConstructor == NO)
-    {
-      // Remove any leading stuff
-      tmp = [word pathExtension];
-      if ((tmp != nil) && ([tmp isEqualToString: @""] == NO))
-	{
-	  word = tmp;
-	}
-    }
-  
-  [outputString appendString: word];
-  
-  // Now, the arguments 
-  [scanner scanUpToCharactersFromSet: closeBracket  intoString: &word];
-
-  // Query-replace "," with ", "
-  word = [word stringByReplacingString: @"," withString: @", "];
-
-  [outputString appendString: @" "];
-  [outputString appendString: word];
-  [outputString appendString: @")"];
-  
-  // Discard all the rest
-  return [outputString cString];
-}
-
-
-/*
- * Map a java method name of a certain java class to an objc method name 
- *
- */
-static const char *
-mapJavaMethodName (const char *javaName, const char *className, 
-		   int numberOfArguments, const char *javaSignature, 
-		   const char *types, BOOL isConstructor, 
-		   struct _JIGSSelectorIDEntry *classTable, int count)
-{
-  NSMutableString *objcName;
-  int i;
-  BOOL isOK;
-  const char *cObjcName = NULL;
-
-  isOK = YES;
-  
-  if (isConstructor == YES)
-    {
-      if (numberOfArguments == 0)
-	{
-	  return "init";
-	}
-      else
-	{
-	  isOK = NO;
-	}
-    }
-  else
-    {
-      // TODO: Use the following code only as a standard way 
-      // of mapping method names!  Access some config somewhere 
-      // otherwise
-      objcName = [NSMutableString stringWithCString: javaName];
-      
-      for (i = 0; i < numberOfArguments; i++)
-	{
-	  [objcName appendString: @":"];
-	}
-      
-      cObjcName = [objcName cString];
-      /*
-       * We should now (0.6.1) be able to work fine even if selector
-       * is already in use in another class even with a different
-       * signature, so the following code is commented out.  
-       */
-      // Check that selector is not already in use. 
-      /*
-	{
-	SEL selector;
-	selector = sel_get_any_typed_uid (cObjcName);
-	if (selector != NULL)
-	{ */
-      // NSLog (@"Selector not null"); */
-      //	  if ((sel_get_type (selector) == NULL) 
-      //	  || (strcmp (types, sel_get_type (selector)))
-      /*	  if ((sel_get_type (selector) != NULL) 
-		  && (strcmp (types, sel_get_type (selector))))
-		  { */
-      // NSLog (@"Oh oh - problem - selector %s is already in use "
-      // @"with another type!", [objcName cString]);
-      // NSLog (@"New selector type is %s, old one is %s", types, 
-      // sel_get_type (selector)); 
-      /*isOK = NO;
-	}	  
-	}
-	}
-      */
-    }
-  
-  
-  if (isOK == YES)
-    {
-      for (i = 0; i < count; i++)
-	{
-	  if (!strcmp ((char *)classTable->selIDTable[i].selector, cObjcName))
-	    {
-	      isOK = NO;
-	      break;
-	    }      
-	}
-    }
-
-  if (isOK == NO)
-    {
-      return strim (javaSignature, isConstructor);
-    }
-  else
-    {
-      return cObjcName;
-    }
 }
 
 /*
@@ -552,8 +352,17 @@ BOOL _JIGS_prepare_method_struct
   method_types = ObjcUtilities_build_runtime_Objc_signature (types);
   /*  NSLog (@"Mapped types to %s", method_types);  */
   method_name = mapJavaMethodName (tmpName, className, numberOfArguments, 
-				   tmpToString, method_types, isConstructor,
-				   classTable, count);
+				   tmpToString, method_types, isConstructor);
+  
+  for (i = 0; i < count; i++)
+    {
+      if (!strcmp ((char *)classTable->selIDTable[i].selector, method_name))
+	{
+	  method_name = strim (tmpToString, isConstructor);
+	  break;
+	}      
+    }
+
   /*  NSLog (@"Mapped method to %s", method_name); */
   
   if (types[0] == _C_ID)
