@@ -67,6 +67,7 @@ static Class (*_original_lookup_class)(const char* name) = 0;
 static Class
 _jigs_lookup_class (const char* name)
 {
+  BOOL registeredThread = GSRegisterCurrentThread ();
   CREATE_AUTORELEASE_POOL(pool);
   Class		c;
   NSString	*className = [NSString stringWithCString: name];
@@ -86,6 +87,7 @@ _jigs_lookup_class (const char* name)
 
   _objc_lookup_class = _jigs_lookup_class;
   RELEASE(pool);
+  if (registeredThread) GSUnregisterCurrentThread ();
   return c;
 }
 
