@@ -9,6 +9,9 @@ objective-C runtime which gives you so much more possibilities of
 having fun; the procedure is now explained in all details and it should 
 be quite simple.  
 
+[You can skip 0), 1), 2) and 3) if you install the shard libobjc from
+an RPM - see ftp://ftp.gnustep.org/pub/gnustep/rpms to get the RPMs]
+
 0) Build and install the GNUstep make package. If you have already
    installed the GNUstep core libraries, you need to do nothing. 
 
