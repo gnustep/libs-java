@@ -21,6 +21,9 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA.
   */
 
+#ifndef _JIGS_PROPERTY_LIST_SERIALIZATION_H
+#define _JIGS_PROPERTY_LIST_SERIALIZATION_H
+
 #include <Foundation/Foundation.h>
 
 @interface NSPropertyListSerialization : NSObject
@@ -34,3 +37,5 @@
 + (id) propertyListFromData: (NSData *)aData;
 
 @end
+
+#endif /* _JIGS_PROPERTY_LIST_SERIALIZATION_H */
