@@ -1,3 +1,9 @@
+Tue Sep 26 10:50:20 BST 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* INSTALL: Completely simplified and rewritten the part on 
+	installing a shared objective-C runtime library.  Installing 
+	JIGS should now be quite easy.
+	
 Wed Sep  6 03:43:41 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* README: Added news for 0.5.
