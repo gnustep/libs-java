@@ -78,41 +78,33 @@ class JIGSLibraryLoader
   static void loadLibrary (String name)
     throws UnsatisfiedLinkError, SecurityException
     {
-      /* In case of an exception, we need to catch the exception and
-	 print the library name to stderr, otherwise the
-	 UnsatisfiedLinkError does not tell us which library could not
-	 be found ! */
-      try 
-	{
-	  System.loadLibrary (completeName (name));
-	} 
-      catch (UnsatisfiedLinkError e) 
-	{
-	  System.err.println ("Could not load library " 
-			      + completeName (name));
-	  throw e;
-	} 
-      catch (SecurityException e)
-	{
-	  System.err.println ("Could not load library " 
-			      + completeName (name));
-	  throw e;
-	}
+	System.loadLibrary (completeName (name));
     }
+  
+  /* The following stuff is used to load gnustep-java or
+     gnustep-java_d.  We need to record the problems in the process; 
+     since we try both of the libraries, it is possible that one doesn't 
+     load, but the other does.  So, we should not print the problems 
+     immediately, but rather record them, and wait to see if we can figure 
+     out the thing; if we can't, then we print the problem log. */
+  static String loadingError = "";
   
   static boolean tryLoading (String completeName)
     throws SecurityException
   {
-      try 
-	{
-	  System.loadLibrary (completeName);
-	} 
-      catch (UnsatisfiedLinkError e) 
-	{
-	  return false;
-	} 
-      return true;
-    }
+    try 
+      {
+	System.loadLibrary (completeName);
+      } 
+    catch (UnsatisfiedLinkError e) 
+      {
+	loadingError += "Could not load " + completeName + ": ";
+	loadingError += e.toString ();
+	loadingError += "\n";
+	return false;
+      } 
+    return true;
+  }
 
   /* The JIGS class static initializer calls the following method
      which tries to load the correct version of libgnustep-java and
@@ -165,7 +157,8 @@ class JIGSLibraryLoader
     
     /* Not any luck - give up - but make sure we tell the users what
        the problem is */
-    System.err.println ("Could not load libgnustep-java");
+    System.err.println ("Could not load libgnustep-java nor libgnustep-java_d!");
+    System.err.println (loadingError);
     throw new UnsatisfiedLinkError ("Could not load libgnustep-java");
   }
   
