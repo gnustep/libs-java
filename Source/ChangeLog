@@ -1,3 +1,10 @@
+Sat May  5 02:14:27 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* JIGSSelectorMapping.m
+	(JIGSSelectorMappingFindClassJavaMethod): Fixed critical typo
+	generating random crashes - `Instance' where it should have been
+	`Class'.
+
 Mon Mar 19 11:59:27 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGSNative.h: Updated for change in gnustep base thread support:
