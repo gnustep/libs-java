@@ -263,6 +263,13 @@ Class _JIGSAllocClassForThis (JNIEnv *env, jobject this);
  */
 NSString *_JIGSLongJavaClassNameForObjcClassName (JNIEnv *env, 
 						  NSString *className);
+
+
+/*
+ * Implemented by NSObject.m
+ */  
+void JIGSFinalizeInit ();
+
 #endif /* __JIGSMapper_h_GNUSTEP_JAVA_INCLUDE */
 
 
