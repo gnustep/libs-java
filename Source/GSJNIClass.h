@@ -55,7 +55,7 @@ NSString *GSJNI_NSStringFromClassOfObject (JNIEnv *env, jobject object);
  * Use this only for Objc classes.
  *
  */
-inline NSString *GSJNI_ShortClassNameFromLongClassName (NSString *className);
+NSString *GSJNI_ShortClassNameFromLongClassName (NSString *className);
 
 
 /*

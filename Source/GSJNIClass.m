@@ -96,7 +96,7 @@ NSString *GSJNI_NSStringFromClassOfObject (JNIEnv *env, jobject object)
   return returnString;
 }
 
-inline NSString *GSJNI_ShortClassNameFromLongClassName (NSString *className)
+NSString *GSJNI_ShortClassNameFromLongClassName (NSString *className)
 {
   NSString *shortClassName;
 
