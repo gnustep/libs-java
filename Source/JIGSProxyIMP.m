@@ -1,7 +1,7 @@
 /* JIGSProxyIMP.m - Forwarding routines to Java
    Copyright (C) 2000 Free Software Foundation, Inc.
    
-   Written by:  Nicola Pero <nicola@brainstorm.co.uk>
+   Written by:  Nicola Pero <n.pero@mi.flashnet.it>
    Date: June 2000
    
    This file is part of the GNUstep Java Interface Library.
@@ -26,6 +26,7 @@
 #include "java.lang.Object.h"
 #include "JIGSException.h"
 #include "JIGSMapper.h"
+#include "JIGSSelectorMapping.h"
 
 // From JIGSProxySetup.m
 extern struct _JIGSSelectorIDTable *_JIGS_selIDTable;
@@ -176,9 +177,7 @@ process_argument (JNIEnv *env, const char *tmptype, va_list ap)
     }
   else if (*tmptype == _C_SEL)
     {
-      // This should never happen I guess
-      NSLog (@"Passing selectors to java not implemented yet!");
-      ret.i = 0;
+      ret.l = JIGSNSSelectorFromSEL (env, va_arg (ap, SEL));
     }
   else if (*tmptype == _JAVA_BOOLEAN) 
     {                  
