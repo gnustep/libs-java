@@ -35,5 +35,6 @@
 #include "JIGSNative.h"
 #include "JIGSMapper.h"
 #include "JIGSProxy.h"
+#include "NSJavaVirtualMachine.h"
 
 #endif /*__JIGS_h_GNUSTEP_JAVA_INCLUDE*/
