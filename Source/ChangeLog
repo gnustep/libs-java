@@ -1,3 +1,16 @@
+Sat May  5 21:20:05 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	Implemented morphing of java.lang.Boolean and java.lang.Number
+	into and from NSNumber.
+	* GSJNINumber.m: New file implementing the morphing functions.
+	* GSJNINumber.h: New file declaring the new functions.
+	* GNUmakefile (libgnustep-java_HEADER_FILES): Added GSJNINumber.h.
+	(libgnustep-java_OBJC_FILES): Added GSJNINumber.m.
+	* GSJNI.h: Include GSJNINumber.h.
+	* JIGSMapper.m (_JIGSMapperInitialize): Initialize class cache for
+	the classes we morph.  (JIGSJobjectFromId), (JIGSIdFromJobject): 
+	Use the new GSJNINumber facilities to morph booleans and numbers.
+	
 Sat May  5 15:47:09 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* GSJNIArray.h: Removed `inline' attributes without effect.
