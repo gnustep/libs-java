@@ -439,6 +439,8 @@ jobject JIGSCreateNewJavaProxy (JNIEnv *env, id object)
   (*env)->SetLongField (env, newProxy, fidRealObject, 
 			JIGS_ID_TO_JLONG (object));
 
+  RETAIN (object);
+
   _JIGSMapperAddJavaProxy (env, object, newProxy);
 
   return newProxy;
