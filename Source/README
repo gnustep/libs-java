@@ -26,7 +26,7 @@ GSJNIDebug : utilities to make debugging easier.
 GSJNIString : utilities to convert ASCII and UNICODE strings between
                 GNUstep and Java.
 [Java:]
-gnu.gnustep.java.GSJNIUtilites : Some utilities to get info on a class methods.
+gnu.gnustep.java.GSJNIMethods : Some utilities to get info on a class methods.
 
 NSJavaVirtualMachine
 ====================
