@@ -209,27 +209,38 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE)
 	@$(MKDIRS) $(WRAPPER_DIR)
 	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/$(JAVA_WRAPPER_TOP_TEMPLATE) \
 	                 $(WRAPPER_DIR)/GNUmakefile
+ifneq ($(GNUSTEP_INSTALLATION_DIR),)
+	@mv $(WRAPPER_DIR)/GNUmakefile $(WRAPPER_DIR)/GNUmakefile.tmp
+	@sed -e \
+	 's/# SETINSTALLATIONDIRHERE/GNUSTEP_INSTALLATION_DIR = $(subst /,\/,$(GNUSTEP_INSTALLATION_DIR))/g' \
+	       $(WRAPPER_DIR)/GNUmakefile.tmp > $(WRAPPER_DIR)/GNUmakefile
+	@rm $(WRAPPER_DIR)/GNUmakefile.tmp
+endif
 	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/java-wrapper.readme.template \
 	                 $(WRAPPER_DIR)/README
 	@$(MKDIRS) $(JAVA_WRAPPER_DIR)
 	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/java-wrapper.java.template \
-	                 $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
+	                 $(JAVA_WRAPPER_DIR)/GNUmakefile
+	@mv $(JAVA_WRAPPER_DIR)/GNUmakefile $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
 	@sed -e 's/DEBUGHERE/$(debug)/g'           \
-	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp        \
-	        > $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp.2
+	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp \
+	       > $(JAVA_WRAPPER_DIR)/GNUmakefile
 	@rm $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
+	@mv $(JAVA_WRAPPER_DIR)/GNUmakefile $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
 	@sed -e 's/PROFILEHERE/$(profile)/g'           \
-	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp.2        \
-	        > $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
-	@rm $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp.2
-	@sed -e 's/JAVADOCHERE/$(javadoc)/g'           \
-	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp        \
-	        > $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp.2
-	@rm $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
-	@sed -e 's/REPLACEME/$(LIBRARY_NAME)/g'           \
-	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp.2          \
+	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp \
 	        > $(JAVA_WRAPPER_DIR)/GNUmakefile
-	@rm $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp.2
+	@rm $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
+	@mv $(JAVA_WRAPPER_DIR)/GNUmakefile $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
+	@sed -e 's/JAVADOCHERE/$(javadoc)/g'           \
+	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp \
+	        > $(JAVA_WRAPPER_DIR)/GNUmakefile
+	@rm $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
+	@mv $(JAVA_WRAPPER_DIR)/GNUmakefile $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
+	@sed -e 's/REPLACEME/$(LIBRARY_NAME)/g'           \
+	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp \
+	        > $(JAVA_WRAPPER_DIR)/GNUmakefile
+	@rm $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
 	@$(MKDIRS) $(OBJC_WRAPPER_DIR)
 	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/java-wrapper.objc.template \
 	      $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp 
