@@ -1,3 +1,16 @@
+Wed Nov  1 11:32:49 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* WCMethod.m (convertToJNI): New function converting class names
+	to JNI convention for use in long JNI native function names.
+	([-setOutputFullJniName:]): New method.  ([-outputJniMethodName]):
+	Added code to output a long jni method name if required.
+	* WCMethod.h: Updated for the changes.
+	* WCClass.m ([-outputWrappers]): Rewritten code which outputs
+	method wrappers so that it decides whether to use the long JNI
+	name or the short one for each wrapped method.
+	(setNeedsLongJniName): New function to support the new code in
+	([-outputWrappers]).
+	
 Fri Oct 20 12:40:29 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* WCHeaderParser.m ([+methodNameFromMethodDeclaration:]): New method.
