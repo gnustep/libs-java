@@ -1,3 +1,14 @@
+Fri Oct 20 12:40:29 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* WCHeaderParser.m ([+methodNameFromMethodDeclaration:]): New method.
+	* WCHeaderParser.h: Declared the new method.
+	* WCClass.m ([-initWithDictionary:]): Accept and manage a `method
+	declarations' option.  ([-declarationOfMethod:isClassMethod:]):
+	New method.  ([-outputWrappers]): Use the new method; improved
+	comment output.
+	* WCClass.h: Declared the new method, added related instance 
+	variables.
+
 Tue Oct 17 14:37:25 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* WCTypeLoader.m: Use the new JIGSNSStringFromJstring and
