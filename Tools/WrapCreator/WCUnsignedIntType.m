@@ -33,17 +33,20 @@
     {
       javaType = @"char";
       jniType = @"jchar";
+      javaArgumentType = @"C";
     }
   else if (sizeof (unsigned int) == 4)
     {
       javaType = @"long";
       jniType = @"jlong";
+      javaArgumentType = @"J";
     }
   else 
     {
       NSLog (@"Warning: sizeof unsigned int is weird.");
       javaType = @"long";
       jniType = @"jlong";
+      javaArgumentType = @"J";
     }
 
   return self;

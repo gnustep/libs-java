@@ -34,17 +34,20 @@
     {
       javaType = @"float";
       jniType = @"jfloat";
+      javaArgumentType = @"F";
     }
   else if (sizeof (float) == 8)
     {
       javaType = @"double";
       jniType = @"jdouble";
+      javaArgumentType = @"D";
     }
   else 
     {
       NSLog (@"Warning: sizeof float is weird.");
       javaType = @"float";
       jniType = @"jfloat";
+      javaArgumentType = @"F";
     }
 
   return self;
