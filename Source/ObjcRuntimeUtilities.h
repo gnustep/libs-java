@@ -153,7 +153,7 @@ void ObjcUtilities_insert_method_in_list (MethodList *ml,
  *
  */
 
-inline const char *ObjcUtilities_build_runtime_Objc_signature (const char *);
+const char *ObjcUtilities_build_runtime_Objc_signature (const char *);
 
 /*
  * ObjcUtilities_register_method_list:

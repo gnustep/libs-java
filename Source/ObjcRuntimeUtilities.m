@@ -190,7 +190,7 @@ void ObjcUtilities_insert_method_in_list (MethodList *ml,
   method->method_imp = imp;
 }
 
-inline const char *ObjcUtilities_build_runtime_Objc_signature (const char 
+const char *ObjcUtilities_build_runtime_Objc_signature (const char 
 							       *types)
 {
   NSMethodSignature *sig;
