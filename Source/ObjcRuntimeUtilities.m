@@ -43,7 +43,8 @@
 
 #include "ObjcRuntimeUtilities.h"
 
-BOOL GSJavaInterface_new_class (const char *name, const char *superclassName, 
+BOOL GSJavaInterface_new_class (const char *name, 
+				const char *superclassName, 
 				int ivarNumber, ...)
 {
   extern void __objc_exec_class (Module_t module);
