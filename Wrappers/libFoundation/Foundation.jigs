@@ -2,7 +2,6 @@
 types = { 
   NSTimeInterval = double;
 };
-enumerations = (RunLoopEventType);
 classes = (
 {
   "java name" = "gnu.gnustep.base.NSArray";
