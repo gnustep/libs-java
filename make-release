@@ -41,6 +41,8 @@ cvs_module=java
 header_file=Source/JIGS.h
 # Name of the variable to look for
 release_variable=GNUSTEP_JAVA_VERSION
+# CVS read access
+pserver_read_only=":pserver:anoncvs@subversions.gnu.org:/cvsroot/gnustep"
 
 #
 # Now the code
@@ -59,7 +61,7 @@ cd releases
 
 # Export CVS module in ./releases
 echo Exporting CVS module ${cvs_module}
-cvs -z3 export -D now $cvs_module
+cvs -z9 -d$pserver_read_only export -D now $cvs_module
 
 # Get release info
 cd ${cvs_module}
