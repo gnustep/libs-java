@@ -21,8 +21,8 @@
 #
 
 #
-# This file needs to be generalized so that a generic project could use it 
-# to manage its automatically wrapped libraries
+# This file is needed only because we are building wrappers for the base 
+# library separated from the base library itself
 #
 
 .PHONY: all base gui install install-base install-gui \
@@ -38,12 +38,12 @@ endif
 #
 all: base #gui
 
+export BUILD_JAVA_WRAPPER_AUTOMATICALLY=yes
+
 base:
-	cd base                     && $(MAKE)
-	cd base/$(JAVA_WRAPPER_DIR) && $(MAKE)
+	cd base && $(MAKE)
 gui:
-	cd gui                     && $(MAKE)
-	cd gui/$(JAVA_WRAPPER_DIR) && $(MAKE)
+	cd gui  && $(MAKE)
 
 #
 # install
