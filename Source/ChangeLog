@@ -1,3 +1,12 @@
+Sat Nov 24 18:28:53 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* NSObject.m (Java_gnu_gnustep_base_NSObject_finalize_1native):
+	Rewritten as to register/unregister the thread and create
+	autorelease pools only once every forty invocations.
+	(JIGSFinalizeInit): New function.
+	* JIGSMapper.m (_JIGSMapperInitialize): Call the function.
+	* JIGSMapper.h: Declare it.
+	
 Sat Nov 24 16:02:08 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 	
 	* JIGSMapper.m (_JIGSMapperRemoveJavaProxy): Moved JNI call
