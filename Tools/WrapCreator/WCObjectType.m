@@ -53,6 +53,34 @@
   return javaType;
 }
 
+- (NSString *) javaArgumentType
+{
+  /* We hard-code the most basic and common guesses at all */
+  if ([javaType isEqualToString: @"NSArray"])
+    {
+      return @"Lgnu.gnustep.base.NSArray;";
+    }
+  else if ([javaType isEqualToString: @"NSDictionary"])
+    {
+      return @"Lgnu.gnustep.base.NSDictionary;";
+    }
+  else if ([javaType isEqualToString: @"NSMutableArray"])
+    {
+      return @"Lgnu.gnustep.base.NSMutableArray;";
+    }
+  else if ([javaType isEqualToString: @"NSMutableDictionary"])
+    {
+      return @"Lgnu.gnustep.base.NSMutableDictionary;";
+    }
+  else if ([javaType isEqualToString: @"NSNotification"])
+    {
+      return @"Lgnu.gnustep.base.NSNotification;";
+    }
+
+  /* This has to be determined at run-time */
+  return nil;
+}
+
 - (NSString *) jniType
 {
   return @"jobject";
