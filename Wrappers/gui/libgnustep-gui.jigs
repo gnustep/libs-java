@@ -1,16 +1,18 @@
 {
   "prerequisite libraries" = ("gnustep-base");
   "types" = {
-    NSBackingStoreType = int;
-    NSBorderType = int;
-    NSCellAttribute = int;
-    NSCellType = int;
-    NSComparisonResult = int;
-    NSEventType = int;
-    NSTextAlignment = int;
     NSTimeInterval = double;
-    NSTitlePosition = int;
-  };
+   };
+  enumerations = (
+    NSBackingStoreType,
+    NSBorderType,
+    NSCellAttribute,
+    NSCellType,
+    NSComparisonResult,
+    NSEventType,
+    NSTextAlignment,
+    NSTitlePosition
+ );
   "classes" = (
                 {
                   "java name" = "gnu.gnustep.gui.NSActionCell";
