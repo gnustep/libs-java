@@ -1,3 +1,7 @@
+Fri Feb  9 14:56:49 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* libgnustep-base.jigs (NSCountedSet): New wrapper.
+
 Fri Feb  9 14:32:47 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* NSData.m.handmade (Java_gnu_gnustep_base_NSData_initWithBytes):
