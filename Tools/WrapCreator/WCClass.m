@@ -49,7 +49,7 @@
     }
   else
     {
-      ASSIGN (name, [self shortJavaName]);
+      ASSIGN (objcName, [self shortJavaName]);
     }
 
   array = [dict objectForKey: @"class methods"];

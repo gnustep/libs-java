@@ -28,7 +28,7 @@
 
 - (id) initWithObjcType: (NSString *)aType
 {
-  self = [super initWithObjcType: @""];
+  self = [super initWithObjcType: aType];
 
   return self;
 }
