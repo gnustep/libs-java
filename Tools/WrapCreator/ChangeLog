@@ -1,3 +1,9 @@
+Fri Nov  3 15:30:13 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* WCClass.m ([-initWithDictionary:]): Read the `hardcoded
+	constants' section in the .jigs file.  ([-outputWrappers]): Added
+	code to output the `hardcoded constants'.
+	
 Thu Nov  2 16:01:24 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* WCLibrary.m ([+initializeWithJigsFile:preprocessedHeaderFile:
