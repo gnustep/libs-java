@@ -319,11 +319,10 @@ is the section name, the value is an array or a dictionary containing
 the information referring to that section.  For example, we have the
 \texttt{classes} section (containing an array of classes to be wrapped), the
 \texttt{types} section (containing a dictionary of mapping of custom C 
-types to already known C types), the \texttt{enumerations} section
-(containing an array listing enumeration types), the \texttt{method
-name mapping} section (containing a dictionary of mappings from
-objective-C method names to Java method names, to be used for the
-whole library).  Here is an example:
+types to already known C types), the \texttt{method name mapping}
+section (containing a dictionary of mappings from objective-C method
+names to Java method names, to be used for the whole library).  Here
+is an example:
 \begin{verbatim}
 {
   classes = (
@@ -519,7 +518,42 @@ is not found.
 If your Objective-C library defines some constants, and some methods
 which you expose to Java return or accept these constants, you may
 want to make these constants available to Java as well by using the
-\texttt{hardcoded constants} section.
+\texttt{hardcoded constants} section.  Enumerations are exposed using 
+the \texttt{enumerations} section, as explained in the next
+paragraphs.
+
+\subsubsection{enumerations}
+
+Starting from JIGS 1.5.0, enumeration types are automatically
+recognized in the header file, and treated by the wrapper tool exactly
+as if they were simple \texttt{int}s.  Usually, that is not enough --
+you want also to have the enumeration constants available from Java as
+static integer constants of some class.  You can use the
+\texttt{hardcoded constants} section to manually add them to the
+class; this is quite clumsy, because you have to enter all the
+enumeration constants manually in the jigs file, and if you change the
+enumeration values in the Objective-C code, you have to manually
+update the jigs file.
+
+Recent versions of JIGS (1.5.0 and newer) offer a new better option,
+in the form of the \texttt{enumerations} section.  For example, the
+following line inside a class section
+\begin{verbatim}
+enumerations = (NSComparisonResult);
+\end{verbatim}
+will cause the following code to be automatically added to the
+generated Java class code:
+\begin{verbatim} 
+public static int NSOrderedDescending = 1;
+public static int NSOrderedSame = 0;
+public static int NSOrderedAscending = -1;
+\end{verbatim}
+
+Please notice that the wrapper tool has parsed your Objective-C header
+file, and extracted the constant values from there automatically!
+This means that you don't have to enter the constants in the first
+place, and if you ever change the enumeration, the Java wrappers will
+be immediately and automatically updated as soon as you recreate them.
 
 \subsubsection{file to include in java code}
 This is a string -- a filename (relative to the current directory).
@@ -620,56 +654,12 @@ This simply tells to the wrapper tool that whenever it finds an argument
 of type \texttt{NSTimeInterval} in an Objective-C method declaration, it 
 has to treat it in the same way as if it were a \texttt{double}.
 
-\subsection{Enumerations}
-The \texttt{enumerations} section is simply a short-hand to make
-wrapping enumerations simpler.  This section contains an array, in
-which you can list all the new enumeration types in your Objective-C
-library that you want to be exposed:
-\begin{verbatim}
-enumerations = (NSTitlePosition);
-\end{verbatim}
-The enumeration types are exposed in the same way as \texttt{int}s
-are.  In other words, this is completely equivalent to putting
-\texttt{NSTitlePosition} in the \texttt{types} section mapping it to
-the \texttt{int} type:
-\begin{verbatim}
-types = { NSTitlePosition = int; };
-\end{verbatim}
-Using the \texttt{enumerations} section rather than mixing
-enumerations with the other types makes simply the wrapping file
-clearer to read, and lets you type less.
-
-Usually, after declaring an enumeration in the \texttt{enumerations} 
-section, you need to add the various values as hardcoded constants 
-in one of your Java classes.  For example, in the GNUstep Gui 
-Library, after having declared \texttt{NSTitlePosition} as an 
-enumeration, the following entry is added to the \texttt{NSBox} 
-class entry:
-\begin{verbatim}
-"hardcoded constants" = (
-   "int NoTitle = 0",
-   "int AboveTop = 1",
-   "int AtTop = 2",
-   "int BelowTop = 3",
-   "int AboveBottom = 4",
-   "int AtBottom = 5",
-   "int BelowBottom = 6");
-\end{verbatim}
-This will generate the following code in the Java \texttt{NSBox} class:
-\begin{verbatim}
-/* Constants */
-
-public static int NoTitle = 0;
-public static int AboveTop = 1;
-public static int AtTop = 2;
-public static int BelowTop = 3;
-public static int AboveBottom = 4;
-public static int AtBottom = 5;
-public static int BelowBottom = 6;
-\end{verbatim}
-This makes sure the various values for \texttt{NSTitlePosition}
-arguments are available from Java quite simply as \texttt{NSBox.NoTitle} 
-etc.
+Starting from JIGS 1.5.0, the wrapper tool recognizes enumerations
+when it parses your header file, and it automatically treats them as
+new types corresponding to \texttt{int}.  This means that you don't
+need to do anything special to have JIGS wrap methods taking or
+returning enumerations -- enumerations should be recognized
+automatically, and treated automatically as \texttt{int}s.
 
 \section{Useful Make Options when Creating Wrappers}
 
