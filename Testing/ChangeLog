@@ -1,3 +1,10 @@
+Tue Sep  5 16:06:54 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Java/NSProcessInfoTest.java: New file.
+	* Java/GNUmakefile: Added the new test.
+	* Java/README: Added comment about setting the library 
+	path before running the java tests.
+
 Sat Aug 19 22:28:17 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Java/NSArrayTest.java: New file.
