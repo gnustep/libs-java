@@ -30,6 +30,7 @@ gnu.gnustep.base-test_JAVA_FILES =       \
     NSDataTest.java                      \
     NSDateTest.java                      \
     NSNotificationCenterTest.java        \
+    NSNumberTest.java                    \
     NSObjectTest.java                    \
     NSObjectSubclassTest.java            \
     NSProcessInfoTest.java               \
