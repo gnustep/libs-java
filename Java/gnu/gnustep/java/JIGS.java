@@ -33,8 +33,11 @@ public class JIGS
 	 according to the environment variable JIGS_DEBUG and to which 
 	 of the two libraries is actually available. */
       JIGSLibraryLoader.initialize ();
-      /* Safety check */
-      initialize ();
+      /* Don't call JIGS.initialize () here to avoid a recursive 
+	 initialization when JIGS is initialized from Objective-C. 
+	 JIGS.initialize () [which is exactly the same as JIGSInit () 
+	 in objective-C] is called from gnu.gnustep.base.NSObject
+      */
     }
 
   /* List of loaded libraries */
@@ -54,6 +57,7 @@ public class JIGS
 
   /*
    * It is safe (but useless) to call the following more than once.
+   * It is exactly the same as JIGSInit.
    */
   static native public void initialize ();
 }
