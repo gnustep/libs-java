@@ -90,11 +90,10 @@ BOOL _JIGSProxyJavaIsEqual (NSMapTable *table, const void *a, const void *b)
 /* Unfortunately, to get a working hash of a jobject to compare it
  * with other jobjects, the only way is to perform a JNI
  * cross-language call to the Java -hashCode method of the object a
- * ... which is unbeliveliably slow ... it used to take approx the
- * same time as 1000 normal java method invocations ...
+ * ... which is unbeliveliably slow ...
  *
  * So we are in the paradoxical situation that computing the hash
- * takes hugely more time than comparing the keys directly ... 
+ * takes much more time than comparing the keys directly ... 
  *
  * As a result, we have to disable hashing, and always compare all
  * keys directly.
