@@ -12,6 +12,7 @@ Mon May 21 02:21:33 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 	gnustep-base-java-wrapper.debug.spec.in.
 	* GNUmakefile.wrapper: Removed.
 	* GNUmakefile.wrapper.objc.postamble: Removed.
+	* GNUmakefile.wrapper.objc.preamble: Updated.
 	* libgnustep-base.jigs: Moved to gnustep-base.jigs; added
 	declarations for `next' and `prev' methods in GSXML classes to
 	prevent problems with conflicting types.
