@@ -31,6 +31,8 @@ WCClass.m \
 WCMethod.m \
 WCBOOLType.m \
 WCCharType.m \
+WCDoubleType.m \
+WCFloatType.m \
 WCIdType.m \
 WCIntType.m \
 WCUnsignedIntType.m \
