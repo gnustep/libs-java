@@ -1,0 +1,12 @@
+Mon May 21 02:21:33 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	Simplified and updated building process to the new
+	java-wrapper.make.
+	* GNUmakefile: Rewritten for new java-wrapper.make.
+	* NSPropertyListSerialization.h: Protected from multiple
+	inclusions.
+	* NSPropList.m: Renamed to NSPropertyListSerialization.m.
+	* GNUmakefile.wrapper: Removed.
+	* GNUmakefile.wrapper.objc.postamble: Removed.
+	* GNUmakefile.wrapper.objc.preamble: Updated.
+	* libFoundation.jigs: Moved to Foundation.jigs.

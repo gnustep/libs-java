@@ -1,7 +1,7 @@
 #
-#  Copyright (C) 2000 Free Software Foundation, Inc.
+#  Copyright (C) 2001 Free Software Foundation, Inc.
 #
-#  Written by: Nicola Pero <nicola@brainstorm.co.uk>
+#  Written by: Nicola Pero <n.pero@mi.flashnet.it>
 #
 #  This file is part of the GNUstep Java Interface Library.
 #
@@ -20,39 +20,12 @@
 #  Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
 #
 
-internal-all ::
-
-install :: 
-	@echo ===================================================
-	@echo
-	@echo You should never install this fake library !
-	@echo
-	@echo By typing \'make\' in this directory the wrapper 
-	@echo library is created in ./JavaWrapper.
-	@echo
-	@echo So, please type \'make\', then cd into JavaWrapper, 
-	@echo and compile and install the wrapper library there.  
-	@echo 
-	@echo ===================================================
-	@echo
-	@echo Now trying to abort...
-	@echo
-	@stop-execution-of-this-makefile-please
-
 include $(GNUSTEP_MAKEFILES)/common.make
 
-PACKAGE_NAME = Foundation
+PACKAGE_NAME = libFoundation-java-wrapper
+VERSION = 1.0.0
 
-# NB: VERSION should be the same as the Foundation library version we
-# are wrapping.
-VERSION = 0.9.0
-
-LIBRARY_NAME = libFoundation
-
-include $(GNUSTEP_MAKEFILES)/library.make
+JAVA_WRAPPER_NAME = Foundation
 
 include $(GNUSTEP_MAKEFILES)/java-wrapper.make
 
-after-distclean::
-	rm -f $(PACKAGE_NAME)-wrapper-$(VERSION).tar.gz
-	rm -f $(PACKAGE_NAME)-wrapper-debug-$(VERSION).tar.gz

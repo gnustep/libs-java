@@ -1,8 +1,9 @@
 
-Type 'make' to create and compile the gnustep base library wrappers.
-Then get root and type 'make install' to install the gnustep base
-library wrappers.
+Go into the directory you are interested in - 
 
-Type 'make gui' to create and compile the [very alpha] gnustep gui
-library wrappers.  Then get root and type 'make install-gui' to
-install the [very alpha] gnustep gui library wrappers.
+ base - GNUstep base library java wrappers;
+ libFoundation - libFoundation java wrappers;
+ gui - GNUstep gui library java wrappers <not working at the moment>
+
+Type `make' to create and compile them, and `make install' (as root)
+to install them.

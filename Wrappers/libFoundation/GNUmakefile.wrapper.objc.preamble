@@ -1,2 +1,1 @@
-JW_FILE_LIST += \
-  NSPropList.m
+ADDITIONAL_INCLUDE_DIRS += -I../..
