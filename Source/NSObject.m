@@ -83,7 +83,10 @@ Java_gnu_gnustep_base_NSObject_equals (JNIEnv *env, jobject this,
  *
  * 1. We take advantage of a little trick by directly passing the
  * IDpointer as argument and sparing the lookup.
- *
+ */
+
+#if 0 /* SPEEDY UNSTABLE CODE */
+/*
  * 2. We avoid registering the current thread ... and creating an
  * autorelease pool ... not needed to remove the pointers from the
  * tables ... then we save ObjC objects to be released in a little
@@ -92,6 +95,7 @@ Java_gnu_gnustep_base_NSObject_equals (JNIEnv *env, jobject this,
  * array.  Warning - all this trick is tricky ... concrete risks
  * of generating deadlocks or other strange bugs.
  */
+#endif
 
 objc_mutex_t JIGSFinalizeListLock = NULL;
 
@@ -105,6 +109,7 @@ Java_gnu_gnustep_base_NSObject_finalize_1native (JNIEnv *env,
 						      jobject this, 
 						      jlong IDpointer)
 {
+#if 0 /* FAST BUT NOT STABLE_CODE - WILL RANDOMLY DEADLOCK */
   static int count = 0;
   static id list[40];
   int lock_count;
@@ -199,7 +204,35 @@ Java_gnu_gnustep_base_NSObject_finalize_1native (JNIEnv *env,
 	  }
       }
     }
+#else /* SLOW BUT STABLE_CODE */
+  BOOL registeredThread = GSRegisterCurrentThread ();
+  NSAutoreleasePool *pool = [JIGSAutoreleasePoolClass new];
+  
+  /* Remove the object from our tables.  */
+  id objc = JIGS_JLONG_TO_ID (IDpointer);
+  _JIGSMapperRemoveJavaProxy (env, objc);
+  
+  NS_DURING
+    {
+      RELEASE (objc);
+    }
+  NS_HANDLER
+    {
+      /* Ignored - exceptions in finalize() are ignored by Java
+	 anyway so why raising them.  */
+      ;
+    }
+  NS_ENDHANDLER
+
+  RELEASE (pool);
+
+  if (registeredThread) 
+    {
+      GSUnregisterCurrentThread ();
+    }
+#endif /* STABLE_CODE */
 }
+
 
 
 JNIEXPORT jint JNICALL 
