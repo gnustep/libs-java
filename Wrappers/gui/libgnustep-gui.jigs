@@ -10,9 +10,9 @@
     NSCellType,
     NSComparisonResult,
     NSEventType,
+    NSSelectionDirection,
     NSTextAlignment,
-    NSTitlePosition
- );
+    NSTitlePosition);
   "classes" = (
                 {
                   "java name" = "gnu.gnustep.gui.NSActionCell";
@@ -98,6 +98,11 @@
 		    "delegate");
 
                   "initializers" = ("init");
+
+		  "hardcoded constants" = (
+		  "int RunStoppedResponse = 0",
+		  "int RunAbortedResponse = 1",
+		  "int RunContinuesResponse = 2");
                 },
 
                 {
@@ -122,6 +127,14 @@
 		    "setContentViewMargins:",
 		    "setFrameFromContentFrame:",
 		    "sizeToFit");
+		  "hardcoded constants" = (
+		    "int NoTitle = 0",
+		    "int AboveTop = 1",
+		    "int AtTop = 2",
+		    "int BelowTop = 3",
+		    "int AboveBottom = 4",
+		    "int AtBottom = 5",
+		    "int BelowBottom = 6");
                 },
 
                 {
@@ -710,6 +723,12 @@
                        "convertRect:fromView:"  = "convertRectFromView";
                        "convertRect:toView:"    = "convertRectToView";
                     };
+		  "hardcoded constants" = (
+		    "int NoBorder = 0",
+		    "int LineBorder = 1",
+		    "int BezelBorder = 2",
+	            "int GrooveBorder = 3"
+		  );
                 },
 
 	      {
@@ -835,7 +854,7 @@
 		    "selectKeyViewPrecedingView:", 
 		    "selectNextKeyView:", 
 		    "selectPreviousKeyView:", 
-		    //"keyViewSelectionDirection",
+		    "keyViewSelectionDirection",
 		    "setTitle:", 
 		    "setTitleWithRepresentedFilename:", 
 		    "title", 
@@ -880,7 +899,41 @@
 		    "fax:",
 		    "setDelegate:", 
 		    "delegate");
+		  
+		  "hardcoded constants" = (
+		  /* Window Masks */
+                    "int BorderlessWindowMask = 0",
+                    "int TitledWindowMask = 1",
+                    "int ClosableWindowMask = 2",
+                    "int MiniaturizableWindowMask = 4",
+                    "int ResizableWindowMask = 8",
+                    "int IconWindowMask = 64",                    
+		    "int MiniWindowMask = 128",
+        	  /* NSBackingStoreType */
+                    "int Retained = 0",
+                    "int Nonretained = 1",
+                    "int Buffered = 2",
+		  /* Window levels */
+                    "int NormalWindowLevel = 0",
+                    "int FloatingWindowLevel = 3",
+                    "int SubmenuWindowLevel = 3",
+                    "int TornOffMenuWindowLevel = 3",
+                    "int MainMenuWindowLevel = 20",
+                    "int StatusWindowLevel = 21",
+                    "int ModalPanelWindowLevel = 100",
+                    "int PopUpMenuWindowLevel = 101",
+                    "int ScreenSaverWindowLevel = 1000",
+		  /* NSWindowOrderingMode */
+                    "int Above = 0",
+                    "int Below = 1",
+                    "int Out = 2",
+		  /* NSSelectionDirection */
+                    "int DirectSelection = 0",
+                    "int SelectingNext = 1",
+                    "int SelectingPrevious = 2");
 		  }
 
 		);
 }		    
+
+
