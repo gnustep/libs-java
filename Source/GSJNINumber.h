@@ -38,16 +38,10 @@
  */
 NSNumber *GSJNI_NSNumberFromJNumber (JNIEnv *env, jobject object);
 
-/* Convert a java.lang.Boolean object to a NSNumber.  This is safe
- * because if you convert the NSNumber back, you will get a
- * java.lang.Boolean.  Return nil upong exception thrown.  object
- * should not be NULL.  Return an autoreleased number.  */
-NSNumber *GSJNI_NSNumberFromJBoolean (JNIEnv *env, jobject object);
-
 /* Convert the NSNumber object to an appropriate java.lang.Number
- * object - as an exception, if the NSNumber is actually holding a
- * BOOL, we morph it better into a java.lang.Boolean. We never return
- * a java.lang.Character even when it would be the more appropriate
+ * object - if the NSNumber is actually holding a BOOL, we morph it
+ * into a java.lang.Short holding 1 or 0. We never return a
+ * java.lang.Character even when it would be the more appropriate
  * conversion type, because java.lang.Character is not a number.
  * Return NULL upon exception thrown.  object should not be nil.
  * Return a local reference.  */
