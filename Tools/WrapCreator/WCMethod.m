@@ -620,22 +620,31 @@ static NSString *convertToJNI (NSString *string)
 	  /* Output the long full JNI name to prevent clashes for
 	     overridden methods */
 	  [output appendString: @"__"];
-	
+
 	  for (i = 0; i < count; i++)
 	    {
 	      WCType *t = (WCType *)[arguments objectAtIndex: i];
 
-	      /* __FIXME__: Argh - here we could have a nightmare problem:
-		 we could have an argument of a class which we determine
-		 at run-time... It's impossible then to go on with the
-		 wrapping unless further help/input is given by the .jigs
-		 file in some way (to determine/decide - probably a `hints' 
-		 section in the .jigs file). */
+	      /* Argh - here we could have a nightmare problem: we
+		 could have an argument of a class whose full java
+		 class name can't be determined...  The programmer has
+		 to fix this by adding a `class method name mapping
+		 hints' to his .jigs file.  Everything should work
+		 anyway if he does not use this method. */
+	      if ([t javaArgumentType] == nil)
+		{
+		  printf ("\nWARNING!\n");
+		  printf ("Can not determine the full java name of class `%s'\n",
+			  [[t javaType] cString]);
+		  printf ("Please add a `class name mapping hints' to your .jigs file\n");
+		  printf ("telling me how to map that name!  Otherwise, your java code\n");
+		  printf ("will crash whenever you try accessing the method wrapping\n");
+		  printf ("`%s'\n\n", [methodName cString]);
+		}
 	      [output appendString: convertToJNI ([t javaArgumentType])];
 	    }
 	}
     }
-      
 
   return output;
 }
