@@ -1,0 +1,10 @@
+The directory Examples/ contains some examples of JIGS in action:
+
+Examples/Java/ contains a couple of full examples of wrapping a GNUstep
+objective-C library and accessing it transparently from java.  In these
+examples, the wrapping has been done by hand.
+
+Example/Java/SimpleGUI/ is and example of a gui library.  This example
+contains detailed documentation (See Examples/Java/README).
+
+
