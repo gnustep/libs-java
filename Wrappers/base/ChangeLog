@@ -1,7 +1,9 @@
 Mon May 11 13:55:28 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GNUmakefile (VERSION): Raise to 1.0.2.
-
+	* gnustep-base-wrapper.debug.spec.in: Renamed back to
+	gnustep-base-java-wrapper-debug.spec.in.
+	
 Wed May 23 13:14:20 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* gnustep-base.jigs: Provide explicit declaration of
