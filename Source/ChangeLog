@@ -1,3 +1,21 @@
+Wed Aug  2 19:10:03 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	Fixes and changings to allow subclassing in java an objective-C
+	class and exposing static methods:
+	* JIGSMapper.m (JIGSRegisterJavaProxyClass): Fixed big bug due to a
+	typo.  (_JIGSFirstJavaProxySuperClass): New Function.
+	(JIGSClassFromThisClass): New function. (_JIGSAllocClassForThis): 
+	New function.
+	* JIGSMapper.h: Declare the new functions.
+	* NSObject.m (Java_gnu_gnustep_base_NSObject_NSObject_1alloc): Use
+	_JIGSAllocClassForThis rather than JIGSClassOfThis.
+	(Java_gnu_gnustep_base_NSObject_NSObject_1new): Idem.
+	* JIGSClass.h: Removed.
+	* JIGSClass.m: Removed.
+	* JIGS.h: Do not include JIGSClass.h.  Updated version to 0.2.
+	* GNUmakefile (libgnustep-java_OBJC_FILES): Removed JIGSClass.m.
+	(libgnustep-java_HEADER_FILES): Removed JIGSClass.h.
+	
 Mon Jul 31 13:59:34 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGS.h: Define GNUSTEP_JAVA_VERSION.
