@@ -1,0 +1,12 @@
+Mon Nov 27 16:10:49 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* GNUmakefile: New file.
+	* Manual.tex: Idem.
+	* TitlePage.tex: Idem.
+	* Introduction.tex: Idem.
+	* Overview.tex: Idem.
+	* ProgrammingInJava.tex: Idem. 
+	* WrappingObjcLibraries.tex: Idem.
+	* AccessingJavaFromObjc.tex: Idem.
+	* Manual/: New directory;
+	* Manual/*: Generated from TeX source.
