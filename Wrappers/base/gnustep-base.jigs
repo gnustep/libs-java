@@ -585,6 +585,52 @@ classes = (
   },
 
   {
+    "java name" = "gnu.gnustep.base.NSDistributedNotificationCenter";
+    
+    "class methods" = (
+      "defaultCenter",
+      "notificationCenterForType:"
+    );
+    
+    "instance methods" = (
+      "addObserver:selector:name:object:",
+      "addObserver:selector:name:object:suspensionBehavior:",
+      "postNotification:",
+      "postNotificationName:object:",
+      "postNotificationName:object:userInfo:",
+      "postNotificationName:object:userInfo:deliverImmediately:",
+      "removeObserver:",
+      "removeObserver:name:object:",
+      "setSuspended:",
+      "suspended"
+    );
+    /* As a special exception, we need to declare this stuff 
+       because the declarations conflict with 
+       NSNotificationCenter's ones. */
+    "method declarations" = (
+      "- (void) addObserver: (id)anObserver  
+		   selector: (SEL)aSelector  
+		       name: (NSString *)notificationName  
+		     object: (id)anObject",
+      "- (void) postNotificationName: (NSString*)name  
+			      object: (id)object;",
+      "- (void) postNotificationName: (NSString*)name  
+			      object: (id)object
+			    userInfo: (NSDictionary*)info;"
+    );
+    "hardcoded constants" = (
+      "String LocalNotificationCenterType
+	= \"NSLocalNotificationCenterType\"",
+      "String NetworkNotificationCenterType
+	= \"GSNetworkNotificationCenterType\"",
+      "int NotificationSuspensionBehaviorDrop = 0",
+      "int NotificationSuspensionBehaviorCoalesce = 1",
+      "int NotificationSuspensionBehaviorHold = 2",
+      "int NotificationSuspensionBehaviorDeliverImmediately = 3"
+    );
+  },
+
+  {
     "java name" = "gnu.gnustep.base.NSEnumerator";
     
     "instance methods" = (//"allObjects",
@@ -821,6 +867,34 @@ classes = (
 			     );
   },
     
+  {
+    "java name" = "gnu.gnustep.base.NSNotificationQueue";
+    
+    "class methods" = (
+      "defaultQueue" 
+    );
+    
+    "instance methods" = (
+      "dequeueNotificationsMatching:coalesceMask:",
+      "enqueueNotification:postingStyle:",
+      "enqueueNotification:postingStyle:coalesceMask:forModes:"
+    );	   
+
+    "initializers" = (
+      "init", 
+      "initWithNotificationCenter:"
+    );
+
+    "hardcoded constants" = (
+      "int NotificationNoCoalescing = 0",
+      "int NotificationCoalescingOnName = 1",
+      "int NotificationCoalescingOnSender = 2",
+      "int PostWhenIdle = 0",
+      "int PostASAP = 1",
+      "int PostNow = 2"
+    );
+  },
+
   {
     "java name" = "gnu.gnustep.base.NSNull";
     
@@ -1069,12 +1143,15 @@ classes = (
   }
 );
 "method name mapping" = {
-  "description" = "toString";
-  "null" = "nullValue";
-  "addTimer:forMode:" = "addTimerForMode";
-  "runMode:beforeDate:" = "runModeBeforeDate";
   "addPort:forMode:" = "addPortForMode";
+  "addTimer:forMode:" = "addTimerForMode";
+  "dequeueNotificationsMatching:coalesceMask:" = "dequeueMatchingNotifications";
+  "description" = "toString";
+  "enqueueNotification:postingStyle:coalesceMask:forModes:"
+    = "enqueueNotificationWithCoalesceMaskForModes";
+  "null" = "nullValue";
   "removePort:forMode:" = "removePortForMode";
+  "runMode:beforeDate:" = "runModeBeforeDate";
   "setObject:forKey:" = "setObjectForKey";
 };
 }
