@@ -1,3 +1,7 @@
+2005-02-29  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* gnustep-base.jigs: remove NSPort close method (doesn't exist).
+
 Mon Sep 27 14:36:12 2004  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* gnustep-base.jigs (NSRunLoop): Removed -init initializer which
