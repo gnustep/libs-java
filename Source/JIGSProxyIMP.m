@@ -154,88 +154,6 @@ find_selector_in_selIDTable (int k, SEL aSelector)
  * Processing of arguments
  */
 
-// Process a single argument
-
-static inline jvalue 
-process_argument (JNIEnv *env, const char *tmptype, va_list ap)
-{
-  jvalue ret;
-  
-  if (*tmptype == _C_ID)
-    {
-      ret.l = JIGSJobjectFromId (env, va_arg (ap, id));
-    }
-  else if (*tmptype == _C_CLASS)
-    {
-      // Not implemented yet
-      NSLog (@"Critical - (class) argument not supported yet!");
-      ret.i = 0;
-    }
-  else if (*tmptype == _C_STRUCT_B)
-    {
-      // Not implemented yet - need to keep track of which 
-      // type struct each method needs to convert to an object ?
-      NSLog (@"Passing struct to java not implemented yet!");
-      ret.i = 0;
-    }
-  else if (*tmptype == _C_SEL)
-    {
-      ret.l = JIGSNSSelectorFromSEL (env, va_arg (ap, SEL));
-    }
-  else if (*tmptype == _JAVA_BOOLEAN) 
-    {                  
-      ret.z = (jboolean)(va_arg (ap, int)); 
-    }
-  else if (*tmptype == _JAVA_BYTE) 
-    {                  
-      ret.b = (jbyte)(va_arg (ap, int)); 
-    }
-  else if (*tmptype == _JAVA_CHAR) 
-    {                  
-      ret.c = (jchar)(va_arg (ap, int /* FIXME: unsigned int ? */)); 
-    }
-  else if (*tmptype == _JAVA_SHORT) 
-    {                  
-      ret.s = (jshort)(va_arg (ap, int)); 
-    }
-  else if (*tmptype == _JAVA_INT) 
-    {                  
-      ret.i = va_arg (ap, jint);
-    }
-  else if (*tmptype == _JAVA_LONG) 
-    {                  
-      ret.j = va_arg (ap, jlong); 
-    }
-  else if (*tmptype == _JAVA_FLOAT)
-    {                  
-      /* FIXME: on gcc 2.91-66 this must be "va_arg (ap, jfloat)" */
-      ret.f = (jfloat)(va_arg (ap, double)); 
-    }
-  else if (*tmptype == _JAVA_DOUBLE) 
-    {                  
-      ret.d = va_arg (ap, jdouble); 
-    }
-  else if (*tmptype == _C_CHARPTR)
-    {
-      // This should never happen I guess
-      NSLog (@"Critical - (char *) not supported yet!");
-      ret.i = 0;
-    }
-  else if (*tmptype == _C_PTR)
-    {	    
-      // This should never happen I guess
-      NSLog (@"Critical - (void *) not supported yet!");
-      ret.i = 0;
-    }
-  else 
-    {
-      [NSException raise: NSInvalidArgumentException
-		   format: @"_JIGS_IMP_JavaMethod - "
-		   @"unrecognized Objc type"]; 
-    }
-  return ret;
-}
-
 /*
  * Macros to process the whole list of arguments
  */
@@ -248,11 +166,77 @@ process_argument (JNIEnv *env, const char *tmptype, va_list ap)
       va_start (ap, sel);              \
       i = 0;
 
-#define DO_PROCESS_ARGS                                \
-      while (*type != '\0') {                          \
-	  args[i] = process_argument (env, type, ap);  \
-	  type = objc_skip_argspec (type);             \
-	  i++; }                               
+#define DO_PROCESS_ARGS  \
+while (*type != '\0') {  \
+if (*type == _C_ID)\
+  {\
+    args[i].l = JIGSJobjectFromId (env, va_arg (ap, id));\
+  }\
+else if (*type == _C_CLASS)\
+  {\
+    NSLog (@"Critical - (class) argument of java method not supported yet!");\
+    args[i].i = 0;\
+  }\
+else if (*type == _C_STRUCT_B)\
+  {\
+    NSLog (@"Critical - a struct as argument of java method ?");\
+    args[i].i = 0;\
+  }\
+else if (*type == _C_SEL)\
+  {\
+    args[i].l = JIGSNSSelectorFromSEL (env, va_arg (ap, SEL));\
+  }\
+else if (*type == _JAVA_BOOLEAN)\
+  {\
+     args[i].z = (jboolean)(va_arg (ap, int));\
+  }\
+else if (*type == _JAVA_BYTE)\
+  {\
+    args[i].b = (jbyte)(va_arg (ap, int));\
+  }\
+else if (*type == _JAVA_CHAR)\
+  {\
+    args[i].c = (jchar)(va_arg (ap, int /* FIXME: unsigned int ? */));\
+  }\
+else if (*type == _JAVA_SHORT)\
+  {\
+    args[i].s = (jshort)(va_arg (ap, int));\
+  }\
+else if (*type == _JAVA_INT)\
+  {\
+    args[i].i = va_arg (ap, jint);\
+  }\
+else if (*type == _JAVA_LONG)\
+  {\
+    args[i].j = va_arg (ap, jlong);\
+  }\
+else if (*type == _JAVA_FLOAT)\
+  {\
+    /* FIXME: on gcc 2.91-66 this must be "va_arg (ap, jfloat)" */\
+    args[i].f = (jfloat)(va_arg (ap, double));\
+  }\
+else if (*type == _JAVA_DOUBLE)\
+  {\
+    args[i].d = va_arg (ap, jdouble);\
+  }\
+else if (*type == _C_CHARPTR)\
+  {\
+    NSLog (@"Critical - (char *) as argument of java method ?");\
+    args[i].i = 0;\
+  }\
+else if (*type == _C_PTR)\
+  {\
+    NSLog (@"Critical - (void *) as argument of java method ?");\
+    args[i].i = 0;\
+  }\
+else\
+  {\
+    [NSException raise: NSInvalidArgumentException\
+		 format: @"_JIGS_IMP_JavaMethod - "\
+		 @"unrecognized Objc type"];\
+  }\
+type = objc_skip_argspec (type);\
+i++; }
 
 #define END_PROCESS_ARGS va_end(ap);
 
