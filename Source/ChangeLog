@@ -1,3 +1,14 @@
+Mon Mar 19 11:59:27 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* JIGSNative.h: Updated for change in gnustep base thread support:
+	calls to [NSThread +registerCurrentThread] and
+	[NSThread +unregisterCurrentThread] replaced with calls to the new
+	functions GSRegisterCurrentThread and GSUnregisterCurrentThread.
+	* JIGS.m (Java_gnu_gnustep_java_JIGS_forceMultithreading): Idem.
+
+	* GNUmakefile ($(GNUSTEP_OBJ_DIR)/NSObject.o): Added 
+	dependency on JIGSNative.h.
+	
 Fri Feb  9 13:04:55 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GSJNIArray.h (GSJNI_initNSDataFromJbyteArray): New function.
