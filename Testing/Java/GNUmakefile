@@ -42,6 +42,7 @@ gnu.gnustep.java-test_JAVA_FILES =       \
     ThreadsTest.java                     \
     NSApplicationTest.java               \
     NSButtonTest.java                    \
+    NSButtonTest2.java                   \
     NSWindowTest.java
 
 
