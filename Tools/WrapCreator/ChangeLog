@@ -1,3 +1,10 @@
+Wed Aug 29 13:26:19 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* WCMethod.m ([-outputJniMethodName]): Made warning produced when
+	we find an unresolved class name as argument to an overloaded java
+	method extremely loudy in an attempt to prevent people from
+	ignoring it.
+
 Tue Jul 24 12:21:26 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* WCHeaderParser.m ([-parseEnumBodyUsingScanner:]): Fixed problem
