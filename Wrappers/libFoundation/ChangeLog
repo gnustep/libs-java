@@ -1,3 +1,9 @@
+Wed May 23 13:18:40 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Foundation.jigs: Provide explicit declaration of
+	removeObjectForKey: to solve conflicts between NSMutableDictionary
+	and NSUserDefault declarations.
+
 Mon May 21 02:21:33 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	Simplified and updated building process to the new
