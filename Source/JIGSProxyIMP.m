@@ -805,10 +805,9 @@ id _JIGS_id_IMP_JavaMethod (id rcv, SEL sel, ...)
 	}
       
       (*env)->PopLocalFrame (env, NULL);
-
-      _JIGSMapperInsertProxiedJava (((_java_lang_Object *)rcv)->realObject, 
-				    rcv);
-
+      
+      _JIGSMapperAddObjcProxy (env, ((_java_lang_Object *)rcv)->realObject, 
+			       rcv);
       return rcv;
     }
 
@@ -824,7 +823,7 @@ id _JIGS_id_IMP_JavaMethod (id rcv, SEL sel, ...)
   RUN_JAVA_METHOD(Object);
   CHECK_JAVA_EXCEPTION(0);
 
-  objc_ret = JIGSIdFromJObject (env, ret);
+  objc_ret = JIGSIdFromJobject (env, ret);
   (*env)->PopLocalFrame (env, NULL);
   return objc_ret;
 }
