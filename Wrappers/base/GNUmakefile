@@ -51,3 +51,7 @@ LIBRARY_NAME = libgnustep-base
 include $(GNUSTEP_MAKEFILES)/library.make
 
 include $(GNUSTEP_MAKEFILES)/java-wrapper.make
+
+after-distclean::
+	rm -f $(PACKAGE_NAME)-wrapper-$(VERSION).tar.gz
+	rm -f $(PACKAGE_NAME)-wrapper-debug-$(VERSION).tar.gz
