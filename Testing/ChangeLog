@@ -1,7 +1,7 @@
 Thu Dec 20 13:08:22 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Java/Base/NSExceptionTest.java: New test.
-	* Java/Base/GNUmakefile: Compiler it.
+	* Java/Base/GNUmakefile: Compile it.
 	* Java/Base/test-base: Run it.
 	
 Tue Nov 27 22:52:57 2001  Nicola Pero  <n.pero@mi.flashnet.it>
