@@ -41,6 +41,7 @@ static void print_help_and_exit ()
   printf ("  --wrapper-dir directory: use directory as the top wrapper dir\n");
   printf ("  --preprocessed-header filename: use filename as the preprocessed\n");
   printf ("                                  header\n");
+  printf ("  --no-javadoc: do not output javadoc comments\n");
   printf ("  --no-verbose: do not output information on what it is doing\n");
   printf ("  --silent: same as --no-verbose\n");
   printf ("  --verbose: output information as we go on (this is the default)\n");
@@ -67,7 +68,9 @@ int main (int argc, char **argv, char **env)
   NSString *library_name = nil;
   NSString *library_header = nil;
   BOOL verbose_output = YES;
+  BOOL output_javadoc = YES;
   int i, count;
+  NSDictionary *options;
 
 #if defined(GS_PASS_ARGUMENTS)
   [NSProcessInfo initializeWithArguments: argv  count: argc  
@@ -181,6 +184,11 @@ int main (int argc, char **argv, char **env)
 	{
 	  verbose_output = NO;
 	}
+
+      if ([key isEqualToString: @"--no-javadoc"])
+	{
+	  output_javadoc = NO;
+	}
     }
 
 
@@ -213,13 +221,22 @@ int main (int argc, char **argv, char **env)
       print_warning_and_exit (@"missing compulsory option --library-header"); 
     }
 
-  [WCLibrary initializeWithJigsFile: jigs_file
-	     preprocessedHeaderFile: preprocessed_header
-	     headerFile: library_header
-	     wrapDirectory: wrapper_dir
-	     libraryName: library_name
-	     verboseOutput: verbose_output];
+  options = [NSDictionary dictionaryWithObjectsAndKeys:
+			    jigs_file, @"JigsFile",
+			  preprocessed_header, @"PreprocessedHeaderFileName",
+			  library_header, @"HeaderFile",
+			  wrapper_dir, @"WrapDirectory",
+			  library_name, @"LibraryName",
 
+			  [NSValue value: &verbose_output  
+				   withObjCType: @encode (BOOL)], 
+			  @"VerboseOutput",
+			  
+			  [NSValue value: &output_javadoc  
+				   withObjCType: @encode (BOOL)], 
+			  @"OutputJavadoc", nil];
+
+  [WCLibrary initializeWithOptions: options];
   [WCLibrary outputWrappers];
 
   RELEASE (pool);
