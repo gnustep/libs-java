@@ -177,7 +177,8 @@ classes = (
     "previous",
     "setObject:forKey:",
     "type",
-    "typeDescription"
+    "typeDescription",
+    "setNamespace:"
   );
   /* The following conflicts with other classes */
   "method declarations" = (
