@@ -1,3 +1,15 @@
+Tue Feb  6 11:55:59 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* gnu/gnustep/base/NSObject.java: Added some short javadoc
+	comments.
+	* gnu/gnustep/base/NSPoint.java: Idem.
+	* gnu/gnustep/base/NSSize.java: Idem.
+	* gnu/gnustep/base/NSRect.java: Idem.
+	* gnu/gnustep/base/NSRange.java: Idem.
+	* gnu/gnustep/base/NSException.java: Idem.
+	* gnu/gnustep/base/NSSelector.java: Idem.
+	* gnu/gnustep/base/GSInitializationType.java: Idem.
+
 Tue Nov 21 14:06:03 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* gnu/gnustep/java/JIGS.java (forceMultithreading): New method.
