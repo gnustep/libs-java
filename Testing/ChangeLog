@@ -1,3 +1,8 @@
+Sat Aug 19 22:28:17 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Java/NSArrayTest.java: New file.
+	* Java/GNUmakefile: Added the new test.
+
 Wed Aug  2 18:42:31 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Java/NSObjectSubclassTest.java: New file.
