@@ -26,11 +26,11 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 </HEAD>
 
 <BODY BGCOLOR="#FFFFFF" text="#000000" link="#0000FF" vlink="#4444FF" alink="#3388FF">
-<B> Next: <A NAME="tex2html163"
+<B> Next: <A NAME="tex2html172"
   HREF="node8.html">3.2 Accessing the GNUstep</A> </B>
-<B>Up: <A NAME="tex2html161"
+<B>Up: <A NAME="tex2html170"
   HREF="node6.html">3. Programming GNUstep in</A>  </B>
-<B> Previous: <A NAME="tex2html155"
+<B> Previous: <A NAME="tex2html164"
   HREF="node6.html">3. Programming GNUstep in</A> </B>
 <BR> <P>
 
@@ -39,10 +39,12 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 <A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
 
 <UL>
-<LI><A NAME="tex2html164"
+<LI><A NAME="tex2html173"
   HREF="node7.html#SECTION00411000000000000000">3.1.1 Compiling a Single Class</A>
-<LI><A NAME="tex2html165"
+<LI><A NAME="tex2html174"
   HREF="node7.html#SECTION00412000000000000000">3.1.2 Compiling Classes Belonging to a Package</A>
+<LI><A NAME="tex2html175"
+  HREF="node7.html#SECTION00413000000000000000">3.1.3 Documenting Classes Using Javadoc</A>
 </UL>
 <!--End of Table of Child-Links-->
 <HR>
@@ -226,17 +228,109 @@ which bears no relation with java packages, and it is just a temporary
 name used internally by the make package.
 
 <P>
-<HR><B> Next: <A NAME="tex2html163"
+
+<H2><A NAME="SECTION00413000000000000000">
+3.1.3 Documenting Classes Using Javadoc</A>
+</H2>
+
+<P>
+The GNUstep make package has also some support for generating
+documentation using <TT>javadoc</TT>; if you want to use this
+facility, please read on.  Otherwise, you may safely skip this
+section.
+
+<P>
+Here is an example of the same <TT>GNUmakefile</TT> with added
+documentation using javadoc:
+<PRE>
+include $(GNUSTEP_MAKEFILES)/common.make
+
+JAVA_PACKAGE_NAME = fun
+fun_JAVA_FILES = \
+  misc/quotes/Pisa.java       \
+  misc/quotes/Farinata.java   \
+  misc/quotes/Ulisse.java     \
+  misc/jokes/Sailor.java      \
+  misc/jokes/Worker.java
+
+DOCUMENT_NAME = Reference
+Reference_JAVADOC_FILES = misc.quotes misc.jokes
+Reference_DOC_INSTALL_DIR = Developer/Fun/
+
+include $(GNUSTEP_MAKEFILES)/java.make
+include $(GNUSTEP_MAKEFILES)/documentation.make
+</PRE>As you see, you need to choose a document name, list the packages you
+want to document, choose the installation directory, and include
+<TT>documentation.make</TT>.  We now review each option in more detail.
+
+<P>
+<TT>DOCUMENT_NAME</TT> is a name describing the documentation to be 
+generated.  It has some importance, because the documentation is
+generated inside a directory called <TT>$(DOCUMENT_NAME)</TT>.  In
+this case, when I run <TT>make</TT>, make creates a directory called
+<TT>Reference</TT>, and runs <TT>javadoc</TT> telling him to put 
+the documentation into this directory (this is accomplished by using
+the <TT>-d</TT> option to <TT>javadoc</TT>).
+
+<P>
+<TT>JAVADOC_FILES</TT> contains a list of packages to be documented.  
+It might also contain standalone java files - which need to be
+specified with full pathnames then, as in 
+<PRE>
+Reference_JAVADOC_FILES = /home/nicola/java/test/test.java
+</PRE>
+You can mix package names and java file names - and use an arbitrary
+number of them.
+
+<P>
+<TT>DOC_INSTALL_DIR</TT> specifies where the generated documentation 
+is going to be installed when you run <TT>make install</TT>.  In the
+example, it will end up being installed in 
+<PRE>
+$(GNUSTEP_LOCAL_ROOT)/Documentation/Developer/Fun/Reference/
+</PRE>which on my system means
+<PRE>
+/usr/GNUstep/Local/Documentation/Developer/Fun/Reference/
+</PRE>
+Additional options you may want to use are: 
+
+<OL>
+<LI>Setting <TT>ADDITIONAL_JAVADOCFLAGS</TT> before including 
+<TT>documentation.make</TT> allows you to pass custom 
+flags to javadoc - a standard example is:
+<PRE>
+ADDITIONAL_JAVADOCFLAGS += -public
+</PRE>
+</LI>
+<LI>By default, the make package will tell javadoc to look for source 
+files in the current directory; if some of them are elsewhere, you can
+specify additional paths to look for the source files by setting a
+<TT>JAVADOC_SOURCEPATH</TT>:
+<PRE>
+Reference_JAVADOC_SOURCEPATH=/home/nicola/Java/Nico:/home/nicola/Java/Nicola
+</PRE>
+Before running javadoc, the make package will always add <TT>./</TT> in 
+front of the sourcepath - for example, in this case it would use 
+<PRE>
+-sourcepath ./:/home/nicola/Java/Nico:/home/nicola/Java/Nicola
+</PRE>
+when invoking javadoc.  Please refer to the javadoc documentation if
+you want to learn more about the sourcepath.
+</LI>
+</OL>
+
+<P>
+<HR><B> Next: <A NAME="tex2html172"
   HREF="node8.html">3.2 Accessing the GNUstep</A> </B>
-<B>Up: <A NAME="tex2html161"
+<B>Up: <A NAME="tex2html170"
   HREF="node6.html">3. Programming GNUstep in</A> </B>
-<B> Previous: <A NAME="tex2html155"
+<B> Previous: <A NAME="tex2html164"
   HREF="node6.html">3. Programming GNUstep in</A> </B>
 
 <!--End of Navigation Panel-->
 <ADDRESS>
 Nicola Pero
-2001-01-25
+2001-02-07
 </ADDRESS>
 </BODY>
 </HTML>
