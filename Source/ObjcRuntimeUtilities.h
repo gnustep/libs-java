@@ -21,8 +21,7 @@
    You should have received a copy of the GNU Library General Public
    License along with this library; if not, write to the Free
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA.
-   */ 
-
+   */
 
 #ifndef __ObjcRuntimeUtilities_h_GNUSTEP_JAVA_INCLUDE
 #define __ObjcRuntimeUtilities_h_GNUSTEP_JAVA_INCLUDE
@@ -45,6 +44,8 @@
  */
 
 /*
+ * GSJavaInterface_new_class:
+ *
  * Create a new Objective-C class called name, inheriting from
  * superClass.  
 
@@ -77,6 +78,8 @@ GSJavaInterface_new_class
 (const char *name, const char *superclassName, int ivarNumber, ...);
 
 /*
+ * GSJavaInterface_add_method_list:
+ *
  * Add the list `ml' of methods to an existing Class `class'.
  * They are registered as instance methods. 
  * To add class methods, you simply need to pass the meta class 
@@ -92,6 +95,8 @@ GSJavaInterface_add_method_list
 (Class class, MethodList *ml);
 
 /*
+ * GSJavaInterface_build_runtime_Objc_signature:
+ *
  * This method creates a runtime objc signature which can be used 
  * to describe type for a selector *on this machine* (you need this 
  * signature for example to build the MethodList to pass to the 
@@ -120,7 +125,8 @@ GSJavaInterface_add_method_list
  */
 
 inline const char *
-GSJavaInterface_build_runtime_Objc_signature (const char *);
+GSJavaInterface_build_runtime_Objc_signature 
+(const char *);
 
 #endif /* __ObjcRuntimeUtilitis_h_GNUSTEP_JAVA_INCLUDE */
 
