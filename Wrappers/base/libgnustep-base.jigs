@@ -30,6 +30,7 @@
                                         "writeToFile:atomically:");
                   "initializers" = ("init", "initWithArray:", 
 		                    "initWithContentsOfFile:");
+		  "hardcoded constants" = ("int NotFound = 0x7fffffff");
                 },
 
 		{
@@ -367,6 +368,8 @@
 		    // "containsPortForMode" (APPLE) ??
 		    // "portsForMode" (APPLE) ??
 		  );
+		  "hardcoded constants" = (
+		    "String DefaultRunLoopMode = \"NSDefaultRunLoopMode\"");
         	},
 
                 {
