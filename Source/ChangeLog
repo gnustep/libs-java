@@ -1,3 +1,19 @@
+Mon Nov 13 10:11:17 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* JIGSInit.m (JIGSInit): Make sure the default thread is
+	initialized.
+	* JIGSNative.h (JIGS_ENTER), (JIGS_EXIT), (JIGS_EXIT_WITH_VALUE):
+	Register/unregister the thread upon entering/exiting from native 
+	code.
+	* NSJavaVirtualMachine.m ([+startVirtualMachineWithClassPath:
+	libraryPath:]): Register NSJavaVirtualMachine for the 
+	NSThreadDidStartNotification and NSThreadWillExitNotification.
+	* NSJavaVirtualMachine.m (_attachCurrentThread:),
+	(_detachCurrentThread:): Implemented to manage the notifications.
+	* NSJavaVirtualMachine.h, NSJavaVirtualMachine.m
+	(attachCurrentThread), (detachCurrentThread): New methods.
+	* JIGS.h: Version is now 0.9.0.
+	
 Wed Nov  1 11:49:30 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* JIGS.h: Version is now 0.8.0.
