@@ -103,13 +103,15 @@ before-$(TARGET)-all::
 ifneq ($(BUILD_JAVA_WRAPPER_AUTOMATICALLY),no)
 
 after-$(TARGET)-all::
-	cd $(WRAPPER_DIR); unset MAKEFLAGS; $(MAKE)
+	cd $(WRAPPER_DIR); unset MAKEFLAGS; $(MAKE) 
 
 internal-java_wrapper-install::
-	cd $(WRAPPER_DIR); unset MAKEFLAGS; $(MAKE) install
+	cd $(WRAPPER_DIR); unset MAKEFLAGS; \
+	$(MAKE) install GNUSTEP_INSTALLATION_DIR=$(GNUSTEP_INSTALLATION_DIR)
 
 internal-java_wrapper-uninstall::
-	cd $(WRAPPER_DIR); unset MAKEFLAGS; $(MAKE) uninstall
+	cd $(WRAPPER_DIR); unset MAKEFLAGS; \
+	$(MAKE) uninstall GNUSTEP_INSTALLATION_DIR=$(GNUSTEP_INSTALLATION_DIR)
 
 else 
 
@@ -207,27 +209,6 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE)
 	@$(MKDIRS) $(WRAPPER_DIR)
 	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/$(JAVA_WRAPPER_TOP_TEMPLATE) \
 	                 $(WRAPPER_DIR)/GNUmakefile
-ifneq ($(GNUSTEP_INSTALLATION_DIR),)
-	@mv $(WRAPPER_DIR)/GNUmakefile $(WRAPPER_DIR)/GNUmakefile.tmp
-	@sed -e \
-	 's/# GNUSTEP_INSTALLATION_DIR =/GNUSTEP_INSTALLATION_DIR = $(subst /,\/,$(GNUSTEP_INSTALLATION_DIR))/' \
-	       $(WRAPPER_DIR)/GNUmakefile.tmp > $(WRAPPER_DIR)/GNUmakefile
-	@rm $(WRAPPER_DIR)/GNUmakefile.tmp
-endif
-ifneq ($(INSTALL_AS_USER),)
-	@mv $(WRAPPER_DIR)/GNUmakefile $(WRAPPER_DIR)/GNUmakefile.tmp
-	@sed -e \
-	 's/# INSTALL_AS_USER =/export INSTALL_AS_USER = $(INSTALL_AS_USER)/' \
-	       $(WRAPPER_DIR)/GNUmakefile.tmp > $(WRAPPER_DIR)/GNUmakefile
-	@rm $(WRAPPER_DIR)/GNUmakefile.tmp
-endif
-ifneq ($(INSTALL_AS_GROUP),)
-	@mv $(WRAPPER_DIR)/GNUmakefile $(WRAPPER_DIR)/GNUmakefile.tmp
-	@sed -e \
-	 's/# INSTALL_AS_GROUP =/export INSTALL_AS_GROUP = $(INSTALL_AS_GROUP)/' \
-	       $(WRAPPER_DIR)/GNUmakefile.tmp > $(WRAPPER_DIR)/GNUmakefile
-	@rm $(WRAPPER_DIR)/GNUmakefile.tmp
-endif
 	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/java-wrapper.readme.template \
 	                 $(WRAPPER_DIR)/README
 	@$(MKDIRS) $(JAVA_WRAPPER_DIR)

@@ -1,9 +1,5 @@
 # Automatically generated! Do not edit.  
 
-# GNUSTEP_INSTALLATION_DIR =
-# INSTALL_AS_USER =
-# INSTALL_AS_GROUP =
-
 include $(GNUSTEP_MAKEFILES)/common.make
 
 # When building the RPM, only include in the file list what is in the
