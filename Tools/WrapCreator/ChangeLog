@@ -1,3 +1,11 @@
+Tue Jul 24 11:17:27 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Makefiles/java-wrapper.make ($(WRAPPER_DIR)/stamp-file): Pass
+	the -P option to the preprocessor, to avoid annoying preprocessor
+	output about lines.
+	* Compatibility.h: New file.
+	* WCLibrary.h: Include it.
+
 Mon Jul 16 13:27:08 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GNUmakefile: Install into GNUSTEP_SYSTEM_ROOT.
