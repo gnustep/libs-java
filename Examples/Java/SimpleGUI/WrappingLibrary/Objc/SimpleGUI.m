@@ -23,7 +23,7 @@
 
 #include <Foundation/Foundation.h>
 #include <jni.h>
-#include <java/JIGS.h>
+#include <GNUstepJava/JIGS.h>
 #include "../../Library/SimpleGUI.h"
 
 /* REQUIRED: This function should be implemented in all library wrapper, 

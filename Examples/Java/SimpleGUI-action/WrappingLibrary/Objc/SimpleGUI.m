@@ -23,7 +23,7 @@
 
 #include <Foundation/Foundation.h>
 #include <jni.h>
-#include <java/JIGS.h>
+#include <GNUstepJava/JIGS.h>
 #include "../../Library/SimpleGUI.h"
 
 /* The selector morphing table for this library */
