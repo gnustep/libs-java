@@ -54,7 +54,7 @@
  * but it's safer.  The following will crash if you pass a generic
  * argument.  */
 
-inline id JIGSIdFromThis (JNIEnv *env, jobject this);
+id JIGSIdFromThis (JNIEnv *env, jobject this);
 
 /*
  * The following functions are the more general and slow of the proxying 
@@ -85,9 +85,9 @@ jobject JIGSJobjectFromId (JNIEnv *env, id object);
 id JIGSIdFromJobject (JNIEnv *env, jobject object);
 
 
-inline jstring JIGSJstringFromNSString (JNIEnv *env, NSString *string);
+jstring JIGSJstringFromNSString (JNIEnv *env, NSString *string);
 
-inline NSString *JIGSNSStringFromJstring (JNIEnv *env, jstring string);
+NSString *JIGSNSStringFromJstring (JNIEnv *env, jstring string);
 
 
 jbyteArray JIGSJbyteArrayFromNSData (JNIEnv *env, NSData *data);
@@ -234,22 +234,22 @@ void _JIGSMapperInitialize (JNIEnv *env);
  * _JIGSMapperAddJavaProxy is to be used only in NSObject's native
  * constructors. (and in JIGSMapperCreateNewJavaProxy)
  */
-inline void _JIGSMapperAddJavaProxy (JNIEnv *env, id objc, jobject java);
+void _JIGSMapperAddJavaProxy (JNIEnv *env, id objc, jobject java);
 /*
  * _JIGSMapperRemoveJavaProxy is to be used only in the finalize
  * method in (java) gnu.gnustep.base.NSObject
  */
-inline void _JIGSMapperRemoveJavaProxy (JNIEnv *env, id objc);
+void _JIGSMapperRemoveJavaProxy (JNIEnv *env, id objc);
 /*
  * _JIGSMapperAddObjcProxy is to be used only in the constructors in
  * JIGSProxyIMP (and in JIGSMapperCreateNewObjcProxy)
  */
-inline void _JIGSMapperAddObjcProxy (JNIEnv *env, jobject java, id objc);
+void _JIGSMapperAddObjcProxy (JNIEnv *env, jobject java, id objc);
 /* 
  * _JIGSMapperRemoveObjcProxy is to be used only in the -dealloc
  * method of (objc) java.lang.Object.  
  */
-inline void _JIGSMapperRemoveObjcProxy (JNIEnv *env, jobject java);
+void _JIGSMapperRemoveObjcProxy (JNIEnv *env, jobject java);
 
 /*
  * The following is used by NSObject to decide which Objective-C class 
