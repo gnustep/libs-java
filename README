@@ -1,13 +1,14 @@
 What is JIGS ?
 ==============
 
-JIGS is a free (LGPL) Java Interface for GNUstep.  It allows full
-integration between java and objective-C code; it allows to access the
-GNUstep libraries (and any library based on GNUstep) from java as if
-they were java libraries, and vice versa to access java objects from
-objective-C as if they were objective-C objects.  Everything will be
-supported by a set of tools and high level APIs to make it easy,
-friendly and fast to use.
+JIGS is a free (LGPL) Java Interface for GNUstep; it can automatically
+wrap Objective-C libraries based on GNUstep making them accessible
+directly to the Java programmer as if they were Java libraries.  As a
+side effect, it is also possible to use the whole engine in the
+reverse way: JIGS provides a high level API to allow Objective-C
+programmers to start java virtual machines inside GNUstep Objective-C
+code and access java objects in the java virtual machine
+transparently, as if they were objective-C objects.
 
 Authors
 =======
@@ -21,6 +22,13 @@ Maintainers
 ===========
 
 JIGS is currently maintained by Nicola Pero <nicola@brainstorm.co.uk>.
+
+Release Notes for JIGS version 0.7
+==================================
+
+This release adds support for morphing of selectors.  This improvement
+required extensive additions to the JIGS core engine and to the
+WrapCreator tool.
 
 Release Notes for JIGS version 0.6
 ==================================
