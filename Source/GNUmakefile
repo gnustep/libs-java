@@ -40,6 +40,7 @@ GSJNIArray.h \
 GSJNICache.h \
 GSJNIClass.h \
 GSJNIDebug.h \
+GSJNINumber.h \
 GSJNIString.h \
 NSJavaVirtualMachine.h \
 JIGS.h \
@@ -60,6 +61,7 @@ GSJNIArray.m \
 GSJNICache.m \
 GSJNIClass.m \
 GSJNIDebug.m \
+GSJNINumber.m \
 GSJNIString.m \
 JIGSBaseStruct.m \
 JIGSException.m \
