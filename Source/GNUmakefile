@@ -53,7 +53,7 @@ JIGSProxy.h \
 JIGSSelectorMapping.h \
 java.lang.Object.h
 
-libgnustep-java_HEADER_FILES_INSTALL_DIR = /$(GNUSTEP_FND_DIR)/java
+libgnustep-java_HEADER_FILES_INSTALL_DIR = GNUstepJava
 
 libgnustep-java_C_FILES = \
 ObjcRuntimeUtilities.c \

@@ -1,3 +1,8 @@
+Tue Jul 29 15:08:16 2003  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* GNUmakefile (libgnustep-java_HEADER_FILES_INSTALL_DIR): Install headers
+	in GNUstepJava.
+
 Wed Jul 23 18:35:06 2003  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* JIGSMapper.m: Create local reference to existing proxied object
