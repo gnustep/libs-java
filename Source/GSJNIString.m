@@ -23,6 +23,8 @@
 
 #include "GSJNIString.h"
 
+static Class stringClass = Nil;
+
 // Return NULL upon exception raised.
 NSString *GSJNI_NSStringFromASCIIJString (JNIEnv *env, jstring string)
 {
@@ -38,7 +40,11 @@ NSString *GSJNI_NSStringFromASCIIJString (JNIEnv *env, jstring string)
     }
   
   // Create a GNUstep string from the C string
-  gnustepString = [NSString stringWithCString: cString];
+  if (stringClass == Nil)
+    {
+      stringClass = [NSString class];
+    }
+  gnustepString = [stringClass stringWithCString: cString];
   
   // Release the C string
   (*env)->ReleaseStringUTFChars (env, string, cString);
@@ -46,6 +52,8 @@ NSString *GSJNI_NSStringFromASCIIJString (JNIEnv *env, jstring string)
   return gnustepString;
 }
 
+/* I have reasons to think that the following function might be slower
+   than the full-blown unicode conversion one ...  */
 // NB: Return NULL upon exception raised.
 jstring GSJNI_JStringFromASCIINSString (JNIEnv *env, NSString *string)
 {
@@ -58,7 +66,7 @@ NSString *GSJNI_NSStringFromJString (JNIEnv *env, jstring string)
   unichar *uniString;
   jsize length;
   NSString *gnustepString;
-  
+
   // Get a Unicode string from the jstring
   uniString = (unichar *)(*env)->GetStringChars (env, string, NULL);
   if (uniString == NULL)
@@ -71,13 +79,17 @@ NSString *GSJNI_NSStringFromJString (JNIEnv *env, jstring string)
   length = (*env)->GetStringLength (env, string);
   
   // Create a GNUstep string from the Unicode string
-  gnustepString = [NSString stringWithCharacters: uniString 
-			    length: length];
+  if (stringClass == Nil)
+    {
+      stringClass = [NSString class];
+    }
+  gnustepString = [stringClass stringWithCharacters: uniString 
+			       length: length];
   
   // Release the C string
   (*env)->ReleaseStringChars (env, string, uniString);
   
-  return gnustepString;  
+  return gnustepString;
 }
 
 // NB: Return NULL upon exception thrown
