@@ -34,12 +34,28 @@
 static NSMapTable* _JIGSProxiedObjcMap = NULL; 
 static objc_mutex_t _JIGSProxiedObjcMapLock = NULL;
 
-static inline jobject _JIGSMapperGetProxyFromProxiedObjc (id objc)
+static inline jobject _JIGSMapperGetProxyFromProxiedObjc (JNIEnv *env, id objc)
 {
   jobject java;
   
   objc_mutex_lock (_JIGSProxiedObjcMapLock);
   java = NSMapGet (_JIGSProxiedObjcMap, objc);
+  if (java != NULL)
+    {
+      /*
+       * The map only contains weak references, so we must create a
+       * local reference for the object before unlocking the map to
+       * prevent the jobject being garbage collected by another thread
+       * before we have finished using it.
+       *
+       * Creating a new local reference to null returns NULL.
+       * If this happens, the java object has been garbage collected
+       * but the entry has not been removed from the map.
+       * We don't care about that because the other thread will get
+       * round to removing the entry when we unlock the table.
+       */
+      java = (*env)->NewLocalRef (env, java);
+    }
   objc_mutex_unlock (_JIGSProxiedObjcMapLock);
   return java;
 }
@@ -570,7 +586,7 @@ jobject JIGSJobjectFromId (JNIEnv *env, id object)
   // NSException perhaps ?
   
   // Something else - check if it already proxied
-  ret = _JIGSMapperGetProxyFromProxiedObjc (object);
+  ret = _JIGSMapperGetProxyFromProxiedObjc (env, object);
   if (ret != NULL)
     {
       return ret;
