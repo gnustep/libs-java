@@ -61,7 +61,7 @@ classes = (
     "contentFile",
     "contentID",
     "contentName",
-    "contentSubType",
+    "contentSubtype",
     "contentType",
     "contentsByName:",
     "convertToData",
