@@ -24,6 +24,11 @@
 #include "SimpleGUI.h"
 
 @implementation SimpleGUI : NSObject
++ (id) new
+{
+  return [[self alloc] init];
+}
+
 - (id) init
 {
   return [self initWithTitle: @"SimpleGUI app"];
