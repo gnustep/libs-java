@@ -82,6 +82,9 @@ if (registeredThread) GSUnregisterCurrentThread ();          \
 return (ret_value);
 
 
+/* Warning: the NSObject -finalize method has a custom high performing
+   implementation which does not use these macros.  */
+
 /*
  * Use the following when entering the JNI_OnLoad function of 
  * a library (where usually the classes and selectors of the library 
