@@ -61,17 +61,6 @@ include $(GNUSTEP_MAKEFILES)/tool.make
 JIGS_MAKE_DIR = $(INSTALL_ROOT_DIR)$(GNUSTEP_MAKEFILES)
 after-install::
 	$(MKINSTALLDIRS) $(JIGS_MAKE_DIR)
-	$(INSTALL_DATA) Makefiles/old-java-wrapper.make $(JIGS_MAKE_DIR)
-	$(INSTALL_DATA) Makefiles/old-java-wrapper.top.template \
-	                $(JIGS_MAKE_DIR)
-	$(INSTALL_DATA) Makefiles/old-java-wrapper.top.debug.template \
-	                $(JIGS_MAKE_DIR)
-	$(INSTALL_DATA) Makefiles/old-java-wrapper.readme.template \
-	                $(JIGS_MAKE_DIR)
-	$(INSTALL_DATA) Makefiles/old-java-wrapper.objc.template \
-	                $(JIGS_MAKE_DIR)
-	$(INSTALL_DATA) Makefiles/old-java-wrapper.java.template \
-	                $(JIGS_MAKE_DIR)
 	$(INSTALL_DATA) Makefiles/java-wrapper.make $(JIGS_MAKE_DIR)
 	$(INSTALL_DATA) Makefiles/java-wrapper.top.template $(JIGS_MAKE_DIR)
 	$(INSTALL_DATA) Makefiles/java-wrapper.top.debug.template $(JIGS_MAKE_DIR)
