@@ -17,12 +17,12 @@ cd build-egcs
 ../egcs-20000703/configure --enable-shared --prefix=/opt/gcc
 make
 
-(replace egcs-20000703 with the snapshot you are using, and the argument 
-of --prefix with a directory you may want to install to).
-[FIXME: for snapshots before the 2000xxxx (FIXME), please edit the file 
-egcs-20000703/libobjc/Makefile.in and remove NXConstStr.lo from the 
-list of OBJS, otherwise you will not be able to use your shared libobjc 
-with GNUstep]
+(replace egcs-20000703 with the snapshot you are using, and the
+argument of --prefix with a directory you may want to install to).
+[FIXME: for snapshots before the 2000xxxx (for any snapshot as of today,
+31 Jul 2000), please edit the file egcs-20000703/libobjc/Makefile.in
+and remove NXConstStr.lo from the list of OBJS, otherwise you will not
+be able to use your shared libobjc with GNUstep]
 
 At this point, instead of installing everything, you may want to install 
 only the shared libobjc: 
