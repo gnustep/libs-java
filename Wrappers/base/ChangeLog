@@ -1,3 +1,8 @@
+Tue Jan 30 16:01:32 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* GNUmakefile (after-distclean): Added to clean out .tar.gz 
+	files created by make rpm in the wrapper subdirs
+
 Thu Jan 25 13:27:52 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GNUmakefile.wrapper (java-wrapper): Copy gnustep-base.h into the
