@@ -1,3 +1,8 @@
+Wed Oct 11 15:59:20 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* README: New file.
+	* GNUmakefile: New file.
+
 Tue Sep  5 19:45:06 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* gui: New directory.
