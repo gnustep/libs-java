@@ -1,3 +1,8 @@
+Tue Nov 21 12:38:27 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* WrappingLibrary/Objc/SimpleGUI.m (JNI_OnLoad): Use the 
+	new thread-safe macros when entering/exiting.
+
 Tue Oct 17 14:35:45 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* WrappingLibrary/Objc/SimpleGUI.m: Use the new
