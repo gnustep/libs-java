@@ -92,7 +92,7 @@ else
 WRAPPER_HEADER = $(HEADER_FILES_DIR)/$(LIBRARY_SHORT_NAME).h
 endif
 
-WRAP_CREATOR = WrapCreator
+WRAP_CREATOR = opentool WrapCreator
 
 # The following should override, if needed: 
 # JIGS_FILE, WRAPPER_DIR, WRAPPER_HEADER
