@@ -26,7 +26,9 @@
 
 #include "WCBOOLType.h"
 #include "WCCharType.h"
+#include "WCDoubleType.h"
 #include "WCIdType.h"
+#include "WCFloatType.h"
 #include "WCIntType.h"
 #include "WCMorphType.h"
 #include "WCObjectType.h"
@@ -111,6 +113,12 @@ static const struct morphType
   return [[WCCharType alloc] initWithObjcType: name  signed: YES];
 #endif
   
+  if ([name isEqualToString: @"float"] == YES)
+    return [[WCFloatType alloc] initWithObjcType: name];
+
+  if ([name isEqualToString: @"double"] == YES)
+    return [[WCDoubleType alloc] initWithObjcType: name];
+
   for (i = 0; i < DEFAULT_MORPHTYPES_NUMBER; i++)
     {
       struct morphType morph = defaultMorphTypes[i];
