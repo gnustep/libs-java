@@ -1,7 +1,8 @@
-Fri Jul 28 12:51:36 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+Fri Jul 28 12:55:58 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* java.lang.Object.h: New file.
-
+	* JIGSNative.h: New file.
+	
 Fri Jul 28 12:47:16 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGSInit.h: New file.
