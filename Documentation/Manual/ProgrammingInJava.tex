@@ -161,6 +161,35 @@ please don't be confused by the \texttt{JAVA\_PACKAGE\_NAME} variable,
 which bears no relation with java packages, and it is just a temporary
 name used internally by the make package.
 
+\subsection{Installing Java classes where you like}
+
+Compiled Java classes are automatically installed into
+\begin{verbatim}
+$GNUSTEP_LOCAL_ROOT/Libraries/Java/
+\end{verbatim}
+%$ [Fool Emacs buggy TeX mode]
+and this makes sure that they are always in the classpath.  This is
+what you normally want.
+
+But sometimes you might need to modify this behaviour.  For example,
+if you are writing Java servlets, you might want to install them in a
+special, different place.  To do this, you may set the
+\texttt{JAVA\_INSTALLATION\_DIR} variable in your makefile:
+
+\begin{verbatim}
+include $(GNUSTEP_MAKEFILES)/common.make
+
+JAVA_PACKAGE_NAME = servlet
+servlet_JAVA_FILES = MyServlet.java
+
+JAVA_INSTALLATION_DIR = /usr/local/servlets
+
+include $(GNUSTEP_MAKEFILES)/java.make
+\end{verbatim}
+
+This GNUmakefile will compile your servlet, and install it into 
+\texttt{/usr/local/servlets}.
+
 \subsection{Documenting Classes Using Javadoc}
 
 The GNUstep make package has also some support for generating
