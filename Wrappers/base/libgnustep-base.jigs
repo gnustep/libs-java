@@ -35,6 +35,43 @@
 		                    "initWithContentsOfFile:");
                 },
 
+		{
+		  "java name" = "gnu.gnustep.base.NSBundle";
+
+		  "class methods" = 
+		    (
+		      "allBundles",
+		      "allFrameworks",
+		      "mainBundle",
+		      //"bundleForClass:",
+		      "bundleWithPath:",
+		      //"pathForResource:ofType:inDirectory:",
+		      //"pathForResource:ofType:inDirectory:withVersion:"
+		    );
+		  
+		  "instance methods" = 
+		    (
+		      "bundlePath",
+		      //"classNamed:",
+		      //"principalClass",
+		      "pathsForResourcesOfType:inDirectory:",
+		      //"pathForResource:ofType:inDirectory:",
+		      "pathForResource:ofType:",
+		      "localizedStringForKey:value:table:",
+		      "resourcePath",
+		      "bundleVersion",
+		      "setBundleVersion:",
+		      "infoDictionary",
+		      "load"
+		    );
+
+		  "initializers" = 
+		    (
+		      "init",
+		      "initWithPath:"
+		    );
+		 },
+
                 {
                   "java name" = "gnu.gnustep.base.NSDate";
 
@@ -220,6 +257,36 @@
 				    //"initWithSet:copyItems:"
 				    );
                 },
+
+                {
+                  "java name" = "gnu.gnustep.base.NSTask";
+		  "class methods" = 
+		    ("launchedTaskWithLaunchPath:arguments:"
+		    );
+		  "instance methods" = 
+		    ("arguments",
+		     "currentDirectoryPath",
+		     "environment",
+		     "launchPath",
+		     "standardError",
+		     "standardInput",
+		     "standardOutput",
+		     "setArguments:",
+		     "setCurrentDirectoryPath:",
+		     "setEnvironment:",
+		     "setLaunchPath:",
+		     "setStandardError:",
+		     "setStandardInput:",
+		     "setStandardOutput:",
+		     "isRunning",
+		     "terminationStatus",
+		     "interrupt",
+		     "launch",
+		     "terminate",
+		     "waitUntilExit"
+		    );
+		  "initializers" = ("init");
+		},
 
                 {
                   "java name" = "gnu.gnustep.base.NSUserDefaults";
