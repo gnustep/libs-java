@@ -1,3 +1,9 @@
+2001-12-04 Richard frith-Macdonald <rfm@gnu.org>
+
+	* Makefiles/java-wrapper.make (AUTO_DEPENDENCIES): Force to 'no'
+	as this conflicts with the production of the preprocessed header
+	output needed for WrapCreator.
+
 Mon Nov 19 15:28:37 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Makefiles/java-wrapper.make (SILENT_FLAGS): Fixed adding
