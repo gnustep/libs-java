@@ -105,23 +105,21 @@ ifneq ($(BUILD_JAVA_WRAPPER_AUTOMATICALLY),no)
 after-$(TARGET)-all::
 	cd $(WRAPPER_DIR); unset MAKEFLAGS; $(MAKE)
 
-install-java_wrapper::
+internal-java_wrapper-install::
 	cd $(WRAPPER_DIR); unset MAKEFLAGS; $(MAKE) install
 
-uninstall-java_wrapper::
+internal-java_wrapper-uninstall::
 	cd $(WRAPPER_DIR); unset MAKEFLAGS; $(MAKE) uninstall
 
-endif # BUILD_JAVA_WRAPPER_AUTOMATICALLY
+else 
 
 after-$(TARGET)-all::
 
-internal-java_wrapper-install:: internal-java_wrapper-all install-java_wrapper
+internal-java_wrapper-install::
 
-internal-install-java-dirs::
+internal-java_wrapper-uninstall::
 
-install-java_wrapper:: internal-install-java-dirs
-
-uninstall-java_wrapper::
+endif # BUILD_JAVA_WRAPPER_AUTOMATICALLY
 
 #
 # The file containing instructions about which classes to wrap and how.
