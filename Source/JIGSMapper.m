@@ -320,7 +320,6 @@ NSString *_JIGSLongJavaClassNameForObjcClassName (JNIEnv *env,
 static jclass gnu_gnustep_base_NSObject = NULL;
 static jfieldID fidRealObject = NULL;
 static jclass java_lang_String = NULL;
-static jclass java_lang_Boolean = NULL;
 static jclass java_lang_Number = NULL;
 static Class java_lang_Object = Nil;
 static Class nsstring = Nil;
@@ -392,7 +391,6 @@ if (VAR == NULL)                                        \
   }
 
   NEW_CLASS_CACHE (java_lang_String, java/lang/String);
-  NEW_CLASS_CACHE (java_lang_Boolean, java/lang/Boolean);
   NEW_CLASS_CACHE (java_lang_Number, java/lang/Number);
   
   nsstring = NSClassFromString (@"NSString");
@@ -573,13 +571,6 @@ id JIGSIdFromJobject (JNIEnv *env, jobject object)
   if ((*env)->IsInstanceOf (env, object, java_lang_String) == YES)
     {
       return GSJNI_NSStringFromJString (env, object);
-    }
-
-  // java.lang.Boolean - this is safely morphed as a NSNumber
-  // containing a boolean comes back as a java.lang.Boolean.
-  if ((*env)->IsInstanceOf (env, object, java_lang_Boolean) == YES)
-    {
-      return GSJNI_NSNumberFromJBoolean (env, object);
     }
 
   if ((*env)->IsInstanceOf (env, object, java_lang_Number) == YES)
