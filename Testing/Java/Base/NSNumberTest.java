@@ -136,6 +136,14 @@ class NSNumberTest
     testIntegerBackAndForth (new Long ((long)-100233e4));
     testIntegerBackAndForth (new Long ((long)0));
 
+    /* This is just a test of a non-standard Number subclass.  Of
+       course if you pass a huge BigInteger (which doesn't fit in a
+       double), it will be approximated when it goes back and
+       forth. */
+    testIntegerBackAndForth (java.math.BigInteger.ONE);
+    testIntegerBackAndForth (java.math.BigInteger.ZERO);
+    testIntegerBackAndForth (new java.math.BigInteger ("-123456"));
+
     testFloatBackAndForth (new Float ((float)1));
     testFloatBackAndForth (new Float ((float)1.00233e4));
     testFloatBackAndForth (new Float ((float)-1));
