@@ -213,7 +213,8 @@ void JIGSRegisterJavaProxyClass (JNIEnv *env, NSString *fullJavaClassName,
   RELEASE (pool);
 }
 
-inline static Class _JIGSFirstJavaProxySuperClass (JNIEnv *env, NSString *className)
+inline static Class _JIGSFirstJavaProxySuperClass (JNIEnv *env, 
+						   NSString *className)
 {
   NSString *shortClassName;
   Class class;
@@ -266,6 +267,21 @@ Class _JIGSAllocClassForThis (JNIEnv *env, jobject this)
   className = GSJNI_NSStringFromClassOfObject (env, this); 
   class = _JIGSFirstJavaProxySuperClass (env, className);
   return class;
+}
+
+NSString *_JIGSLongJavaClassNameForObjcClassName (JNIEnv *env, 
+						  NSString *className)
+{
+  jclass result = NULL;
+
+  objc_mutex_lock (_JIGSProxiedObjcClassMapLock); 
+  result = NSMapGet (_JIGSProxiedObjcClassMap, NSClassFromString (className));
+  objc_mutex_unlock (_JIGSProxiedObjcClassMapLock); 
+
+  if (result == NULL)
+    return nil;
+
+  return GSJNI_NSStringFromJClass (env, result);
 }
 
 // Cache used in the lookup functions
