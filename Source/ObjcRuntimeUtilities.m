@@ -166,14 +166,27 @@ BOOL GSJavaInterface_new_class (const char *name,
   return YES;
 }
 
-void GSJavaInterface_add_method_list (Class class, MethodList *ml)
+MethodList *GSJavaInterface_alloc_method_list (int count)
 {
-  extern void class_add_method_list (Class class, MethodList_t list);
-  extern objc_mutex_t __objc_runtime_mutex;
-  
-  objc_mutex_lock (__objc_runtime_mutex);
-  class_add_method_list (class, ml);
-  objc_mutex_unlock (__objc_runtime_mutex);
+  MethodList *ml;
+  int extra;
+
+  extra = (sizeof (struct objc_method)) * (count - 1);
+  ml = objc_calloc (1, sizeof(MethodList) + extra);
+  ml->method_count = count;  
+  return ml;
+}
+
+void GSJavaInterface_insert_method_in_list (MethodList *ml, 
+					    int index, const char *name, 
+					    const char *types, IMP imp)
+{
+  Method *method;
+
+  method = &(ml->method_list[index]);
+  method->method_name = (void *)strdup (name);
+  method->method_types = strdup (types);
+  method->method_imp = imp;
 }
 
 inline const char *GSJavaInterface_build_runtime_Objc_signature (const char 
@@ -190,21 +203,15 @@ inline const char *GSJavaInterface_build_runtime_Objc_signature (const char
 #endif  
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void GSJavaInterface_register_method_list (Class class, MethodList *ml)
+{
+  extern void class_add_method_list (Class class, MethodList_t list);
+  extern objc_mutex_t __objc_runtime_mutex;
+  
+  objc_mutex_lock (__objc_runtime_mutex);
+  class_add_method_list (class, ml);
+  objc_mutex_unlock (__objc_runtime_mutex);
+}
 
 
 
