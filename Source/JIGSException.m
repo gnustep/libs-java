@@ -1,4 +1,4 @@
-/* GSJNIException.m - Exception morphing and managing
+/* JIGSException.m - Exception morphing and managing
    Copyright (C) 2000 Free Software Foundation, Inc.
    
    Written by:  Nicola Pero <nicola@brainstorm.co.uk>
