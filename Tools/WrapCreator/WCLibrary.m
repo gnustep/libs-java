@@ -32,6 +32,7 @@ static NSString *wrapDir;
 static NSDictionary *wrappingPreferences;
 static WCHeaderParser *headerParser;
 static BOOL verboseOutput;
+static NSMutableArray *classList;
 
 @implementation WCLibrary
 + (NSString *)libraryName
@@ -64,13 +65,22 @@ static BOOL verboseOutput;
   return verboseOutput;
 }
 
-+ (void)initializeWithJigsFile: (NSString *)jigsFileName
-	preprocessedHeaderFile: (NSString *)headerFileName
-		    headerFile: (NSString *)libHeader
-		 wrapDirectory: (NSString *)wrapDirectory
-		   libraryName: (NSString *)libName
-		 verboseOutput: (BOOL)verbOut
++ (void) initializeWithJigsFile: (NSString *)jigsFileName
+	 preprocessedHeaderFile: (NSString *)headerFileName
+		     headerFile: (NSString *)libHeader
+		  wrapDirectory: (NSString *)wrapDirectory
+		    libraryName: (NSString *)libName
+		  verboseOutput: (BOOL)verbOut
 {
+  int i, count;
+  NSArray *classes;
+  NSAutoreleasePool *pool;
+  NSDictionary *customTypes;
+  NSEnumerator *enumerator;
+  NSString *customType;
+  NSString *primitiveType;
+  NSDictionary *classInfo;
+  
   verboseOutput = verbOut;
   headerParser = [WCHeaderParser newWithHeaderFile: headerFileName];
   if (headerParser == nil)
@@ -78,7 +88,7 @@ static BOOL verboseOutput;
       [NSException raise: @"WrapCreatorException"
 		   format: @"Could not read header file %@", headerFileName];
     }
-
+  
   wrappingPreferences = [NSDictionary dictionaryWithContentsOfFile: jigsFileName];
   if (wrappingPreferences == nil)
     {
@@ -90,17 +100,58 @@ static BOOL verboseOutput;
   ASSIGN (wrapDir, wrapDirectory);
   ASSIGN (libraryName, libName);
   ASSIGN (libraryHeader, libHeader);
+
+  /* Load custom types */
+  pool = [NSAutoreleasePool new];
+  customTypes = [wrappingPreferences objectForKey: @"types"];
+  
+  enumerator = [customTypes keyEnumerator];
+  
+  while (1)
+    {
+      customType = [enumerator nextObject];
+      if (customType == nil)
+	{
+	  break;
+	}
+      primitiveType = [customTypes objectForKey: customType];
+      
+      if (verboseOutput == YES)
+	{
+	  printf ("Loading type mapping %s --> %s\n", 
+		  [customType cString], [primitiveType cString]);
+	}
+      /* Allocating the type registers it in WCType's internal table
+	 so it will be returned next time WCType's is asked for this
+	 type. */
+      [[WCCustomType alloc] initWithObjcType: customType
+			    primitiveType: primitiveType];
+    }
+  [pool release];
+
+  /* Load class list */
+  pool = [NSAutoreleasePool new];
+  classList = RETAIN ([NSMutableArray new]);
+  classes = [wrappingPreferences objectForKey: @"classes"];
+  count = [classes count];
+  for (i = 0; i < count; i++)
+    {
+      WCClass *class; 
+      
+      classInfo = [classes objectAtIndex: i];
+      class = [WCClass newWithDictionary: classInfo];
+      if (verboseOutput == YES)
+	{
+	  printf ("Loading class %s\n", [[class objcName] cString]);
+	}
+      [classList addObject: class];
+    }
+  [pool release];
 }
 
 + (void)outputWrappers
 {
   NSAutoreleasePool *pool;
-  NSArray *classes;
-  NSDictionary *customTypes;
-  NSDictionary *classInfo;
-  NSEnumerator *enumerator;
-  NSString *customType;
-  NSString *primitiveType;
   NSString *path;
   WCClass *class;
   int i, count;
@@ -139,42 +190,12 @@ static BOOL verboseOutput;
   [libraryInitCode appendString: @"JNI_OnLoad (JavaVM *jvm, void *reserved)\n"];
   [libraryInitCode appendString: @"{\n"];
 
-  /* Load custom types */
-  pool = [NSAutoreleasePool new];
-  customTypes = [wrappingPreferences objectForKey: @"types"];
-  
-  enumerator = [customTypes keyEnumerator];
-  
-  while (1)
-    {
-      customType = [enumerator nextObject];
-      if (customType == nil)
-	{
-	  break;
-	}
-      primitiveType = [customTypes objectForKey: customType];
-      
-      if (verboseOutput == YES)
-	{
-	  printf ("Loading type mapping %s --> %s\n", 
-		  [customType cString], [primitiveType cString]);
-	}
-      /* Allocating the type registers it in WCType's internal table
-	 so it will be returned next time WCType's is asked for this
-	 type. */
-      [[WCCustomType alloc] initWithObjcType: customType
-			    primitiveType: primitiveType];
-    }
-  [pool release];
-
   /* Wrap classes */
-  classes = [wrappingPreferences objectForKey: @"classes"];
-  count = [classes count];
+  count = [classList count];
   for (i = 0; i < count; i++)
     {
       pool = [NSAutoreleasePool new];
-      classInfo = [classes objectAtIndex: i];
-      class = [WCClass newWithDictionary: classInfo];
+      class = [classList objectAtIndex: i];
       if (verboseOutput == YES)
 	{
 	  printf ("Wrapping class %s\n", [[class objcName] cString]);
@@ -314,6 +335,70 @@ static BOOL verboseOutput;
 		   objcClassName];
 }
 
++ (NSString *) javaClassNameForObjcClassName: (NSString*)objcClassName
+{
+  int i, count;
+  NSDictionary *hints;
+  NSEnumerator *enumerator;
+  NSString *objcHintName;
 
+  /* First look in the list of classes we are wrapping */
+  count = [classList count];
+  
+  for (i = 0; i < count; i++)
+    {
+      WCClass *class = [classList objectAtIndex: i];
+
+      if ([[class objcName] isEqualToString: objcClassName])
+	{
+	  return [class javaName];
+	}
+    }
+
+  /* No luck - see if the programmer has given us an explicit hint on
+     this. */
+  hints = [wrappingPreferences objectForKey: @"class name mapping hints"];
+  
+  enumerator = [hints keyEnumerator];
+  
+  while (1)
+    {
+      objcHintName = [enumerator nextObject];
+      if (objcHintName == nil)
+	{
+	  break;
+	}
+      if ([objcHintName isEqualToString: objcClassName])
+	{
+	  return [hints objectForKey: objcHintName];
+	}
+    }
+
+  /* No luck - try using some very common hardcoded cases */
+  if ([objcClassName isEqualToString: @"NSArray"])
+    {
+      return @"gnu.gnustep.base.NSArray";
+    }
+  else if ([objcClassName isEqualToString: @"NSDictionary"])
+    {
+      return @"gnu.gnustep.base.NSDictionary";
+    }
+  else if ([objcClassName isEqualToString: @"NSMutableArray"])
+    {
+      return @"gnu.gnustep.base.NSMutableArray";
+    }
+  else if ([objcClassName isEqualToString: @"NSMutableDictionary"])
+    {
+      return @"gnu.gnustep.base.NSMutableDictionary";
+    }
+  else if ([objcClassName isEqualToString: @"NSNotification"])
+    {
+      return @"gnu.gnustep.base.NSNotification";
+    }
+  
+  /* Return nil.  This is usually harmless - but unrecoverably bad for
+     an overloaded native method. */
+  return nil;
+}
 @end
 
