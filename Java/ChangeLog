@@ -1,3 +1,12 @@
+Thu Sep 28 12:39:24 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* gnu/gnustep/java/JIGS.java: Added support for debug libraries.
+	(static): Use JIGSLibraryLoader to load gnustep-java at the
+	beginning.  (loadLibrary): New method.
+	* gnu/gnustep/java/JIGSLibraryLoader.java: New class.
+	* GNUmakefile (gnu.gnustep.java_JAVA_FILES),
+	(gnu.gnustep.java_JAVA_JNI_FILES): Added JIGSLibraryLoader.java.
+	
 Mon Jul 31 11:13:25 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GNUmakefile (GNUSTEP_INSTALLATION_DIR): Install by default 
