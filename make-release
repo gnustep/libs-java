@@ -1,0 +1,97 @@
+#!/bin/sh
+#   make-release: Create a new release of the JIGS
+#
+#   Copyright (C) 2000 Free Software Foundation, Inc.
+#
+#   Author:  Nicola Pero <nicola@brainstorm.co.uk>
+#   Date: July 2000
+#   
+#   This file is part of GNUstep.
+#   
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#   
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#   
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, write to the Free Software
+#   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+#
+# Usage: make-release
+# It creates a release.
+# The release number is obtained by looking for the line:
+#
+# #define GNUSTEP_JAVA_VERSION 0.1.0
+# 
+# in the file Source/JIGS.h
+
+#
+# By changing the following four, you may use this script 
+# to generate releases for other packages/cvs modules
+#
+package_name=jigs
+cvs_module=java
+# Header file containing the release info
+header_file=Source/JIGS.h
+# Name of the variable to look for
+release_variable=GNUSTEP_JAVA_VERSION
+
+#
+# Now the code
+#
+
+# Start 
+echo Making release of ${package_name}
+
+# Create ./releases directory if it does not exist
+if [ ! -d releases ]; then
+  mkdir releases
+fi
+
+# Go into ./releases
+cd releases
+
+# Export CVS module in ./releases
+echo Exporting CVS module ${cvs_module}
+cvs -z3 export -D now $cvs_module
+
+# Get release info
+cd ${cvs_module}
+release_tmp=`grep define ${header_file} | grep ${release_variable}`
+# Remove #define ${release_variable} from the beginning of release_tmp
+code_to_remove="#define ${release_variable} "
+release=${release_tmp#${code_to_remove}}
+# Remove any space in the remaining string
+release=`echo ${release} | sed 's/ //g'`
+cd ..
+
+# Tell the user what release we are creating
+echo Creating release ${release}
+release_name=${package_name}-${release}
+
+# Change name of the source directory
+mv ${cvs_module} ${release_name}
+
+# Save previous release before writing the new one
+if [ -f ${release_name}.tar.gz ]; then 
+  echo "releases/${release_name}.tar.gz already exists:"
+  echo "saving old version in releases/${release_name}.tar.gz~"
+  mv ${release_name}.tar.gz ${release_name}.tar.gz~
+fi
+
+# Create the .tar.gz
+echo Creating the archive file
+tar chfz ${release_name}.tar.gz $release_name
+rm -rf $release_name
+
+# Done; a tiny check before exit
+if [ ! -f ${release_name}.tar.gz ]; then 
+  echo Error creating release !
+fi
+
