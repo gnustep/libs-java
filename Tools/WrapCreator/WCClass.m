@@ -189,6 +189,7 @@
       [javaOutput appendFormat: @"package %@;\n\n", [self packageName]];
     }
   
+  [javaOutput appendString: @"import gnu.gnustep.java.JIGS;\n"];
   [javaOutput appendString: @"import gnu.gnustep.base.*;\n\n"];
   // TODO: Additional imports ?
 
@@ -203,12 +204,12 @@
   count = [libraries count];
   for (i = 0; i < count; i++)
     {
-      [javaOutput appendString: @"\n    System.loadLibrary (\""];
+      [javaOutput appendString: @"\n    JIGS.loadLibrary (\""];
       [javaOutput appendString: (NSString *)[libraries objectAtIndex: i]];
       [javaOutput appendString: @".A\");"];      
     }
 
-  [javaOutput appendString: @"\n    System.loadLibrary (\""];
+  [javaOutput appendString: @"\n    JIGS.loadLibrary (\""];
   [javaOutput appendString: [WCLibrary shortLibraryName]];
   [javaOutput appendString: @".A\");\n"];
   [javaOutput appendString: @"  }\n\n  protected "];
