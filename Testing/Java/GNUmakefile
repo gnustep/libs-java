@@ -1,9 +1,9 @@
 #  GNUmakefile for the JIGS's Java Tests
 #
-#  Copyright (C) 2000 Free Software Foundation, Inc.
+#  Copyright (C) 2001 Free Software Foundation, Inc.
 #
 #  Author:  Nicola Pero <n.pero@mi.flashnet.it>
-#  Date: July 2000
+#  Date: February 2001
 #   
 #  This file is part of GNUstep.
 #   
