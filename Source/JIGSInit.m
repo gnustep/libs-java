@@ -62,6 +62,7 @@ static Class (*_original_lookup_class)(const char* name) = 0;
 static Class
 _jigs_lookup_class(const char* name)
 {
+  CREATE_AUTORELEASE_POOL(pool);
   Class		c;
   NSString	*className = [NSString stringWithCString: name];
 
@@ -69,6 +70,7 @@ _jigs_lookup_class(const char* name)
   JIGSRegisterJavaClass (JIGSJNIEnv (), className);
   c = NSClassFromString (className);
   _objc_lookup_class = _jigs_lookup_class;
+  RELEASE(pool);
   return c;
 }
 
