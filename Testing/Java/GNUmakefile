@@ -28,7 +28,8 @@ JAVA_PACKAGE_NAME = gnu.gnustep.java-test
 gnu.gnustep.java-test_JAVA_FILES = \
     NSObjectTest.java              \
     NSObjectSubclassTest.java      \
-    NSArrayTest.java              
+    NSArrayTest.java               \
+    NSProcessInfoTest.java              
 
 
 
