@@ -28,6 +28,7 @@
 
 #include <objc/objc-api.h>
 #include <objc/thr.h>
+#include <objc/encoding.h>
 #include <Foundation/Foundation.h>
 
 /* 
