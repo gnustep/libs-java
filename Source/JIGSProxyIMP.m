@@ -806,6 +806,9 @@ id _JIGS_id_IMP_JavaMethod (id rcv, SEL sel, ...)
       
       (*env)->PopLocalFrame (env, NULL);
 
+      _JIGSMapperInsertProxiedJava (((_java_lang_Object *)rcv)->realObject, 
+				    rcv);
+
       return rcv;
     }
 
