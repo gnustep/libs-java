@@ -1,3 +1,8 @@
+Fri Oct 20 12:49:35 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Java/NSNotificationCenterTest.java: New test.
+	* Java/GNUmakefile: Added the new test.
+	
 Fri Oct  6 13:11:30 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Java/NSSelectorTest.java: New test.
