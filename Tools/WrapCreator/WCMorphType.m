@@ -28,12 +28,14 @@
 - (id) initWithObjcType: (NSString *)name
 	       javaType: (NSString *)javaName
 		jniType: (NSString *)jniName
+       javaArgumentType: (NSString *)javaFullName
      javaToObjcFunction: (NSString *)java2objc
      objcToJavaFunction: (NSString *)objc2java
 {
   self = [super initWithObjcType: name];
   ASSIGN (javaType, javaName);
   ASSIGN (jniType, jniName);
+  ASSIGN (javaArgumentType, javaFullName);
   ASSIGN (javaToObjcFunction, java2objc);
   ASSIGN (objcToJavaFunction, objc2java);
   return self;
@@ -59,6 +61,11 @@
 - (NSString *) jniType
 {
   return jniType;
+}
+
+- (NSString *) javaArgumentType
+{
+  return javaArgumentType;
 }
 
 - (NSString *) codeToConvertToObjc: (NSString *)jniArgument
