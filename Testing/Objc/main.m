@@ -342,62 +342,67 @@ int main (int argc, char **argv, char **penv)
 
   printf ("Calling it to get some system properties:\n"); 
 
+  /* Make sure we can manage nil results */
+#define RESULT (result != nil ? [result cString] : "(nil)")
+
   result = imp (javaLangSystem, selector, @"java.version");
-  printf (" java.vm.version == %s\n", [result cString]);
+  printf (" java.vm.version == %s\n", RESULT);
 
   result = imp (javaLangSystem, selector, @"java.vendor");
-  printf (" java.vendor == %s\n", [result cString]);
+  printf (" java.vendor == %s\n", RESULT);
 
   result = imp (javaLangSystem, selector, @"java.vendor.url");
-  printf (" java.vendor.url == %s\n", [result cString]);
+  printf (" java.vendor.url == %s\n", RESULT);
 
   result = imp (javaLangSystem, selector, @"java.vendor.uri");
-  printf (" java.vendor.uri == %s\n", [result cString]);
+  printf (" java.vendor.uri == %s\n", RESULT);
 
   result = imp (javaLangSystem, selector, @"java.home");
-  printf (" java.home == %s\n", [result cString]);
+  printf (" java.home == %s\n", RESULT);
 
   result = imp (javaLangSystem, selector, @"java.vm.specification.version");
-  printf (" java.vm.specification.version == %s\n", [result cString]);
+  printf (" java.vm.specification.version == %s\n", RESULT);
 
   result = imp (javaLangSystem, selector, @"java.vm.specification.vendor");
-  printf (" java.vm.specification.vendor == %s\n", [result cString]);
+  printf (" java.vm.specification.vendor == %s\n", RESULT);
 
   result = imp (javaLangSystem, selector, @"java.vm.specification.name");
-  printf (" java.vm.specification.name == %s\n", [result cString]);
+  printf (" java.vm.specification.name == %s\n", RESULT);
 
   result = imp (javaLangSystem, selector, @"java.vm.version");
-  printf (" java.vm.version == %s\n", [result cString]);
+  printf (" java.vm.version == %s\n", RESULT);
 
   result = imp (javaLangSystem, selector, @"java.vm.vendor");
-  printf (" java.vm.vendor == %s\n", [result cString]);
+  printf (" java.vm.vendor == %s\n", RESULT);
 
   result = imp (javaLangSystem, selector, @"java.vm.name");
-  printf (" java.vm.name == %s\n", [result cString]);
+  printf (" java.vm.name == %s\n", RESULT);
 
   result = imp (javaLangSystem, selector, @"java.class.version");
-  printf (" java.class.version == %s\n", [result cString]);
+  printf (" java.class.version == %s\n", RESULT);
 
   result = imp (javaLangSystem, selector, @"java.class.path");
-  printf (" java.class.path == %s\n", [result cString]);
+  printf (" java.class.path == %s\n", RESULT);
 
   result = imp (javaLangSystem, selector, @"os.name");
-  printf (" os.name == %s\n", [result cString]);
+  printf (" os.name == %s\n", RESULT);
 
   result = imp (javaLangSystem, selector, @"os.arch");
-  printf (" os.arch == %s\n", [result cString]);
+  printf (" os.arch == %s\n", RESULT);
 
   result = imp (javaLangSystem, selector, @"os.version");
-  printf (" os.version == %s\n", [result cString]);
+  printf (" os.version == %s\n", RESULT);
 
   result = imp (javaLangSystem, selector, @"user.name");
-  printf (" user.name == %s\n", [result cString]);
+  printf (" user.name == %s\n", RESULT);
 
   result = imp (javaLangSystem, selector, @"user.home");
-  printf (" user.home == %s\n", [result cString]);
+  printf (" user.home == %s\n", RESULT);
 
   result = imp (javaLangSystem, selector, @"user.dir");
-  printf (" user.dir == %s\n", [result cString]);
+  printf (" user.dir == %s\n", RESULT);
+
+#undef RESULT
 
   /* Testing overloaded methods */
   printf ("Now testing overloaded methods by loading in the java.lang.StringBuffer class...");
