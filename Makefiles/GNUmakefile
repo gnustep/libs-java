@@ -29,7 +29,8 @@ clean:
 	@echo "Nothing to be done for clean"
 
 distclean:
-	@echo "Nothing to be done for distclean"
+	@echo "Making distclean..."
+	-rm -f *~
 
 check:
 	@echo "Nothing to be done for check"

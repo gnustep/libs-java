@@ -1,3 +1,7 @@
+Mon Jun  4 17:44:52 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* GNUmakefile (distclean): Remove *~.
+
 Mon Jun  4 16:45:29 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* GNUmakefile (clean), (distclean), (check), (uninstall): New
