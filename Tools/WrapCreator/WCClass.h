@@ -41,6 +41,7 @@
   NSMutableDictionary *classMethodDeclarations;  
   NSMutableDictionary *instanceMethodDeclarations;
   NSArray *hardcodedConstants;
+  NSArray *enumerations;
   NSString *fileWithPreambleJavaCode;
   NSString *fileWithIncludedJavaCode;
   NSString *fileWithIncludedObjcCode;
