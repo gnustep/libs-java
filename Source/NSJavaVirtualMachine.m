@@ -32,7 +32,8 @@ JavaVM *JIGSJavaVM = NULL;
 
 /*
  * Return the (JNIEnv *) associated with the current thread,
- * or NULL if no java virtual machine is running.
+ * or NULL if no java virtual machine is running (or if the thread 
+ * is not attached to the JVM).
  *
  * NB: This function performs a call.  Better use your (JNIEnv *) if 
  * you already have it.
@@ -53,7 +54,19 @@ inline JNIEnv *JIGSJNIEnv ()
     }
 }
 
-@implementation NSJavaVirtualMachine : NSObject
+@implementation NSJavaVirtualMachine (GNUstepInternals)
++ (void) _attachCurrentThread: (NSNotification *)not
+{
+  [self attachCurrentThread];
+}
+
++ (void) _detachCurrentThread: (NSNotification *)not
+{
+  [self detachCurrentThread];
+}
+@end
+
+@implementation NSJavaVirtualMachine
 
 + (void) startDefaultVirtualMachine
 {
@@ -74,6 +87,7 @@ inline JNIEnv *JIGSJNIEnv ()
   JNIEnv *env;
   NSDictionary *environment = [[NSProcessInfo processInfo] environment];
   NSString *path;
+  NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
 
   if (JIGSJavaVM != NULL)
     {
@@ -121,6 +135,14 @@ inline JNIEnv *JIGSJNIEnv ()
       [NSException raise: NSGenericException
 		   format: @"Could not start Java Virtual Machine"];
     }
+
+  /* Whenever a thread start or ends, we want to automatically attach
+     or detach it to/from the JVM */
+  [nc addObserver: self  selector: @selector (_attachCurrentThread:)
+      name: NSThreadDidStartNotification  object: nil];
+
+  [nc addObserver: self selector: @selector (_detachCurrentThread:)
+      name: NSThreadWillExitNotification  object: nil];
 
   return;
 }
@@ -180,6 +202,82 @@ inline JNIEnv *JIGSJNIEnv ()
 + (JNIEnv *) JNIEnvHandleOfCurrentThread
 {
   return JIGSJNIEnv ();
+}
+
++ (void) attachCurrentThread
+{
+  static int count = 0;
+  JNIEnv *env;
+  JavaVMAttachArgs args;
+  jint result;
+
+  if (JIGSJavaVM == NULL)
+    {
+      /* No JVM - nothing to do */
+      return;
+    }  
+                    
+  if (JIGSJNIEnv () != NULL)
+    {
+      /* The thread is already attached */
+      return;
+    }
+
+  {
+    CREATE_AUTORELEASE_POOL (pool);
+    
+    args.version = JNI_VERSION_1_2;
+    args.name = (char *)[[NSString stringWithFormat: @"GNUstepThread-%d", 
+				   count] 
+			  cString];
+    args.group = NULL;
+    
+    result = (*JIGSJavaVM)->AttachCurrentThread (JIGSJavaVM, (void **)&env, 
+						 &args);
+    
+    RELEASE (pool);
+  }
+
+  if (result < 0)
+    {
+      [NSException raise: NSGenericException
+		   format: @"Could not attach thread to the Java VM"];
+    }
+  
+  count++;
+  if (count > 100000)
+    {
+      /* Duplicated names shouldn't cause any problem */
+      count = 0;
+    }
+  return;
+}
+
++ (void) detachCurrentThread 
+{
+  jint result;
+
+  if (JIGSJavaVM == NULL)
+    {
+      /* No JVM - nothing to do */
+      return;
+    }  
+                    
+  if (JIGSJNIEnv () == NULL)
+    {
+      /* The thread is not attached */
+      return;
+    }
+
+  result = (*JIGSJavaVM)->DetachCurrentThread (JIGSJavaVM);
+  
+  if (result < 0)
+    {
+      [NSException raise: NSGenericException
+		   format: @"Could not detach thread from the Java VM"];
+    }
+
+  return;
 }
 
 + (void) registerJavaVM: (JavaVM *)javaVMHandle
@@ -244,6 +342,16 @@ inline JNIEnv *JIGSJNIEnv ()
   [NSJavaVirtualMachine startVirtualMachineWithClassPath: classPath
 			libraryPath: libraryPath];
   return self;
+}
+
+- (void) attachCurrentThread
+{
+  return [NSJavaVirtualMachine attachCurrentThread];
+}
+ 
+- (void) detachCurrentThread 
+{
+  return [NSJavaVirtualMachine detachCurrentThread];
 }
 @end
 
