@@ -31,6 +31,7 @@ JAVA_PACKAGE_NAME = gnu.gnustep.java
 gnu.gnustep.java_JAVA_FILES =                 \
    gnu/gnustep/java/GSJNIMethods.java         \
    gnu/gnustep/java/JIGS.java                 \
+   gnu/gnustep/java/JIGSLibraryLoader.java    \
    gnu/gnustep/base/NSException.java          \
    gnu/gnustep/base/NSObject.java             \
    gnu/gnustep/base/GSInitializationType.java \
@@ -39,8 +40,10 @@ gnu.gnustep.java_JAVA_FILES =                 \
    gnu/gnustep/base/NSRect.java               \
    gnu/gnustep/base/NSSize.java        
 
-gnu.gnustep.java_JAVA_JNI_FILES =       \
-   gnu/gnustep/java/JIGS.java           \
+gnu.gnustep.java_JAVA_JNI_FILES =          \
+   gnu/gnustep/java/JIGS.java              \
+   gnu/gnustep/java/JIGSLibraryLoader.java \
    gnu/gnustep/base/NSObject.java
 
 include $(GNUSTEP_MAKEFILES)/java.make
+
