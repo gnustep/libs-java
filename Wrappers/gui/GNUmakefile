@@ -1,7 +1,7 @@
 #
-#  Copyright (C) 2000 Free Software Foundation, Inc.
+#  Copyright (C) 2001 Free Software Foundation, Inc.
 #
-#  Written by: Nicola Pero <nicola@brainstorm.co.uk>
+#  Written by: Nicola Pero <n.pero@mi.flashnet.it>
 #
 #  This file is part of the GNUstep Java Interface Library.
 #
@@ -20,30 +20,13 @@
 #  Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
 #
 
-internal-all ::
-
-install :: 
-	@echo ===================================================
-	@echo
-	@echo You should never install this fake library !
-	@echo
-	@echo By typing \'make\' in this directory the wrapper 
-	@echo library is created in ./JavaWrapper.
-	@echo
-	@echo So, please type \'make\', then cd into JavaWrapper, 
-	@echo and compile and install the wrapper library there.  
-	@echo 
-	@echo ===================================================
-	@echo
-	@echo Now trying to abort...
-	@echo
-	@stop-execution-of-this-makefile-please
-
 include $(GNUSTEP_MAKEFILES)/common.make
 
+PACKAGE_NAME = gnustep-gui-java-wrapper
+VERSION = 0.1.0
 
-LIBRARY_NAME = libgnustep-gui
-
-include $(GNUSTEP_MAKEFILES)/library.make
+JAVA_WRAPPER_NAME = gnustep-gui
+gnustep-gui_HEADER_FILES = AppKit/AppKit.h
 
 include $(GNUSTEP_MAKEFILES)/java-wrapper.make
+
