@@ -1,3 +1,9 @@
+Sat Aug 12 13:08:46 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* JIGSInit.m (JIGSInit): Create an autorelease pool on entry, 
+	destroy it on exit.
+	* JIGSMapper.m (JIGSRegisterJavaProxyClass): Idem.
+	
 Fri Aug  4 21:18:08 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGS.h (GNUSTEP_JAVA_VERSION): Updated to 0.3.
