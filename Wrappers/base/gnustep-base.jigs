@@ -208,6 +208,54 @@ classes = (
 },
 
 {
+  "java name" = "gnu.gnustep.base.GSXPathContext";
+  
+  "instance methods" = (
+    "evaluateExpression:"
+  );
+  "initializers" = (
+    "initWithDocument:"
+  );
+},
+
+{
+  "java name" = "gnu.gnustep.base.GSXPathObject";
+},
+
+{
+  "java name" = "gnu.gnustep.base.GSXPathBoolean";
+  
+  "instance methods" = (
+    "booleanValue"
+  );
+},
+
+{
+  "java name" = "gnu.gnustep.base.GSXPathNumber";
+  
+  "instance methods" = (
+    "doubleValue"
+  );
+},
+
+{
+  "java name" = "gnu.gnustep.base.GSXPathString";
+  
+  "instance methods" = (
+    "stringValue"
+  );
+},
+
+{
+  "java name" = "gnu.gnustep.base.GSXPathNodeSet";
+  
+  "instance methods" = (
+    "length",
+    "nodeAtIndex:"
+  );
+},
+
+{
   "java name" = "gnu.gnustep.base.GSSAXHandler";
   
   "class methods" = ("handler" );
@@ -622,6 +670,7 @@ classes = (
     
     "instance methods" = ("addObject:",
 			  "addObjectsFromArray:",
+			  "exchangeObjectAtIndex:withObjectAtIndex:",
 			  "insertObject:atIndex:",
 			  "replaceObjectAtIndex:withObject:",
 			  "replaceObjectsInRange:withObjectsFromArray:",
@@ -849,6 +898,7 @@ classes = (
 			  "runMode:beforeDate:",
 			  "runUntilDate:",
 			  "addPort:forMode:",
+			  "cancelPerformSelectorsWithTarget:",
 			  "cancelPerformSelector:target:argument:",
 			  "configureAsServer",
 			  "performSelector:target:argument:order:modes:",
@@ -957,6 +1007,7 @@ classes = (
 			  "isValid", 
 			  "timeInterval",
 			  "fireDate",
+			  "setFireDate:",
 			  "userInfo");
   },
     
