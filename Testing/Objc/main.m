@@ -34,7 +34,10 @@ int main (int argc, char **argv, char **penv)
   getPropIMP imp;
   NSString *result;
 
-#if LIB_FOUNDATION_LIBRARY
+#if defined(GS_PASS_ARGUMENTS)
+  [NSProcessInfo initializeWithArguments: argv  count: argc  
+		 environment: penv];
+#elif defined(LIB_FOUNDATION_LIBRARY)
   [NSProcessInfo initializeWithArguments: argv  count: argc  
 		 environment: penv];
 #endif
