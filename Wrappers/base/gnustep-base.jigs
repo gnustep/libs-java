@@ -19,6 +19,7 @@ classes = (
     "objects",
     "parameterForKey:",
     "parameters",
+    "rawMimeData",
     "setName:",
     "setObject:forKey:",
     "setParameter:forKey:",
@@ -40,6 +41,14 @@ classes = (
 {
   "java name" = "gnu.gnustep.base.GSMimeDocument";
   
+  "class methods" = (
+    "charsetFromEncoding:",
+    "decodeBase64:",
+    "decodeBase64String:",
+    "encodeBase64:",
+    "encodeBase64String:",
+    "encodingFromCharset:"
+  );
   "instance methods" = (
     "addContent:",
     "addHeader:",
@@ -60,7 +69,10 @@ classes = (
     "headerNamed:",
     "headersNamed:",
     "makeContentID",
+    "rawMimeData",
+    "rawMimeData:",
     "setContent:",
+    "setContent:type:name:",
     "setContent:type:subType:name:",
     "setHeader:"
   );
