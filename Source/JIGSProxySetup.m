@@ -31,6 +31,7 @@
 #include "java.lang.Object.h"
 #include <string.h>
 #include "JIGSSelectorMapping.h"
+#include <Foundation/NSDebug.h>
 
 static jclass GSJNIMethods = NULL;
 
