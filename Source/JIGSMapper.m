@@ -205,8 +205,63 @@ void JIGSRegisterJavaProxyClass (JNIEnv *env, NSString *fullJavaClassName,
     }
 
   objc_mutex_lock (_JIGSProxiedObjcClassMapLock);
-  NSMapInsert (_JIGSProxiedObjcClassMap, javaClass, objcClass);
+  NSMapInsert (_JIGSProxiedObjcClassMap, objcClass, javaClass);
   objc_mutex_unlock (_JIGSProxiedObjcClassMapLock);
+}
+
+inline static Class _JIGSFirstJavaProxySuperClass (JNIEnv *env, NSString *className)
+{
+  NSString *shortClassName;
+  Class class;
+
+  objc_mutex_lock (_JIGSProxiedObjcClassMapLock); 
+
+  while (1)
+    {
+      shortClassName = GSJNI_ShortClassNameFromLongClassName (className);
+      class = NSClassFromString (shortClassName);
+
+      if (class == Nil)
+	{
+	  className = GSJNI_SuperclassNameFromClassName (env, className);
+	  if (className == nil)
+	    {
+	      class = Nil;
+	      NSLog (@"Could not find a real objective-C class for class %@", 
+		     className);
+	      break;
+	    }
+	}
+      else
+	{
+	  if (NSMapGet (_JIGSProxiedObjcClassMap, class) != NULL)
+	    {
+	      break;
+	    }
+	  className = NSStringFromClass (class_get_super_class (class));
+	}
+    }
+
+  objc_mutex_unlock (_JIGSProxiedObjcClassMapLock);
+  return class;
+}
+
+Class JIGSClassFromThisClass (JNIEnv *env, jclass class)
+{
+  NSString *className;
+
+  className = GSJNI_NSStringFromJClass (env, class);
+  return _JIGSFirstJavaProxySuperClass (env, className);
+}
+
+Class _JIGSAllocClassForThis (JNIEnv *env, jobject this)
+{
+  NSString *className;
+  Class class;
+
+  className = GSJNI_NSStringFromClassOfObject (env, this); 
+  class = _JIGSFirstJavaProxySuperClass (env, className);
+  return class;
 }
 
 // Cache used in the lookup functions

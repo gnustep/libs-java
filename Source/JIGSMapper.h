@@ -114,12 +114,31 @@ jobject JIGSCreateNewJavaProxy (JNIEnv *env, id proxiedObject);
  * gnu.gnustep.yourFramework.MyClass: we can't know - you need to 
  * register the mapping of classes.
  *
+ * Also, when we allocate the real object corresponding to a java proxy, 
+ * we need to know which class to allocate it of.  We look in the tree of 
+ * registered java proxy classes (see _JIGSAllocClassOfThis). 
+ * When we send a static message, we need to do that too.  We can't simply 
+ * take the java class of the object and look for the objective-C counterpart 
+ * because the java class could be a java subclass of (the java proxy class of) 
+ * an objective-C class.  So, we need to look for the first ancestor of 
+ * the class which is the java proxy class corresponding to an objective-C 
+ * class.  We then send our class message to that class.  (For the programmer, 
+ * all this simply amounts at calling JIGSClassFromThisClass).
+ *
  * In your library wrapper, you should call in JNI_OnLoad this
  * function for each class you have wrapped.
  */
 
 void JIGSRegisterJavaProxyClass (JNIEnv *env, NSString *fullJavaClassName, 
 				 NSString *objcClassName);
+
+/*
+ * Use the following to determine which objective-C class to send a static 
+ * method to.  This method looks for the first superclass of `class' which 
+ * is a java proxy class (ie, has an Objective-C real counterpart).
+ */
+
+Class JIGSClassFromThisClass (JNIEnv *env, jclass class);
 
 /*
  * END OF PUBLIC FUNCTIONS
@@ -187,4 +206,12 @@ inline void _JIGSMapperAddObjcProxy (JNIEnv *env, jobject java, id objc);
  */
 inline void _JIGSMapperRemoveObjcProxy (JNIEnv *env, jobject java);
 
+/*
+ * The following is used by NSObject to decide which Objective-C class 
+ * to use to allocate the real object.  
+ */
+Class _JIGSAllocClassForThis (JNIEnv *env, jobject this);
+
 #endif /* __JIGSMapper_h_GNUSTEP_JAVA_INCLUDE */
+
+
