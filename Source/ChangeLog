@@ -1,3 +1,11 @@
+Fri Jul 27 13:10:04 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* JIGSProxyIMP.m (DO_PROCESS_ARGS): Fixed processing of multiple
+	arguments by removing inline function to process a single
+	argument, and processing arguments using a single big macro.  This
+	works around a va_arg problem with functions which was causing
+	incorrect arguments to be used.
+
 Fri Jul 27 11:18:51 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGSInit.m (_jigs_lookup_class): Wrap the attempt to register
