@@ -24,6 +24,24 @@
 #include "JIGS.h"
 #include "JIGSSelectorMapping.h"
 
+#if defined(LIB_FOUNDATION_LIBRARY)
+/* Use a global lock. */
+static objc_mutex_t JIGSLock = NULL;
+
+BOOL GSRegisterCurrentThread (void)
+{
+  objc_mutex_lock (JIGSLock);
+  return YES;
+}
+
+void GSUnregisterCurrentThread (void)
+{
+  objc_mutex_unlock (JIGSLock);
+}
+#endif /* LIB_FOUNDATION_LIBRARY */
+
+
+
 /* A global reference to the JIGS class. 
    Global thread locking could be done with respect to this class. 
    We don't do it now, but we load a reference to
@@ -80,6 +98,10 @@ void JIGSInit (JNIEnv *env)
 
       // Make sure the default thread is initialized 
       GSCurrentThread ();
+
+#if defined(LIB_FOUNDATION_LIBRARY)
+      JIGSLock = objc_mutex_allocate ();
+#endif     
 
       // Get the JavaVM to register it with NSJavaVirtualMachine
       if ((*env)->GetJavaVM (env, &jvm) < 0)
