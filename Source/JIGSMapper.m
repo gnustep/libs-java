@@ -26,6 +26,7 @@
 #include "GSJNI.h"
 #include "JIGSProxy.h"
 #include "NSJavaVirtualMachine.h"
+#include <objc/Object.h>
 
 /***
  *** Table mapping real objc objects to their java proxies 
@@ -509,13 +510,13 @@ jobject JIGSJobjectFromId (JNIEnv *env, id object)
     return NULL;
   
   // java.lang.Object
-  if ([object isKindOf: java_lang_Object])
+  if ([object isKindOfClass: java_lang_Object])
     {
       return ((_java_lang_Object *)object)->realObject;
     }
   
   // NSString 
-  if ([object isKindOf: nsstring])
+  if ([object isKindOfClass: nsstring])
     {
       return GSJNI_JStringFromNSString (env, object);
     }
