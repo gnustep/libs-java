@@ -1,3 +1,11 @@
+Tue Apr 30 14:48:03 2002  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Makefiles/java-wrapper.make (HEADER_FILE): Fixed for new
+	gnustep-make ... HEADER_FILES is no longer defined by the
+	Master invocation and must be defined manually in the Instance
+	invocation.
+	(WRAPPER_HEADER): Idem.
+	
 Thu Mar 21 15:36:36 2002  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* Makefiles/java-wrapper.make: Updated internal-java_wrapper-all,
