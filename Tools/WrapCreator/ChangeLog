@@ -1,3 +1,21 @@
+Thu Sep 28 11:54:58 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Makefiles/java-wrapper.objc.template: Added setting of debug and
+	profile flags to match the ones of the wrapped library.
+	* Makefiles/java-wrapper.java.template: Idem. 
+	* Makefiles/java-wrapper.make (before-$(TARGET)-all): Warn if
+	trying to build the wrapper for a static library.
+	 (WRAPPER_DIR): Add suffix if building a debug and/or profile
+	version.  ($(WRAPPER_DIR)/stamp-file): Set the info about debug
+	and profile in the GNUmakefiles we are generating; echo
+	instructions on how to compile the wrapper at the end;
+	(internal-java_wrapper-distclean): Remove JavaWrapper_debug and
+	similar directories in distclean.
+	* WCClass.m ([-outputWrappers]): Made output code invoke the new
+	JIGS.loadLibrary () facility rather than the bare
+	System.loadLibrary () to allow debug libraries to be wrapped;
+	output import of gnu.gnustep.java.JIGS to allow this.
+
 Tue Sep 26 12:27:43 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* WCLibrary.m ([+outputWrappers]): Read the custom type mapping
