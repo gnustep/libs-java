@@ -28,10 +28,12 @@
 
 static NSString *libraryName;
 static NSString *libraryHeader;
+static NSString *topLevelDirectory;
 static NSString *wrapDir;
 static NSDictionary *wrappingPreferences;
 static WCHeaderParser *headerParser;
 static BOOL verboseOutput;
+static BOOL outputJavadoc;
 static NSMutableArray *classList;
 
 @implementation WCLibrary
@@ -65,12 +67,12 @@ static NSMutableArray *classList;
   return verboseOutput;
 }
 
-+ (void) initializeWithJigsFile: (NSString *)jigsFileName
-	 preprocessedHeaderFile: (NSString *)headerFileName
-		     headerFile: (NSString *)libHeader
-		  wrapDirectory: (NSString *)wrapDirectory
-		    libraryName: (NSString *)libName
-		  verboseOutput: (BOOL)verbOut
++ (BOOL) outputJavadoc
+{
+  return outputJavadoc;
+}
+
++ (void) initializeWithOptions: (NSDictionary *)options
 {
   int i, count;
   NSArray *classes;
@@ -82,15 +84,21 @@ static NSMutableArray *classList;
   NSArray *enumTypes;
   NSString *enumType;
   NSDictionary *classInfo;
-  
-  verboseOutput = verbOut;
+
+  /* Options */
+  NSString *jigsFileName;
+  NSString *headerFileName;
+
+  headerFileName = [options objectForKey: @"PreprocessedHeaderFileName"];
+
   headerParser = [WCHeaderParser newWithHeaderFile: headerFileName];
   if (headerParser == nil)
     {
       [NSException raise: @"WrapCreatorException"
 		   format: @"Could not read header file %@", headerFileName];
     }
-  
+
+  jigsFileName = [options objectForKey: @"JigsFile"];
   wrappingPreferences = [NSDictionary dictionaryWithContentsOfFile: jigsFileName];
   if (wrappingPreferences == nil)
     {
@@ -98,10 +106,15 @@ static NSMutableArray *classList;
 		   format: @"Could not parse jigs file %@", jigsFileName];
     }
   RETAIN (wrappingPreferences);
+  ASSIGN (topLevelDirectory, [jigsFileName stringByDeletingLastPathComponent]);
 
-  ASSIGN (wrapDir, wrapDirectory);
-  ASSIGN (libraryName, libName);
-  ASSIGN (libraryHeader, libHeader);
+  ASSIGN (libraryHeader, [options objectForKey: @"HeaderFile"]);  
+  ASSIGN (wrapDir, [options objectForKey: @"WrapDirectory"]);
+  ASSIGN (libraryName, [options objectForKey: @"LibraryName"]);
+  [(NSValue *)[options objectForKey: @"VerboseOutput"] 
+	      getValue: &verboseOutput];
+  [(NSValue *)[options objectForKey: @"OutputJavadoc"] 
+	      getValue: &outputJavadoc];
 
   /* Load custom types */
   pool = [NSAutoreleasePool new];
@@ -364,6 +377,14 @@ static NSMutableArray *classList;
 {
   return [NSString stringWithFormat: @"%@/Objc/%@-map.c", wrapDir, 
 		   objcClassName];
+}
+
++ (NSString *) fileWithRelativePath: (NSString *)relativePath
+{
+  NSString *path;
+
+  path = [topLevelDirectory stringByAppendingPathComponent: relativePath];
+  return [NSString stringWithContentsOfFile: path];
 }
 
 + (NSString *) javaClassNameForObjcClassName: (NSString*)objcClassName
