@@ -1,3 +1,7 @@
+Thu Jun  7 14:57:33 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* JIGSProxyIMP.m (process_argument): tidied casts.
+
 2001-06-07 Rcihard Frith-Macdonald <rfm@gnu.org>
 
 	* JIGSProxyIMP.m: process_argument() changed vararg types to stop
