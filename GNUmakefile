@@ -32,7 +32,9 @@ GNUSTEP_INSTALLATION_DIR=$(GNUSTEP_SYSTEM_ROOT)
 RPM_DISABLE_RELOCATABLE=YES
 
 # NB: "Java" must come before "Source"
-SUBPROJECTS = Java Source Tools Documentation
+# let Documentation be the last one, so even if it doesn't work,
+# the software is built/installed anyway
+SUBPROJECTS = Java Source Tools Makefiles Documentation
 
 include $(GNUSTEP_MAKEFILES)/aggregate.make
 
