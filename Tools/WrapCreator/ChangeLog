@@ -1,3 +1,23 @@
+Fri May 18 01:08:45 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	Made a backup of the old java-wrapper makefiles before the planned
+	rewriting, so that legacy code can still use them simply by
+	including old-java-wrapper.make rather than java-wrapper.make.
+	* Makefiles/old-java-wrapper.make: New file - copy of
+	java-wrapper.make, modified to include and process files with name
+	old-java-wrapper.xxx.yyy rather than java-wrapper.xxx.yyy.
+	* Makefiles/old-java-wrapper.java.template: New file - copy of 
+	java-wrapper.java.template.
+	* Makefiles/old-java-wrapper.objc.template: New file - copy of
+	java-wrapper.objc.template.
+	* Makefiles/old-java-wrapper.readme.template: New file - copy of
+	java-wrapper.readme.template.
+	* Makefiles/old-java-wrapper.top.debug.template: New file - copy
+	of java-wrapper.top.debug.template.
+	* Makefiles/old-java-wrapper.top.template: New file - copy of
+	java-wrapper.top.template.
+	* GNUmakefile: Install the old makefiles as well.
+
 Mon May  7 04:47:37 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* main.m (main): For libFoundation, disable double-check of

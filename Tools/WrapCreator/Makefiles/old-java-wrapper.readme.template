@@ -1,0 +1,12 @@
+This directory and all its contents are automatically generated !
+
+So please note that: 
+
+(*) you should not edit anything in this directory: any change will be
+lost the next time that the directory is regenerated.
+
+(*) you can safely remove this directory and all its contents whenever
+you wish.
+
+To compile, type: `make'.
+To install, type: `make install'.
