@@ -1,3 +1,8 @@
+Thu Jan 25 12:05:32 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* GNUmakefile: Use the new BUILD_JAVA_WRAPPER_AUTOMATICALLY 
+	feature.
+
 Wed Oct 11 15:59:20 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* README: New file.
