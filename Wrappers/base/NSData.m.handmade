@@ -1,0 +1,31 @@
+JNIEXPORT void JNICALL
+Java_gnu_gnustep_base_NSData_initWithBytes (JNIEnv *env, jobject this, 
+					   jbyteArray bytes)
+{
+  NSData *we;
+  NSData *objc_bytes;
+
+  JIGS_ENTER;
+  we = JIGSIdFromThis (env, this);
+
+  /* Yep - this is lossy - anyway */
+  objc_bytes = JIGSNSDataFromJbyteArray (env, bytes);
+  [we initWithBytes: [objc_bytes bytes]  length: [objc_bytes length]];
+
+  JIGS_EXIT;
+}
+
+JNIEXPORT jbyteArray JNICALL
+Java_gnu_gnustep_base_NSData_bytes (JNIEnv *env, jobject this)
+{
+  NSData *we;
+  jbyteArray result;
+
+  JIGS_ENTER;
+  we = JIGSIdFromThis (env, this);
+
+  result = JIGSJbyteArrayFromNSData (env, we);
+
+  JIGS_EXIT_WITH_VALUE (result);
+}
+
