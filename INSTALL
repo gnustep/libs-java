@@ -3,67 +3,47 @@ INSTALLATION INSTRUCTIONS
 
 To have the full functionality, follow all the steps; in the
 exceptional case that you don't need a shared objective-C runtime
-library, you can safely skip points 0) and 1) to obtain a JIGS library
+library, you can safely skip points 0) to 4) to obtain a JIGS library
 with reduced functionality.  I strongly suggest using a shared
 objective-C runtime which gives you so much more possibilities of
-having fun.  Please refer to the README for more information.
+having fun; the procedure is now explained in all details and it should 
+be quite simple.  
 
-0) You need a libobjc compiled as a shared library: get the latest gcc
-snapshot, unpack it and follow the instructions:
+0) Build and install the GNUstep make package. If you have already
+   installed the GNUstep core libraries, you need to do nothing. 
 
-tar xfvz egcs-20000703.tar.gz 
-mkdir build-egcs
-cd build-egcs
-../egcs-20000703/configure --enable-shared --prefix=/opt/gcc
-make
+1) Download one (and only one) of the following two packages providing a 
+   shared libobjc: 
 
-(replace egcs-20000703 with the snapshot you are using, and the
-argument of --prefix with a directory you may want to install to).
-[FIXME: for snapshots before the 2000xxxx (for any snapshot as of today,
-31 Jul 2000), please edit the file egcs-20000703/libobjc/Makefile.in
-and remove NXConstStr.lo from the list of OBJS, otherwise you will not
-be able to use your shared libobjc with GNUstep.  But - this gives problems 
-when configuring GNUstep, since some tests fail.  You may want to configure 
-GNUstep using the static libobjc, and then compile it using the shared
-libobjc.]
+     * Helge Hess' shared Objective-C runtime library. This probably
+       runs on many more platforms and machines than the other one. 
+       Get it from 
+       
+       ftp://ftp.gnustep.org/pub/gnustep/contrib/libobjc-hh-20000417.tar.gz
+       
+     * If you prefer to use the standard Objective-C runtime library
+       from gcc, here is the libobjc from the egcs-20000918 snapshot 
+       packaged with a GNUmakefile. I hacked the machine configuration in, 
+       so this probably only runs only on 32 bits machines (I tested it only 
+       on a i386 linux-gnu), but it's precisely the latest gcc version. 
+       Get it from 
+       
+       http://www.gnustep.it/jigs/libobjc.tgz
 
-At this point, instead of installing everything, you may want to install 
-only the shared libobjc: 
 
-{in the directory build-egcs}
-cd i686-pc-linux/libobjc
-cd .libs
-su
-{type in root password}
-cp libobjc.so.* /usr/lib/gcc-lib/i386-linux/2.95.2/
-exit
+2) Compile the shared libobjc. Just get in the directory, and type 'make' 
 
-(Please use the obvious adaptations for your system).
-If everything looks nice, you may want to take a precautionary measure
-by moving the static libobjc where it can't be found, so that you are
-sure the shared libobjc is always used when compiling objective-C:
+3) Install the shared libobjc by typing 'make install'. This will
+   install the shared libobjc in GNUstep's System directory. 
 
-su
-{type in root password}
-cd /usr/lib/gcc-lib/i386/i386-linux/2.95.2/
-mv libobjc.a libobjc.a.old
-exit
-
-Run ldconfig: 
-su
-{type in root password}
-ldconfig
-exit
-
-You will now need to recompile any Objective-C binary.
-
-1) Recompile and reinstall GNUstep from scratch.  The shared libobjc
-should be used.  Make sure everything works fine before going on.
-Please note that you need a recent gnustep-make package (GNUstep 0.6.6
-at least) to build and use JIGS.
-
-2) Make sure your java environment is well configured.  
-At least one of the following should be true: 
+4) Reconfigure, recompile and reinstall the GNUstep core libraries.
+   Reconfiguring them will detect that you have a custom libobjc in your
+   GNUstep System directory, and always use that library and its headers when
+   compiling GNUstep and all the stuff, ignoring the standard objective-C 
+   runtime library bundled with your system.
+   
+5) Make sure your java environment is well configured.  
+   At least one of the following should be true: 
   
   * typing 'javac' at the shell prompt should run the java compiler
   (ie, you have set up your PATH environment variable);
@@ -77,17 +57,17 @@ simply by resetting the old shell variables to new values appropriate for
 the new environment.  You do not need to recompile or reinstall JIGS nor any
 GNUstep based java packages or apps.]
 
-3) Compile JIGS: 
+6) Compile JIGS: 
 
 make 
 
-4) Install JIGS: 
+7) Install JIGS: 
 
   * Become root, then type:
 
     make install
 
-5) Play with JIGS.  The directory Examples/ contains examples of JIGS
+8) Play with JIGS.  The directory Examples/ contains examples of JIGS
 in action.  You probably want to have a look at WrapCreator and its
 examples, which you find in Tools/WrapCreator/.  The directory
 Wrappers contains a first attempt at a wrapper for the gnustep base
