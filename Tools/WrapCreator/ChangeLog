@@ -1,3 +1,9 @@
+Mon Nov 19 15:24:02 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Makefiles/java-wrapper.make ($(WRAPPER_DIR)/stamp-file):
+	Shortened messages about compiling automatically the wrapper
+	library.
+
 Mon Sep 10 18:15:52 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Makefiles/java-wrapper.make (install-java_wrapper): Removed.
