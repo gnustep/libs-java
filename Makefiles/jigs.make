@@ -32,9 +32,9 @@ ifeq ($(JIGS_VM_LIBS),)
   $(error You need to source $(GNUSTEP_MAKEFILES)/GNUstep-Java.sh before compiling!)
 endif
 
+ADDITIONAL_OBJC_LIBS += -lgnustep-java
 ADDITIONAL_LIB_DIRS += $(JIGS_VM_LIBDIRS)
 ADDITIONAL_OBJC_LIBS += $(JIGS_VM_LIBS)
-ADDITIONAL_OBJC_LIBS += -lgnustep-java
 
 endif # jigs.make loaded
 
