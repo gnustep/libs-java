@@ -264,6 +264,13 @@
                 },
 
                 {
+                  "java name" = "gnu.gnustep.base.NSPropertyListSerialization";
+
+		  "class methods" = ("propertyListFromString:",
+		  		     "stringFromPropertyList:");
+                },
+
+                {
                   "java name" = "gnu.gnustep.base.NSSet";
 
                   "instance methods" = 

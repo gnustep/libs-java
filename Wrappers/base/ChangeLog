@@ -1,3 +1,12 @@
+Fri Oct 20 17:13:24 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* GNUmakefile.wrapper: New file.
+	* GNUmakefile.wrapper.objc.preamble: New file.	
+	* NSPropList.m: New file.
+	* NSPropertyListSerialization.h: New file.
+	* libgnustep-base.jigs (NSPropertyListSerialization): New wrapper.
+	* gnustep-base.h: Include NSPropertyListSerialization.h.
+	
 Fri Oct 20 12:44:14 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* libgnustep-base.jigs (NSNotificationCenter): New wrapper.
