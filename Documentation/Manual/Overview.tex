@@ -1,0 +1,58 @@
+\chapter{Quick Overview of JIGS}
+
+This chapter is a quick technical overview of the various parts of the
+JIGS source code distribution.
+
+\section{Components of JIGS}
+JIGS is composed by: 
+\begin{enumerate}
+\item An integrated Java-to-Objective-C interfacing engine (this is
+the core of JIGS).  The source code is located in the \texttt{Source/}
+and \texttt{Java/} directories.
+\item An automated wrapping tool for Objective-C libraries; this tool
+can automatically output the wrapping code needed to expose
+Objective-C libraries to Java using the JIGS core engine; this tool is
+called \texttt{WrapCreator} [but a name change is planned].  The
+source code is in the \texttt{Tools/WrapCreator/} directory.
+\item Wrappers for the GNUstep Base and Gui libraries.  You need
+\texttt{WrapCreator} to compile these wrappers.  The source code is in
+the \texttt{Wrappers/base/} and \texttt{Wrappers/gui/} directories.
+\item Examples of libraries wrapped by hand.  This is mainly useful 
+to JIGS hackers themselves.  Source is in \texttt{Examples/}.
+\item Examples of libraries wrapped using the WrapCreator tool.  Source 
+is in \texttt{Tools/WrapCreator/Examples}.
+\item Examples of using the GNUstep Base and Gui libraries from Java.
+The source code is in \texttt{Testing/Java/}.
+\item Examples of running Java code from Objective-C.  The source code 
+is in \texttt{Testing/Objc/}.
+\item This manual.  The source is in the \texttt{Documentation/Manual/} 
+directory.
+\end{enumerate}
+
+\section{Which Components are Used for What}
+
+\subsection{Starting a Java VM inside an Objective-C program}
+To start a Java Virtual Machine and access Java from an Objective-C
+GNUstep program, you need only the JIGS core engine.  It must be said
+that this will not work out the box.  You need to find out what
+libraries you need to link with in order to start a Java Virtual
+Machine from native code in your Java Environment, because of a lack
+of standardization between different Java Environments.  It's just a
+couple of library flags for the compiler, but it can be painful, and
+non-portable.  The example is in \texttt{Testing/Objc}.  If you are
+lucky, you might also find the flags for your java platform there.
+
+\subsection{Using the GNUstep Base and Gui Libraries from Java}
+To use the GNUstep Base and Gui libraries from Java, you only need the
+JIGS core engine and the GNUstep Base and Gui libraries wrappers.
+Once you have installed JIGS, it should just work out of the box.  The
+examples are in \texttt{Testing/Java/}.
+
+\subsection{Using Other GNUstep Libraries from Java}
+To use a generic GNUstep Objective-C library from Java, you need the
+JIGS core engine, and wrappers for that library.  To generate the
+wrappers, you need to use the WrapCreator tool.  Complete examples of
+wrapping a library and then accessing it from Java are in
+\texttt{Tools/WrapCreator/Examples/}.
+
+
