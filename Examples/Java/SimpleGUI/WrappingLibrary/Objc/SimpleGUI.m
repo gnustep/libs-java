@@ -55,7 +55,7 @@ JNI_OnLoad (JavaVM *jvm, void *reserved)
  *
  * Some shortcuts are: 
 
- * convert string arguments using GSJNI_NSStringFromJString.
+ * convert string arguments using JIGSNSStringFromJstring.
  * This is slightly faster but you must be sure the arg is a string.
  
  * create proxies directly when cloning objects.  Please refer 
@@ -69,7 +69,7 @@ Java_SimpleGUI_initWithTitle (JNIEnv *env, jobject this, jstring title)
   JIGS_ENTER;
 
   we = JIGSIdFromThis (env, this);
-  [we initWithTitle: GSJNI_NSStringFromJString (env, title)];
+  [we initWithTitle: JIGSNSStringFromJstring (env, title)];
 
   JIGS_EXIT;
 }
@@ -82,7 +82,7 @@ Java_SimpleGUI_addButtonWithTitle (JNIEnv *env, jobject this,
   JIGS_ENTER;
 
   we = JIGSIdFromThis (env, this);
-  [we addButtonWithTitle: GSJNI_NSStringFromJString (env, title)  tag: tag];
+  [we addButtonWithTitle: JIGSNSStringFromJstring (env, title)  tag: tag];
 
   JIGS_EXIT;
 }
@@ -127,5 +127,6 @@ Java_SimpleGUI_start (JNIEnv *env, jobject this)
 
   JIGS_EXIT;
 }
+
 
 

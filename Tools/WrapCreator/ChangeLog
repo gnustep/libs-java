@@ -1,3 +1,8 @@
+Tue Oct 17 14:37:25 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* WCTypeLoader.m: Use the new JIGSNSStringFromJstring and
+	JIGSJstringFromNSString functions when morphing strings.
+
 Fri Oct  6 12:41:40 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* WCType.h, WCType.m ([-javaArgumentType]): New method.
