@@ -1,3 +1,8 @@
+Fri Jul 27 13:18:22 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Objc/main.m (main): Added test for calling a Java method 
+	with two arguments from ObjC.
+
 Fri Jul 27 11:28:35 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Objc/main.m (main): Do not register the java.lang.System class
