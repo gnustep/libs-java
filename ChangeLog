@@ -1,3 +1,9 @@
+Fri Aug 18 20:37:23 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* README: Added news for 0.4.
+	* INSTALL: Updated.
+	* Wrappers: New directory.
+
 Sat Aug  5 16:05:07 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GNUmakefile (SUBPROJECTS): Compile Tools from top level 
