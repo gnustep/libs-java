@@ -1,3 +1,9 @@
+Sun May  6 21:12:03 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Java/Base/NSKeyValueCodingTest.java: New test.
+	* Java/Base/GNUmakefile: Added the new test.
+	* Java/Base/test-base: Idem.
+
 Sat May  5 23:39:46 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* Java/Base/NSNumberTest.java: Removed testing of booleans.
