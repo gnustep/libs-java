@@ -84,13 +84,15 @@ _jigs_lookup_class (const char* name)
   return c;
 }
 
-void JIGSInit (JNIEnv *env)
+/* This is JIGSInit as it is called from Java.  From Java, we need to
+   make sure that we correctly set up the program arguments before
+   invoking JIGSInit, while we must not touch the program arguments if
+   we are called from ObjC. */
+void JIGSInitFromJava (JNIEnv *env)
 {
-  NSAutoreleasePool *pool = [NSAutoreleasePool new]; 
-
   if (JIGS == NULL)
     {
-      JavaVM *jvm;
+      NSAutoreleasePool *pool = [NSAutoreleasePool new]; 
       /*
        * On some systems, GNUstep can't really read the arguments 
        * and environment without help/hack from the programmer. 
@@ -108,22 +110,35 @@ void JIGSInit (JNIEnv *env)
       static char  *args[2] = { "java", 0 };
       
       [NSProcessInfo initializeWithArguments: args
-				       count: 1
-				 environment: environ]; 
+		     count: 1
+		     environment: environ]; 
 #elif defined(LIB_FOUNDATION_LIBRARY)
       extern char **environ;
       static char  *args[2] = { "java", 0 };
       
       [NSProcessInfo initializeWithArguments: args
-		                       count: 1
-                   		 environment: environ];
+		     count: 1
+		     environment: environ];
 #endif
 
+      /* Now the code common with ObjC */
+      JIGSInit (env);
+
+      RELEASE (pool);
+    }
+}
+
+void JIGSInit (JNIEnv *env)
+{
+  if (JIGS == NULL)
+    {
+      NSAutoreleasePool *pool = [NSAutoreleasePool new]; 
+      JavaVM *jvm;
       /* Now, we know if we are the debugging or the non-debugging
 	 version of gnustep-java, so in case we are being called from
 	 Objc, we force JIGS_DEBUG to respect our debugging or
 	 non-debugging status.
-
+	 
 	 If this code is being called from Java, this makes no
 	 difference because JIGS_DEBUG has already been used to decide
 	 which library to load, and it's not going to be used again.
@@ -173,8 +188,8 @@ void JIGSInit (JNIEnv *env)
 
       _original_lookup_class = _objc_lookup_class;
       _objc_lookup_class = _jigs_lookup_class;
+      RELEASE (pool);
     }
-  RELEASE (pool);
 }
 
 
