@@ -27,6 +27,10 @@ package gnu.gnustep.base;
  * See NSObject.java for more info on how this class fits in the system.
  */
 
+/**
+ * This class is a placeholder used internally by JIGS.  It does nothing 
+ * interesting and you should ignore it.
+ */
 public class GSInitializationType 
 {
   public GSInitializationType ()
