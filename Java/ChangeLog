@@ -1,9 +1,10 @@
-Mon Jun  4 19:36:08 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+Mon Jun  4 20:26:52 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
-	* gnu/gnustep/java/JIGSLibraryLoader.java (loadLibrary),
-	(initialize): When there is a problem in loading a library, catch
-	the exception, print a message which says which library could not
-	be loaded, and reraise the exception.
+	* gnu/gnustep/java/JIGSLibraryLoader.java (loadingError): New
+	field registering problems in loading of libgnustep-java.
+	(tryLoading): register loading problems in loadingError.
+	(initialize): When we can't load libgnustep-java, print the record
+	of the problems we had before giving up.
 
 Sun May  6 20:47:17 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
