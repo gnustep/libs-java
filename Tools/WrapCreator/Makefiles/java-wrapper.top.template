@@ -2,9 +2,6 @@
 
 include $(GNUSTEP_MAKEFILES)/common.make
 
-PACKAGE_NAME = PACKAGEHERE-wrapper
-VERSION = VERSIONHERE
-
 SUBPROJECTS = Java Objc 
 
 -include GNUmakefile.preamble

@@ -2,9 +2,6 @@
 
 include $(GNUSTEP_MAKEFILES)/common.make
 
-PACKAGE_NAME = PACKAGEHERE-wrapper-debug
-VERSION = VERSIONHERE
-
 # When building the RPM, only include in the file list what is in the
 # Objc directory (ie, the debugging library, not the java classes)
 ifeq ($(filelist),yes)
