@@ -39,7 +39,7 @@
 #include "WCVoidType.h"
 
 /* Default morphing types.  Oh - it would be nice to have constant objects */
-#define DEFAULT_MORPHTYPES_NUMBER 6
+#define DEFAULT_MORPHTYPES_NUMBER 7
 
 static const struct morphType
 { 
@@ -52,6 +52,9 @@ static const struct morphType
 } defaultMorphTypes[DEFAULT_MORPHTYPES_NUMBER] = {
   { @"NSString *", @"String", @"jstring", @"Ljava.lang.String;", 
     @"JIGSNSStringFromJstring", @"JIGSJstringFromNSString" },
+
+  { @"NSNumber *", @"Number", @"jobject", @"Ljava.lang.Number;", 
+    @"GSJNI_NSNumberFromJNumber", @"GSJNI_JNumberFromNSNumber" },
 
   { @"NSPoint", @"NSPoint", @"jobject", @"Lgnu.gnustep.base.NSPoint;", 
     @"JIGSNSPointConvertToStruct", @"JIGSNSPointConvertToJobject" },
