@@ -1,3 +1,7 @@
+Thu Jan 25 12:59:39 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* GNUmakefile (VERSION): Version is now 1.1.0.
+
 Thu Jan 25 11:32:06 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GNUmakefile (PACKAGE_NAME): Changed to gnustep-java.
