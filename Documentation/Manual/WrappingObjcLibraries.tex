@@ -2,37 +2,65 @@
 
 In this chapter we are going to learn how to use JIGS to expose an
 existing Objective-C library to Java.  Technically, we call this
-procedure {\sl wrapping} the library.  
+procedure {\sl wrapping} the library.
 
-\section{Compiling the Wrappers of an Already Configured Library}
-We start by reviewing the simplest case: you download the source code
-of a library which is already configured to generate java wrappers
-when it is compiled.  You can try the discussion out by using any
-example in the \texttt{Tools/WrapCreator/Examples/} directory.
+\subsection{Historical Notes}
+Building java wrappers for an objective-C library in JIGS used to be
+strongly coupled with building the library itself.  Starting with JIGS
+1.4.0, the wrapping mechanism has been redesigned to be totally
+independent from the original library: building the objective-C
+library and building the java wrappers for it are now totally
+independent processes.  You can now build the objective-C library,
+install it, and only later on create java wrappers for the library.
+You can also easily wrap objective-c libraries which you got in binary
+form (as soon as you have the header files from them).
 
-\subsection{Creating and Compiling the Wrappers}
+You can still build wrappers in the old way by including
+\begin{verbatim}
+old-java-wrapper.make
+\end{verbatim}
+rather than \texttt{java-wrapper.make}.  But please - whenever
+possible - use the new - much better - way, and please update any old
+wrapper to the new design.  In this manual, we only document the new
+design.  The old backward compatibility code will be dropped at some
+point in the future.
 
-In this case, when you type \texttt{make}, the Objective-C will be
-compiled as usual; after it is compiled, JIGS will automatically
-create a directory called \texttt{JavaWrapper} (or
-\texttt{JavaWrapper\_debug} if you are compiling with debug enabled),
-and generate inside this directory source code for the wrappers.  It
-will then enter into this directory, and compile the wrapper source
-code (which has just been generated).
+\section{Compiling ready-to-use wrappers}
 
-It is quite important to understand that at this point you have two
-different entities: the original Objective-C library, and the Java
-wrappers for this library.  While the default JIGS setup is to manage
-all automatically for you, the two things can be compiled and
-installed separately.  To access your library from Objective-C you
-only need to have compiled and installed your original library, while
-to access it from Java you need to have compiled and installed both
-the original library and the wrappers.
+We start by reviewing the simplest case: you have a library installed
+on your system, and you download the wrappers for that library.  The
+wrappers actually consist of a \texttt{GNUmakefile}, a \texttt{.jigs}
+file, and possibly a few other support files.  These files contain all
+the instructions JIGS needs to wrap your library.  You can try the
+discussion out by using any example in the
+\texttt{Tools/WrapCreator/Examples/} directory (which are slightly
+more complicated, as the library and the wrapper for the library are
+kept and compiled in the same directory at the same time).
 
-In the default setup, when you install the library, JIGS automatically
-installs the wrapper library too.
+\subsection{Creating and compiling the wrappers}
 
-\subsection{Structure of the Wrappers}\label{wrapper-structure}
+When you type \texttt{make}, JIGS will automatically create a
+directory called
+\begin{verbatim}
+JavaWrapper
+\end{verbatim}
+(or \texttt{JavaWrapper\_debug} if you are compiling with debug
+enabled), and generate inside this directory source code for the
+wrappers.  It will then enter into this directory, and compile the
+wrapper source code (which has just been generated).  If you want more
+details about the wrapping process (which classes and which methods
+are being wrapped), you can use
+\begin{verbatim}
+make verbose=yes
+\end{verbatim}
+
+To access your library from Java you need to have compiled and
+installed both the original library and the wrappers.
+
+Typing \texttt{make install} will install the wrappers, so you should
+be ready to use them from Java.
+
+\subsection{Structure of the wrappers}\label{wrapper-structure}
 
 It's not strictly necessary for you to know the structure of the
 wrappers to create or use them, so you may safely skip this section.
@@ -51,7 +79,7 @@ these parts yourself.  There are two main subdirectories in the
 \texttt{JavaWrapper} directory, the \texttt{Java} and the
 \texttt{Objc} subdirectories.
 
-\subsubsection{The Java Subdirectory}
+\subsubsection{The Java subdirectory}
 
 The \texttt{Java} subdirectory contains the Java classes.  All methods
 which are not explicitly marked as \texttt{public} in these classes
@@ -94,7 +122,7 @@ documentation can be quite useful for someone already knowing the
 Objective-C API (or having the Objective-C documentation to refer to)
 and wanting to use the library from Java.
 
-\subsubsection{The Objc Subdirectory}
+\subsubsection{The Objc subdirectory}
 
 The \texttt{Objc} subdirectory contains the Objective-C library 
 \texttt{libexample.A.so}, which provides to Java the implementation 
@@ -104,33 +132,24 @@ the (pure Objective-C) \texttt{libexample.so} library, by using the
 JIGS core engine to catch exceptions, convert arguments and return
 types, etc.
 
-\section{Turning on Generation of Java Wrappers}
-We assume that your library is an objective-C library which is managed
-using the GNUstep make package.
+\section{The GNUmakefile for java wrappers}
+We are now going to learn how to write the \texttt{GNUmakefile} and
+the other support files to have JIGS wrap an Objective-C library.  We
+begin with the \texttt{GNUmakefile}.  Here is a simple example:
 
-To turn on the generation of the java wrappers for your objective-C
-library, all you need to do is to add the line
 \begin{verbatim}
+include $(GNUSTEP_MAKEFILES)/common.make
+
+JAVA_WRAPPER_NAME = Name
+
 include $(GNUSTEP_MAKEFILES)/java-wrapper.make
 \end{verbatim}
-after including \texttt{library.make}, that is, after the line
-\begin{verbatim}
-include $(GNUSTEP_MAKEFILES)/library.make
-\end{verbatim}
 
-When you now compile your library (by typing \texttt{make}), JIGS will
-try to generate the java wrappers.  In this way, you can simply turn
-off and on generation of the java wrappers by commenting and
-uncommenting the inclusion of \texttt{java-wrapper.make}.  
-You may also want to consider using 
-\begin{verbatim}
--include $(GNUSTEP_MAKEFILES)/java-wrapper.make
-\end{verbatim}
-%$
-which will cause \texttt{java-wrapper.make} (and thus code for wrapper
-generation) to be included if and only if it can be found (which
-should happen if and only if jigs is installed), without complaining
-if it can't.
+You need to create a new directory, and put this \texttt{GNUmakefile}
+into it.  The \texttt{JAVA\_WRAPPER\_NAME} must be the same as the name
+of the library you want to wrap, after removing the \texttt{lib} in
+front of the library name.  In the example, we are wrapping a library
+called \texttt{libName}.
 
 To correctly generate the java wrappers, you will actually need to
 instruct JIGS about what classes and methods you want exposed, and
@@ -138,8 +157,9 @@ how.  This will be discussed in detail in the following sections.
 
 As a last comment, you may want to stop JIGS from automatically trying
 to compile the java wrapper after creating them, and from installing
-it automatically after installing your library.  To do this, you just
-need to add
+it automatically after installing your library.  I don't see why this
+could be useful except if you are debugging JIGS itself, anyway if you
+ever need this, just add
 \begin{verbatim}
 BUILD_JAVA_WRAPPER_AUTOMATICALLY=no
 \end{verbatim}
@@ -148,70 +168,119 @@ wrapper source, but will not automatically compile it.  When you want
 to compile it, you have to \texttt{cd} into the java wrapper
 directory, and type \texttt{make} there.  Similarly, to install the
 java wrappers \texttt{cd} into the java wrapper directory, and type
-\texttt{make install} (you probably need to be root) - JIGS will not 
+\texttt{make install} (you probably need to be root) - JIGS will not
 install them automatically when you install the library.
 
-\section{Specifying the Main Library Header}
+\section{Specifying the main library header}
+
+\section{Library header name}
 JIGS automatically parses your library headers to determine the exact
-method declarations of the methods you want to expose.  
+method declarations of the methods you want to expose.
 
 You need to specify a single header file for your library which
 includes all the header files for your library.  JIGS tries to
-determine it in the following way: it takes the name of your library 
-(the one you set by setting the \texttt{LIBRARY\_NAME}), removes 
-the trailing \texttt{lib}, then looks for a header file with that name 
-in the directory \texttt{HEADER\_FILES\_DIR}. 
+determine it in the following way: it takes the
+\texttt{JAVA\_WRAPPER\_NAME}, and adds \texttt{.h} to it.
 
-For example, if the GNUmakefile for your library is the following:
-
+For example, if the GNUmakefile for your java wrapper is the following:
 \begin{verbatim}
 include $(GNUSTEP_MAKEFILES)/common.make
 
-LIBRARY_NAME = libGame
+JAVA_WRAPPER_NAME = Game
 
-libGame_OBJC_FILES = Alien.m Fuel.m SpaceShip.m Sprite.m
-
-libGame_HEADER_FILES_DIR = Headers
-libGame_HEADER_FILES_INSTALL_DIR = /Game
-libGame_HEADER_FILES = Alien.h Game.h Fuel.h SpaceShip.h Sprite.h
-
-include $(GNUSTEP_MAKEFILES)/library.make
-
-# Comment the following line to disable java wrappers
 include $(GNUSTEP_MAKEFILES)/java-wrapper.make
 \end{verbatim}
-%$ [fool emac's buggy TeX mode]
+Then your library name is \texttt{libGame}.  The header file JIGS will
+try to parse by default is \texttt{Game.h}.  This header file should
+include all the header files which might be need to compile code
+against your library.
 
-Then your library name is \texttt{libGame}, which is shortened to
-\texttt{Game}.  The header file dir is \texttt{Headers}, so that 
-by default JIGS will (try to) parse the file \texttt{Headers/Game.h}
-as the library header file.  This header file should include all the
-header files which might be need to compile code against your library.
-
-If the header which JIGS needs to parse is not correctly determined in
-this way, you can override it by adding a \texttt{GNUmakefile.wrapper}
-to your project, and defining \texttt{WRAPPER\_HEADER} manually there.
-For example, if the header you want to be parsed is called
-\texttt{game.h} rather than \texttt{Game.h}, you can add the following 
-\texttt{GNUmakefile.wrapper} to fix this: 
+Often, you want to set explicitly the header file name.  You can do
+that simply by setting the 
 \begin{verbatim}
-WRAPPER_HEADER = Headers/game.h
+XXX_HEADER_FILES
 \end{verbatim}
-The \texttt{GNUmakefile.wrapper} is automatically included (if present) 
-by JIGS at the correct stage.
+variable (where \texttt{XXX} is to be replaced with your
+\texttt{JAVA\_WRAPPER\_NAME}).  For example, when wrapping the
+gnustep-base library, we have in the \texttt{GNUmakefile}
+\begin{verbatim}
+include $(GNUSTEP_MAKEFILES)/common.make
 
-The other variables you may want to set in the
-\texttt{GNUmakefile.wrapper} are \texttt{JIGS\_FILE} and
-\texttt{WRAPPER\_DIR}.  We will talk about these in the next section.
+JAVA_WRAPPER_NAME = gnustep-base
+gnustep-base_HEADER_FILES = Foundation/Foundation.h
 
-\section{The Wrapper Directory}
+include $(GNUSTEP_MAKEFILES)/java-wrapper.make
+\end{verbatim}
+Please note that it should be a single header; you can't use multiple
+headers, despite the variable is called \texttt{HEADER\_FILES}.  The
+header file name should be in the full form you use for including it
+into C source code, such as in \texttt{Foundation/Foundation.h}.  It
+must be in this form because it {\bf will} end up in an Objective-C
+source file.
+
+\section{Library header location}
+When JIGS has determined the name of the header file to parse, it will
+need to find it.  Usually, JIGS will look into the current directory,
+and then in the standard GNUstep header directories, that is, it will
+look (in the order) into:
+\begin{verbatim}
+./
+$(GNUSTEP_USER_ROOT)/Headers/
+$(GNUSTEP_LOCAL_ROOT)/Headers/
+$(GNUSTEP_NETWORK_ROOT)/Headers/
+$(GNUSTEP_SYSTEM_ROOT)/Headers/
+\end{verbatim}
+For example, if you are using
+\begin{verbatim}
+include $(GNUSTEP_MAKEFILES)/common.make
+
+JAVA_WRAPPER_NAME = Game
+Game_HEADER_FILES = Game/Game.h
+
+include $(GNUSTEP_MAKEFILES)/java-wrapper.make
+\end{verbatim}
+then JIGS will look for the following files, in the order:
+\begin{verbatim}
+./Game/Game.h
+$(GNUSTEP_USER_ROOT)/Headers/Game/Game.h
+$(GNUSTEP_LOCAL_ROOT)/Headers/Game/Game.h
+$(GNUSTEP_NETWORK_ROOT)/Headers/Game/Game.h
+$(GNUSTEP_SYSTEM_ROOT)/Headers/Game/Game.h
+\end{verbatim}
+and pick up the first it finds.
+
+In some cases, that is not enough - for example, you might not yet
+have installed your library.  In this case, you need to help JIGS by
+telling it where it might find your header, by setting the
+\texttt{XXX\_HEADER\_FILES\_DIR} variable (again, replace \texttt{XXX}
+with your java wrapper name).  It might be a relative path (relative
+to the current directory), such as in
+\begin{verbatim}
+Game_HEADER_FILES_DIR = ../GameLibrary/
+\end{verbatim}
+or an absolute one, as in 
+\begin{verbatim}
+Game_HEADER_FILES_DIR = /opt/games/Source/GameLibrary/
+\end{verbatim}
+
+\subsection{Special header flags}
+If you need any other special flags for reading the header, use the 
+\texttt{XXX\_ADDITIONAL\_CPP\_FLAGS} variable, as in
+\begin{verbatim}
+Game_ADDITIONAL_CPP_FLAGS = -I/opt/games/Source/Support/Headers
+\end{verbatim}
+Basically, you should specify all flags which you would normally use
+to build a library or a bundle or an executable linked against the
+library you want to wrap.
+
+\section{The wrapper directory}
 JIGS generates full code for the java wrappers into a specific
 directory, which we call the wrapper directory.  By default, this
 directory is called \texttt{JavaWrapper} (or
 \texttt{JavaWrapper\_debug} if you are compiling with debugging
 enabled), but you can change the name of the directory by simply
-setting the \texttt{WRAPPER\_DIR} variable in your
-\texttt{GNUmakefile.wrapper}.  This is not very common.
+setting the \texttt{WRAPPER\_DIR\_NAME} variable in your
+\texttt{GNUmakefile}.  This is not very common.
 
 To determine if the wrappers are to be rebuilt or not, JIGS keeps a
 stamp file in the wrapper directory.
@@ -231,11 +300,11 @@ directory is destroyed.
 \subsection{Determining which .jigs file to read}
 After running the preprocessor on the header file, JIGS will read a
 configuration file to know which wrappers to generate, and how.  By
-default, the file is called \texttt{\$(LIBRARY\_NAME).jigs}.  In the
-case described before, this file would be called
-\texttt{libGame.jigs}.  You can override this choice by setting the
-\texttt{JIGS\_FILE} variable in your \texttt{GNUmakefile.wrapper}, 
-but you shouldn't usually need to.
+default, the file is called \texttt{\$(JAVA\_WRAPPER\_NAME).jigs}.  In
+the case described before, this file would be called
+\texttt{Game.jigs}.  You can override this choice by setting the
+\texttt{JIGS\_FILE} variable in your \texttt{GNUmakefile}, but you
+shouldn't usually need to.
 
 \subsection{Overview of the .jigs file}
 The \texttt{.jigs} file is the main file from which you can control
@@ -276,7 +345,7 @@ In this example, we only have the \texttt{classes} and \texttt{method
 name mapping} sections.  We now examine in detail each section of the
 \texttt{.jigs} file.
 
-\subsection{The Classes Section}
+\subsection{The Classes section}
 Probably the most important section in the file is the
 \texttt{classes} section, where you list all the classes you want to
 be wrapped, and how.  This section is an array, each entry in the
@@ -523,7 +592,7 @@ wrappers for the GNUstep Base Library.  If this is the case for your
 library, you need to add a \texttt{prerequisite libraries} section,
 containing a list of GNUstep libraries whose wrappers you want to be
 loaded at run-time when the wrappers for your library are initialized.
-For example, in \texttt{libgnustep-gui.jigs} there is
+For example, in \texttt{gnustep-gui.jigs} there is
 \begin{verbatim}
 "prerequisite libraries" = ("gnustep-base");
 \end{verbatim}
@@ -542,7 +611,7 @@ In the \texttt{types} section you can specify a list of C types
 specific to your library, and for each of them, a corresponding
 (known) C type.  The wrapper tool will know it has to convert to/from
 Java the first C type in the same way as it does with the second.  For
-example, in the \texttt{libgnustep-base.jigs} file, there is the
+example, in the \texttt{gnustep-base.jigs} file, there is the
 following line:
 \begin{verbatim}
 types = { NSTimeInterval = double; };
@@ -728,6 +797,42 @@ In this way, by adding one of these files to your library's directory,
 you can have it copied into the generated wrappers in the appropriate
 place.
 
+\subsection{Finding the library}
+A typical usage of this is to wrap libraries which have not yet been
+installed.  Normally, you create java wrappers for libraries which you
+have already installed.  Sometimes though, you need to create java
+wrappers for a library before it is installed.  In this case, you
+might need to help the compiler to find your actual library when it
+links the java wrappers.
+
+You would do so by creating a file called
+\begin{verbatim}
+GNUmakefile.wrapper.objc.postamble
+\end{verbatim}
+and adding to this file something like the following line
+\begin{verbatim}
+ADDITIONAL_LIB_DIRS = -L/opt/nicola/MyLibrary/
+\end{verbatim}
+%$ [fool emacs' stupid TeX mode]
+Please note that you will need to install your library anyway before
+you can use the java wrappers, because the library must be found at
+run-time as well!
+
+A classical case in which you need this trick is if you are building
+the java wrappers with the library itself (that is, if you have a
+\texttt{GNUmakefile} which includes both \texttt{library.make} and
+\texttt{java-wrapper.make} and which you use to compile both.  In that
+case, you need to add
+\begin{verbatim}
+ADDITIONAL_LIB_DIRS = -L../../$(GNUSTEP_OBJ_DIR)
+\end{verbatim}
+%$ [fool emacs]
+to your \texttt{GNUmakefile.wrapper.objc.preamble} to make sure that,
+when the java wrappers are built, the compiler will find the original
+library (and you also need to make sure that \texttt{library.make} is
+included before \texttt{java-wrapper.make} so that the library is
+compiled before the wrappers.
+
 \section{Controlling the Quick Reference Documentation}
 
 This section documents special options which control the quick
@@ -773,61 +878,14 @@ which installs the documentation into
 $(GNUSTEP_INSTALLATION_DIR)/Developer/Base/Java/Reference/
 \end{verbatim}%$
 
-\section{Generating RPMs for the Wrapper Library}
+\section{Generating RPMs for the wrapper library}
 
-This section is about generating RPMs.  If you are not interested in
-this topic, you may safely skip this section.
+Historically, generating RPMs for the wrappers was a complicated
+process, because generation of java wrappers was strongly coupled to
+building the library.  Now it's no longer so, and the two processes
+are now totally independent, which means that you can build RPMs for
+java wrappers normally as for any other gnustep package -- in the
+simple, standard way -- just add \texttt{PACKAGE\_NAME} and
+\texttt{VERSION} to your \texttt{GNUmakefile}, and provide
+corresponding \texttt{.spec.in} and \texttt{.debug.spec.in} files.
 
-Please make sure you are confident about how the GNUstep make package
-manages generating RPMs in the standard case before you read this
-section.
-
-\subsection{Standard RPMs}
-
-The RPM for the wrapper library are generated independently from the
-RPM for the library itself.  For example, suppose the library is
-packaged in a package called \texttt{hippo}.  You have a
-\texttt{hippo.spec.in} file in the hippo project directory to generate 
-the RPM for the \texttt{hippo} package.  To generate an RPM for the 
-wrapper, you need to add a 
-\begin{verbatim} 
-hippo-wrapper.spec.in
-\end{verbatim}
-file in the library directory, following the same syntax you use for the 
-normal \texttt{hippo.spec.in} file.  You can also add a 
-\begin{verbatim}
-hippo-wrapper.script.spec.in
-\end{verbatim}
-file if you need.  These two files are automatically copied into the
-\texttt{JavaWrapper} directory when JIGS generates it; JIGS uses these two 
-files to set all up and ready to generate the RPM for the wrapper.
-
-The RPM package for the wrappers will have name
-\texttt{hippo-wrapper}, and the same version number as \texttt{hippo}.
-
-To create the RPM, you need to \texttt{cd} into the wrapper directory,
-and use the standard commands to build it (usually simply
-\begin{verbatim}
-su
-export RPM_TOPDIR=/usr/src/redhat
-make rpm
-\end{verbatim}
-(replace \texttt{/usr/src/redhat} with the appropriate directory for
-your system).
-
-\subsection{Debugging RPMs}
-
-When you create the debugging wrapper, the package is called
-\texttt{hippo-wrapper-debug}; and the files which are copied into the
-\texttt{JavaWrapper\_debug} directory have different names:
-\begin{verbatim}
-hippo-wrapper-debug.spec.in
-hippo-wrapper-debug.script.spec.in
-\end{verbatim}
-
-The debugging wrapper will not contain the Java classes, and it will
-depend on having installed the non debugging wrapper package first.
-
-Hint on a counter-intuitive trick: make sure you type \texttt{make
-rpm} and not \texttt{make debug=yes rpm} inside
-\texttt{JavaWrapper\_debug} when building the RPM.
