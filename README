@@ -1,0 +1,93 @@
+What is JIGS ?
+==============
+
+JIGS is a free (LGPL) Java Interface for GNUstep.  It allows full
+integration between java and objective-C code; it allows to access the
+GNUstep libraries (and any library based on GNUstep) from java as if
+they were java libraries, and vice versa to access java objects from
+objective-C as if they were objective-C objects.  Everything will be
+supported by a set of tools and high level APIs to make it easy,
+friendly and fast to use.
+
+Authors
+=======
+
+JIGS version 0.1 was brought to you by Nicola Pero <nicola@brainstorm.co.uk>. 
+
+Brainstorm Computer Solutions (http://www.brainstorm.co.uk) funded the
+development of JIGS version 0.1.
+
+Maintainers
+===========
+
+JIGS is currently maintained by Nicola Pero <nicola@brainstorm.co.uk>.
+
+Release Notes for JIGS version 0.1 
+==================================
+
+This is the first public release.  While the core engine is mostly
+working, the high level APIs and tools are still missing.  In
+particular, we don't have a wrapper tool yet.  And, the base gnustep
+library has not yet been wrapped.
+
+The core engine is organized in the following way: 
+
+   * A little library (ObjcRuntimeUtilities) to programmatically 
+   add classes and methods to the objective-C runtime while it is
+   running;
+
+   * A little library (GSJNI) of utilities to program JNI using GNUstep. 
+
+   * A little class (NSJavaVirtualMachine) keeping track of the java 
+   virtual machine presently running and incidentally providing a
+   simple API to start a java virtual machine.
+
+   * The real core engine (JIGS itself), built on top of the previous 
+   layers.  Most of it is written in Objective-C, but part is in Java.
+
+Version 0.1 contains an example of an objective-C gnustep library
+wrapped by hand and exposed as a Java library.  Following this
+example, it should not be too difficult to wrap by hand simple
+libraries.
+
+Tests and examples of the reverse (starting a java virtual machine in
+an Objective-C executable and accessing java objects from objective-C)
+have been written, but not included in JIGS 0.1.
+
+Software Needed to Use JIGS
+===========================
+
+To use the JIGS, you need: 
+
+  * A version of the Objective-C runtime library compiled as a shared
+  library (and working with GNUstep).  Please refer to the INSTALL
+  file for more information on how to compile and install it.  This is
+  needed only to load objective-C libraries into a running java
+  virtual machine, while you don't need it to start a java virtual
+  machine inside an already running objective-C app or tool.  Please
+  note that there are no examples of doing the latter in JIGS 0.1
+  though, so if you want to play comfortably, getting a shared
+  Objective-C runtime library is recommended.
+
+  * GNUstep make package and base library.
+
+  * A java development environment supporting JNI 1.2.
+
+Special Thanks
+==============
+
+To Richard Frith-Macdonald <richard@brainstorm.co.uk> for countless
+discussions and help during development of JIGS 0.1.
+
+Obtaining JIGS
+==============
+
+JIGS 0.1 is available at http://FIXME/jigs-0.1.tgz
+You may always get the latest version of JIGS from the GNUstep CVS -
+the module is called 'java'.
+
+Bug Reports
+===========
+
+The best way to submit bug reports and fixes is to email them to 
+<bug-gnustep@gnu.org>.
