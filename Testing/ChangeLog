@@ -26,7 +26,8 @@ Wed Nov 21 15:48:23 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 	* Java/Base/Benchmarks/ObjCNewObjectBenchmark.java: New file.
 	* Java/Base/Benchmarks/ObjCToStringBenchmark.java: New file.
 	* Java/Base/Benchmarks/StringComparisonBenchmark.java: New file.
-	* Java/Base/Benchmarks/StringConcatenationBenchmark.java: New file.
+	* Java/Base/Benchmarks/StringConcatenationBenchmark.java: 
+	New file.
 	* Java/Base/Benchmarks/Vector0Benchmark.java: New file.
 	* Java/Base/Benchmarks/Vector1Benchmark.java: New file.
 	* Java/Base/Benchmarks/Vector2Benchmark.java: New file.
