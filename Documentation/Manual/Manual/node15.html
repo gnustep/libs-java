@@ -7,8 +7,8 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
   Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
 <HTML>
 <HEAD>
-<TITLE>4.4 The Wrapper Directory</TITLE>
-<META NAME="description" CONTENT="4.4 The Wrapper Directory">
+<TITLE>4.4 Library header name</TITLE>
+<META NAME="description" CONTENT="4.4 Library header name">
 <META NAME="keywords" CONTENT="Manual">
 <META NAME="resource-type" CONTENT="document">
 <META NAME="distribution" CONTENT="global">
@@ -26,50 +26,78 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 </HEAD>
 
 <BODY BGCOLOR="#FFFFFF" text="#000000" link="#0000FF" vlink="#4444FF" alink="#3388FF">
-<B> Next: <A NAME="tex2html322"
-  HREF="node16.html">4.5 The .jigs File</A> </B>
-<B>Up: <A NAME="tex2html320"
+<B> Next: <A NAME="tex2html328"
+  HREF="node16.html">4.5 Library header location</A> </B>
+<B>Up: <A NAME="tex2html326"
   HREF="node11.html">4. Wrapping Objective-C Libraries</A>  </B>
-<B> Previous: <A NAME="tex2html314"
-  HREF="node14.html">4.3 Specifying the Main</A> </B>
+<B> Previous: <A NAME="tex2html320"
+  HREF="node14.html">4.3 Specifying the main</A> </B>
 <BR> <P>
 
 <!--End of Navigation Panel-->
 
 <H1><A NAME="SECTION00540000000000000000">
-4.4 The Wrapper Directory</A>
+4.4 Library header name</A>
 </H1>
-JIGS generates full code for the java wrappers into a specific
-directory, which we call the wrapper directory.  By default, this
-directory is called <TT>JavaWrapper</TT> (or
-<TT>JavaWrapper_debug</TT> if you are compiling with debugging
-enabled), but you can change the name of the directory by simply
-setting the <TT>WRAPPER_DIR</TT> variable in your
-<TT>GNUmakefile.wrapper</TT>.  This is not very common.
+JIGS automatically parses your library headers to determine the exact
+method declarations of the methods you want to expose.
 
 <P>
-To determine if the wrappers are to be rebuilt or not, JIGS keeps a
-stamp file in the wrapper directory.
+You need to specify a single header file for your library which
+includes all the header files for your library.  JIGS tries to
+determine it in the following way: it takes the
+<TT>JAVA_WRAPPER_NAME</TT>, and adds <TT>.h</TT> to it.
 
 <P>
-Everything which is inside the wrapper directory is automatically
-generated - this means that
+For example, if the GNUmakefile for your java wrapper is the following:
+<PRE>
+include $(GNUSTEP_MAKEFILES)/common.make
 
-<OL>
-<LI>you can always remove the wrapper directory without loosing anything, 
-since you can always regenerate the wrappers;
-</LI>
-<LI>you should not edit or modify directly the contents of the wrapper 
-directory, because when the wrappers are recreated, the content of the 
-directory is destroyed.
-</LI>
-</OL>
+JAVA_WRAPPER_NAME = Game
+
+include $(GNUSTEP_MAKEFILES)/java-wrapper.make
+</PRE>
+Then your library name is <TT>libGame</TT>.  The header file JIGS will
+try to parse by default is <TT>Game.h</TT>.  This header file should
+include all the header files which might be need to compile code
+against your library.
 
 <P>
-<BR><HR>
+Often, you want to set explicitly the header file name.  You can do
+that simply by setting the 
+<PRE>
+XXX_HEADER_FILES
+</PRE>
+variable (where <TT>XXX</TT> is to be replaced with your
+<TT>JAVA_WRAPPER_NAME</TT>).  For example, when wrapping the
+gnustep-base library, we have in the <TT>GNUmakefile</TT>
+<PRE>
+include $(GNUSTEP_MAKEFILES)/common.make
+
+JAVA_WRAPPER_NAME = gnustep-base
+gnustep-base_HEADER_FILES = Foundation/Foundation.h
+
+include $(GNUSTEP_MAKEFILES)/java-wrapper.make
+</PRE>
+Please note that it should be a single header; you can't use multiple
+headers, despite the variable is called <TT>HEADER_FILES</TT>.  The
+header file name should be in the full form you use for including it
+into C source code, such as in <TT>Foundation/Foundation.h</TT>.  It
+must be in this form because it <B>will</B> end up in an Objective-C
+source file.
+
+<P>
+<HR><B> Next: <A NAME="tex2html328"
+  HREF="node16.html">4.5 Library header location</A> </B>
+<B>Up: <A NAME="tex2html326"
+  HREF="node11.html">4. Wrapping Objective-C Libraries</A> </B>
+<B> Previous: <A NAME="tex2html320"
+  HREF="node14.html">4.3 Specifying the main</A> </B>
+
+<!--End of Navigation Panel-->
 <ADDRESS>
 Nicola Pero
-2001-05-06
+2001-05-21
 </ADDRESS>
 </BODY>
 </HTML>

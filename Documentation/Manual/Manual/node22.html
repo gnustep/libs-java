@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2K.1beta (1.48)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>4.11 Generating RPMs for the wrapper library</TITLE>
+<META NAME="description" CONTENT="4.11 Generating RPMs for the wrapper library">
+<META NAME="keywords" CONTENT="Manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2K.1beta">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="Manual.css">
+
+<LINK REL="previous" HREF="node21.html">
+<LINK REL="up" HREF="node11.html">
+<LINK REL="next" HREF="node23.html">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" text="#000000" link="#0000FF" vlink="#4444FF" alink="#3388FF">
+<B> Next: <A NAME="tex2html422"
+  HREF="node23.html">About this document ...</A> </B>
+<B>Up: <A NAME="tex2html420"
+  HREF="node11.html">4. Wrapping Objective-C Libraries</A>  </B>
+<B> Previous: <A NAME="tex2html416"
+  HREF="node21.html">4.10 Controlling the Quick</A> </B>
+<BR> <P>
+
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION005110000000000000000">
+4.11 Generating RPMs for the wrapper library</A>
+</H1>
+
+<P>
+Historically, generating RPMs for the wrappers was a complicated
+process, because generation of java wrappers was strongly coupled to
+building the library.  Now it's no longer so, and the two processes
+are now totally independent, which means that you can build RPMs for
+java wrappers normally as for any other gnustep package - in the
+simple, standard way - just add <TT>PACKAGE_NAME</TT> and
+<TT>VERSION</TT> to your <TT>GNUmakefile</TT>, and provide
+corresponding <TT>.spec.in</TT> and <TT>.debug.spec.in</TT> files.
+
+<P>
+<BR><HR>
+<ADDRESS>
+Nicola Pero
+2001-05-21
+</ADDRESS>
+</BODY>
+</HTML>
