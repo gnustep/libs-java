@@ -1,0 +1,4 @@
+Mon Jul 31 09:37:27 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* WrappingLibrary/Objc/SimpleGUI.m: Fixed include.
+
