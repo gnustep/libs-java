@@ -32,3 +32,48 @@ Java_gnu_gnustep_java_JIGS_initialize (JNIEnv *env, jclass this)
   JIGSInit (env);
 }
 
+/*
+ * Now the forceMultithreading machine.
+ *
+ */
+
+/* A nop method used below */
+@interface _JIGS_Force_Thread : NSObject
++ (void) _JIGSFake: (id)sender;
+@end
+
+@implementation _JIGS_Force_Thread
++ (void) _JIGSFake: (id)sender 
+{ 
+  return; 
+}
+@end
+
+JNIEXPORT void JNICALL 
+Java_gnu_gnustep_java_JIGS_forceMultithreading (JNIEnv *env, jclass this)
+{
+  /* We don't use JIGS_ENTER because we don't want the exception 
+     handler. */
+
+  /*
+   * If this is not the default thread, the following will force GNUstep 
+   * in multi-thread state immediately.
+   */
+  BOOL registeredThread = [NSThread registerCurrentThread]; 
+  NSAutoreleasePool *pool = [NSAutoreleasePool new]; 
+  
+  if ([NSThread isMultiThreaded] == NO)
+    {
+      /* It didn't - so we do it manually */
+
+      /* Detaching any thread puts GNUstep into multithreading state.
+	 What we are doing in the thread has no importance, so we use an 
+	 auxiliary no-operation method. */
+      [NSThread detachNewThreadSelector: @selector (_JIGSFake:)  
+		toTarget: [_JIGS_Force_Thread class]  withObject: nil];
+    }
+
+  RELEASE (pool);
+  if (registeredThread) [NSThread unregisterCurrentThread];
+}
+
