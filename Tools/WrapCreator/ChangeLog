@@ -1,3 +1,8 @@
+Mon May  7 04:47:37 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* main.m (main): For libFoundation, disable double-check of
+	autoreleasing.
+
 Sun May  6 23:49:20 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* WCLibrary.m ([WCLibrary +initializeWithOptions:]): Set
