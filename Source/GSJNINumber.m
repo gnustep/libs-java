@@ -24,6 +24,40 @@
 #include "GSJNINumber.h"
 #include "GSJNICache.h"
 
+/* Our little cache of classes.  Initialized by _GSJNI_ClassCacheInit () */
+
+static jclass booleanClass = NULL;
+static jclass byteClass = NULL;
+static jclass shortClass = NULL;
+static jclass intClass = NULL;
+static jclass longClass = NULL;
+static jclass floatClass = NULL;
+static jclass doubleClass = NULL;
+
+static void _GSJNI_ClassCacheInit (JNIEnv *env)
+{
+  if (booleanClass != NULL)
+    {
+      return;
+    }
+  
+#define NEW_CLASS_CACHE(VAR,CLASS_NAME) \
+VAR = GSJNI_NewClassCache (env, #CLASS_NAME);           \
+if (VAR == NULL)                                        \
+  {                                                     \
+    NSLog (@"Could not get reference to " @#CLASS_NAME);\
+    return;                                            \
+  }
+
+  NEW_CLASS_CACHE (booleanClass, java/lang/Boolean); 
+  NEW_CLASS_CACHE (byteClass, java/lang/Byte);  
+  NEW_CLASS_CACHE (floatClass, java/lang/Float);  
+  NEW_CLASS_CACHE (doubleClass, java/lang/Double);  
+  NEW_CLASS_CACHE (intClass, java/lang/Integer);  
+  NEW_CLASS_CACHE (shortClass, java/lang/Short);  
+  NEW_CLASS_CACHE (longClass, java/lang/Long);  
+}
+
 
 #define _JIGS_check_null(variable) if (variable == NULL) return nil;
 
@@ -56,7 +90,7 @@ NSNumber *GSJNI_NSNumberFromJBoolean (JNIEnv *env, jobject object)
     }
 }
 
-NSNumber *GSJNI_NSNumberFromJByte (JNIEnv *env, jobject object)
+static NSNumber *GSJNI_NSNumberFromJByte (JNIEnv *env, jobject object)
 {
   jmethodID jid;
   jclass objectClass;
@@ -77,7 +111,7 @@ NSNumber *GSJNI_NSNumberFromJByte (JNIEnv *env, jobject object)
   return [NSNumber numberWithChar: value];
 }
 
-NSNumber *GSJNI_NSNumberFromJDouble (JNIEnv *env, jobject object)
+static NSNumber *GSJNI_NSNumberFromJDouble (JNIEnv *env, jobject object)
 {
   jmethodID jid;
   jclass objectClass;
@@ -99,7 +133,7 @@ NSNumber *GSJNI_NSNumberFromJDouble (JNIEnv *env, jobject object)
   return [NSNumber numberWithDouble: value];
 }
 
-NSNumber *GSJNI_NSNumberFromJFloat (JNIEnv *env, jobject object)
+static NSNumber *GSJNI_NSNumberFromJFloat (JNIEnv *env, jobject object)
 {
   jmethodID jid;
   jclass objectClass;
@@ -121,7 +155,7 @@ NSNumber *GSJNI_NSNumberFromJFloat (JNIEnv *env, jobject object)
   return [NSNumber numberWithFloat: value];
 }
 
-NSNumber *GSJNI_NSNumberFromJInteger (JNIEnv *env, jobject object)
+static NSNumber *GSJNI_NSNumberFromJInteger (JNIEnv *env, jobject object)
 {
   jmethodID jid;
   jclass objectClass;
@@ -142,7 +176,7 @@ NSNumber *GSJNI_NSNumberFromJInteger (JNIEnv *env, jobject object)
   return [NSNumber numberWithLong: value];
 }
 
-NSNumber *GSJNI_NSNumberFromJLong (JNIEnv *env, jobject object)
+static NSNumber *GSJNI_NSNumberFromJLong (JNIEnv *env, jobject object)
 {
   jmethodID jid;
   jclass objectClass;
@@ -163,7 +197,7 @@ NSNumber *GSJNI_NSNumberFromJLong (JNIEnv *env, jobject object)
   return [NSNumber numberWithLongLong: value];
 }
 
-NSNumber *GSJNI_NSNumberFromJShort (JNIEnv *env, jobject object)
+static NSNumber *GSJNI_NSNumberFromJShort (JNIEnv *env, jobject object)
 {
   jmethodID jid;
   jclass objectClass;
@@ -187,16 +221,57 @@ NSNumber *GSJNI_NSNumberFromJShort (JNIEnv *env, jobject object)
 }
 
 
-/* Our little cache of classes.  Filled in when classes are first
-   used. */
 
-static jclass booleanClass = NULL;
-static jclass byteClass = NULL;
-static jclass shortClass = NULL;
-static jclass intClass = NULL;
-static jclass longClass = NULL;
-static jclass floatClass = NULL;
-static jclass doubleClass = NULL;
+
+NSNumber *GSJNI_NSNumberFromJNumber (JNIEnv *env, jobject object)
+{
+  if (booleanClass == NULL)
+    {
+      _GSJNI_ClassCacheInit (env);
+    }
+  
+
+  // java.lang.Byte
+  if ((*env)->IsInstanceOf (env, object, byteClass) == YES)
+    {
+      return GSJNI_NSNumberFromJByte (env, object);
+    }
+  
+  // java.lang.Double
+  if ((*env)->IsInstanceOf (env, object, doubleClass) == YES)
+    {
+      return GSJNI_NSNumberFromJDouble (env, object);
+    }
+  
+  // java.lang.Float
+  if ((*env)->IsInstanceOf (env, object, floatClass) == YES)
+    {
+      return GSJNI_NSNumberFromJFloat (env, object);
+    }
+  
+  // java.lang.Integer
+  if ((*env)->IsInstanceOf (env, object, intClass) == YES)
+    {
+      return GSJNI_NSNumberFromJInteger (env, object);
+    }
+  
+  // java.lang.Long
+  if ((*env)->IsInstanceOf (env, object, longClass) == YES)
+    {
+      return GSJNI_NSNumberFromJLong (env, object);
+    }
+  
+  // java.lang.Short
+  if ((*env)->IsInstanceOf (env, object, shortClass) == YES)
+    {
+      return GSJNI_NSNumberFromJShort (env, object);
+    }
+
+  // Else, treat is as a Double
+  return GSJNI_NSNumberFromJDouble (env, object);
+}
+
+
 
 /* This is a little cache for the constructors for the java
    classes. */
@@ -215,6 +290,11 @@ jobject GSJNI_JNumberFromNSNumber (JNIEnv *env, NSNumber *object)
   jvalue value;
   jobject result = NULL;
 
+  if (booleanClass == NULL)
+    {
+      _GSJNI_ClassCacheInit (env);
+    }
+  
   /* Read the number into value; store the type (in Java convention)
      into jtype */
 
@@ -423,10 +503,8 @@ jobject GSJNI_JNumberFromNSNumber (JNIEnv *env, NSNumber *object)
     {
     case 'z':
       {
-	if (booleanClass == NULL)
+	if (booleanId == NULL)
 	  {
-	    booleanClass = GSJNI_NewClassCache (env, "java/lang/Boolean");
-	    _JIGS_check_null (booleanClass);
 	    booleanId = (*env)->GetMethodID (env, booleanClass, 
 					     "<init>", "(Z)V");
 	    _JIGS_check_null (booleanId);
@@ -437,10 +515,8 @@ jobject GSJNI_JNumberFromNSNumber (JNIEnv *env, NSNumber *object)
       }
     case 'b':
       {
-	if (byteClass == NULL)
+	if (byteId == NULL)
 	  {
-	    byteClass = GSJNI_NewClassCache (env, "java/lang/Byte");
-	    _JIGS_check_null (byteClass);
 	    byteId = (*env)->GetMethodID (env, byteClass, "<init>", "(B)V");
 	    _JIGS_check_null (byteId);
 	  }
@@ -456,10 +532,8 @@ jobject GSJNI_JNumberFromNSNumber (JNIEnv *env, NSNumber *object)
       }
     case 's':
       {
-	if (shortClass == NULL)
+	if (shortId == NULL)
 	  {
-	    shortClass = GSJNI_NewClassCache (env, "java/lang/Short");
-	    _JIGS_check_null (shortClass);
 	    shortId = (*env)->GetMethodID (env, shortClass, "<init>", "(S)V");
 	    _JIGS_check_null (shortId);
 	  }
@@ -469,10 +543,8 @@ jobject GSJNI_JNumberFromNSNumber (JNIEnv *env, NSNumber *object)
       }
     case 'i':
       {
-	if (intClass == NULL)
+	if (intId == NULL)
 	  {
-	    intClass = GSJNI_NewClassCache (env, "java/lang/Integer");
-	    _JIGS_check_null (intClass);
 	    intId = (*env)->GetMethodID (env, intClass, "<init>", "(I)V");
 	    _JIGS_check_null (intId);
 	  }
@@ -482,10 +554,8 @@ jobject GSJNI_JNumberFromNSNumber (JNIEnv *env, NSNumber *object)
       }
     case 'j':
       {
-	if (longClass == NULL)
+	if (longId == NULL)
 	  {
-	    longClass = GSJNI_NewClassCache (env, "java/lang/Long");
-	    _JIGS_check_null (longClass);
 	    longId = (*env)->GetMethodID (env, longClass, "<init>", "(J)V");
 	    _JIGS_check_null (longId);
 	  }
@@ -495,10 +565,8 @@ jobject GSJNI_JNumberFromNSNumber (JNIEnv *env, NSNumber *object)
       }
     case 'f':
       {
-	if (floatClass == NULL)
+	if (floatId == NULL)
 	  {
-	    floatClass = GSJNI_NewClassCache (env, "java/lang/Float");
-	    _JIGS_check_null (floatClass);
 	    floatId = (*env)->GetMethodID (env, floatClass, "<init>", "(F)V");
 	    _JIGS_check_null (floatId);
 	  }
@@ -508,10 +576,8 @@ jobject GSJNI_JNumberFromNSNumber (JNIEnv *env, NSNumber *object)
       }
     case 'd':
       {
-	if (doubleClass == NULL)
+	if (doubleId == NULL)
 	  {
-	    doubleClass = GSJNI_NewClassCache (env, "java/lang/Double");
-	    _JIGS_check_null (doubleClass);
 	    doubleId = (*env)->GetMethodID (env, doubleClass, 
 					    "<init>", "(D)V");
 	    _JIGS_check_null (doubleId);
