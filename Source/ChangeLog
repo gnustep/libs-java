@@ -1,3 +1,11 @@
+Mon Feb  5 16:15:48 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* JIGSMapper.h, JIGSMapper.m (JIGSJbyteArrayFromNSData),
+	(JIGSNSDataFromJbyteArray): New functions.
+	* GSJNIArray.h, GSJNIArray.m: New file.
+	* GSJNI.h: Include GSJNIArray.h.
+	* GNUmakefile: Added the new files.
+	
 Thu Jan 25 12:59:12 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGS.h, GNUmakefile: Version is now 1.1.0.
