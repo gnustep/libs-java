@@ -657,6 +657,13 @@ static void setNeedsLongJniName (NSMutableArray *jniNames,
     }
 }
 
+- (NSString *)description 
+{
+  return [NSString stringWithFormat:@"<%@ 0x%08x: objc=%@ java=%@>",
+		   NSStringFromClass ([self class]),
+		   self, objcName, javaName];
+}
+
 @end
 
 
