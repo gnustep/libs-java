@@ -197,7 +197,7 @@ inline const char *ObjcUtilities_build_runtime_Objc_signature (const char
   
   sig = [NSMethodSignature signatureWithObjCTypes: types];
   
-#if defined GNUSTEP_BASE_VERSION
+#if defined GNUSTEP_BASE_VERSION || defined(LIB_FOUNDATION_LIBRARY)
   return [sig methodType];
 #else
 # error "Don't know how to get method signature on this platform!"
