@@ -1,17 +1,22 @@
-JNIEXPORT void JNICALL
+JNIEXPORT jlong JNICALL
 Java_gnu_gnustep_base_NSMutableData_initWithBytes (JNIEnv *env, jobject this, 
 					           jbyteArray bytes)
 {
   NSMutableData *we;
   NSData *objc_bytes;
+  id objc_new;
+  jlong java;
 
   JIGS_ENTER;
   we = JIGSIdFromThis (env, this);
 
   /* Yep - this is lossy - anyway */
   objc_bytes = JIGSNSDataFromJbyteArray (env, bytes);
-  [we initWithBytes: [objc_bytes bytes]  length: [objc_bytes length]];
+  objc_new = [we initWithBytes: [objc_bytes bytes]  
+                        length: [objc_bytes length]];
+  _JIGSMapperAddJavaProxy (env, objc_new, this);
+  java = JIGS_ID_TO_JLONG (objc_new);  
 
-  JIGS_EXIT;
+  JIGS_EXIT_WITH_VALUE (java);
 }
 
