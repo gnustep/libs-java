@@ -24,6 +24,202 @@
 #include <Foundation/Foundation.h>
 #include <java/JIGS.h>
 
+void
+test_primitive_type (int type, JNIEnv *env)
+{
+  Class myClass;
+  NSObject *instance;
+  SEL selector;
+  SEL selector_2;
+  NSString *javaClassName = nil;
+  NSString *javaClassType = nil;
+  NSString *javaClassValue = nil;
+  NSString *format;
+  typedef NSObject *(*newBooleanIMP)(id, SEL, jboolean);
+  typedef NSObject *(*newByteIMP)(id, SEL, jbyte);
+  typedef NSObject *(*newCharIMP)(id, SEL, jchar);
+  typedef NSObject *(*newShortIMP)(id, SEL, jshort);
+  typedef NSObject *(*newIntIMP)(id, SEL, jint);
+  typedef NSObject *(*newLongIMP)(id, SEL, jlong);
+  typedef NSObject *(*newFloatIMP)(id, SEL, jfloat);
+  typedef NSObject *(*newDoubleIMP)(id, SEL, jdouble);
+  typedef jboolean (*booleanValueIMP)(id, SEL);
+  typedef jbyte (*byteValueIMP)(id, SEL);
+  typedef jchar (*charValueIMP)(id, SEL);
+  typedef jshort (*shortValueIMP)(id, SEL);
+  typedef jint (*intValueIMP)(id, SEL);
+  typedef jlong (*longValueIMP)(id, SEL);
+  typedef jfloat (*floatValueIMP)(id, SEL);
+  typedef jdouble (*doubleValueIMP)(id, SEL);
+
+  switch (type)
+    {
+    case 0:
+      {
+	printf ("** Testing passing jbool to Java **\n");
+	javaClassName = @"java.lang.Boolean";
+	javaClassType = @"boolean";
+	javaClassValue = @"booleanValue";
+	break;
+      }
+    case 1:
+      {
+	printf ("** Testing passing jbyte to Java **\n");
+	javaClassName = @"java.lang.Byte";
+	javaClassType = @"byte";
+	javaClassValue = @"byteValue";
+	break;
+      }
+    case 2:
+      {
+	printf ("** Testing passing jchar to Java **\n");
+	javaClassName = @"java.lang.Character";
+	javaClassType = @"char";
+	javaClassValue = @"charValue";
+	break;
+      }
+    case 3:
+      {
+	printf ("** Testing passing jshort to Java **\n");
+	javaClassName = @"java.lang.Short";
+	javaClassType = @"short";
+	javaClassValue = @"shortValue";
+	break;
+      }
+    case 4:
+      {
+	printf ("** Testing passing jint to Java **\n");
+	javaClassName = @"java.lang.Integer";
+	javaClassType = @"int";
+	javaClassValue = @"intValue";
+	break;
+      }
+    case 5:
+      {
+	printf ("** Testing passing jlong to Java **\n");
+	javaClassName = @"java.lang.Long";
+	javaClassType = @"long";
+	javaClassValue = @"longValue";
+	break;
+      }
+    case 6:
+      {
+	printf ("** Testing passing jfloat to Java **\n");
+	javaClassName = @"java.lang.Float";
+	javaClassType = @"float";
+	javaClassValue = @"floatValue";
+	break;
+      }
+    case 7:
+      {
+	printf ("** Testing passing jdouble to Java **\n");
+	javaClassName = @"java.lang.Double";
+	javaClassType = @"double";
+	javaClassValue = @"doubleValue";
+	break;
+      }
+    }
+
+  printf ("Registering %s class...\n", [javaClassName cString]);
+  JIGSRegisterJavaClass (env, javaClassName);
+  myClass = NSClassFromString (javaClassName);
+    
+  if (myClass == Nil)
+    {
+      printf ("Failed\n"); abort ();
+    }
+
+  /* Get the constructor with a single String argument */
+  format = [NSString stringWithFormat: @"%@ (%@)", javaClassName, 
+		     javaClassType];
+  selector = NSSelectorFromString (format);
+  selector_2 = NSSelectorFromString (javaClassValue);
+
+#define TEST_TYPE(newIMP, valueIMP, type, testValue) \
+({	newIMP imp_;                \
+	valueIMP imp_2;             \
+	type test = testValue;      \
+	type result;                \
+	                            \
+	instance = [myClass alloc]; \
+        imp_ = (newIMP)[instance methodForSelector: selector];        \
+	instance = imp_ (instance, selector, test);                   \
+	printf ("Instance %s; ", [[instance description] cString]); \
+                                                                            \
+	imp_2 = (valueIMP)[instance methodForSelector: selector_2];  \
+	result = imp_2 (instance, selector_2); \
+                                          \
+	if (result != test)               \
+	  {                               \
+	    printf ("FAILED\n");          \
+	    abort ();                     \
+	  }                               \
+	else                              \
+	  {                               \
+	    printf ("Ok\n");              \
+	  }                               \
+})
+
+  switch (type)
+    {
+    case 0:
+      {
+	TEST_TYPE (newBooleanIMP, booleanValueIMP, jboolean, 1);
+	TEST_TYPE (newBooleanIMP, booleanValueIMP, jboolean, 0);
+	break;
+      }
+    case 1:
+      {
+	TEST_TYPE (newByteIMP, byteValueIMP, jbyte, 1);
+	TEST_TYPE (newByteIMP, byteValueIMP, jbyte, 0);
+	TEST_TYPE (newByteIMP, byteValueIMP, jbyte, -1);
+	break;
+      }
+    case 2:
+      {
+	TEST_TYPE (newCharIMP, charValueIMP, jchar, 121);
+	TEST_TYPE (newCharIMP, charValueIMP, jchar, 0);
+	break;
+      }
+    case 3:
+      {
+	TEST_TYPE (newShortIMP, shortValueIMP, jshort, 12);
+	TEST_TYPE (newShortIMP, shortValueIMP, jshort, 0);
+	TEST_TYPE (newShortIMP, shortValueIMP, jshort, -11);
+	break;
+      }
+    case 4:
+      {
+	TEST_TYPE (newIntIMP, intValueIMP, jint, 132);
+	TEST_TYPE (newIntIMP, intValueIMP, jint, 0);
+	TEST_TYPE (newIntIMP, intValueIMP, jint, -12);
+	break;
+      }
+    case 5:
+      {
+	TEST_TYPE (newLongIMP, longValueIMP, jlong, 10002);
+	TEST_TYPE (newLongIMP, longValueIMP, jlong, 0);
+	TEST_TYPE (newLongIMP, longValueIMP, jlong, -2334);
+	break;
+      }
+    case 6:
+      {
+	TEST_TYPE (newFloatIMP, floatValueIMP, jfloat, 123.2);
+	TEST_TYPE (newFloatIMP, floatValueIMP, jfloat, 0);
+	TEST_TYPE (newFloatIMP, floatValueIMP, jfloat, -33.3);
+	break;
+      }
+    case 7:
+      {
+	TEST_TYPE (newDoubleIMP, doubleValueIMP, jdouble, 1.3);
+	TEST_TYPE (newDoubleIMP, doubleValueIMP, jdouble, 0);
+	TEST_TYPE (newDoubleIMP, doubleValueIMP, jdouble, -12.99);
+	break;
+      }
+    }
+  /* We happily leak the instance */
+}
+
 int main (int argc, char **argv, char **penv)
 {
   NSAutoreleasePool *pool;
@@ -187,6 +383,16 @@ int main (int argc, char **argv, char **penv)
   printf ("Now testing overloaded methods by loading in the java.lang.StringBuffer class...");
   JIGSRegisterJavaClass (env, @"java.lang.StringBuffer");
   printf ("ok\n");
+
+  /* Testing invoking Java methods with different types of parameters */
+  test_primitive_type (0, env);
+  test_primitive_type (1, env);
+  test_primitive_type (2, env);
+  test_primitive_type (3, env);
+  test_primitive_type (4, env);
+  test_primitive_type (5, env);
+//  test_primitive_type (6, env);
+  test_primitive_type (7, env);
   
 #if 0
   /* Testing morphing of numbers - used to debug JIGS internals */
