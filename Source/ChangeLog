@@ -1,3 +1,11 @@
+Thu Jul 27 16:09:52 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* JIGSException.m (JIGSRaiseNSExceptionFromJException): Fixed
+	critical typo/bug; fixed leakage of the local reference to the
+	raised java exception.
+	* JIGSProxyIMP.m (_JIGS_id_IMP_JavaMethod): PushLocalFrame to get
+	memory for the local reference to the returned object.
+
 Thu Jul 27 11:44:13 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* JIGSProxyIMP.h: New file.
