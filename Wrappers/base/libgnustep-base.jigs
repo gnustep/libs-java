@@ -73,6 +73,9 @@
 		{
 		  "java name" = "gnu.gnustep.base.NSData";
 
+		  "file to include in java code" = "NSData.java.handmade";
+		  "file to include in objective-c code" = "NSData.m.handmade";
+
 		  "instance methods" = 
 		    (
 		      "subdataWithRange:",
@@ -192,6 +195,8 @@
 
 		{
 		  "java name" = "gnu.gnustep.base.NSMutableData";
+		  "file to include in java code" = "NSMutableData.java.handmade";
+		  "file to include in objective-c code" = "NSMutableData.m.handmade";
 
 		  "instance methods" = 
 		    (
