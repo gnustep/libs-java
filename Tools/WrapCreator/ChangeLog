@@ -1,3 +1,8 @@
+Mon Nov 19 15:28:37 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Makefiles/java-wrapper.make (SILENT_FLAGS): Fixed adding
+	multiple flags.
+
 Mon Nov 19 15:24:02 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Makefiles/java-wrapper.make ($(WRAPPER_DIR)/stamp-file):
