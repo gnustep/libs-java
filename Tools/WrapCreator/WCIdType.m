@@ -52,6 +52,11 @@
   return @"jobject";
 }
 
+- (NSString *) javaArgumentType 
+{
+  return @"Ljava.lang.Object;";
+}
+
 - (NSString *) codeToConvertToObjc: (NSString *)jniArgument
 		      givingResult: (NSString *)objcResult
 {
