@@ -1,3 +1,10 @@
+Release Notes for JIGS version 0.9
+==================================
+
+This release implements support for threads.  Calling (thread-safe)
+GNUstep libraries concurrently from different java threads should now
+work.
+
 Release Notes for JIGS version 0.8
 ==================================
 
