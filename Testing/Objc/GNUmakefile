@@ -20,10 +20,14 @@
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA. */
 
+#
+# Please make sure you type `. ./GNUstep-Java.sh' before attempting 
+# to compile this makefile!
+#
+
 include $(GNUSTEP_MAKEFILES)/common.make
 
 TOOL_NAME = JavaTest
-
 JavaTest_OBJC_FILES = main.m
 
 ADDITIONAL_OBJCFLAGS += -Wall
@@ -33,5 +37,5 @@ include $(GNUSTEP_MAKEFILES)/tool.make
 
 
 check:: all
-	./openjavatool JavaTest
+	./obj/JavaTest
 
