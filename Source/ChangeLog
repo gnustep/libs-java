@@ -1,3 +1,7 @@
+Tue Feb  6 18:25:33 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* JIGS.h, GNUmakefile: Version is now 1.2.0.
+
 Mon Feb  5 16:15:48 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGSMapper.h, JIGSMapper.m (JIGSJbyteArrayFromNSData),
