@@ -656,3 +656,59 @@ GNUmakefile.wrapper.java.postamble --> JavaWrapper/Java/GNUmakefile.postamble
 In this way, by adding one of these files to your library's directory,
 you can have it copied into the generated wrappers in the appropriate
 place.
+
+\section{Generating RPMs for the Wrapper Library}
+
+Please make sure you are confident about how the GNUstep make package
+manages generating RPMs in the standard case before you read this
+section.
+
+\subsection{Standard RPMs}
+
+The RPM for the wrapper library are generated independently from the
+RPM for the library itself.  For example, suppose the library is
+packaged in a package called \texttt{hippo}.  You have a
+\texttt{hippo.spec.in} file in the hippo project directory to generate 
+the RPM for the \texttt{hippo} package.  To generate an RPM for the 
+wrapper, you need to add a 
+\begin{verbatim} 
+hippo-wrapper.spec.in
+\end{verbatim}
+file in the library directory, following the same syntax you use for the 
+normal \texttt{hippo.spec.in} file.  You can also add a 
+\begin{verbatim}
+hippo-wrapper.script.spec.in
+\end{verbatim}
+file if you need.  These two files are automatically copied into the
+\texttt{JavaWrapper} directory when JIGS generates it; JIGS uses these two 
+files to set all up and ready to generate the RPM for the wrapper.
+
+The RPM package for the wrappers will have name
+\texttt{hippo-wrapper}, and the same version number as \texttt{hippo}.
+
+To create the RPM, you need to \texttt{cd} into the wrapper directory,
+and use the standard commands to build it (usually simply
+\begin{verbatim}
+su
+export RPM_TOPDIR=/usr/src/redhat
+make rpm
+\end{verbatim}
+(replace \texttt{/usr/src/redhat} with the appropriate directory for
+your system).
+
+\subsection{Debugging RPMs}
+
+When you create the debugging wrapper, the package is called
+\texttt{hippo-wrapper-debug}; and the files which are copied into the
+\texttt{JavaWrapper\_debug} directory have different names:
+\begin{verbatim}
+hippo-wrapper-debug.spec.in
+hippo-wrapper-debug.script.spec.in
+\end{verbatim}
+
+The debugging wrapper will not contain the Java classes, and it will
+depend on having installed the non debugging wrapper package first.
+
+Hint on a counter-intuitive trick: make sure you type \texttt{make
+rpm} and not \texttt{make debug=yes rpm} inside
+\texttt{JavaWrapper\_debug} when building the RPM.

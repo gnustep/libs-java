@@ -1,3 +1,8 @@
+Thu Jan 25 16:18:44 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* WrappingObjcLibraries.tex (Generating RPMs for the Wrapper
+	Library): New section.
+
 Thu Jan 25 12:37:59 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* WrappingObjcLibraries.tex (Creating and Compiling the Wrappers):
