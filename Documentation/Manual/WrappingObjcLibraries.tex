@@ -16,17 +16,21 @@ In this case, when you type \texttt{make}, the Objective-C will be
 compiled as usual; after it is compiled, JIGS will automatically
 create a directory called \texttt{JavaWrapper} (or
 \texttt{JavaWrapper\_debug} if you are compiling with debug enabled),
-and generate inside this directory source code for the wrappers.  To
-compile the wrappers, you just need to enter the \texttt{JavaWrapper}
-directory, and type \texttt{make} there.
+and generate inside this directory source code for the wrappers.  It
+will then enter into this directory, and compile the wrapper source
+code (which has just been generated).
 
 It is quite important to understand that at this point you have two
 different entities: the original Objective-C library, and the Java
-wrappers for this library.  The two things can be compiled and
+wrappers for this library.  While the default JIGS setup is to manage
+all automatically for you, the two things can be compiled and
 installed separately.  To access your library from Objective-C you
 only need to have compiled and installed your original library, while
 to access it from Java you need to have compiled and installed both
 the original library and the wrappers.
+
+In the default setup, when you install the library, JIGS automatically
+installs the wrapper library too.
 
 \subsection{Structure of the Wrappers}\label{wrapper-structure}
 
@@ -106,7 +110,7 @@ You may also want to consider using
 -include $(GNUSTEP_MAKEFILES)/java-wrapper.make
 \end{verbatim}
 %$
-which will cause java-wrapper.make (and thus code for wrapper
+which will cause \texttt{java-wrapper.make} (and thus code for wrapper
 generation) to be included if and only if it can be found (which
 should happen if and only if jigs is installed), without complaining
 if it can't.
@@ -114,6 +118,21 @@ if it can't.
 To correctly generate the java wrappers, you will actually need to
 instruct JIGS about what classes and methods you want exposed, and
 how.  This will be discussed in detail in the following sections.
+
+As a last comment, you may want to stop JIGS from automatically trying
+to compile the java wrapper after creating them, and from installing
+it automatically after installing your library.  To do this, you just
+need to add
+\begin{verbatim}
+BUILD_JAVA_WRAPPER_AUTOMATICALLY=no
+\end{verbatim}
+to your library's GNUmakefile.  Then - JIGS will still create the java
+wrapper source, but will not automatically compile it.  When you want
+to compile it, you have to \texttt{cd} into the java wrapper
+directory, and type \texttt{make} there.  Similarly, to install the
+java wrappers \texttt{cd} into the java wrapper directory, and type
+\texttt{make install} (you probably need to be root) - JIGS will not 
+install them automatically when you install the library.
 
 \section{Specifying the Main Library Header}
 JIGS automatically parses your library headers to determine the exact
