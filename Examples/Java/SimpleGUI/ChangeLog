@@ -1,3 +1,10 @@
+Mon Oct  2 10:24:36 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* JavaApp/run: Hacked in support for running the Example 
+	with debug enabled.
+	* WrappingLibrary/Java/SimpleGUI.java: Updated loading the library
+	to the new JIGS facility for that.
+
 Sat Aug 19 20:22:39 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Library/SimpleGUI.m ([+new]): Removed.
