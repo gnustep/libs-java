@@ -40,7 +40,13 @@ JAVA_CPU = i386
 #
 # Probably completely system-dependent stuff goes here
 #
+
+# SUN JDK 1.2.2
 JAVA_VM_LIBS = -ljava -ljvm -lhpi
+
+# BLACKDOWN JDK 1.3.0
+#JAVA_VM_LIBS = -ljava -ljvm -lhpi -lverify
+
 JAVA_VM_LIB_DIRS = -L$(JAVA_HOME)/jre/lib/$(JAVA_CPU)/ \
                    -L$(JAVA_HOME)/jre/lib/$(JAVA_CPU)/$(JAVA_THREAD_TYPE)/ \
                    -L$(JAVA_HOME)/jre/lib/$(JAVA_CPU)/classic
