@@ -84,7 +84,14 @@ experiences running (or trying to run) JIGS on a different machine and
 os, I <n.pero@mi.flashnet.it> would be happy to hear about your
 experience.
 
-6. How do I report a bug ?
+6. Which core libraries are wrapped ?
+=====================================
+
+The base library is mostly wrapped, and works nicely.  The gui library
+wrapper instead is experimental and hackish and not very useful as it
+stands.
+
+7. How do I report a bug ?
 ==========================
 
 The best way to submit bug reports and fixes is to email them to
