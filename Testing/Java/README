@@ -6,3 +6,10 @@ To run them, do as in the following example:
 Or, if you don't have ./ in your CLASSPATH, 
 
   CLASSPATH=./:$CLASSPATH java NSObjectTest
+
+If you encounter problems (crashes) loading libraries, 
+try running the script ld_lib_path.sh before running 
+the tests.  For example, I do: 
+
+. /opt/gnustep/System/Makefiles/ld_lib_path.sh 
+
