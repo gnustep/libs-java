@@ -1,3 +1,9 @@
+Thu Jun  7 15:48:17 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Objc/main.m (test_primitive_type): New function to test
+	passing various primitive types to Java.
+	* Objc/main.m (main): Call it.
+
 Mon Jun  4 15:48:02 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* Objc/GNUstep-Java.sh: Moved to Makefiles/.
