@@ -37,3 +37,4 @@ inline Class JIGSClassOfThis (JNIEnv *env, jobject this)
   return NSClassFromString (className);
 }
 
+
