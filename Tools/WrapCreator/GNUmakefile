@@ -50,11 +50,12 @@ ADDITIONAL_OBJCFLAGS += -Wall
 include $(GNUSTEP_MAKEFILES)/tool.make
 
 # Install the Makefiles
+JIGS_MAKE_DIR = $(INSTALL_ROOT_DIR)$(GNUSTEP_MAKEFILES)
 after-install::
-	$(MKDIRS) $(GNUSTEP_INSTALLATION_DIR)/Makefiles/
-	$(INSTALL_DATA) Makefiles/java-wrapper.make $(GNUSTEP_MAKEFILES)/
-	$(INSTALL_DATA) Makefiles/java-wrapper.top.template $(GNUSTEP_MAKEFILES)/
-	$(INSTALL_DATA) Makefiles/java-wrapper.readme.template $(GNUSTEP_MAKEFILES)/
-	$(INSTALL_DATA) Makefiles/java-wrapper.objc.template $(GNUSTEP_MAKEFILES)/
-	$(INSTALL_DATA) Makefiles/java-wrapper.java.template $(GNUSTEP_MAKEFILES)/
+	$(MKDIRS) $(JIGS_MAKE_DIR)
+	$(INSTALL_DATA) Makefiles/java-wrapper.make $(JIGS_MAKE_DIR)
+	$(INSTALL_DATA) Makefiles/java-wrapper.top.template $(JIGS_MAKE_DIR)
+	$(INSTALL_DATA) Makefiles/java-wrapper.readme.template $(JIGS_MAKE_DIR)
+	$(INSTALL_DATA) Makefiles/java-wrapper.objc.template $(JIGS_MAKE_DIR)
+	$(INSTALL_DATA) Makefiles/java-wrapper.java.template $(JIGS_MAKE_DIR)
 
