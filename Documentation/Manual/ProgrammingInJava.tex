@@ -161,6 +161,88 @@ please don't be confused by the \texttt{JAVA\_PACKAGE\_NAME} variable,
 which bears no relation with java packages, and it is just a temporary
 name used internally by the make package.
 
+\subsection{Documenting Classes Using Javadoc}
+
+The GNUstep make package has also some support for generating
+documentation using \texttt{javadoc}; if you want to use this
+facility, please read on.  Otherwise, you may safely skip this
+section.
+
+Here is an example of the same \texttt{GNUmakefile} with added
+documentation using javadoc:
+\begin{verbatim}
+include $(GNUSTEP_MAKEFILES)/common.make
+
+JAVA_PACKAGE_NAME = fun
+fun_JAVA_FILES = \
+  misc/quotes/Pisa.java       \
+  misc/quotes/Farinata.java   \
+  misc/quotes/Ulisse.java     \
+  misc/jokes/Sailor.java      \
+  misc/jokes/Worker.java
+
+DOCUMENT_NAME = Reference
+Reference_JAVADOC_FILES = misc.quotes misc.jokes
+Reference_DOC_INSTALL_DIR = Developer/Fun/
+
+include $(GNUSTEP_MAKEFILES)/java.make
+include $(GNUSTEP_MAKEFILES)/documentation.make
+\end{verbatim}%$ fool emacs' buggy tex-mode
+As you see, you need to choose a document name, list the packages you
+want to document, choose the installation directory, and include
+\texttt{documentation.make}.  We now review each option in more detail.
+
+\texttt{DOCUMENT\_NAME} is a name describing the documentation to be 
+generated.  It has some importance, because the documentation is
+generated inside a directory called \texttt{\$(DOCUMENT\_NAME)}.  In
+this case, when I run \texttt{make}, make creates a directory called
+\texttt{Reference}, and runs \texttt{javadoc} telling him to put 
+the documentation into this directory (this is accomplished by using
+the \texttt{-d} option to \texttt{javadoc}).
+
+\texttt{JAVADOC\_FILES} contains a list of packages to be documented.  
+It might also contain standalone java files - which need to be
+specified with full pathnames then, as in 
+\begin{verbatim}
+Reference_JAVADOC_FILES = /home/nicola/java/test/test.java
+\end{verbatim}
+You can mix package names and java file names - and use an arbitrary
+number of them.
+
+\texttt{DOC\_INSTALL\_DIR} specifies where the generated documentation 
+is going to be installed when you run \texttt{make install}.  In the
+example, it will end up being installed in 
+\begin{verbatim}
+$(GNUSTEP_LOCAL_ROOT)/Documentation/Developer/Fun/Reference/
+\end{verbatim}%$
+which on my system means
+\begin{verbatim}
+/usr/GNUstep/Local/Documentation/Developer/Fun/Reference/
+\end{verbatim}
+Additional options you may want to use are: 
+\begin{enumerate}
+\item Setting \texttt{ADDITIONAL\_JAVADOCFLAGS} before including 
+\texttt{documentation.make} allows you to pass custom 
+flags to javadoc - a standard example is:
+\begin{verbatim}
+ADDITIONAL_JAVADOCFLAGS += -public
+\end{verbatim}
+\item By default, the make package will tell javadoc to look for source 
+files in the current directory; if some of them are elsewhere, you can
+specify additional paths to look for the source files by setting a
+\texttt{JAVADOC\_SOURCEPATH}:
+\begin{verbatim}
+Reference_JAVADOC_SOURCEPATH=/home/nicola/Java/Nico:/home/nicola/Java/Nicola
+\end{verbatim}
+Before running javadoc, the make package will always add \texttt{./} in 
+front of the sourcepath - for example, in this case it would use 
+\begin{verbatim}
+-sourcepath ./:/home/nicola/Java/Nico:/home/nicola/Java/Nicola
+\end{verbatim}
+when invoking javadoc.  Please refer to the javadoc documentation if
+you want to learn more about the sourcepath.
+\end{enumerate}
+
 \section{Accessing the GNUstep Base Library From Java}
 
 \subsection{A First Example}
@@ -259,6 +341,19 @@ NSProcessInfo process;
 process = NSProcessInfo.processInfo ();
 \end{verbatim}
 because this is the Java syntax for method calls.
+
+If you want to know exactly which classes and methods are exposed to
+Java, with which name, and to which Objective-C classes and methods
+they correspond, you can consult the quick reference documentation for
+the GNUstep base library wrappers.  This is generated automatically by
+JIGS when it creates the wrappers; if you have installed JIGS
+correctly, it should be in:
+\begin{verbatim}
+$(GNUSTEP_SYSTEM_ROOT)/Documentation/Developer/Base/Java/Reference/
+\end{verbatim}%$
+Warning: this is only a quick reference for the java wrapper, listing
+classes and methods exposed to Java, and does not document the GNUstep
+Base Library itself.
 
 \section{How the Wrapping Works}
 
