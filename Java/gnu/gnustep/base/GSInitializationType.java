@@ -24,9 +24,7 @@ package gnu.gnustep.base;
 /*
  * There are major differences between Java constructor system 
  * and Objective-C init/alloc system.  
- * I didn't want to write this class, but it seems the only easy 
- * way to make things clean.  See NSObject.java for more info.
- *
+ * See NSObject.java for more info on how this class fits in the system.
  */
 
 public class GSInitializationType 
