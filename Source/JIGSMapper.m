@@ -44,7 +44,7 @@ static inline jobject _JIGSMapperGetProxyFromProxiedObjc (id objc)
   return java;
 }
 
-inline void _JIGSMapperAddJavaProxy (JNIEnv *env, id objc, jobject java)
+void _JIGSMapperAddJavaProxy (JNIEnv *env, id objc, jobject java)
 {
   jobject weak_java;
   
@@ -59,7 +59,7 @@ inline void _JIGSMapperAddJavaProxy (JNIEnv *env, id objc, jobject java)
   objc_mutex_unlock (_JIGSProxiedObjcMapLock);
 }
 
-inline void _JIGSMapperRemoveJavaProxy (JNIEnv *env, id objc)
+void _JIGSMapperRemoveJavaProxy (JNIEnv *env, id objc)
 {
   jobject weak_java;
 
@@ -157,14 +157,14 @@ static inline id _JIGSMapperGetProxyFromProxiedJava (jobject java)
   return objc;
 }
 
-inline void _JIGSMapperAddObjcProxy (JNIEnv *env, jobject java, id objc)
+void _JIGSMapperAddObjcProxy (JNIEnv *env, jobject java, id objc)
 {
   objc_mutex_lock (_JIGSProxiedJavaMapLock);
   NSMapInsert (_JIGSProxiedJavaMap, java, objc);
   objc_mutex_unlock (_JIGSProxiedJavaMapLock);
 }
 
-inline void _JIGSMapperRemoveObjcProxy (JNIEnv* env, jobject java)
+void _JIGSMapperRemoveObjcProxy (JNIEnv* env, jobject java)
 {
   objc_mutex_lock (_JIGSProxiedJavaMapLock);
   NSMapRemove (_JIGSProxiedJavaMap, java);
@@ -232,7 +232,7 @@ void JIGSRegisterJavaProxyClass (JNIEnv *env, NSString *fullJavaClassName,
    Also, beware that this function call wants a local reference as 
    argument, and it destroys it during processing ! 
 */
-inline static Class _JIGSFirstJavaProxySuperClass (JNIEnv *env, 
+static inline Class _JIGSFirstJavaProxySuperClass (JNIEnv *env, 
 						   jclass inClass)
 {
   Class outClass;
@@ -568,7 +568,7 @@ id JIGSIdFromJobject (JNIEnv *env, jobject object)
   return JIGSCreateNewObjcProxy (env, object);
 }
 
-inline jstring JIGSJstringFromNSString (JNIEnv *env, NSString *string)
+jstring JIGSJstringFromNSString (JNIEnv *env, NSString *string)
 {
   if (string == nil)
     {
@@ -580,7 +580,7 @@ inline jstring JIGSJstringFromNSString (JNIEnv *env, NSString *string)
     }
 }
 
-inline NSString *JIGSNSStringFromJstring (JNIEnv *env, jstring string)
+NSString *JIGSNSStringFromJstring (JNIEnv *env, jstring string)
 {
   if (string == NULL)
     {
@@ -725,7 +725,7 @@ NSArray *JIGSNSArrayFromJobjectArray (JNIEnv *env, jobjectArray objects)
 						       objects));
 }
 
-inline id JIGSIdFromThis (JNIEnv *env, jobject this)
+id JIGSIdFromThis (JNIEnv *env, jobject this)
 {
   return JIGS_JLONG_TO_ID((*env)->GetLongField (env, this, fidRealObject));
 }
