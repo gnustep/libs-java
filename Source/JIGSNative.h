@@ -70,9 +70,12 @@ RELEASE (pool);
 #define JIGS_EXIT_WITH_VALUE(ret_value)                      \
 NS_HANDLER                                                   \
 JIGSRaiseJExceptionFromNSException (env, localException);    \
-RELEASE (pool); return (0);                                  \
+ret_value = 0;                                               \
 NS_ENDHANDLER                                                \
 RELEASE (pool); return (ret_value);
      
 
 #endif /*__JIGSNative_h_GNUSTEP_JAVA_INCLUDE*/
+
+
+
