@@ -1,7 +1,9 @@
-Mon Jul 31 17:20:10 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+Mon Jul 31 17:26:15 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* README: Fixed download URL.
-
+	* INSTALL: Added a comment about the need for a recent 
+	gnustep-make package.
+	
 Mon Jul 31 15:49:36 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* INSTALL: Updated.
