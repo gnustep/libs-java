@@ -25,6 +25,15 @@ include $(GNUSTEP_MAKEFILES)/common.make
 all:
 	@echo "Nothing to be done for all"
 
+clean:
+	@echo "Nothing to be done for clean"
+
+distclean:
+	@echo "Nothing to be done for distclean"
+
+check:
+	@echo "Nothing to be done for check"
+
 # Install the Makefiles
 JIGS_MAKE_DIR = $(INSTALL_ROOT_DIR)$(GNUSTEP_MAKEFILES)
 
@@ -36,4 +45,10 @@ install: $(JIGS_MAKE_DIR)
 	$(INSTALL_DATA) GNUstep-Java.sh $(JIGS_MAKE_DIR)
 	chmod a+x $(JIGS_MAKE_DIR)/GNUstep-Java.sh
 	$(INSTALL_DATA) jigs.make       $(JIGS_MAKE_DIR)
+
+uninstall:
+	@echo "Uninstalling GNUstep-Java.sh and jigs.make..."
+	rm $(JIGS_MAKE_DIR)/GNUstep-Java.sh
+	rm $(JIGS_MAKE_DIR)/jigs.make
+
 
