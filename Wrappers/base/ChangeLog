@@ -1,0 +1,5 @@
+Fri Aug 18 20:01:10 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* libgnustep-base.jigs: New file.
+	* GNUmakefile: New file.
+	* gnustep-base.h: New file.
