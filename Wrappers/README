@@ -1,0 +1,8 @@
+
+Type 'make' to create and compile the gnustep base library wrappers.
+Then get root and type 'make install' to install the gnustep base
+library wrappers.
+
+Type 'make gui' to create and compile the [very alpha] gnustep gui
+library wrappers.  Then get root and type 'make install-gui' to
+install the [very alpha] gnustep gui library wrappers.
