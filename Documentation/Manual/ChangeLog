@@ -1,3 +1,8 @@
+Mon May 21 02:46:36 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* WrappingObjcLibraries.tex: Extensive changes and updates
+	everywhere for the new way of wrapping libraries.
+
 Sun May  6 00:39:22 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* ProgrammingInJava.tex (Numbers): Documented the morphing of
