@@ -24,6 +24,20 @@
 #include <Foundation/Foundation.h>
 #include <java/JIGS.h>
 
+/* Get a {char *} description of an object, making sure we manage nil */
+const char *
+print_object (id obj)
+{
+  if (obj == nil)
+    {
+      return "(nil)";
+    }
+  else
+    {
+      return [[obj description] lossyCString];
+    }
+}
+
 void
 test_primitive_type (int type, JNIEnv *env)
 {
@@ -120,8 +134,7 @@ test_primitive_type (int type, JNIEnv *env)
       }
     }
 
-  printf ("Registering %s class...\n", [javaClassName cString]);
-  JIGSRegisterJavaClass (env, javaClassName);
+  printf ("Looking up class %s...\n", print_object (javaClassName));
   myClass = NSClassFromString (javaClassName);
     
   if (myClass == Nil)
@@ -144,7 +157,7 @@ test_primitive_type (int type, JNIEnv *env)
 	instance = [myClass alloc]; \
         imp_ = (newIMP)[instance methodForSelector: selector];        \
 	instance = imp_ (instance, selector, test);                   \
-	printf ("Instance %s; ", [[instance description] cString]); \
+	printf ("Instance %s; ", print_object (instance)); \
                                                                             \
 	imp_2 = (valueIMP)[instance methodForSelector: selector_2];  \
 	result = imp_2 (instance, selector_2); \
@@ -226,6 +239,7 @@ int main (int argc, char **argv, char **penv)
   JNIEnv *env;
   Class javaLangSystem;
   Class bogusJavaLangSystem;
+  Class aClass;
   SEL selector;
   typedef NSString *(*getPropIMP)(id, SEL, NSString *);
   getPropIMP imp;
@@ -293,7 +307,7 @@ int main (int argc, char **argv, char **penv)
     }
   else
     {
-      printf ("Got %s\n", [[javaLangSystem description] cString]);
+      printf ("Got %s\n", print_object (javaLangSystem));
     }
     
     
@@ -342,72 +356,75 @@ int main (int argc, char **argv, char **penv)
 
   printf ("Calling it to get some system properties:\n"); 
 
-  /* Make sure we can manage nil results */
-#define RESULT (result != nil ? [result cString] : "(nil)")
-
   result = imp (javaLangSystem, selector, @"java.version");
-  printf (" java.vm.version == %s\n", RESULT);
+  printf (" java.vm.version == %s\n", print_object (result));
 
   result = imp (javaLangSystem, selector, @"java.vendor");
-  printf (" java.vendor == %s\n", RESULT);
+  printf (" java.vendor == %s\n", print_object (result));
 
   result = imp (javaLangSystem, selector, @"java.vendor.url");
-  printf (" java.vendor.url == %s\n", RESULT);
+  printf (" java.vendor.url == %s\n", print_object (result));
 
   result = imp (javaLangSystem, selector, @"java.vendor.uri");
-  printf (" java.vendor.uri == %s\n", RESULT);
+  printf (" java.vendor.uri == %s\n", print_object (result));
 
   result = imp (javaLangSystem, selector, @"java.home");
-  printf (" java.home == %s\n", RESULT);
+  printf (" java.home == %s\n", print_object (result));
 
   result = imp (javaLangSystem, selector, @"java.vm.specification.version");
-  printf (" java.vm.specification.version == %s\n", RESULT);
+  printf (" java.vm.specification.version == %s\n", print_object (result));
 
   result = imp (javaLangSystem, selector, @"java.vm.specification.vendor");
-  printf (" java.vm.specification.vendor == %s\n", RESULT);
+  printf (" java.vm.specification.vendor == %s\n", print_object (result));
 
   result = imp (javaLangSystem, selector, @"java.vm.specification.name");
-  printf (" java.vm.specification.name == %s\n", RESULT);
+  printf (" java.vm.specification.name == %s\n", print_object (result));
 
   result = imp (javaLangSystem, selector, @"java.vm.version");
-  printf (" java.vm.version == %s\n", RESULT);
+  printf (" java.vm.version == %s\n", print_object (result));
 
   result = imp (javaLangSystem, selector, @"java.vm.vendor");
-  printf (" java.vm.vendor == %s\n", RESULT);
+  printf (" java.vm.vendor == %s\n", print_object (result));
 
   result = imp (javaLangSystem, selector, @"java.vm.name");
-  printf (" java.vm.name == %s\n", RESULT);
+  printf (" java.vm.name == %s\n", print_object (result));
 
   result = imp (javaLangSystem, selector, @"java.class.version");
-  printf (" java.class.version == %s\n", RESULT);
+  printf (" java.class.version == %s\n", print_object (result));
 
   result = imp (javaLangSystem, selector, @"java.class.path");
-  printf (" java.class.path == %s\n", RESULT);
+  printf (" java.class.path == %s\n", print_object (result));
 
   result = imp (javaLangSystem, selector, @"os.name");
-  printf (" os.name == %s\n", RESULT);
+  printf (" os.name == %s\n", print_object (result));
 
   result = imp (javaLangSystem, selector, @"os.arch");
-  printf (" os.arch == %s\n", RESULT);
+  printf (" os.arch == %s\n", print_object (result));
 
   result = imp (javaLangSystem, selector, @"os.version");
-  printf (" os.version == %s\n", RESULT);
+  printf (" os.version == %s\n", print_object (result));
 
   result = imp (javaLangSystem, selector, @"user.name");
-  printf (" user.name == %s\n", RESULT);
+  printf (" user.name == %s\n", print_object (result));
 
   result = imp (javaLangSystem, selector, @"user.home");
-  printf (" user.home == %s\n", RESULT);
+  printf (" user.home == %s\n", print_object (result));
 
   result = imp (javaLangSystem, selector, @"user.dir");
-  printf (" user.dir == %s\n", RESULT);
-
-#undef RESULT
+  printf (" user.dir == %s\n", print_object (result));
 
   /* Testing overloaded methods */
   printf ("Now testing overloaded methods by loading in the java.lang.StringBuffer class...");
-  JIGSRegisterJavaClass (env, @"java.lang.StringBuffer");
-  printf ("ok\n");
+  aClass = NSClassFromString (@"java.lang.StringBuffer"); 
+  if (aClass == Nil)
+    {
+      printf ("Could not load this class ... test FAILED\n");
+      abort ();
+    }
+  else
+    {
+      printf ("Got %s ==> ok\n", print_object (aClass)); 
+    }
 
   /* Testing invoking Java methods with different types of parameters */
   test_primitive_type (0, env);
@@ -476,9 +493,9 @@ int main (int argc, char **argv, char **penv)
 #define TEST_NUMBER_MORPH(CREATION,TYPE) \
 ({ NSNumber *number; jobject jnumber; \
    number = [NSNumber CREATION]; \
-   printf ("Morphing: " #TYPE " %s --> ", [[number description] lossyCString]); \
+   printf ("Morphing: " #TYPE " %s --> ", print_object (number)); \
    jnumber = GSJNI_JNumberFromNSNumber (env, number); \
-   printf ("%s\n", [GSJNI_DescriptionOfJObject (env, jnumber)  lossyCString]); \
+   printf ("%s\n", print_object (GSJNI_DescriptionOfJObject (env, jnumber))); \
 })
 
   TEST_NUMBER_MORPH(numberWithBool: YES, Bool);
@@ -535,7 +552,7 @@ int main (int argc, char **argv, char **penv)
       }
     else
       {
-	printf ("Got %s\n", [[javaIOStringReader description] cString]);
+	printf ("Got %s\n", print_object (javaIOStringReader));
       }
 
     printf ("Now creating an instance:\n");
@@ -549,12 +566,11 @@ int main (int argc, char **argv, char **penv)
        object is really allocated> */
     instance = imp_ (instance, selector, @"Test");
 
-    printf ("Got instance %s\n", [[instance description] cString]);
+    printf ("Got instance %s\n", print_object (instance));
 
     /* Access its 'lock' field using valueForKey */
     printf ("Getting the lock using key/value coding...\n");
-    printf ("Got %s\n", 
-	    [[[instance valueForKey: @"lock"] description] cString]);
+    printf ("Got %s\n", print_object ([instance valueForKey: @"lock"]));
     
     /* Set it - not really meaningful as we set it to a string anyway */
     printf ("Setting the lock to `Hi' using key/value coding...\n");
@@ -562,8 +578,7 @@ int main (int argc, char **argv, char **penv)
 
     /* Checking that we set it right */
     printf ("Getting the lock using key/value coding...\n");
-    printf ("Got %s\n", 
-	    [[[instance valueForKey: @"lock"] description] cString]);
+    printf ("Got %s\n", print_object ([instance valueForKey: @"lock"]));
 
     if (![[instance valueForKey: @"lock"] isEqualToString: @"Hi"])
       {
