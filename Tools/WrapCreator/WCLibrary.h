@@ -40,12 +40,9 @@
 
 + (BOOL) verboseOutput;
 
-+ (void) initializeWithJigsFile: (NSString *)jigsFileName
-	 preprocessedHeaderFile: (NSString *)headerFileName
-		     headerFile: (NSString *)libHeader
-		  wrapDirectory: (NSString *)wrapDirectory
-		    libraryName: (NSString *)libName
-		  verboseOutput: (BOOL)verbOutput;
++ (BOOL) outputJavadoc;
+
++ (void) initializeWithOptions: (NSDictionary *)options;
 
 + (void) outputWrappers;
 
@@ -60,6 +57,11 @@
 + (NSString *) objcWrapperFileForClass: (NSString *)objcClassName;
 
 + (NSString *) selectorMapFileForClass: (NSString *)objcClassName;
+
+/* The following returns the contents of the file at
+   top_directory/relativePath - where top_directory is the one in
+   which the jigs file is kept. */
++ (NSString *) fileWithRelativePath: (NSString *)relativePath;
 
 /* The following will look into our class list, and then into 
    class name mappings specified by the `hints' entries in the 
