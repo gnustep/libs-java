@@ -32,6 +32,7 @@ gnu.gnustep.java_JAVA_FILES =                 \
    gnu/gnustep/java/GSJNIMethods.java         \
    gnu/gnustep/java/JIGS.java                 \
    gnu/gnustep/java/JIGSLibraryLoader.java    \
+   gnu/gnustep/java/JIGSKeyValueCoding.java   \
    gnu/gnustep/base/NSException.java          \
    gnu/gnustep/base/NSObject.java             \
    gnu/gnustep/base/GSInitializationType.java \
