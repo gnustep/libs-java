@@ -1,3 +1,8 @@
+Mon Jul 31 11:13:25 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* GNUmakefile (GNUSTEP_INSTALLATION_DIR): Install by default 
+	in $(GNUSTEP_SYSTEM_ROOT).
+
 Fri Jul 28 12:19:00 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GNUmakefile: Removed adding ./ to CLASSPATH, the make package
