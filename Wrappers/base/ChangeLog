@@ -1,3 +1,7 @@
+Tue Feb  6 18:35:28 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* gnustep-base-wrapper.spec.in (Summary, description): Fixed.
+
 Tue Feb  6 18:18:09 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* NSData.m.handmade: New file.
