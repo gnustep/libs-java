@@ -28,48 +28,21 @@
 #include <jni.h>
 #include <Foundation/Foundation.h>
 
+/* Convert a java.lang.Number object of an unknown class to a
+ * NSNumber.  This first checks the standard classes, and tries to use
+ * the appropriate code for better precision in conversion.  If the
+ * number is not of a standard class, it gets the value of the number
+ * as a double, and creates a NSNumber for a double.  Return nil upong
+ * exception thrown.  object should not be NULL.  Return an
+ * autoreleased number. 
+ */
+NSNumber *GSJNI_NSNumberFromJNumber (JNIEnv *env, jobject object);
+
 /* Convert a java.lang.Boolean object to a NSNumber.  This is safe
  * because if you convert the NSNumber back, you will get a
  * java.lang.Boolean.  Return nil upong exception thrown.  object
  * should not be NULL.  Return an autoreleased number.  */
 NSNumber *GSJNI_NSNumberFromJBoolean (JNIEnv *env, jobject object);
-
-/* Convert a java.lang.Byte object to a NSNumber.
- * Return nil upong exception thrown.  object should not be NULL.
- * Return an autoreleased number.
- */
-NSNumber *GSJNI_NSNumberFromJByte (JNIEnv *env, jobject object);
-
-/* Convert a java.lang.Double object to a NSNumber.
- * Return nil upong exception thrown.  object should not be NULL.
- * Return an autoreleased number.
- */
-NSNumber *GSJNI_NSNumberFromJDouble (JNIEnv *env, jobject object);
-
-/* Convert a java.lang.Float object to a NSNumber.
- * Return nil upong exception thrown.  object should not be NULL.
- * Return an autoreleased number.
- */
-NSNumber *GSJNI_NSNumberFromJFloat (JNIEnv *env, jobject object);
-
-/* Convert a java.lang.Integer object to a NSNumber.
- * Return nil upong exception thrown.  object should not be NULL.
- * Return an autoreleased number.
- */
-NSNumber *GSJNI_NSNumberFromJInteger (JNIEnv *env, jobject object);
-
-/* Convert a java.lang.Long object to a NSNumber.
- * Return nil upong exception thrown.  object should not be NULL.
- * Return an autoreleased number.
- */
-NSNumber *GSJNI_NSNumberFromJLong (JNIEnv *env, jobject object);
-
-/* Convert a java.lang.Short object to a NSNumber.
- * Return nil upong exception thrown.  object should not be NULL.
- * Return an autoreleased number.
- */
-NSNumber *GSJNI_NSNumberFromJShort (JNIEnv *env, jobject object);
-
 
 /* Convert the NSNumber object to an appropriate java.lang.Number
  * object - as an exception, if the NSNumber is actually holding a
