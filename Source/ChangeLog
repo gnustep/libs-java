@@ -1,3 +1,8 @@
+Thu Jan 11 11:33:38 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* GNUmakefile (LIBRARIES_DEPEND_UPON): Update for changes in the
+	base/make library on CVS: link also against CONFIG_SYSTEM_LIBS.
+
 Thu Nov 30 11:36:39 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	Patches by Helge Hess:
