@@ -60,8 +60,7 @@ classes = (
     "setHeader:"
   );
   "method declarations" = (
-    "- (id) content",
-    "- (id) document"
+    "- (id) content"
   );
 },
 
@@ -81,6 +80,9 @@ classes = (
     "isInHeaders",
     "parse:",
     "parseHeader:"
+  );
+  "method declarations" = (
+    "- (id) document"
   );
 },
 
