@@ -51,12 +51,15 @@
 - (NSString *) outputJavaWrapper;
 
 - (NSString *) outputObjcWrapper;
+
+- (NSString *) outputSelectorMapping;
 @end
 
 @interface WCMethod (InternalMethods)
 - (NSString *) outputJavaMethodName;
 - (NSString *) outputJavaArguments;
 - (NSString *) outputJniMethodName;
+- (NSString *) outputJavaArgumentSignature;
 @end
 
 #endif
