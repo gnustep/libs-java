@@ -33,7 +33,8 @@ GNUstep based java packages or apps.]
 
     make install
 
-5) Create and Compile the base library wrapper: Go into Wrappers/, and
+5) Create and Compile the base library wrapper: Go into Wrappers/base
+   (or into Wrapper/libFoundation if you are using libFoundation), and
    type:
 
    make
