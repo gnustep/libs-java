@@ -8,13 +8,8 @@ Java_gnu_gnustep_base_NSData_initWithBytes (JNIEnv *env, jobject this,
   jlong java;
 
   JIGS_ENTER;
-  /* Destroy old NSData */
   we = JIGSIdFromThis (env, this);
-  [we release];
-
-  /* Create new one with the provided bytes */
-  objc_new = JIGSNSDataFromJbyteArray (env, bytes);
-  [objc_new retain];
+  objc_new = JIGSInitNSDataFromJbyteArray (env, we, bytes);
   _JIGSMapperAddJavaProxy (env, objc_new, this);
   java = JIGS_ID_TO_JLONG (objc_new);  
 
