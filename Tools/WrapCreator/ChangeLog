@@ -1,3 +1,12 @@
+Thu Jan 25 14:47:19 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Makefiles/java-wrapper.make: Use java-wrapper.top.debug.template
+	rather than java.wrapper.top.template if debugging is enabled.
+	* Makefiles/java-wrapper.top.debug.template: New file with 
+	modified SUBPROJECTS and PACKAGE_NAME.
+	* GNUmakefile (after-install): Install
+	java-wrapper.top.debug.template too.
+	
 Thu Jan 25 12:21:31 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Makefiles/java-wrapper.make ($(WRAPPER_DIR)/stamp-file):
