@@ -1,4 +1,9 @@
-Wed Jul 26 12:49:12 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+Fri Jul 28 12:19:00 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* GNUmakefile: Removed adding ./ to CLASSPATH, the make package
+	now does it for us.
+
+Wed Jul 26 12:49:12 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* gnu/gnustep/base/NSObject.java: Rewritten constructor code.
 	* gnu/gnustep/base/GSInitializationType.java: New class.
