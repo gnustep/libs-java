@@ -55,6 +55,7 @@
   ASSIGN (objcType, aType);
   ASSIGN (javaType, [primitiveTypeObject javaType]);
   ASSIGN (jniType, [primitiveTypeObject jniType]);
+  ASSIGN (javaArgumentType, [primitiveTypeObject javaArgumentType]);
 
   return self;
 }

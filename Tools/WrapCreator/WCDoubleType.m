@@ -34,12 +34,14 @@
     {
       javaType = @"double";
       jniType = @"jdouble";
+      javaArgumentType = @"D";
     }
   else 
     {
       NSLog (@"Warning: sizeof double is weird.");
       javaType = @"double";
       jniType = @"jdouble";
+      javaArgumentType = @"D";
     }
 
   return self;

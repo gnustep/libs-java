@@ -33,22 +33,26 @@
     {
       javaType = @"short";
       jniType = @"jshort";
+      javaArgumentType = @"S";
     }
   else if (sizeof (int) == 4)
     {
       javaType = @"int";
       jniType = @"jint";
+      javaArgumentType = @"I";
     }
   else if (sizeof (int) == 8)
     {
       javaType = @"long";
       jniType = @"jlong";
+      javaArgumentType = @"J";
     }
   else 
     {
       NSLog (@"Warning: sizeof int is weird.");
       javaType = @"int";
       jniType = @"jint";
+      javaArgumentType = @"I";
     }
 
 
