@@ -1,6 +1,4 @@
 /* NSException.java - the GNUstep exception class
-   GNUstep Java Interface
-
    Copyright (C) 2000 Free Software Foundation, Inc.
    
    Written by:  Nicola Pero <nicola@brainstorm.co.uk>
