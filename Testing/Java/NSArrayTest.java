@@ -71,6 +71,7 @@ class NSArrayTest
     indexOf (arrayOne, "three", 2);
     indexOf (arrayOne, "four", 3);
     indexOf (arrayTwo, "C", 2);
+    indexOf (arrayTwo, "F", NSArray.NotFound);
     System.out.println ("");
 
     /* Now trying if indexOf: works */
