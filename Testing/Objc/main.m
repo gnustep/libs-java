@@ -413,6 +413,52 @@ int main (int argc, char **argv, char **penv)
   test_primitive_type (5, env);
 //  test_primitive_type (6, env);
   test_primitive_type (7, env);
+
+  /* Test a method with two parameters */
+  {
+    Class javaLangMath = NSClassFromString (@"java.lang.Math");
+    SEL selector = NSSelectorFromString (@"min::");
+    typedef jint (*intIntIntIMP)(id, SEL, jint, jint);    
+    intIntIntIMP mathImp;
+    jint a, b, result;
+
+    if (selector == NULL)
+      {
+	printf ("Could not get selector for min::\n");
+	exit (1);
+      }
+
+    mathImp = (intIntIntIMP)[javaLangMath methodForSelector: selector];
+
+    a = 0; b = 0;
+    result = mathImp (javaLangMath, selector, a, b);
+    printf (" min (%d, %d) == %d\n", a, b, result);
+    if (result != 0)
+      {
+	printf ("Test failed\n");
+	exit (1);
+      }
+
+    a = 1; b = 0;
+    result = mathImp (javaLangMath, selector, a, b);
+    printf (" min (%d, %d) == %d\n", a, b, result);
+    if (result != 0)
+      {
+	printf ("Test failed\n");
+	exit (1);
+      }
+
+    a = 1; b = -1;
+    result = mathImp (javaLangMath, selector, a, b);
+    printf (" min (%d, %d) == %d\n", a, b, result);
+    if (result != -1)
+      {
+	printf ("Test failed\n");
+	exit (1);
+      }
+  }
+
+
   
 #if 0
   /* Testing morphing of numbers - used to debug JIGS internals */
