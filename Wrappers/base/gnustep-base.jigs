@@ -29,6 +29,12 @@ classes = (
 			"value");
   "initializers" = ("initWithNamespace:name:",
     "initWithNode:name:value:" );
+
+  /* Can't return GSXMLAttribute here because in Java you can't change
+     the return type when you override in a subclass a method of the
+     superclass ! */
+  "method declarations" = ("- (GSXMLNode *)next",
+			   "- (GSXMLNode *)prev");
 },
 
 {
@@ -55,6 +61,8 @@ classes = (
 			"type",
 			"typeDescription");
   "initializers" = ("initWithNode:href:prefix:" );
+  /* The following conflicts with other GSXML* classes */
+  "method declarations" = ("- (GSXMLNamespace *)next");
 },
 
 {
@@ -80,6 +88,9 @@ classes = (
 			"type",
 			"typeDescription");
   "initializers" = ("initWithNamespace:name:" );
+  /* The following conflicts with other GSXML* classes */
+  "method declarations" = ("- (GSXMLNode *)next",
+			   "- (GSXMLNode *)prev");
 },
 
 {
@@ -486,7 +497,9 @@ classes = (
     
   {
     "java name" = "gnu.gnustep.base.NSPropertyListSerialization";
-    
+    "file to include in objective-c code" 
+      = "NSPropertyListSerialization.m.add";
+
     "class methods" = ("propertyListFromString:",
 		       "stringFromPropertyList:",
 		       "dataFromPropertyList:",
@@ -634,7 +647,7 @@ classes = (
     /* WARNING: We are forced to expose these methods in this way not
        to get conflicting selectors with NSDictionary and
        NSMutableDictionary, but the truth is - these methods want
-       strings as keys - even if the Java declaration we are force to
+       strings as keys - even if the Java declaration we are forced to
        use is more generic. */
     "method declarations" = ("- (id) objectForKey: (id)aKey", 
 			     "- (void) setObject: (id)anObject forKey: (id)aKey");
