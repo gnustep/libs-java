@@ -1,3 +1,12 @@
+Tue Oct 31 13:26:47 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* libgnustep-base.jigs (NSData), (NSMutableData): New wrappers.
+	* NSPropList.m ([+propertyListFromData:]),
+	([+dataFromPropertyList:]): New methods.
+	* NSPropertyListSerialization.h: Updated for the new methods.
+	* libgnustep-base.jigs (NSPropertyListSerialization): Wrap the
+	new methods.
+
 Fri Oct 20 17:13:24 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* GNUmakefile.wrapper: New file.
