@@ -1,3 +1,7 @@
+Mon May 21 02:58:05 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* GNUmakefile, JIGS.h: Version is now 1.4.0.
+
 Mon May  7 04:23:29 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* JIGSInit.m (JIGSInit): Allocate a global mutex for
