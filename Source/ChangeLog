@@ -1,3 +1,8 @@
+Mon Oct  2 10:00:00 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* JIGSInit.m (JIGSInit): Added workaround for systems without
+	/proc filesystem (Patch by Richard Frith-Macdonald).
+
 Fri Sep 29 15:46:29 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGS.m (Java_gnu_gnustep_java_JIGS_initialize): Do not 
