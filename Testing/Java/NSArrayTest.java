@@ -73,6 +73,15 @@ class NSArrayTest
     indexOf (arrayTwo, "C", 2);
     System.out.println ("");
 
+    /* Now trying if indexOf: works */
+    System.out.println ("Now trying if indexOfObject (,) overloaded with the range works");
+    indexOf (arrayOne, "one", 0, new NSRange (0, 3));
+    indexOf (arrayOne, "two", 1, new NSRange (0, 2));
+    indexOf (arrayOne, "three", 2, new NSRange (1, 2));
+    indexOf (arrayOne, "four", 3, new NSRange (3, 1));
+    indexOf (arrayTwo, "C", 2, new NSRange (1, 2));
+    System.out.println ("");
+
     /* Right, now test if equality works */
     System.out.println ("Now trying to compare the arrays using isEqualToArray ()");
     compare (arrayOne, arrayTwo, false);
@@ -182,6 +191,32 @@ class NSArrayTest
     result = array.indexOfObject (object);
 
     output += object + " is at index " + result + " in array " + description;
+
+    if (result != position)
+      {
+	output += " ==> test FAILED";
+	System.out.println (output);
+	System.exit (1);
+      }
+    else
+      {
+	output += " ==> test passed";
+	System.out.println (output);
+      }
+  }
+
+  public static void indexOf (NSArray array, Object object, 
+			      int position, NSRange range)
+  {
+    String description;
+    String output = "* ";
+    long result;
+
+    description = array.toString ();
+    result = array.indexOfObject (object, range);
+
+    output += object + " is at index " + result + " in array " + description 
+	+ " in range " + range;
 
     if (result != position)
       {
