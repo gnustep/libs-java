@@ -1,0 +1,76 @@
+#!/bin/sh
+#   make-snapshot: Create a snapshot of the JIGS with the date of today.
+#
+#   Copyright (C) 2000 Free Software Foundation, Inc.
+#
+#   Author:  Nicola Pero <nicola@brainstorm.co.uk>
+#   Date: July 2000
+#   
+#   This file is part of GNUstep.
+#   
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#   
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#   
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, write to the Free Software
+#   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+#
+# Usage: make-snapshot
+# It creates a new snapshot with the date of today.
+#
+
+#
+# By changing the following two, you may use this script 
+# to generate snapshots for other packages/cvs modules
+#
+package_name=jigs
+cvs_module=java
+
+#
+# Now the code
+#
+
+# Get snapshot date 
+snapshot_name=${package_name}-snapshot-`date +%y%m%d`
+echo Making $snapshot_name
+
+# Create ./snapshots directory if it does not exist
+if [ ! -d snapshots ]; then
+  mkdir snapshots
+fi
+
+# Go into ./snapshots
+cd snapshots
+
+# Export CVS module in ./snapshots
+echo Exporting CVS module ${cvs_module}
+cvs -z3 export -D now $cvs_module
+
+# Change name of the source directory
+mv $cvs_module $snapshot_name
+
+# Save previous snapshot (if any) before overwriting with the new one
+if [ -f ${snapshot_name}.tar.gz ]; then 
+  echo "snapshots/${snapshot_name}.tar.gz already exists:"
+  echo "saving old version into snapshots/${snapshot_name}.tar.gz~"
+  mv ${snapshot_name}.tar.gz ${snapshot_name}.tar.gz~
+fi
+
+# Create the .tar.gz
+echo Creating the archive file
+tar chfz ${snapshot_name}.tar.gz $snapshot_name
+rm -rf $snapshot_name
+
+# Done; a tiny check before exit
+if [ ! -f ${snapshot_name}.tar.gz ]; then 
+  echo Error creating snapshot !
+fi
+
