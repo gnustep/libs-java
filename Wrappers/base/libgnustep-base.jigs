@@ -7,6 +7,9 @@
                {
                  "java name" = "gnu.gnustep.base.NSArray";
 
+		  "file to include in java code" = "NSArray.java.handmade";
+		  "file to include in objective-c code" = "NSArray.m.handmade";
+
                   "instance methods" = ("containsObject:",
                                         "count", 
 		                        "indexOfObject:", 
@@ -167,6 +170,9 @@
 
                 {
                   "java name" = "gnu.gnustep.base.NSMutableArray";
+
+		  "file to include in java code" = "NSMutableArray.java.handmade";
+		  "file to include in objective-c code" = "NSMutableArray.m.handmade";
 
                   "instance methods" = 
                     ("addObject:",
