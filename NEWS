@@ -1,0 +1,73 @@
+Release Notes for JIGS version 0.7
+==================================
+
+This release adds support for morphing of selectors.  This improvement
+required extensive additions to the JIGS core engine and to the
+WrapCreator tool.
+
+Release Notes for JIGS version 0.6
+==================================
+
+This release supports building wrappers of debugging libraries, and
+keeping and running them on the same system as wrappers of
+not-debugging libraries.
+
+Release Notes for JIGS version 0.5
+==================================
+
+This release includes a first very partial and experimental wrapper of
+the gnustep gui library; WrapCreator supports prerequisite libraries;
+bug fixes.
+
+Release Notes for JIGS version 0.4
+==================================
+
+This release includes a first partial wrapper of the gnustep base
+library; the WrapCreator tool has been modified to parse the header 
+file only once, so it is now much faster.  Many bug fixes too.
+
+Release Notes for JIGS version 0.3
+==================================
+
+First release of WrapCreator, an automatic wrapper tool for JIGS.
+The wrapper can automatically generate the code to wrap an objective-C 
+library to Java.
+
+Release Notes for JIGS version 0.2
+==================================
+
+Alpha support for subclassing an Objective-C class in Java. 
+Better support for exposing Objective-C class methods  to Java.
+
+Release Notes for JIGS version 0.1 
+==================================
+
+This is the first public release.  While the core engine is mostly
+working, the high level APIs and tools are still missing.  In
+particular, we don't have a wrapper tool yet.  And, the base gnustep
+library has not yet been wrapped.
+
+The core engine is organized in the following way: 
+
+   * A little library (ObjcRuntimeUtilities) to programmatically 
+   add classes and methods to the objective-C runtime while it is
+   running;
+
+   * A little library (GSJNI) of utilities to program JNI using GNUstep. 
+
+   * A little class (NSJavaVirtualMachine) keeping track of the java 
+   virtual machine presently running and incidentally providing a
+   simple API to start a java virtual machine.
+
+   * The real core engine (JIGS itself), built on top of the previous 
+   layers.  Most of it is written in Objective-C, but part is in Java.
+
+Version 0.1 contains an example of an objective-C gnustep library
+wrapped by hand and exposed as a Java library.  Following this
+example, it should not be too difficult to wrap by hand simple
+libraries.
+
+Tests and examples of the reverse (starting a java virtual machine in
+an Objective-C executable and accessing java objects from objective-C)
+have been written, but not included in JIGS 0.1.
+
