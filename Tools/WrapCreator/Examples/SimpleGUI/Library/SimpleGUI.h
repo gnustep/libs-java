@@ -23,7 +23,7 @@
 
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
-#include <AppKit/GSVbox.h>
+#include <GNUstepGUI/GSVbox.h>
 
 /*
  * This demo library provides a single object, SimpleGUI.
