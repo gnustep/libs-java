@@ -1,3 +1,9 @@
+Wed Apr 25 17:57:35 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* ProgrammingInJava.tex (Installing Java classes where you like):
+	New section explaining how to use the JAVA_INSTALLATION_DIR make
+	variable.
+	
 Wed Feb  7 13:59:52 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* TitlePage.tex, .latex2html-init: Updated date.
