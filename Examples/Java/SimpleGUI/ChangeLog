@@ -1,3 +1,11 @@
+Wed Aug  2 19:24:39 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	Added example of wrapping a class method.
+	* Library/SimpleGUI.m ([SimpleGUI +new]): New method.
+	* Library/SimpleGUI.h: Idem.
+	* WrappingLibrary/Java/SimpleGUI.java: (createNew): Idem.
+	* WrappingLibrary/Objc/SimpleGUI.m (Java_SimpleGUI_createNew): Idem.
+	
 Mon Jul 31 11:31:07 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* WrappingLibrary/Objc/GNUmakefile: Use $(FND_LIBS) etc 
