@@ -340,7 +340,9 @@ classes = (
     
   {
     "java name" = "gnu.gnustep.base.NSPropertyListSerialization";
-    
+    "file to include in objective-c code"
+      = "NSPropertyListSerialization.m.add";
+           
     "class methods" = ("propertyListFromString:",
 		       "stringFromPropertyList:",
 		       "dataFromPropertyList:",
@@ -485,7 +487,7 @@ classes = (
     /* WARNING: We are forced to expose these methods in this way not
        to get conflicting selectors with NSDictionary and
        NSMutableDictionary, but the truth is - these methods want
-       strings as keys - even if the Java declaration we are force to
+       strings as keys - even if the Java declaration we are forced to
        use is more generic. */
     "method declarations" = ("- (id) objectForKey: (id)aKey", 
 			     "- (void) setObject: (id)anObject forKey: (id)aKey");
