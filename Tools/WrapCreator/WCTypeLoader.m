@@ -30,12 +30,17 @@
 #include "WCIdType.h"
 #include "WCFloatType.h"
 #include "WCIntType.h"
+#include "WCLongType.h"
+#include "WCLongLongType.h"
+#include "WCShortType.h"
 #include "WCMorphType.h"
 #include "WCObjectType.h"
 #include "WCType.h"
 #include "WCTypeLoader.h"
 #include "WCUnsignedIntType.h"
+#include "WCUnsignedLongType.h"
 #include "WCUnsignedShortType.h"
+#include "WCUnsignedLongLongType.h"
 #include "WCVoidType.h"
 
 /* Default morphing types.  Oh - it would be nice to have constant objects */
@@ -128,9 +133,41 @@ static const struct morphType
     {
       t = [[WCDoubleType alloc] initWithObjcType: name];
     }
-  else if ([name isEqualToString: @"unsigned short"] == YES) 
+  else if ([name isEqualToString: @"unsigned short"]
+	   || [name isEqualToString: @"unsigned short int"])
     {
       t = [[WCUnsignedShortType alloc] initWithObjcType: name];
+    }
+  else if ([name isEqualToString: @"short"]
+	   || [name isEqualToString: @"short int"]
+	   || [name isEqualToString: @"signed short"]
+	   || [name isEqualToString: @"signed short int"])
+    {
+      t = [[WCShortType alloc] initWithObjcType: name];
+    }
+  else if ([name isEqualToString: @"long"]
+	   || [name isEqualToString: @"long int"]
+	   || [name isEqualToString: @"signed long"]
+	   || [name isEqualToString: @"signed long int"])
+    {
+      t = [[WCLongType alloc] initWithObjcType: name];
+    }
+  else if ([name isEqualToString: @"unsigned long"]
+	   || [name isEqualToString: @"unsigned long int"])
+    {
+      t = [[WCUnsignedLongType alloc] initWithObjcType: name];
+    }
+  else if ([name isEqualToString: @"long long"]
+	   || [name isEqualToString: @"long long int"]
+	   || [name isEqualToString: @"signed long long"]
+	   || [name isEqualToString: @"signed long long int"])
+    {
+      t = [[WCLongLongType alloc] initWithObjcType: name];
+    }
+  else if ([name isEqualToString: @"unsigned long long"]
+	   || [name isEqualToString: @"unsigned long long int"])
+    {
+      t = [[WCUnsignedLongLongType alloc] initWithObjcType: name];
     }
   else
     {
