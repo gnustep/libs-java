@@ -1,9 +1,9 @@
 #
 #  Makefile for libName, a useless demo library
 #  
-#  Copyright (C) 2000 Free Software Foundation, Inc.
+#  Copyright (C) 2001 Free Software Foundation, Inc.
 #
-#  Written by: Nicola Pero <nicola@brainstorm.co.uk>
+#  Written by: Nicola Pero <n.pero@mi.flashnet.it>
 #
 #  This file is part of the GNUstep Java Interface Library.
 #
@@ -24,15 +24,19 @@
 
 include $(GNUSTEP_MAKEFILES)/common.make
 
+# The following two would mainly be useful if we were building RPMs
+PACKAGE_NAME = NameLibrary
+VERSION = 1.0.0
 
+# The library
 LIBRARY_NAME = libName
-
 libName_HEADER_FILES = Name.h 
-
 libName_OBJC_FILES = Name.m
 
-include $(GNUSTEP_MAKEFILES)/library.make
+# The wrappers for the library
+JAVA_WRAPPER_NAME = Name
+Name_HEADER_FILES = Name.h
 
-# Uncomment this line to disable automatic wrapping
+include $(GNUSTEP_MAKEFILES)/library.make
 include $(GNUSTEP_MAKEFILES)/java-wrapper.make
 
