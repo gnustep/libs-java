@@ -24,6 +24,11 @@
 #include "JIGS.h"
 #include "JIGSSelectorMapping.h"
 
+/* For the GNU runtime, which is very slow in class method invocation, 
+   we use this pointer to the NSAutoreleasePool class, to be used by 
+   JIGSNative.h macros.  */
+Class JIGSAutoreleasePoolClass = Nil;
+
 #if defined(LIB_FOUNDATION_LIBRARY)
 /* Use a global lock. */
 static objc_mutex_t JIGSLock = NULL;
@@ -154,6 +159,8 @@ void JIGSInit (JNIEnv *env)
 #else
       putenv ("JIGS_DEBUG=NO");
 #endif
+
+      JIGSAutoreleasePoolClass = [NSAutoreleasePool class];
 
       JIGS = GSJNI_NewClassCache (env, "gnu/gnustep/java/JIGS");
       if (JIGS == NULL)
