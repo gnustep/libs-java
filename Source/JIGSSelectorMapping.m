@@ -748,7 +748,7 @@ const char *JIGSLongSelectorName (const char *fullJavaName, BOOL isConstructor)
   [outputString appendString: word];
   [outputString appendString: @")"];
 
-  //NSLog (@"Strimmed %s to %@", fullName, outputString);
+  //NSLog (@"Strimmed %s to %@", fullJavaName, outputString);
   
   // Discard all the rest
   return [outputString cString];
