@@ -323,15 +323,15 @@ static NSString *convertToJNI (NSString *string)
 	    public SimpleGUI (String title)
 	      {
 	        super (ALLOC_ONLY);
-	        this.initWithTitle (title);
+	        realObject = this.initWithTitle (title);
 	      }
 	      
-	   We then output initWithTitle as a normal native method below 
+	   We then output initWithTitle as a (semi-)normal native method below 
 	*/
 	int i, count;
 	[output appendString: [class shortJavaName]];
 	[output appendString: [self outputJavaArguments]];
-	[output appendString: @"\n  {\n    super (ALLOC_ONLY);\n    this."];
+	[output appendString: @"\n  {\n    super (ALLOC_ONLY);\n    realObject = this."];
 	[output appendString: [self outputJavaMethodName]];
 	[output appendString: @" ("];
 	count = [arguments count];
@@ -362,7 +362,7 @@ static NSString *convertToJNI (NSString *string)
     }
   else /* it is a constructor */
     {
-      [output appendString: @"void "];
+      [output appendString: @"long "];
     }
   [output appendString: [self outputJavaMethodName]];
   [output appendString: [self outputJavaArguments]];
@@ -439,7 +439,7 @@ static NSString *convertToJNI (NSString *string)
     }
   else /* Constructor */
     {
-      [output appendString: @"void"];
+      [output appendString: @"jlong"];
     }
   [output appendString: @" JNICALL\n"];
   [output appendString: [self outputJniMethodName]];
@@ -490,7 +490,12 @@ static NSString *convertToJNI (NSString *string)
       [output appendString: @";\n"];
     }
 
-  if (([returnType isVoidType] == NO) && (isConstructor == NO))
+  if (isConstructor == YES)
+    {
+      [output appendString: @"  id objc_new;\n"];
+      [output appendString: @"  jlong java;\n"];
+    }
+  else if ([returnType isVoidType] == NO)
     {
       [output appendString: @"  "];
       [output appendString: [returnType objcType]];
@@ -499,6 +504,7 @@ static NSString *convertToJNI (NSString *string)
       [output appendString: [returnType jniType]];
       [output appendString: @" jni_ret;\n"];
     }
+
 
   [output appendString: @"\n  JIGS_ENTER;\n"];
 
@@ -525,7 +531,12 @@ static NSString *convertToJNI (NSString *string)
 
   /* Invoke the method */
 
-  if (([returnType isVoidType] == NO) && (isConstructor == NO))
+  if (isConstructor == YES)
+    {
+      [output appendString: @"  objc_new = ["];
+      indentSpace = 14;
+    }
+  else if ([returnType isVoidType] == NO)
     {
       [output appendString: @"  ret = ["];
       indentSpace = 9;
@@ -590,7 +601,13 @@ static NSString *convertToJNI (NSString *string)
 
   /* Convert the return value and exit */
 
-  if (([returnType isVoidType] == YES) || (isConstructor == YES))
+  if (isConstructor == YES)
+    {
+      [output appendString: @"  _JIGSMapperAddJavaProxy (env, objc_new, this);\n"];
+      [output appendString: @"  java = JIGS_ID_TO_JLONG (objc_new);\n"];
+      [output appendString: @"  JIGS_EXIT_WITH_VALUE (java);\n"];
+    }
+  else if ([returnType isVoidType] == YES)
     {
       [output appendString: @"  JIGS_EXIT;\n"];
     }
