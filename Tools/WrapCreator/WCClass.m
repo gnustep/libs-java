@@ -119,6 +119,9 @@ static void setNeedsLongJniName (NSMutableArray *jniNames,
   array = [dict objectForKey: @"hardcoded constants"];
   ASSIGN (hardcodedConstants, array);
 
+  array = [dict objectForKey: @"enumerations"];
+  ASSIGN (enumerations, array);
+
   name = [dict objectForKey: @"file to include in preamble java code"];
   ASSIGN (fileWithPreambleJavaCode, name);
 
@@ -547,7 +550,7 @@ static void setNeedsLongJniName (NSMutableArray *jniNames,
     {
       NSString *string;
 
-      [javaOutput appendString: @"  /* Constants */\n"];
+      [javaOutput appendString: @"  /* Constants (Hardcoded) */\n"];
       [javaOutput appendString: @"\n"];
 
       count = [hardcodedConstants count];
@@ -563,6 +566,57 @@ static void setNeedsLongJniName (NSMutableArray *jniNames,
 	  [javaOutput appendString: @"  public static "];
 	  [javaOutput appendString: string];
 	  [javaOutput appendString: @";\n"];
+	}
+      [javaOutput appendString: @"\n"];
+    }
+
+  if (enumerations != nil)
+    {
+      NSString *string;
+
+      [javaOutput appendString: @"  /* Constants (Enumerations) */\n"];
+      [javaOutput appendString: @"\n"];
+      
+      count = [enumerations count];
+      
+      for (i = 0; i < count; i++)
+	{
+	  NSDictionary *dict;
+	  NSArray *keys;
+	  int j, keysCount;
+
+	  string = [enumerations objectAtIndex: i];
+
+	  if ([WCLibrary verboseOutput] == YES)
+	    {
+	      printf ("Generating constants for enumeration %s\n", 
+		      [string lossyCString]);
+	    }
+	  [javaOutput appendString: @"  /* "];
+	  [javaOutput appendString: string];
+	  [javaOutput appendString: @" */\n"];
+
+	  dict = [wc dictionaryForEnumeration: string];
+	  keys = [dict allKeys];
+	  keysCount = [keys count];
+
+	  for (j = 0; j < keysCount; j++)
+	    {
+	      NSString *key = [keys objectAtIndex: j];
+
+	      if ([WCLibrary outputJavadoc])
+		{
+		  [javaOutput appendString: @"  /** Wraps a constant from the Objective-C enumeration type\n"];
+		  [javaOutput appendString: @"   * <B>"];
+		  [javaOutput appendString: string];
+		  [javaOutput appendString: @"</B>\n */\n"];
+		}
+	      [javaOutput appendString: @"  public static int "];
+	      [javaOutput appendString: key];
+	      [javaOutput appendString: @" = "];
+	      [javaOutput appendString: [dict objectForKey: key]];
+	      [javaOutput appendString: @";\n"];
+	    }
 	}
       [javaOutput appendString: @"\n"];
     }
