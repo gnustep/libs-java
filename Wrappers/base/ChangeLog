@@ -1,3 +1,9 @@
+Wed Feb  7 12:29:16 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* GNUmakefile.wrapper.java.preamble: Now install into
+	Developer/Base/Java/Reference; updated for change in java wrap
+	makefiles.
+
 Tue Feb  6 18:52:46 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GNUmakefile.wrapper.java.preamble (gnustep-base_JAVADOC_FILES):
