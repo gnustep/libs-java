@@ -1,0 +1,10 @@
+/* -*-c-*- */
+{ 
+  "classes" = (
+  {
+    "java name" = "Name";
+    "objective-c name" = "Name";
+    "instance methods" = ("name", "setName:", "delegate", "setDelegate:");
+    "initializers" = ("init");
+  });
+}
