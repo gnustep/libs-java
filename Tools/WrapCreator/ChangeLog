@@ -1,3 +1,11 @@
+Tue Sep  5 15:59:02 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* WCDoubleType.h, WCDoubleType.m, WCFloatType.h, WCFloatType.m:
+	New files.
+	* GNUmakefile: Added the new files.
+	* WCTypeLoader.m ([+typeWithObjcType:]): Added float and double
+	type.
+	
 Fri Aug 18 18:19:10 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* WCPrimitiveType.m ([-initWithObjcType:]): Fixed typo/bug
