@@ -343,7 +343,7 @@ jboolean _JIGS_jboolean_IMP_JavaMethod (id rcv, SEL sel, ...)
   i = find_selector_in_selIDTable (k, sel);
   jmethod = classTable[k].selIDTable[i].methodID;
   numberOfArgs = classTable[k].selIDTable[i].numberOfArgs;   
-  type = sel_get_type (classTable[k].selIDTable[i].selector); 
+  type = classTable[k].selIDTable[i].types; 
   CHECK_UNLOCK (jmethod == NULL, MESSAGE_SELECTOR_NOT_IN_SELIDTABLE, 0);
   UNLOCK_THE_TABLE;
 
@@ -387,7 +387,7 @@ jbyte _JIGS_jbyte_IMP_JavaMethod (id rcv, SEL sel, ...)
   i = find_selector_in_selIDTable (k, sel);
   jmethod = classTable[k].selIDTable[i].methodID;
   numberOfArgs = classTable[k].selIDTable[i].numberOfArgs;   
-  type = sel_get_type (classTable[k].selIDTable[i].selector); 
+  type = classTable[k].selIDTable[i].types; 
   CHECK_UNLOCK (jmethod == NULL, MESSAGE_SELECTOR_NOT_IN_SELIDTABLE, 0);
   UNLOCK_THE_TABLE;
 
@@ -432,7 +432,7 @@ jchar _JIGS_jchar_IMP_JavaMethod (id rcv, SEL sel, ...)
   i = find_selector_in_selIDTable (k, sel);
   jmethod = classTable[k].selIDTable[i].methodID;
   numberOfArgs = classTable[k].selIDTable[i].numberOfArgs;   
-  type = sel_get_type (classTable[k].selIDTable[i].selector); 
+  type = classTable[k].selIDTable[i].types;
   CHECK_UNLOCK (jmethod == NULL, MESSAGE_SELECTOR_NOT_IN_SELIDTABLE, 0);
   UNLOCK_THE_TABLE;
 
@@ -477,7 +477,7 @@ jshort _JIGS_jshort_IMP_JavaMethod (id rcv, SEL sel, ...)
   i = find_selector_in_selIDTable (k, sel);
   jmethod = classTable[k].selIDTable[i].methodID;
   numberOfArgs = classTable[k].selIDTable[i].numberOfArgs;   
-  type = sel_get_type (classTable[k].selIDTable[i].selector); 
+  type = classTable[k].selIDTable[i].types;
   CHECK_UNLOCK (jmethod == NULL, MESSAGE_SELECTOR_NOT_IN_SELIDTABLE, 0);
   UNLOCK_THE_TABLE;
 
@@ -522,7 +522,7 @@ jint _JIGS_jint_IMP_JavaMethod (id rcv, SEL sel, ...)
   i = find_selector_in_selIDTable (k, sel);
   jmethod = classTable[k].selIDTable[i].methodID;
   numberOfArgs = classTable[k].selIDTable[i].numberOfArgs;   
-  type = sel_get_type (classTable[k].selIDTable[i].selector); 
+  type = classTable[k].selIDTable[i].types;
   CHECK_UNLOCK (jmethod == NULL, MESSAGE_SELECTOR_NOT_IN_SELIDTABLE, 0);
   UNLOCK_THE_TABLE;
 
@@ -567,7 +567,7 @@ jlong _JIGS_jlong_IMP_JavaMethod (id rcv, SEL sel, ...)
   i = find_selector_in_selIDTable (k, sel);
   jmethod = classTable[k].selIDTable[i].methodID;
   numberOfArgs = classTable[k].selIDTable[i].numberOfArgs;   
-  type = sel_get_type (classTable[k].selIDTable[i].selector); 
+  type = classTable[k].selIDTable[i].types;
   CHECK_UNLOCK (jmethod == NULL, MESSAGE_SELECTOR_NOT_IN_SELIDTABLE, 0);
   UNLOCK_THE_TABLE;
 
@@ -612,7 +612,7 @@ jfloat _JIGS_jfloat_IMP_JavaMethod (id rcv, SEL sel, ...)
   i = find_selector_in_selIDTable (k, sel);
   jmethod = classTable[k].selIDTable[i].methodID;
   numberOfArgs = classTable[k].selIDTable[i].numberOfArgs;   
-  type = sel_get_type (classTable[k].selIDTable[i].selector); 
+  type = classTable[k].selIDTable[i].types;
   CHECK_UNLOCK (jmethod == NULL, MESSAGE_SELECTOR_NOT_IN_SELIDTABLE, 0);
   UNLOCK_THE_TABLE;
 
@@ -657,7 +657,7 @@ jdouble _JIGS_jdouble_IMP_JavaMethod (id rcv, SEL sel, ...)
   i = find_selector_in_selIDTable (k, sel);
   jmethod = classTable[k].selIDTable[i].methodID;
   numberOfArgs = classTable[k].selIDTable[i].numberOfArgs;   
-  type = sel_get_type (classTable[k].selIDTable[i].selector); 
+  type = classTable[k].selIDTable[i].types;
   CHECK_UNLOCK (jmethod == NULL, MESSAGE_SELECTOR_NOT_IN_SELIDTABLE, 0);
   UNLOCK_THE_TABLE;
 
@@ -701,7 +701,7 @@ void _JIGS_void_IMP_JavaMethod (id rcv, SEL sel, ...)
   i = find_selector_in_selIDTable (k, sel);
   jmethod = classTable[k].selIDTable[i].methodID;
   numberOfArgs = classTable[k].selIDTable[i].numberOfArgs;   
-  type = sel_get_type (classTable[k].selIDTable[i].selector); 
+  type = classTable[k].selIDTable[i].types;
   CHECK_UNLOCK_NO_RETURN (jmethod == NULL, MESSAGE_SELECTOR_NOT_IN_SELIDTABLE);
   UNLOCK_THE_TABLE;
 
@@ -772,7 +772,7 @@ id _JIGS_id_IMP_JavaMethod (id rcv, SEL sel, ...)
   i = find_selector_in_selIDTable (k, sel);
   jmethod = classTable[k].selIDTable[i].methodID;
   numberOfArgs = classTable[k].selIDTable[i].numberOfArgs;   
-  type = sel_get_type (classTable[k].selIDTable[i].selector); 
+  type = classTable[k].selIDTable[i].types;
   // isConstructor is only possible for methods returning objects
   isConstructor = classTable[k].selIDTable[i].isConstructor;
   CHECK_UNLOCK (jmethod == NULL, MESSAGE_SELECTOR_NOT_IN_SELIDTABLE, 0);
