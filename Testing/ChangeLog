@@ -1,3 +1,9 @@
+Sun May  6 21:16:26 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Objc/main.m: Added testing of accessing Java objects' instance
+	variables from Objective-C by using key/value coding.  Code
+	#ifdefed out.
+	
 Sun May  6 21:12:03 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* Java/Base/NSKeyValueCodingTest.java: New test.
