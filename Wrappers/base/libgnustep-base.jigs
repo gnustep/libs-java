@@ -1,4 +1,7 @@
 {
+  "types" = { 
+              NSTimeInterval = double;
+            };
   "classes" = (
                 {
                   "java name" = "gnu.gnustep.base.NSArray";
@@ -37,35 +40,35 @@
 
 		  "class methods" = (
 		    "date",  
-                    //"dateWithTimeIntervalSinceNow:",  
+                    "dateWithTimeIntervalSinceNow:",  
                     "dateWithString:",  
                     "dateWithNaturalLanguageString:",  
                     //"dateWithNaturalLanguageString:locale:",  
-                    //"dateWithTimeIntervalSinceReferenceDate:",  
-                    //"dateWithTimeIntervalSince1970:",  
+                    "dateWithTimeIntervalSinceReferenceDate:",  
+                    "dateWithTimeIntervalSince1970:",  
                     "distantFuture", 
                     "distantPast" 
                     //"timeIntervalSinceReferenceDate"
                     );
 
                   "initializers" = (
-                    //"initWithTimeIntervalSinceNow:", 
+                    "initWithTimeIntervalSinceNow:", 
                     "initWithString:",
-                    //"initWithTimeInterval:sinceDate:",
+                    "initWithTimeInterval:sinceDate:",
                     "init"
                     //"initWithTimeIntervalSinceReferenceDate:"
                     );
 
                   "instance methods" = (
-                    //"addTimeInterval:",
+                    "addTimeInterval:",
                     "isEqualToDate:", 
                     "earlierDate:", 
                     "laterDate:", 
                     //"compare:",
-                    //"timeIntervalSinceDate:", 
-                    //"timeIntervalSinceNow", 
-                    //"timeIntervalSinceReferenceDate", 
-                    //"timeIntervalSince1970",
+                    "timeIntervalSinceDate:", 
+                    "timeIntervalSinceNow", 
+                    "timeIntervalSinceReferenceDate", 
+                    "timeIntervalSince1970",
                     "description", 
                     "descriptionWithLocale:" 
                     //"descriptionWithCalendarFormat:timeZone:locale:",
@@ -190,8 +193,8 @@
 		     "environment",
 		     "hostName",
 		     "processName",
-		     "globallyUniqueString"
-		     //"setProcessName:"
+		     "globallyUniqueString",
+		     "setProcessName:"
 		     );
                 },
 
@@ -222,7 +225,9 @@
                   "java name" = "gnu.gnustep.base.NSUserDefaults";
 
 		  /* FIXME: NSUserDefaults will always use for the application
-		     name "java", this creates problem, doesn't it ? */
+		     name "java", unless you do use NSProcessInfo 
+		     -setProcessName: to change it, which you *should* 
+		     usually do. */
 
 		  "class methods" = ("standardUserDefaults");		  
                   "instance methods" = 
