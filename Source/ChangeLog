@@ -1,3 +1,10 @@
+Tue Oct 17 13:08:12 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* JIGSMapper.m (JIGSJstringFromNSString),
+	(JIGSNSStringFromJstring): New functions wrapping the GSJNI ones
+	but working with null and nil strings.
+	* JIGSMapper.h: Declared the new functions.
+	
 Tue Oct 10 17:33:26 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* JIGSMapper.m: New table to make reverse class
