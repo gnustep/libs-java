@@ -1,3 +1,9 @@
+Wed Nov  1 11:41:40 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* libgnustep-base.jigs: Uncommented all the overloaded methods.
+	This now works thanks to changes in the WrapCreator tool.
+	(NSUserDefaults): Uncommented method returning NSData.
+
 Tue Oct 31 13:26:47 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* libgnustep-base.jigs (NSData), (NSMutableData): New wrappers.
