@@ -25,6 +25,7 @@ REPLACEME-java_JNI_FILES  = $(JW_FILE_LIST)
 include $(GNUSTEP_MAKEFILES)/java.make
 
 ifneq ($(javadoc),no)
+  ADDITIONAL_JAVADOCFLAGS += -public
   include $(GNUSTEP_MAKEFILES)/documentation.make
 endif
 
