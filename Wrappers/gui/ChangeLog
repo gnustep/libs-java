@@ -1,3 +1,10 @@
+Wed Nov 15 17:19:57 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* libgnustep-gui.jigs (enumerations): Added NSButtonType,
+	NSCellImagePosition.  (NSButton): New wrapper.  (NSCell): Added
+	the NSCellImagePosition constants.  (NSBox), (NSScrollView),
+	(NSWindow): Added explicit declaration of setContentView:.
+	
 Fri Nov  3 16:00:55 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* libgnustep-gui.jigs (enumerations): Added NSSelectionDirection.
