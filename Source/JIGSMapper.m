@@ -71,6 +71,7 @@ void _JIGSMapperRemoveJavaProxy (JNIEnv *env, id objc)
   NSMapRemove (_JIGSProxiedObjcMap, objc);
 
   objc_mutex_unlock (_JIGSProxiedObjcMapLock);
+  
 }
 
 /***
@@ -79,70 +80,31 @@ void _JIGSMapperRemoveJavaProxy (JNIEnv *env, id objc)
 static NSMapTable* _JIGSProxiedJavaMap = NULL; 
 static objc_mutex_t _JIGSProxiedJavaMapLock = NULL;
 
-/* To compare two java references, we need to use JNI's
-   IsSameObject. */
+/* To compare two java references, we need to use JNI's IsSameObject.  */
 BOOL _JIGSProxyJavaIsEqual (NSMapTable *table, const void *a, const void *b)
 {
   JNIEnv *env = JIGSJNIEnv ();
-
   return (*env)->IsSameObject (env, (jobject)a, (jobject)b);
 }
 
-/* Hashcodes to speed up comparison */
+/* Unfortunately, to get a working hash of a jobject to compare it
+ * with other jobjects, the only way is to perform a JNI
+ * cross-language call to the Java -hashCode method of the object a
+ * ... which is unbeliveliably slow ... it used to take approx the
+ * same time as 1000 normal java method invocations ...
+ *
+ * So we are in the paradoxical situation that computing the hash
+ * takes hugely more time than comparing the keys directly ... 
+ *
+ * As a result, we have to disable hashing, and always compare all
+ * keys directly.
+ *
+ * A solution would be for JNI to provide a hash function for
+ * jobjects.  */
+
 unsigned int _JIGSProxyJavaHash (NSMapTable *table, const void *a)
 {
-  static jmethodID jid = NULL; // Cached
-  JNIEnv *env = JIGSJNIEnv ();
-  jint javaHashCode;
-
-  if (jid == NULL)
-    {
-      jclass java_lang_Object = NULL;
-
-      if((*env)->PushLocalFrame (env, 1) < 0)
-	{
-	  return 0;
-	}
-
-      java_lang_Object = (*env)->FindClass (env, "java/lang/Object");
-      if (java_lang_Object == NULL)
-	{
-	  (*env)->PopLocalFrame (env, NULL);
-	  return 0;
-	}
-
-      jid = (*env)->GetMethodID (env, java_lang_Object, "hashCode", "()I");
-      if (jid == NULL)
-	{
-	  (*env)->PopLocalFrame (env, NULL);
-	  return 0;
-	}
-    }
-  
-  // Get object's hashCode
-  javaHashCode = (*env)->CallIntMethod (env, (jobject)a, jid);
-
-  // We encode the jint hashcode into an 'unsigned int' hashcode.
-  // While doing this, we mix it up because java hashcodes
-  // are not good in the implementation I tried.
-  // If you change this, be careful to check for performance.
-  // Bad hash codes can make lookup in the table slow by an order 
-  // of magnitude or more.
-  {
-    int i;
-    unsigned int hash = 0;
-    union divide 
-      {
-	jint number;
-	jboolean parts[4]; // NB: jboolean is defined as unsigned 8bit
-      };
-    
-    for (i = 0; i < 4; i++)
-      {
-	hash = (hash << 5) + hash + ((union divide)javaHashCode).parts[i];
-      }
-    return hash;
-  }
+  return 1;
 }
 
 static NSMapTableKeyCallBacks JIGSJavaReferenceMapKeyCallBacks;
@@ -237,14 +199,14 @@ static inline Class _JIGSFirstJavaProxySuperClass (JNIEnv *env,
 {
   Class outClass;
 
-  objc_mutex_lock (_JIGSProxiedObjcClassMapLock); 
-
   /* Keep an eye on leakages of local references */
   if ((*env)->EnsureLocalCapacity (env, 2) < 0)
     {
       /* Exception thrown */
       return Nil;
     }
+
+  objc_mutex_lock (_JIGSProxiedObjcClassMapLock);
   
   while (1)
     {
@@ -257,6 +219,7 @@ static inline Class _JIGSFirstJavaProxySuperClass (JNIEnv *env,
       else
 	{
 	  jclass superClass = (*env)->GetSuperclass (env, inClass);
+
 	  if (superClass == NULL)
 	    {
 	      // Root Class - no exception thrown
@@ -270,8 +233,9 @@ static inline Class _JIGSFirstJavaProxySuperClass (JNIEnv *env,
 	}
     }
 
-  (*env)->DeleteLocalRef (env, inClass);
   objc_mutex_unlock (_JIGSProxiedObjcClassMapLock);
+
+  (*env)->DeleteLocalRef (env, inClass);
 
   return outClass;
 }
@@ -305,13 +269,16 @@ NSString *_JIGSLongJavaClassNameForObjcClassName (JNIEnv *env,
 						  NSString *className)
 {
   jclass result = NULL;
+  Class objcClass = NSClassFromString (className);
 
   objc_mutex_lock (_JIGSProxiedObjcClassMapLock); 
-  result = NSMapGet (_JIGSProxiedObjcClassMap, NSClassFromString (className));
+  result = NSMapGet (_JIGSProxiedObjcClassMap, objcClass);
   objc_mutex_unlock (_JIGSProxiedObjcClassMapLock); 
 
   if (result == NULL)
-    return nil;
+    {
+      return nil;
+    }
 
   return GSJNI_NSStringFromJClass (env, result);
 }
@@ -515,8 +482,10 @@ jobject JIGSJobjectFromId (JNIEnv *env, id object)
 
   // nil
   if (object == nil)
-    return NULL;
-  
+    {
+      return NULL;
+    }
+
   // java.lang.Object
   if ([object isKindOfClass: java_lang_Object])
     {
