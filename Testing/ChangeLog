@@ -1,0 +1,5 @@
+Mon Jul 31 12:34:50 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Java/GNUmakefile: New file. 
+	* Java/NSObjectTest.java: New file. 
+
