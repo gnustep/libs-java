@@ -194,10 +194,9 @@ mapJavaMethodName (const char *javaName, const char *className,
 {
   NSMutableString *objcName;
   int i;
-  SEL selector;
   BOOL isOK;
   const char *cObjcName = NULL;
-  
+
   isOK = YES;
   
   if (isConstructor == YES)
@@ -224,23 +223,33 @@ mapJavaMethodName (const char *javaName, const char *className,
 	}
       
       cObjcName = [objcName cString];
+      /*
+       * We should now (0.6.1) be able to work fine even if selector
+       * is already in use in another class even with a different
+       * signature, so the following code is commented out.  
+       */
       // Check that selector is not already in use. 
-      selector = sel_get_any_typed_uid (cObjcName);
-      if (selector != NULL)
+      /*
 	{
-	  /* NSLog (@"Selector not null"); */
-	  /*	  if ((sel_get_type (selector) == NULL) 
-		  || (strcmp (types, sel_get_type (selector))))*/
-	  if ((sel_get_type (selector) != NULL) 
-	      && (strcmp (types, sel_get_type (selector))))
-	    {
-	      /* NSLog (@"Oh oh - problem - selector %s is already in use "
-		 @"with another type!", [objcName cString]);
-		 NSLog (@"New selector type is %s, old one is %s", types, 
-		 sel_get_type (selector)); */
-	      isOK = NO;
-	    }	  
+	SEL selector;
+	selector = sel_get_any_typed_uid (cObjcName);
+	if (selector != NULL)
+	{ */
+      // NSLog (@"Selector not null"); */
+      //	  if ((sel_get_type (selector) == NULL) 
+      //	  || (strcmp (types, sel_get_type (selector)))
+      /*	  if ((sel_get_type (selector) != NULL) 
+		  && (strcmp (types, sel_get_type (selector))))
+		  { */
+      // NSLog (@"Oh oh - problem - selector %s is already in use "
+      // @"with another type!", [objcName cString]);
+      // NSLog (@"New selector type is %s, old one is %s", types, 
+      // sel_get_type (selector)); 
+      /*isOK = NO;
+	}	  
 	}
+	}
+      */
     }
   
   
@@ -432,6 +441,8 @@ BOOL _JIGS_prepare_method_struct
   if (methodName == NULL)
     CLEAN_FAIL_EXIT;
   
+  /* NSLog (@"Method Name: %s", methodName); */
+
   tmpToString = (void *)strdup (methodName);
   (*env)->ReleaseStringUTFChars (env, jmethodName, methodName);
   
@@ -509,7 +520,7 @@ BOOL _JIGS_prepare_method_struct
   
   cSignature = [GSJNI_NSStringFromASCIIJString (env, signature) cString];
 
-  /*  NSLog (@"Signature: %s", cSignature);  */
+  /* NSLog (@"Signature: %s", cSignature); */
 
   numberOfArguments = strlen (cSignature);
   if (numberOfArguments > 0)
@@ -536,14 +547,14 @@ BOOL _JIGS_prepare_method_struct
     }
   types[i] = '\0';
 
-  /*  NSLog (@"** types: %s  ** arguments: %d", types, numberOfArguments);  */
+  /* NSLog (@"** types: %s  ** arguments: %d", types, numberOfArguments); */
 
   method_types = ObjcUtilities_build_runtime_Objc_signature (types);
-  /*  NSLog (@"Mapped types to %s", method_types); */
+  /*  NSLog (@"Mapped types to %s", method_types);  */
   method_name = mapJavaMethodName (tmpName, className, numberOfArguments, 
 				   tmpToString, method_types, isConstructor,
 				   classTable, count);
-  /*  NSLog (@"Mapped method to %s", method_name);  */
+  /*  NSLog (@"Mapped method to %s", method_name); */
   
   if (types[0] == _C_ID)
     {
@@ -598,6 +609,7 @@ BOOL _JIGS_prepare_method_struct
   
   tableEntry->numberOfArgs = numberOfArguments;
   tableEntry->selector = (void *)strdup (method_name); 
+  tableEntry->types = (char *)strdup (method_types);
   tableEntry->isConstructor = isConstructor;
   tableEntry->methodID = (*env)->FromReflectedMethod (env, jmethod);
   if ((*env)->ExceptionCheck (env))
@@ -651,8 +663,8 @@ BOOL _JIGS_register_java_class_simple
   NSAutoreleasePool *pool;
   const char *cClassName = [className cString];
 
-  NSDebugLog (@"Registering class %@ with the objective-C runtime", 
-	      className);
+  /* NSLog (@"Registering class %@ with the objective-C runtime", 
+     className); */
 
 #define CLEAN_ZERO(X)   NSLog (@#X);
 #define CLEAN_ONE       (*env)->PopLocalFrame (env, NULL); 
@@ -802,7 +814,7 @@ BOOL _JIGS_register_java_class_simple
       
       for (i = 0; i < count; i++)
 	{
-	  /* NSLog (@"Class Method: %d", i);  */
+	  /* NSLog (@"Class Method: %d", i); */
 	  // We need a reference for each object in the array
 	  if ((*env)->PushLocalFrame (env, 1) < 0)
 	    CLEAN_FAIL_EXIT (PushLocalFrame failed);
@@ -826,7 +838,7 @@ BOOL _JIGS_register_java_class_simple
 	}  
       // Register the static methods 
       ObjcUtilities_register_method_list (class->class_pointer, ml);
-      /*  NSLog (@"Updating internal table for static methods: %d", count); */
+      /* NSLog (@"Updating internal table for static methods: %d", count); */
       // Now we replace each method name with its selector
       for (i = 0; i < count; i++)
 	{
@@ -834,7 +846,7 @@ BOOL _JIGS_register_java_class_simple
 
 	  NSDebugLog (@"Class Method: %s", 
 		      (char *)(metaclassTable->selIDTable)[i].selector); 
-	  tmpSelector = sel_get_any_typed_uid 
+	  tmpSelector = sel_get_any_uid 
 	    ((char *)(metaclassTable->selIDTable)[i].selector);
 	  NSZoneFree (NSDefaultMallocZone (), 
 		      (void *)(metaclassTable->selIDTable[i].selector));
@@ -869,11 +881,11 @@ BOOL _JIGS_register_java_class_simple
   if ((*env)->ExceptionCheck (env))
     CLEAN_FAIL_EXIT (Exception in getConstructors);
   
-  /*  NSLog (@"Preparing to get array length"); */
+  /* NSLog (@"Preparing to get array length"); */
 
   count = (*env)->GetArrayLength (env, methodArray);
   
-  /*  NSLog (@"Count is %d", count); */
+  /* NSLog (@"Count is %d", count); */
 
   // Prepare the constructor methods
   if (count == 0)
@@ -986,7 +998,7 @@ BOOL _JIGS_register_java_class_simple
       ObjcUtilities_register_method_list (class, ml);
     }
 
-  /*NSLog(@"Registering instance methods with internal selector->ID table");*/
+  /* NSLog(@"Registering instance methods with internal selector->ID table");*/
   // Now we replace each instance method name with its selector
   for (i = 0; i < classTable->selIDCount; i++)
     {
@@ -994,7 +1006,7 @@ BOOL _JIGS_register_java_class_simple
 
       NSDebugLog (@"Instance method: %s", 
 	     (char *)(classTable->selIDTable)[i].selector);
-      tmpSelector = sel_get_any_typed_uid 
+      tmpSelector = sel_get_any_uid 
 	((char *)(classTable->selIDTable)[i].selector);
       NSZoneFree (NSDefaultMallocZone (), 
 		  (void *)(classTable->selIDTable[i].selector));
