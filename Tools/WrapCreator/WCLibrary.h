@@ -51,6 +51,8 @@
 
 + (NSString *) javaMethodForObjcMethod: (NSString *)methodName;
 
++ (NSArray *) prerequisiteLibraries;
+
 + (void) createJavaDirectoryForClass: (NSString *)fullJavaClassName;
 
 + (NSString *) javaWrapperFileForClass: (NSString *)fullJavaClassName;
