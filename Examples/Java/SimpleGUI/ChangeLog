@@ -1,3 +1,8 @@
+Mon Jul 31 11:31:07 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* WrappingLibrary/Objc/GNUmakefile: Use $(FND_LIBS) etc 
+	instead of -lgnustep-base etc.
+
 Mon Jul 31 09:37:27 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* WrappingLibrary/Objc/SimpleGUI.m: Fixed include.
