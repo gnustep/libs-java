@@ -26,6 +26,10 @@
 #include "gnu/gnustep/base/NSObject.h"
 #include "JIGS.h"
 
+/* Warning - this method will not put the object into the mapping
+   tables.  This will be done by the wrapper for the initXXX method.
+   This is because the initXXX methods could return a different
+   object, and we want to insert in the table that returned object. */
 JNIEXPORT jlong JNICALL 
 Java_gnu_gnustep_base_NSObject_NSObject_1alloc (JNIEnv *env, jobject this)
 {
@@ -37,7 +41,6 @@ Java_gnu_gnustep_base_NSObject_NSObject_1alloc (JNIEnv *env, jobject this)
 
   objectClass = _JIGSAllocClassForThis (env, this);
   objc = [objectClass alloc];
-  _JIGSMapperAddJavaProxy (env, objc, this);
   java = JIGS_ID_TO_JLONG (objc);
 
   JIGS_EXIT_WITH_VALUE (java);
