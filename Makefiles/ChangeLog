@@ -1,3 +1,8 @@
+Thu Dec 13 11:16:30 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* GNUmakefile ($(JIGS_MAKE_DIR)): Use MKINSTALLDIRS not MKDIRS 
+	when creating installation dirs.
+
 Thu Jun  7 17:32:30 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* jigs.make (ADDITIONAL_OBJC_LIBS): Link -lgnustep-java before
