@@ -1,3 +1,11 @@
+Wed Oct 11 15:23:23 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* FAQ: New file.
+	* INSTALL: Added instructions on how to compile the gnustep base
+	library wrapper.
+	* NEWS: New file obtained from the README file.
+	* README: Moved the news to the NEWS file.
+
 Fri Oct  6 13:57:19 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* README: Added news for 0.7; rewritten the 'What is JIGS?'
