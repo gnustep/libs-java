@@ -39,7 +39,7 @@ JavaVM *JIGSJavaVM = NULL;
  * you already have it.
  *
  */
-inline JNIEnv *JIGSJNIEnv ()
+JNIEnv *JIGSJNIEnv ()
 {
   JNIEnv *penv;
 

@@ -129,7 +129,7 @@
  * A fast function to get the (JNIEnv *) variable.
  */
 
-inline JNIEnv *JIGSJNIEnv ();
+JNIEnv *JIGSJNIEnv ();
 
 
 /*
