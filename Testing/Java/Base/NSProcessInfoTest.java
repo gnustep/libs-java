@@ -54,7 +54,7 @@ class NSProcessInfoTest
     System.out.println ("");
 
     /* Here we implicitly test NSDictionary too */
-    System.out.println ("* environement:");
+    System.out.println ("* environment:");
     System.out.println (process.environment ());
     System.out.println ("");
 
