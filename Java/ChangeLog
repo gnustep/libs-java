@@ -1,3 +1,8 @@
+Fri Oct  6 17:14:53 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* gnu/gnustep/java/GSJNIMethods.java (signatureOfClass): 
+	Return ':' for selectors.
+
 Fri Oct  6 11:26:42 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* gnu/gnustep/java/GSJNIMethods.java (jniSignatureOfClass),
