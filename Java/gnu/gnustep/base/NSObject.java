@@ -147,9 +147,9 @@ public class NSObject implements Cloneable
     return this.toString ();
   }
 
-  // (apple) native public Object valueForKey (String keyName);
-  // (apple) native public void takeValueForKey (Object anObject, 
-  //                                             String keyName);   
+  public native Object valueForKey (String keyName);
+  public native void takeValueForKey (Object value, String keyName);
+  
 
   /*
     GNUstep specific extension 
