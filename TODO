@@ -11,7 +11,7 @@
 
  O Support for inserting arbitrary java code in wrapped class (Done!)
 
- O Morphing NSNumber
+ O Morphing NSNumber (Done!)
 
  O Complete BASE library wrapping (depends on everything which comes
    before this in this list)
