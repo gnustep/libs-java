@@ -2,6 +2,9 @@
 # Edit GNUmakefile.wrapper.objc.preamble, GNUmakefile.wrapper.objc.postamble 
 # in the library directory instead.
 
+override debug=DEBUGHERE
+override profile=PROFILEHERE
+
 include $(GNUSTEP_MAKEFILES)/common.make
 include $(GNUSTEP_MAKEFILES)/jni.make
 
