@@ -26,7 +26,7 @@
 
 #include <Foundation/Foundation.h>
 
-@interface NSPropertyListSerialization : NSObject
+@interface NSPropertyListSerialization (JigsExtension)
 
 + (id) propertyListFromString: (NSString *)aString;
 

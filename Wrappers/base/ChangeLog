@@ -1,3 +1,13 @@
+Tue Feb 10 15:22:16 2004  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	Update for last gnustep-base.
+	* NSPropertyListSerialization.h: Turned additional methods into a
+	category, as gnustep-base already includes a
+	NSPropertyListSerialization class.
+	* NSPropertyListSerialization.m.add: The same.
+	* gnustep-base.h: Include Foundation/NSPropertyList.h which is not
+	included by Foundation/Foundation.h.
+	
 2003-10-09  Richard Frith-Macdonald <rfm@gnu.org>
 
 	* gnustep-base.jigs: wrap setContentType in GSMime
