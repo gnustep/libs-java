@@ -1,0 +1,56 @@
+This file documents how to package JIGS.
+
+Packaging JIGS into RPM
+=======================
+
+All is ready for this.  All instructions start in the jigs top level
+directory.
+
+* To create an RPM for jigs
+
+  Edit the jigs.spec.in file.
+  su
+  export RPM_TOPDIR=/usr/src/redhat
+  make rpm
+
+  <replacing /usr/src/redhat with the top level dir of your RPM directory>
+
+* To create an RPM for jigs-debug
+
+  Edit the jigs-debug.spec.in file.
+  su
+  export RPM_TOPDIR=/usr/src/redhat
+  make debug=yes rpm
+
+  <replacing /usr/src/redhat with the top level dir of your RPM directory>
+
+* To create an RPM for gnustep-base-wrapper
+
+  install the RPM for JIGS first
+
+  Edit the Wrappers/base/gnustep-base-wrapper.spec.in file
+  cd Wrappers
+  make
+  cd base/JavaWrapper
+  su
+  export RPM_TOPDIR=/usr/src/redhat
+  make rpm
+
+* To create an RPM for gnustep-base-wrapper-debug
+
+  install the RPM for JIGS first
+
+  Edit the Wrappers/base/gnustep-base-wrapper-debug.spec.in file
+  cd Wrappers
+  make debug=yes
+  cd base/JavaWrapper_debug
+  su
+  export RPM_TOPDIR=/usr/src/redhat
+  make rpm
+
+
+Packaging JIGS into DEB
+=======================
+
+I have no idea - I suppose we would really need a Debian maintainer to
+take of this.
