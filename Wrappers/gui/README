@@ -2,9 +2,6 @@ This wrapping is very experimental.
 JIGS is still missing support for: 
 
  (*) protocols;
- (*) selectors;
- (*) custom types, defines;
- (*) constants;
 
 All methods requiring these features can't be wrapped yet so are
 commented out.  The resulting wrapping library works but is not very
