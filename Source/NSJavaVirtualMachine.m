@@ -23,6 +23,7 @@
    */ 
 
 #include "NSJavaVirtualMachine.h"
+#include "JIGSInit.h"
 
 /*
  * This is a JNI reference to the currently running java virtual
@@ -310,6 +311,21 @@ JNIEnv *JIGSJNIEnv ()
   JIGSJNIEnv ();
   
   return;
+}
+
++ (void) JIGSInit
+{
+  JNIEnv *env;
+
+  if (JIGSJavaVM == 0)
+    {
+      [self startDefaultVirtualMachine];
+    }
+  env = JIGSJNIEnv ();
+  if (env != 0)
+    {
+      JIGSInit(env);
+    }
 }
 @end
 

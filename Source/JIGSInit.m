@@ -53,6 +53,25 @@ void GSUnregisterCurrentThread (void)
  */
 static jclass JIGS = NULL;
 
+static Class (*_original_lookup_class)(const char* name) = 0;
+
+/*
+ * Little function to load a java class as an ObjC class when the ObjC
+ * runtime asks for a class and can't find it.
+ */
+static Class
+_jigs_lookup_class(const char* name)
+{
+  Class		c;
+  NSString	*className = [NSString stringWithCString: name];
+
+  _objc_lookup_class = _original_lookup_class;
+  JIGSRegisterJavaClass (JIGSJNIEnv (), className);
+  c = NSClassFromString (className);
+  _objc_lookup_class = _jigs_lookup_class;
+  return c;
+}
+
 void JIGSInit (JNIEnv *env)
 {
   NSAutoreleasePool *pool = [NSAutoreleasePool new]; 
@@ -118,6 +137,9 @@ void JIGSInit (JNIEnv *env)
       JIGSRegisterJavaRootClass (env);
       _JIGSMapperInitialize (env);
       _JIGSBaseStructInitialize (env);
+
+      _original_lookup_class = _objc_lookup_class;
+      _objc_lookup_class = _jigs_lookup_class;
     }
   RELEASE (pool);
 }
