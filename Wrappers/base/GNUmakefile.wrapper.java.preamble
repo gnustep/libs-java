@@ -1,3 +1,2 @@
 gnustep-base_JAVADOC_FILES = gnu.gnustep.base
-ADDITIONAL_JAVADOCFLAGS += -public
 gnustep-base_JAVADOC_SOURCEPATH = ../../../../Java/
