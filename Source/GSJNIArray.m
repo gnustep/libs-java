@@ -23,7 +23,7 @@
 
 #include "GSJNIArray.h"
 
-inline NSData *GSJNI_initNSDataFromJbyteArray (JNIEnv *env, NSData *data, 
+NSData *GSJNI_initNSDataFromJbyteArray (JNIEnv *env, NSData *data, 
 					       jbyteArray array)
 {
   NSData *returnData;
@@ -46,13 +46,13 @@ inline NSData *GSJNI_initNSDataFromJbyteArray (JNIEnv *env, NSData *data,
   return returnData;
 }
 
-inline NSData *GSJNI_NSDataFromJbyteArray (JNIEnv *env, jbyteArray array)
+NSData *GSJNI_NSDataFromJbyteArray (JNIEnv *env, jbyteArray array)
 {
   return AUTORELEASE (GSJNI_initNSDataFromJbyteArray (env, [NSData alloc], 
 						      array));
 }
 
-inline jbyteArray GSJNI_jbyteArrayFromNSData (JNIEnv *env, NSData *data)
+jbyteArray GSJNI_jbyteArrayFromNSData (JNIEnv *env, NSData *data)
 {
   const jbyte *bytes;
   unsigned length;

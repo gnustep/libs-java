@@ -32,13 +32,13 @@
  * Return nil upon exception thrown.
  * Return an autorelease object.  array should not be NULL.
  */
-inline NSData *GSJNI_NSDataFromJbyteArray (JNIEnv *env, jbyteArray array);
+NSData *GSJNI_NSDataFromJbyteArray (JNIEnv *env, jbyteArray array);
 
 /* Create a Java array of bytes from an NSData object.
  * Return NULL upon exception thrown.
  * Return a local reference.  data should not be nil.
  */
-inline jbyteArray GSJNI_jbyteArrayFromNSData (JNIEnv *env, NSData *data);
+jbyteArray GSJNI_jbyteArrayFromNSData (JNIEnv *env, NSData *data);
 
 /*
  * You should call this function with a NSData object argument
@@ -46,7 +46,7 @@ inline jbyteArray GSJNI_jbyteArrayFromNSData (JNIEnv *env, NSData *data);
  * yet initialized.  The method will initialize the NSData object
  * passed as argument to contain the bytes in array; and return the
  * result of the init method.  array should not be NULL.  */
-inline NSData *GSJNI_initNSDataFromJbyteArray (JNIEnv *env, NSData *data,
+NSData *GSJNI_initNSDataFromJbyteArray (JNIEnv *env, NSData *data,
 					       jbyteArray array);
 
 #endif /*__GSJNIArray_h_GNUSTEP_JAVA_INCLUDE*/
