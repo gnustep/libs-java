@@ -152,10 +152,12 @@ ifeq ($(debug),yes)
   JAVA_WRAPPER_TOP_TEMPLATE=java-wrapper.top.debug.template
   WRAPPER_SPEC_IN_FILE=$(PACKAGE_NAME)-wrapper-debug.spec.in
   WRAPPER_SCRIPT_IN_FILE=$(PACKAGE_NAME)-wrapper-debug.script.spec.in
+  WRAPPER_REQUIRES="Requires: $(PACKAGE_NAME)-wrapper = $(VERSION)"
 else
   JAVA_WRAPPER_TOP_TEMPLATE=java-wrapper.top.template
   WRAPPER_SPEC_IN_FILE=$(PACKAGE_NAME)-wrapper.spec.in
   WRAPPER_SCRIPT_IN_FILE=$(PACKAGE_NAME)-wrapper.script.spec.in
+  WRAPPER_REQUIRES=""
 endif
 
 java-wrapper:: $(WRAPPER_DIR)/stamp-file
@@ -232,6 +234,11 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FI
 	@if [ -f $(WRAPPER_SPEC_IN_FILE) ]; then              \
 	  echo "Copying $(WRAPPER_SPEC_IN_FILE)...";          \
 	  cp $(WRAPPER_SPEC_IN_FILE) $(WRAPPER_DIR);          \
+	  echo "Adding RPM dependency on $(PACKAGE_NAME)-wrapper"; \
+	  mv $(WRAPPER_DIR)/$(WRAPPER_SPEC_IN_FILE) $(WRAPPER_DIR)/spec.tmp; \
+	  echo "$(WRAPPER_REQUIRES)" > $(WRAPPER_DIR)/$(WRAPPER_SPEC_IN_FILE);\
+	  cat $(WRAPPER_DIR)/spec.tmp >> $(WRAPPER_DIR)/$(WRAPPER_SPEC_IN_FILE); \
+	  rm $(WRAPPER_DIR)/spec.tmp; \
 	fi
 	@if [ -f $(WRAPPER_SCRIPT_IN_FILE) ]; then              \
 	  echo "Copying $(WRAPPER_SCRIPT_IN_FILE)...";          \
