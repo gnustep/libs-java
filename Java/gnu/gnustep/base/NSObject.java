@@ -26,6 +26,13 @@ import gnu.gnustep.java.JIGS;
 public class NSObject implements Cloneable
 {
   /*
+   * This constant can be used as argument to a constructor 
+   * to ask the constructor not to initialize the objc real object.
+   */
+  protected static GSInitializationType ALLOC_ONLY 
+  = new GSInitializationType ();
+  
+  /*
    * This integer is, in practice, a C pointer to the real object that 
    * this objects proxies.
    * We need to access it directly from native code; but native code 
@@ -39,25 +46,68 @@ public class NSObject implements Cloneable
   {
     JIGS.initialize ();
   }
-  
+
   /*
-   * We can't implement a constructor as native. 
-   * So, each constructor should be paired to a method constructor_native, 
-   * with the same args, and implemented as native. 
-   * The implementation of the constructor should invoke super (), 
-   * then set this.realObject to the result of the constructor_native 
-   * call, exactly as in the following example.
+   * Default constructor for NSObject.  
+   * It allocates an objc real object from the class of 'this' (so 
+   * will work for subclasses), and initializes it. 
    */
   public NSObject ()
   {
     super ();
-    this.realObject = this.NSObject_native ();
+    this.realObject = this.NSObject_new ();
   }
 
-  private native long NSObject_native ();
+  /* 
+   * This constructor is provided to make it possible for subclasses
+   * to allocate real objects and initialize them with methods
+   * different from init without arguments.  
+
+   * For example, if you are wrapping NSButton and you need to wrap 
+   * -(id) initWithTitle: (NSString *)title;
+   * you do as follows:
+   
+   public NSButton (String title)
+   {
+     super (ALLOC_ONLY);
+     this.initWithTitle (title);
+   }
+
+   native void initWithTitle (String title);
+
+   * you then only need to implement initWithTitle () to call 
+   * initWithTitle: on your object.
+
+   * Important: to make this work, each subclass should contain 
+   * a constructor as in
+   
+   protected NSButton (GSInitializationType type)
+   {
+      super (type);
+   }
+   
+   * The argument of NSObject (GSInitializationType type) has no
+   * importance - no initialization is done in any case.  The argument
+   * is only used to make this constructor different from the default
+   * one and from any constructor which can be created by wrapping
+   * objective-C inits.  Using a single object is for sparing
+   * resources; having given it the name ALLOC_ONLY makes the
+   * expression "super (ALLOC_ONLY);" clearer to read.  */
+  protected NSObject (GSInitializationType type)
+  {
+    super ();
+    this.realObject = NSObject_alloc ();
+  }
+
+  /* 
+   * Every constructor in NSObject will end up calling one of the
+   * following two.  */
+  private native long NSObject_alloc ();
+  private native long NSObject_new ();
 
   /*
-   * A similar trick with finalize; this is specific to NSObject.
+   * We invoke a finalize_native (to dealloc the real object) before 
+   * calling ordinary finalize.
    */
   protected void finalize () 
     throws Throwable
