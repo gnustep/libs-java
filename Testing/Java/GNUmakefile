@@ -39,7 +39,8 @@ gnu.gnustep.java-test_JAVA_FILES =       \
     NSNotificationCenterTest.java        \
     NSSelectorTest.java                  \
     NSPropertyListSerializationTest.java \
-    NSApplicationTest.java              
+    NSApplicationTest.java               \
+    NSWindowTest.java
 
 
 
