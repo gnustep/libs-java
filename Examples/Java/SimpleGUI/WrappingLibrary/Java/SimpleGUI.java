@@ -59,6 +59,7 @@ class SimpleGUI extends NSObject
   /* Objective-C methods which are exposed - for each of these methods, 
    * a native implementation must be supplied on the objective-C side 
    */
+  public static native NSObject createNew ();
   /* initXxx: methods are wrapped in the same way as any other method */ 
   native void initWithTitle (String title);
   public native void start ();
