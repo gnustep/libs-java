@@ -187,6 +187,7 @@ void JIGSRegisterJavaProxyClass (JNIEnv *env, NSString *fullJavaClassName,
 {
   jclass javaClass;
   Class objcClass;
+  NSAutoreleasePool *pool = [NSAutoreleasePool new]; 
 
   fullJavaClassName = GSJNI_ConvertJavaClassNameToJNI (fullJavaClassName);
   javaClass = GSJNI_NewClassCache (env, [fullJavaClassName cString]);
@@ -194,6 +195,7 @@ void JIGSRegisterJavaProxyClass (JNIEnv *env, NSString *fullJavaClassName,
     {
       NSLog (@"Could not find java proxy class %@ for class %@", 
 	     fullJavaClassName, objcClassName);
+      RELEASE (pool);
       return;
     }
   objcClass = NSClassFromString (objcClassName);
@@ -201,12 +203,14 @@ void JIGSRegisterJavaProxyClass (JNIEnv *env, NSString *fullJavaClassName,
     {
       NSLog (@"Could not find objc class %@ proxied by java class %@", 
 	     objcClassName, fullJavaClassName);
+      RELEASE (pool);
       return;
     }
 
   objc_mutex_lock (_JIGSProxiedObjcClassMapLock);
   NSMapInsert (_JIGSProxiedObjcClassMap, objcClass, javaClass);
   objc_mutex_unlock (_JIGSProxiedObjcClassMapLock);
+  RELEASE (pool);
 }
 
 inline static Class _JIGSFirstJavaProxySuperClass (JNIEnv *env, NSString *className)
