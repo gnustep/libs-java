@@ -52,6 +52,7 @@ classes = (
     "contentName",
     "contentSubType",
     "contentType",
+    "contentsByName:",
     "convertToData",
     "convertToText",
     "deleteHeader:",
