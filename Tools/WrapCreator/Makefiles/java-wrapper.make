@@ -23,6 +23,8 @@
 ifeq ($(JAVA_WRAPPER_MAKE_LOADED),)
 JAVA_WRAPPER_MAKE_LOADED=yes
 
+AUTO_DEPENDENCIES=no
+
 #
 # Include in the common makefile rules
 #
