@@ -59,6 +59,8 @@
 
 + (NSString *) objcWrapperFileForClass: (NSString *)objcClassName;
 
++ (NSString *) selectorMapFileForClass: (NSString *)objcClassName;
+
 @end
 
 #endif
