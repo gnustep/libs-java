@@ -121,7 +121,7 @@ Java_gnu_gnustep_base_NSObject_clone (JNIEnv *env, jobject this)
   JIGS_ENTER;
 
   thisObject = JIGSIdFromThis (env, this);
-  newObject = [thisObject copy];
+  newObject = AUTORELEASE ([thisObject copy]);
   newProxyObject = JIGSCreateNewJavaProxy (env, newObject);
   
   JIGS_EXIT_WITH_VALUE (newProxyObject);
@@ -137,7 +137,7 @@ Java_gnu_gnustep_base_NSObject_mutableClone (JNIEnv *env, jobject this)
   JIGS_ENTER;
 
   thisObject = JIGSIdFromThis (env, this);
-  newObject = [thisObject mutableCopy];
+  newObject = AUTORELEASE ([thisObject mutableCopy]);
   newProxyObject = JIGSCreateNewJavaProxy (env, newObject);
   
   JIGS_EXIT_WITH_VALUE (newProxyObject);
