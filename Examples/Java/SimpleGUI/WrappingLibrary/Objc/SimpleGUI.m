@@ -38,17 +38,16 @@ JNI_OnLoad (JavaVM *jvm, void *reserved)
 /*
  * REQUIRED: All functions must begin with JIGS_ENTER straight after variables 
  * and before *any* objective-C code is executed; they must exit with 
- * JIGS_EXIT if they return void.  If they do not return void, they must 
- * end up as in the following example:
-
- JIGS_EXIT_WITH_FAIL_VALUE (failure_value);
- return rt_value;
-
- * TODO: This will be changed to 
- * JIGS_EXIT_WITH_VALUE (rt_value, failure_value);
- 
+ * JIGS_EXIT if they return void, or JIGS_EXIT_WITH_VALUE (value) 
+ * if they return `value'.  `value' must be a variable whose value is computed 
+ * inside the JIGS_ENTER/JIGS_EXIT tags; using a function or a macro as 
+ * argument of JIGS_EXIT_WITH_VALUE is not safe since any exception generated 
+ * inside the function would not be caught.
+ *
  * To get the object which is receiving the method call, do as in: 
- * we = JIGSIdFromThis (env, this); 
+ * we = JIGSIdFromThis (env, this);
+ * Or, if you are wrapping a class method, 
+ * objcClass = JIGSClassFromThisClass (env, class);
  * Then use JIGSIdFromJobject to convert any object argument 
  * to a GNUstep object; call the method; convert the return value 
  * (if it is an object) to a Java object using JIGSJobjectFromId;
@@ -82,15 +81,10 @@ Java_SimpleGUI_createNew (JNIEnv *env, jclass class)
   Class objcClass;
   JIGS_ENTER;
 
-  /* When wrapping a class method, you need the following call to get
-     the class to send the class method invocation to (NB: this could
-     turn out to be a subclass of the class you are wrapping, but only
-     if this method is invoked on a subclass exposed to java). */
   objcClass = JIGSClassFromThisClass (env, class);
   ret = JIGSJobjectFromId (env, [objcClass new]);
 
-  JIGS_EXIT_WITH_FAIL_VALUE (NULL);
-  return ret;
+  JIGS_EXIT_WITH_VALUE (ret);
 }
 
 JNIEXPORT void JNICALL 
@@ -117,8 +111,7 @@ Java_SimpleGUI_delegate  (JNIEnv *env, jobject this)
   we = JIGSIdFromThis (env, this);
   output = JIGSJobjectFromId (env, [we delegate]);
   
-  JIGS_EXIT_WITH_FAIL_VALUE (NULL);
-  return output;  
+  JIGS_EXIT_WITH_VALUE (output);
 }
 
 
