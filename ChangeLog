@@ -1,3 +1,8 @@
+Tue Apr 10 15:41:29 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* INSTALL: Simplified installation instructions - simply refer to
+	gnustep-objc.
+
 Mon Mar 19 15:01:42 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* make-release: Use explicit -d option when running CVS.
