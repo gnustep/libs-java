@@ -107,11 +107,96 @@ class NSArrayTest
     compare (arrayOne, arrayTwo, true);
     System.out.println ("");
 
+    /* Now trying to extract the contents of the NSArray as a java array */
+    System.out.println ("");
+    System.out.println ("Now trying to get the contents of an NSArray as a java array");
+    Object []objects = arrayOne.objects ();
+    for (int i = 0; i < objects.length; i++)
+      {
+	System.out.println ("Object at index " + i + " is " + objects[i]);
+      }
+
+    /* Now trying to create an NSArray using the special constructor 
+       taking a java array as argument */
+    System.out.println ("");
+    System.out.println ("Now trying to create an NSArray from a java array");
+    arrayOne = new NSArray (objects);
+    for (int i = 0; i < arrayOne.count (); i++)
+      {
+	System.out.println ("Object at index " + i + " is " 
+			    + arrayOne.objectAtIndex (i));
+      }
+
+    System.out.println ("");
+    System.out.println ("Getting the java array from the object and comparing with the original one");
+    Object []newObjects = arrayOne.objects ();
+    compareJavaArrays (objects, newObjects, true);
+    
+    System.out.println ("");
+    System.out.println ("Creating a mutable and a non mutable NSArray from the same java array");
+    arrayOne = new NSMutableArray (new Object[] { "testA", "testB", "testC" });
+    arrayTwo = new NSArray (new Object[] { "testA", "testB", "testC" });
+
+    System.out.println ("Getting a java array out of them and comparing the two");
+    objects = arrayOne.objects ();
+    newObjects = arrayTwo.objects ();
+
+    compareJavaArrays (objects, newObjects, true);
+
     /* Happy end */
     System.out.println ("test passed");
   }
 
   /* Tests - they do not return upon failing */
+
+  public static void compareJavaArrays (Object []one, Object []two, 
+					boolean expectedResult)
+  {
+    String output = "* ";
+    boolean result = true;
+    String descriptionOfOne;
+    String descriptionOfTwo;
+
+    if (one == null && two == null)
+      {
+	result = true;
+      }
+    else if (one == null || two == null)
+      {
+	result = false;
+      }
+    else
+      {
+	if (one.length != two.length)
+	  {
+	    result = false;
+	  }
+	else
+	  {
+	    for (int i = 0; i < one.length; i++)
+	      {
+		if (!one[i].equals (two[i]))
+		  {
+		    output += one[i] + " != " + two[i];
+		    result = false; 
+		    break;
+		  }
+	      }
+	  }
+      }
+    
+    if (result != expectedResult)
+      {
+	output += " ==> test FAILED";
+	System.out.println (output);
+	System.exit (1);
+      }
+    else
+      {
+	output += " Arrays are equal ==> test passed";
+	System.out.println (output);
+      }
+  }
 
   public static void compare (NSArray one, NSArray two, 
 			      boolean expectedResult)
