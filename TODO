@@ -18,6 +18,8 @@
 
  O First working GUI library wrapping (depends on `Support for protocols')
 
+ O Real support for subclassing Objc classes in Java [tricky]
+
  O Support in the GNUstep make package for java-based gnustep
    applications (both building and running them)
 
