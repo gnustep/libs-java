@@ -32,6 +32,7 @@ class NSPropertyListSerializationTest
     String string, string_two;
     NSArray array;
     NSDictionary dict;
+    NSData data;
 
     string = "(nicola, luca, ettore)";
     System.out.println ("Created a string " + string);
@@ -41,6 +42,11 @@ class NSPropertyListSerializationTest
     System.out.println ("* Which converted back to string gives: " + 
 			NSPropertyListSerialization.stringFromPropertyList 
 			(array));
+    data = NSPropertyListSerialization.dataFromPropertyList (array);
+    System.out.println ("* Which gives data: " + data);
+    System.out.println ("* Which converted back to array gives: " + 
+			NSPropertyListSerialization.propertyListFromData 
+			(data));
     System.out.println ("");
 
     string = "{ one=uno; two=due; three=tre; }";
@@ -51,6 +57,11 @@ class NSPropertyListSerializationTest
     System.out.println ("* Which converted back to string gives: " + 
 			NSPropertyListSerialization.stringFromPropertyList 
 			(dict));
+    data = NSPropertyListSerialization.dataFromPropertyList (dict);
+    System.out.println ("* Which gives data: " + data);
+    System.out.println ("* Which converted back to dictionary gives: " + 
+			NSPropertyListSerialization.propertyListFromData 
+			(data));
     System.out.println ("");
 
     System.out.println ("test passed (AFAIK)");
