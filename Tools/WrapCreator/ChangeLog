@@ -1,3 +1,22 @@
+Wed Jan 24 17:18:43 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* GNUmakefile (after-install): Prefix installation paths with
+	$(INSTALL_ROOT_DIR) so that it can be RPM packaged.
+	* Makefiles/java-wrapper.top.template (PACKAGE_NAME): Changed
+	wrapper package name from $(PACKAGE_NAME)-wrap to
+	$(PACKAGE_NAME)-wrapper. (VERSION): New variable.
+	* Makefiles/java-wrapper.make (after-$(TARGET)-all): If
+	BUILD_JAVA_WRAPPER_AUTOMATICALLY is yes, then step into the
+	wrapper dir and compile it automatically after the library.
+	(install-java_wrapper): Idem for install.
+	(uninstall-java_wrapper): Idem for uninstall.
+	* Makefiles/java-wrapper.make (WRAPPER_SPEC_IN_FILE): New
+	variable. (WRAPPER_SCRIPT_IN_FILE): New variable.
+	($(WRAPPER_DIR)/stamp-file): Also set VERSION in the top level
+	makefile; use PACKAGE_NAME rather than LIBRARY_NAME; copy the
+	.spec.in and script.in files for the wrapper into the wrapper dir;
+	made end message more verbose.
+	
 Thu Nov 30 12:18:20 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* main.m (main): Initialize NSProcessInfo if building 
