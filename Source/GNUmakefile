@@ -80,7 +80,4 @@ ADDITIONAL_OBJCFLAGS += -Wall
 include $(GNUSTEP_MAKEFILES)/library.make
 include $(GNUSTEP_MAKEFILES)/aggregate.make
 
-
-
-
-
+$(GNUSTEP_OBJ_DIR)/NSObject.o: JIGSNative.h

@@ -59,7 +59,7 @@ Java_gnu_gnustep_java_JIGS_forceMultithreading (JNIEnv *env, jclass this)
    * If this is not the default thread, the following will force GNUstep 
    * in multi-thread state immediately.
    */
-  BOOL registeredThread = [NSThread registerCurrentThread]; 
+  BOOL registeredThread = GSRegisterCurrentThread ();
   NSAutoreleasePool *pool = [NSAutoreleasePool new]; 
   
   if ([NSThread isMultiThreaded] == NO)
@@ -78,6 +78,6 @@ Java_gnu_gnustep_java_JIGS_forceMultithreading (JNIEnv *env, jclass this)
      want GNUstep to be for sure in multithreading mode.> */
 
   RELEASE (pool);
-  if (registeredThread) [NSThread unregisterCurrentThread];
+  if (registeredThread) GSUnregisterCurrentThread ();
 }
 
