@@ -43,9 +43,9 @@
 
 #include "ObjcRuntimeUtilities.h"
 
-BOOL GSJavaInterface_new_class (const char *name, 
-				const char *superclassName, 
-				int ivarNumber, ...)
+BOOL ObjcUtilities_new_class (const char *name, 
+			      const char *superclassName, 
+			      int ivarNumber, ...)
 {
   extern void __objc_exec_class (Module_t module);
   extern void __objc_resolve_class_links ();
@@ -166,7 +166,7 @@ BOOL GSJavaInterface_new_class (const char *name,
   return YES;
 }
 
-MethodList *GSJavaInterface_alloc_method_list (int count)
+MethodList *ObjcUtilities_alloc_method_list (int count)
 {
   MethodList *ml;
   int extra;
@@ -177,9 +177,9 @@ MethodList *GSJavaInterface_alloc_method_list (int count)
   return ml;
 }
 
-void GSJavaInterface_insert_method_in_list (MethodList *ml, 
-					    int index, const char *name, 
-					    const char *types, IMP imp)
+void ObjcUtilities_insert_method_in_list (MethodList *ml, 
+					  int index, const char *name, 
+					  const char *types, IMP imp)
 {
   Method *method;
 
@@ -189,8 +189,8 @@ void GSJavaInterface_insert_method_in_list (MethodList *ml,
   method->method_imp = imp;
 }
 
-inline const char *GSJavaInterface_build_runtime_Objc_signature (const char 
-								 *types)
+inline const char *ObjcUtilities_build_runtime_Objc_signature (const char 
+							       *types)
 {
   NSMethodSignature *sig;
   
@@ -203,7 +203,7 @@ inline const char *GSJavaInterface_build_runtime_Objc_signature (const char
 #endif  
 }
 
-void GSJavaInterface_register_method_list (Class class, MethodList *ml)
+void ObjcUtilities_register_method_list (Class class, MethodList *ml)
 {
   extern void class_add_method_list (Class class, MethodList_t list);
   extern objc_mutex_t __objc_runtime_mutex;

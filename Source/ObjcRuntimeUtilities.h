@@ -50,7 +50,7 @@
   */
 
 /*
- * GSJavaInterface_new_class:
+ * ObjcUtilities_new_class:
  *
  * Create a new Objective-C class called name, inheriting from
  * superClass.  
@@ -61,9 +61,9 @@
  * Otherwise, appropriate optional arguments should be provided; they
  * should come in couples; the first one is the ivar name, the second
  * one the ivar type.  For example: 
- * GSJavaInterface_new_class ("MyNiceClass", "NSObject", 2, 
- *                             "aJavaObject", @encode (jobject), 
- *                             "tag", @encode (int)); 
+ * ObjcUtilities_new_class ("MyNiceClass", "NSObject", 2, 
+ *                          "aJavaObject", @encode (jobject), 
+ *                          "tag", @encode (int)); 
  * creates a class as it would be created by
  *
  * @interface MyNiceClass : NSObject 
@@ -78,35 +78,35 @@
  
  */
 
-BOOL GSJavaInterface_new_class (const char *name, const char *superclassName, 
-				int ivarNumber, ...);
+BOOL ObjcUtilities_new_class (const char *name, const char *superclassName, 
+			      int ivarNumber, ...);
 
 /*
 
   Adding new methods to a class
 
   Quick HOWTO: 
-  A. alloc a MethodList using GSJavaInterface_alloc_method_list.
+  A. alloc a MethodList using ObjcUtilities_alloc_method_list.
   B. insert the methods you want to register in the MethodList using 
-     GSJavaInterface_alloc_method_list. 
+     ObjcUtilities_alloc_method_list. 
      To get the objective-C runtime type for a method, you may want to use 
-     GSJavaInterface_build_runtime_Objc_signature
+     ObjcUtilities_build_runtime_Objc_signature
   C. register your method list with the objective-C runtime using 
-     GSJavaInterface_register_method_list.
+     ObjcUtilities_register_method_list.
   */
 
 /*
- * GSJavaInterface_alloc_method_list:
+ * ObjcUtilities_alloc_method_list:
  *
  * Allocate a MethodList capable of containing `count' methods. 
  * A pointer to the allocated list is returned. 
  *
  */
 
-MethodList *GSJavaInterface_alloc_method_list (int count);
+MethodList *ObjcUtilities_alloc_method_list (int count);
 
 /*
- * GSJavaInterface_insert_method_in_list:
+ * ObjcUtilities_insert_method_in_list:
  *
  * Insert a method definition in a MethodList.  `ml' is a pointer to
  * the MethodList.  `index' is the index of the method to add.  `name'
@@ -118,17 +118,17 @@ MethodList *GSJavaInterface_alloc_method_list (int count);
  * then before calling this function.
  */
 
-void GSJavaInterface_insert_method_in_list (MethodList *ml, 
+void ObjcUtilities_insert_method_in_list (MethodList *ml, 
 					    int index, const char *name, 
 					    const char *types, IMP imp);
 
 /*
- * GSJavaInterface_build_runtime_Objc_signature:
+ * ObjcUtilities_build_runtime_Objc_signature:
  *
  * This method creates a runtime objc signature which can be used 
  * to describe type for a selector *on this machine* (you need this 
  * signature for example to insert a method description in a method list,
- * using the GSJavaInterface_insert_method_in_list function above).
+ * using the ObjcUtilities_insert_method_in_list function above).
  *
  * It takes as argument a 'naive' objc signature, in the form of 
  * a string obtained by concatenating the following strings: 
@@ -146,16 +146,16 @@ void GSJavaInterface_insert_method_in_list (MethodList *ml,
  * "i@:@" for an instance method returning int and taking an object arg. 
  * (NB: "i" = @encode(int), "@" = @encode(id), ":" = @encode(SEL)).
  *
- * On my machine, GSJavaInterface_build_runtime_Objc_signature ("i@:@")
+ * On my machine, ObjcUtilities_build_runtime_Objc_signature ("i@:@")
  * returns "i12@0:4@8", which I can then use as selector type when 
  * creating entries in MethodList.
  *
  */
 
-inline const char *GSJavaInterface_build_runtime_Objc_signature (const char *);
+inline const char *ObjcUtilities_build_runtime_Objc_signature (const char *);
 
 /*
- * GSJavaInterface_register_method_list:
+ * ObjcUtilities_register_method_list:
  *
  * Add the list `ml' of methods to an existing Class `class'.
  * They are registered as instance methods. 
@@ -166,6 +166,6 @@ inline const char *GSJavaInterface_build_runtime_Objc_signature (const char *);
  * *the objective-C runtime.  
  */
 
-void GSJavaInterface_register_method_list (Class class, MethodList *ml);
+void ObjcUtilities_register_method_list (Class class, MethodList *ml);
 
 #endif /* __ObjcRuntimeUtilitis_h_GNUSTEP_JAVA_INCLUDE */
