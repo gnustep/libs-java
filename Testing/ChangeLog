@@ -1,3 +1,7 @@
+Sat May  5 23:39:46 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Java/Base/NSNumberTest.java: Removed testing of booleans.
+
 Sat May  5 23:16:11 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* Java/Base/NSNumberTest.java: Test passing back and forth simple
