@@ -49,6 +49,8 @@ gnu.gnustep.base-benchmark_JAVA_FILES =       \
     NSArray5Benchmark.java                    \
     NSArray6Benchmark.java                    \
     NSArray7Benchmark.java                    \
+    NSArray8Benchmark.java                    \
+    NSArray9Benchmark.java                    \
     Vector0Benchmark.java                     \
     Vector1Benchmark.java                     \
     Vector2Benchmark.java                     \
@@ -56,7 +58,16 @@ gnu.gnustep.base-benchmark_JAVA_FILES =       \
     Vector4Benchmark.java                     \
     Vector5Benchmark.java                     \
     Vector6Benchmark.java                     \
-    Vector7Benchmark.java
+    Vector7Benchmark.java                     \
+    NSDictionary0Benchmark.java               \
+    NSDictionary1Benchmark.java               \
+    NSDictionary2Benchmark.java               \
+    NSDictionary3Benchmark.java               \
+    Hashtable0Benchmark.java                  \
+    Hashtable1Benchmark.java                  \
+    Hashtable2Benchmark.java                  \
+    Hashtable3Benchmark.java                  
+
 
 include $(GNUSTEP_MAKEFILES)/java.make
 
