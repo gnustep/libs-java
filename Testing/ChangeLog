@@ -1,3 +1,7 @@
+Sat May  5 16:19:45 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Java/Base/GNUmakefile (after-distclean): Remove test-base.log.
+
 Sat May  5 16:17:26 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* Objc/openjavatool (JAVA_HOME): Added for JDK 1.3.0.
