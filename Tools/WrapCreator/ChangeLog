@@ -1,3 +1,10 @@
+Thu Nov  2 16:01:24 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* WCLibrary.m ([+initializeWithJigsFile:preprocessedHeaderFile:
+	headerFile:wrapDirectory:libraryName:verboseOutput:]):
+	Accept enumerations and manage them as custom types with 
+	int primitive type.
+
 Wed Nov  1 15:06:56 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* WCLibrary.m ([+initializeWithJigsFile:preprocessedHeaderFile:
