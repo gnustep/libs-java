@@ -1,3 +1,21 @@
+Sat Nov 24 16:02:08 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+	
+	* JIGSMapper.m (_JIGSMapperRemoveJavaProxy): Moved JNI call
+	outside the critical region.
+	(JIGSJobjectArrayFromNSArray): Ensure that local capacity is
+	enough to manage all the objects in the array.
+	(JIGSInitNSArrayFromJobjectArray): Idem.
+	(_JIGSMapperInitialize): Cache the NSArray class pointer.
+	(JIGSNSArrayFromJobjectArray): Use it.
+
+Sat Nov 24 15:43:13 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* JIGSMapper.m: Redesigned and reimplemented from scratch the
+	table mapping Java proxy classes to ObjC classes and vice versa.
+	The new table heavily outperforms the old one ... creating from
+	Java objects of subclasses - eg, NSArray as opposed to NSObject -
+	is much faster now.
+
 Sat Nov 24 02:01:09 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* JIGSInit.m (JIGSAutoreleasePoolClass): New variable caching 
