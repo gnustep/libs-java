@@ -63,6 +63,10 @@
 
 - (NSString *) javaType;
 
+/* Return 'nil' if it couldn't be determined and has to be looked up 
+   at run-time */
+- (NSString *) javaArgumentType;
+
 - (NSString *) objcType;
 
 - (NSString *) jniType;
