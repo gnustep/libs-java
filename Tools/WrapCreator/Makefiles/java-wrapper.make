@@ -113,6 +113,12 @@ endif
 
 WRAP_CREATOR = opentool WrapCreator
 
+# Run WrapCreator in silent mode if `verbose=no' was passed on the
+# make command line
+ifeq ($(verbose), no)
+  SILENT_FLAGS = --no-verbose
+endif
+
 # The following should override, if needed: 
 # JIGS_FILE, WRAPPER_DIR, WRAPPER_HEADER
 -include GNUmakefile.wrapper
@@ -200,7 +206,8 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FI
 	                --wrapper-dir $(WRAPPER_DIR) \
 	                --preprocessed-header $(WRAPPER_DIR)/preprocessedHeader \
 	                --library-name $(LIBRARY_NAME) \
-	                --library-header $(WRAPPER_HEADER)
+	                --library-header $(WRAPPER_HEADER) \
+	         	$(SILENT_FLAGS)
 	@echo Removing the temporary preprocessor header...
 	@rm $(WRAPPER_DIR)/preprocessedHeader
 	@echo Creating the stamp file...
