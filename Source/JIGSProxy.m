@@ -229,13 +229,24 @@ void JIGSRegisterJavaRootClass (JNIEnv *env)
 void JIGSRegisterJavaClass (JNIEnv *env, NSString *className)
 {
   NSString *superclassName;
+  const char *cClassName;
 
-  // If class exists, return.
+  // If class exists in Objc, return.
   if (NSClassFromString (className) != Nil)
     return;
   
   // Else, get the java superclass of className
   superclassName = GSJNI_SuperclassNameFromClassName (env, className); 
+
+  // If a java exception was thrown, that means probably the java 
+  // class does not exist.  Clear the java exception and throw an 
+  // Objective-C one.
+  if ((*env)->ExceptionCheck (env))
+    {
+      (*env)->ExceptionClear (env);
+      [NSException raise: @"JIGSRegisterJavaClassException"  
+		   format: @"Could not determine the Java superclass of the Java class `%@'", className]; 
+    }
   
   // Register the superclass (this recursively registers 
   // all the superclasses up to Object if needed)
