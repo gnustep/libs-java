@@ -1,3 +1,18 @@
+Thu Nov 30 11:36:39 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	Patches by Helge Hess:
+	* JIGSInit.m (JIGSInit): Added ifdef for initialization on
+	libFoundation.
+	* JIGSMapper.h: Define GS_SIZEOF_VOIDP if compiling on
+	libFoundation.
+	* GNUmakefile (libgnustep-java_HEADER_FILES_INSTALL_DIR): Use 
+	$(GNUSTEP_FND_DIR) instead of hardcoding `gnustep'.
+	* ObjcRuntimeUtilities.m
+	(ObjcUtilities_build_runtime_Objc_signature): Added ifdef for
+	libFoundation.
+	* JIGSMapper.m (JIGSJobjectFromId): Use -isKindOfClass instead of
+	-isKindOf.
+
 Mon Nov 27 16:37:13 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* JIGS.h: Version is now 1.0.0.
