@@ -22,12 +22,23 @@
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA. */
 
+if [ ! -z "$1" ]; then
+  if [ "--help" = "$1" -o "-h" = "$1" ]; then
+    echo "./benchmark-base will run all the benchmarks.";
+    echo "./benchmark-base <bench-name> will run the benchmark <bench-name>.";
+    echo "For example: ./benchmark-base ObjCMethodBenchmark";
+  else
+    CLASSPATH=./:$CLASSPATH java Driver $1;
+  fi;
+  exit 0;
+fi
+
 # Java benchmarks are only used to get the feeling of the orders
 # of magnitudes
-java_benchmarks_to_run="ArrayBenchmark StringComparisonBenchmark StringConcatenationBenchmark JavaMethodBenchmark JavaNewObjectBenchmark JavaToStringBenchmark Vector0Benchmark Vector1Benchmark Vector3Benchmark Vector4Benchmark Vector5Benchmark Vector6Benchmark Vector7Benchmark"
+java_benchmarks_to_run="ArrayBenchmark StringComparisonBenchmark StringConcatenationBenchmark JavaMethodBenchmark JavaNewObjectBenchmark JavaToStringBenchmark Vector0Benchmark Vector1Benchmark Vector3Benchmark Vector4Benchmark Vector5Benchmark Vector6Benchmark Vector7Benchmark Hashtable0Benchmark Hashtable1Benchmark Hashtable2Benchmark"
 
 # ObjC benchmarks are the real JIGS benchmarks
-benchmarks_to_run="ObjCMethodBenchmark ObjCMethodSecondThreadBenchmark ObjCNewObjectBenchmark ObjCNewObjectSecondThreadBenchmark ObjCToStringBenchmark ObjCToStringSecondThreadBenchmark NSArray0Benchmark NSArray1Benchmark NSArray2Benchmark NSArray3Benchmark NSArray4Benchmark NSArray5Benchmark NSArray6Benchmark NSArray7Benchmark"
+benchmarks_to_run="ObjCMethodBenchmark ObjCMethodSecondThreadBenchmark ObjCNewObjectBenchmark ObjCNewObjectSecondThreadBenchmark ObjCToStringBenchmark ObjCToStringSecondThreadBenchmark NSArray0Benchmark NSArray1Benchmark NSArray2Benchmark NSArray3Benchmark NSArray4Benchmark NSArray5Benchmark NSArray6Benchmark NSArray7Benchmark NSArray8Benchmark NSArray9Benchmark NSDictionary0Benchmark NSDictionary1Benchmark NSDictionary2Benchmark NSDictionary3Benchmark Hashtable3Benchmark"
 
 echo "These benchmarks display the required time to perform 100000"
 echo "of the specified operations in arbitrary units of time."
