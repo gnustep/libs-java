@@ -950,7 +950,6 @@ classes = (
 			   "isValid",
 			   "setDelegate:",
 			   "delegate",
-			   "close",
 			   //"addConnection:toRunLoop:forMode:",
 			   //"removeConnection:fromRunLoop:forMode:",
 			   "reservedSpaceLength",
