@@ -73,6 +73,10 @@ Java_gnu_gnustep_java_JIGS_forceMultithreading (JNIEnv *env, jclass this)
 		toTarget: [_JIGS_Force_Thread class]  withObject: nil];
     }
 
+  /* FIXME: We need to wait for the thread to be detached before
+     continuing !  <This is only because when we exit this method, we
+     want GNUstep to be for sure in multithreading mode.> */
+
   RELEASE (pool);
   if (registeredThread) [NSThread unregisterCurrentThread];
 }
