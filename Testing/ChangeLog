@@ -1,3 +1,7 @@
+Sat Nov 24 16:00:05 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Java/Base/NSArrayTest.java: Added test creating a big array.
+
 Wed Nov 21 15:48:23 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Java/Base/Benchmarks: New directory.
