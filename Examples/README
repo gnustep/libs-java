@@ -1,3 +1,12 @@
+The Examples directory is mainly to people interested in JIGS internals.  
+
+To start playing with JIGS as a programmer, you should instead: 
+* go in the Wrappers directory (toplevel) and build, install the wrappers 
+there
+* go into the Testing directory (toplevel) and play there.
+
+####
+
 The directory Examples/ contains some examples of JIGS in action:
 
 Examples/Java/ contains a couple of full examples of wrapping a GNUstep
@@ -6,5 +15,6 @@ examples, the wrapping has been done by hand.
 
 Example/Java/SimpleGUI/ is and example of a gui library.  This example
 contains detailed documentation (See Examples/Java/README).
+
 
 
