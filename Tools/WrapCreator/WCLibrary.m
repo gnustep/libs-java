@@ -148,7 +148,14 @@ static NSMutableArray *classList;
 
   /* Load enumeration types */
   pool = [NSAutoreleasePool new];
-  enumTypes = [wrappingPreferences objectForKey: @"enumerations"];
+  
+  /* First, enumerations found by the header parser in the header file */
+  enumTypes = [headerParser enumerationTypes];
+  /* Then, user specified enumerations - not sure this is useful - I
+     suppose you use it if the parser misses some enums */
+  enumTypes = [enumTypes arrayByAddingObjectsFromArray:
+			   [wrappingPreferences 
+			     objectForKey: @"enumerations"]];
   
   enumerator = [enumTypes objectEnumerator];
   
@@ -161,7 +168,7 @@ static NSMutableArray *classList;
 	}
       if (verboseOutput == YES)
 	{
-	  printf ("Loading enum %s\n", [enumType cString]);
+	  printf ("Loading enumeration %s\n", [enumType cString]);
 	}
       /* Allocating the type registers it in WCType's internal table
 	 so it will be returned next time WCType's is asked for this
