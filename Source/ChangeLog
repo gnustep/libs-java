@@ -1,3 +1,11 @@
+Sat Aug 19 20:26:15 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* JIGSMapper.m (JIGSCreateNewJavaProxy): Retain the object 
+	we are proxying.
+	* NSObject.m (Java_gnu_gnustep_base_NSObject_clone): Autorelease
+	the object to return.
+	(Java_gnu_gnustep_base_NSObject_mutableClone): Idem.
+
 Fri Aug 18 17:22:34 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGS.h (GNUSTEP_JAVA_VERSION): Updated to 0.4.
