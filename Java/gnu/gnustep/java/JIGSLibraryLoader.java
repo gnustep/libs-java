@@ -140,6 +140,7 @@ class JIGSLibraryLoader
 	    System.out.println ("of the gnustep-java library!  Trying with the debugging one.");
 	  }
       } 
+    /* else result is undefined */
     
     /* Then try the not-debugging version */
     if (tryLoading ("gnustep-java"))
@@ -147,7 +148,7 @@ class JIGSLibraryLoader
 	debug = false;
 	return;
       }
-    
+
     /* Then try the debugging version */
     if (tryLoading ("gnustep-java_d"))
       {
