@@ -1,3 +1,7 @@
+Thu Jan 25 12:59:12 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* JIGS.h, GNUmakefile: Version is now 1.1.0.
+
 Thu Jan 25 11:23:28 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GNUmakefile (VERSION): New variable.
