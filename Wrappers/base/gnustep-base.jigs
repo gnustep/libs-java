@@ -94,6 +94,7 @@ classes = (
     "rawMimeData:",
     "setContent:",
     "setContent:type:name:",
+    "setContentType:",
     "setHeader:"
   );
   "initializers" = (
