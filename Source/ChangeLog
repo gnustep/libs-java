@@ -1,3 +1,21 @@
+Mon Oct  2 15:59:56 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* JIGSSelectorMapping.m (strim): Do not output the 
+	'static' keyword; do not output the return type.
+
+Mon Oct  2 11:58:24 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* GNUmakefile (libgnustep-java_HEADER_FILES): Added
+	JIGSSelectorMapping.h.  (libgnustep-java_OBJC_FILES): Added
+	JIGSSelectorMapping.m
+	* JIGSSelectorMapping.m, JIGSSelectorMapping.h: New files.
+	* JIGSSelectorMapping.m (strim), (mapJavaMethodName): Moved here
+	from JIGSProxySetup.m.  (mapJavaMethodName): Do not take the 
+	selector table as argument, removed corresponding code.
+	* JIGSProxySetup.m (_JIGS_prepare_method_struct): Moved here code 
+	to check if the method was already registered in the selector 
+	table.
+
 Mon Oct  2 10:00:00 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGSInit.m (JIGSInit): Added workaround for systems without
