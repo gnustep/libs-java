@@ -60,7 +60,7 @@ include $(GNUSTEP_MAKEFILES)/tool.make
 # Install the Makefiles
 JIGS_MAKE_DIR = $(INSTALL_ROOT_DIR)$(GNUSTEP_MAKEFILES)
 after-install::
-	$(MKDIRS) $(JIGS_MAKE_DIR)
+	$(MKINSTALLDIRS) $(JIGS_MAKE_DIR)
 	$(INSTALL_DATA) Makefiles/old-java-wrapper.make $(JIGS_MAKE_DIR)
 	$(INSTALL_DATA) Makefiles/old-java-wrapper.top.template \
 	                $(JIGS_MAKE_DIR)
