@@ -1,3 +1,10 @@
+Sat May  5 21:40:31 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Java/Base/NSNumberTest.java: New test.
+	* Java/Base/GNUmakefile (gnu.gnustep.base-test_JAVA_FILES): Added
+	NSNumberTest.java.
+	* Java/Base/test-base (tests_to_run): Added NSNumberTest.
+
 Sat May  5 21:34:33 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* Objc/main.m (main): Added (#ifdefed out) code to test
