@@ -1,3 +1,26 @@
+Fri Oct  6 12:41:40 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* WCType.h, WCType.m ([-javaArgumentType]): New method.
+	* WCIdType.m ([-javaArgumentType]): Implemented.
+	* WCObjectType.m ([-javaArgumentType]): Implemented.
+	* WCPrimitiveType.h: Added ivar for java argument type.
+	* WCPrimitiveType.m ([-javaArgumentType]): Implemented.
+	* WCBOOLType.m, WCCharType.m, WCIntType.m, WCDoubleType.m: Set the
+	java argument type ivar.
+	* WCFloatType.m, WCUnsignedInt.m, WCCustomType.m: Idem.
+	* WCMorphType.h, WCMorphType.m: Added support for java argument 
+	type.
+	* WCTypeLoader.m: Updated for change in WCMorphType; added 
+	automatic morphing of selectors.
+	* WCMethod.h, WCMethod.m ([-outputJavaArgumentSignature]),
+	([-outputSelectorMapping]): New methods.
+	* WCClass.m ([-outputWrappers]): Added code to output file with
+	the method mapping for this class.
+	* WCLibrary.h, WCLibrary.m ([+selectorMapFileForClass:]): New method.
+	* WCLibrary.m ([+outputWrappers]): Output a file loading in all
+	the selector mapping files for all classes; output code into the
+	library initialization routine to load in the selector mappings.
+	
 Thu Sep 28 11:54:58 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Makefiles/java-wrapper.objc.template: Added setting of debug and
