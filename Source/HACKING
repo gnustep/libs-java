@@ -1,7 +1,7 @@
 
 
-JNI support functions
-=====================
+GSJNI functions
+===============
 
 * Every JNI function returning a Java reference should return a local
   reference unless espressely stated otherwise.
