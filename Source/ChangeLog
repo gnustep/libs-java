@@ -1,3 +1,14 @@
+Sat May  5 23:37:42 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	Removed morphing of booleans, so that the morphing
+	Number<--->NSNumber is now total.
+	* GSJNINumber.h (GSJNI_NSNumberFromJBoolean): Removed.
+	* GSJNINumber.m (GSJNI_NSNumberFromJBoolean): Removed.
+	(GSJNI_JNumberFromNSNumber): Never convert to boolean.  Updated
+	caching code.
+	* JIGSMapper.m (JIGSIdFromJobject): Do not morph booleans.
+	Updated caching code.
+	
 Sat May  5 22:46:29 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	Simplified morphing of NSNumber and extended to generic
