@@ -1,3 +1,8 @@
+Tue Nov 21 14:05:38 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* JIGS.m (Java_gnu_gnustep_java_JIGS_forceMultithreading): Native 
+	implementation for the new Java API JIGS.forceMultithreading ().
+
 Mon Nov 20 15:11:53 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* JIGSNative.h (JIGS_ONLOAD_ENTER), (JIGS_ONLOAD_EXIT): New macros 
