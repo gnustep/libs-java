@@ -1,3 +1,11 @@
+Mon Jun  4 15:48:02 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Objc/GNUstep-Java.sh: Moved to Makefiles/.
+	* Objc/jigs.make: Moved to Makefiles/.
+	* Objc/GNUmakefile: Include jigs.make from GNUSTEP_MAKEFILES
+	rather than from local dir.
+	* Objc/README: Updated.
+	
 Tue May 22 02:51:39 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* Objc/GNUstep-Java.sh: New script which sets up everything to
