@@ -1,3 +1,7 @@
+Wed Nov  1 11:49:30 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* JIGS.h: Version is now 0.8.0.
+
 Wed Oct 18 10:44:49 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* JIGSNative.h (JIGS_EXIT_WITH_VALUE): Fixed.
