@@ -210,7 +210,21 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE)
 ifneq ($(GNUSTEP_INSTALLATION_DIR),)
 	@mv $(WRAPPER_DIR)/GNUmakefile $(WRAPPER_DIR)/GNUmakefile.tmp
 	@sed -e \
-	 's/# SETINSTALLATIONDIRHERE/GNUSTEP_INSTALLATION_DIR = $(subst /,\/,$(GNUSTEP_INSTALLATION_DIR))/g' \
+	 's/# GNUSTEP_INSTALLATION_DIR =/GNUSTEP_INSTALLATION_DIR = $(subst /,\/,$(GNUSTEP_INSTALLATION_DIR))/' \
+	       $(WRAPPER_DIR)/GNUmakefile.tmp > $(WRAPPER_DIR)/GNUmakefile
+	@rm $(WRAPPER_DIR)/GNUmakefile.tmp
+endif
+ifneq ($(INSTALL_AS_USER),)
+	@mv $(WRAPPER_DIR)/GNUmakefile $(WRAPPER_DIR)/GNUmakefile.tmp
+	@sed -e \
+	 's/# INSTALL_AS_USER =/export INSTALL_AS_USER = $(INSTALL_AS_USER)/' \
+	       $(WRAPPER_DIR)/GNUmakefile.tmp > $(WRAPPER_DIR)/GNUmakefile
+	@rm $(WRAPPER_DIR)/GNUmakefile.tmp
+endif
+ifneq ($(INSTALL_AS_GROUP),)
+	@mv $(WRAPPER_DIR)/GNUmakefile $(WRAPPER_DIR)/GNUmakefile.tmp
+	@sed -e \
+	 's/# INSTALL_AS_GROUP =/export INSTALL_AS_GROUP = $(INSTALL_AS_GROUP)/' \
 	       $(WRAPPER_DIR)/GNUmakefile.tmp > $(WRAPPER_DIR)/GNUmakefile
 	@rm $(WRAPPER_DIR)/GNUmakefile.tmp
 endif
