@@ -1,3 +1,8 @@
+Tue Sep  5 15:49:00 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* libgnustep-base.jigs: (NSProcessInfo), (NSUserDefaults): New
+	wrappers.
+
 Sat Aug 19 20:37:01 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* libgnustep-base.jigs (NSArray): Uncommented some methods 
