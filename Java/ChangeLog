@@ -1,3 +1,7 @@
+Tue Nov 21 14:06:03 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* gnu/gnustep/java/JIGS.java (forceMultithreading): New method.
+
 Mon Nov 20 14:47:23 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* gnu/gnustep/java/JIGS.java (loadLibrary): Synchronized 

@@ -63,5 +63,28 @@ public class JIGS
    * It is exactly the same as JIGSInit.
    */
   static native public void initialize ();
+
+  /*
+   * The following will force GNUstep to get immediately into
+   * multithreading state.
+   * 
+   * In normal circumstances, it is only recommended to people
+   * suffering from thread-safe-paranoia and using GNUstep DO from
+   * multiple Java threads, because JIGS already makes automatically
+   * GNUstep go multithreading when it detects that you are accessing
+   * it from a different Java thread, and this is usually what you
+   * want.
+   *
+   * In some cases, if you have some objects which are initialized in
+   * a different way if GNUstep is multithreading or not (and I'm told
+   * that some DO objects are), you may want to have GNUstep go
+   * multithreading before initializing the objects.
+   *
+   * There are two ways of doing this: one is detaching a Java thread
+   * using the Java API, and then doing a no-operation call to GNUstep
+   * from this thread.
+   *
+   * The other one is via the following utility method.  */
+  static native public void forceMultithreading ();
 }
 
