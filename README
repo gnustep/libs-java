@@ -14,13 +14,20 @@ Authors
 
 JIGS was brought to you by Nicola Pero <nicola@brainstorm.co.uk>. 
 
-Brainstorm Computer Solutions (http://www.brainstorm.co.uk) funded the
+Brainstorm Computer Solutions (http://www.brainstorm.co.uk) funded the 
 development of JIGS.
 
 Maintainers
 ===========
 
 JIGS is currently maintained by Nicola Pero <nicola@brainstorm.co.uk>.
+
+Release Notes for JIGS version 0.5
+==================================
+
+This release includes a first very partial and experimental wrapper of
+the gnustep gui library; WrapCreator supports prerequisite libraries;
+bug fixes.
 
 Release Notes for JIGS version 0.4
 ==================================
