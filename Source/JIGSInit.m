@@ -70,12 +70,12 @@ _jigs_lookup_class (const char* name)
   BOOL registeredThread = GSRegisterCurrentThread ();
   CREATE_AUTORELEASE_POOL(pool);
   Class		c;
-  NSString	*className = [NSString stringWithCString: name];
 
   _objc_lookup_class = _original_lookup_class;
 
   NS_DURING
     {
+      NSString	*className = [NSString stringWithCString: name];
       JIGSRegisterJavaClass (JIGSJNIEnv (), className);
       c = NSClassFromString (className);
     }
