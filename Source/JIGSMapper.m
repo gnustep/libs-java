@@ -321,12 +321,7 @@ static jclass gnu_gnustep_base_NSObject = NULL;
 static jfieldID fidRealObject = NULL;
 static jclass java_lang_String = NULL;
 static jclass java_lang_Boolean = NULL;
-static jclass java_lang_Byte = NULL;
-static jclass java_lang_Float = NULL;
-static jclass java_lang_Double = NULL;
-static jclass java_lang_Integer = NULL;
-static jclass java_lang_Short = NULL;
-static jclass java_lang_Long = NULL;
+static jclass java_lang_Number = NULL;
 static Class java_lang_Object = Nil;
 static Class nsstring = Nil;
 static Class nsnumber = Nil;
@@ -398,12 +393,7 @@ if (VAR == NULL)                                        \
 
   NEW_CLASS_CACHE (java_lang_String, java/lang/String);
   NEW_CLASS_CACHE (java_lang_Boolean, java/lang/Boolean);
-  NEW_CLASS_CACHE (java_lang_Byte, java/lang/Byte);
-  NEW_CLASS_CACHE (java_lang_Float, java/lang/Float);
-  NEW_CLASS_CACHE (java_lang_Double, java/lang/Double);
-  NEW_CLASS_CACHE (java_lang_Integer, java/lang/Integer);
-  NEW_CLASS_CACHE (java_lang_Short, java/lang/Short);
-  NEW_CLASS_CACHE (java_lang_Long, java/lang/Long);
+  NEW_CLASS_CACHE (java_lang_Number, java/lang/Number);
   
   nsstring = NSClassFromString (@"NSString");
   nsnumber = NSClassFromString (@"NSNumber");
@@ -592,51 +582,11 @@ id JIGSIdFromJobject (JNIEnv *env, jobject object)
       return GSJNI_NSNumberFromJBoolean (env, object);
     }
 
-  // java.lang.Byte
-  if ((*env)->IsInstanceOf (env, object, java_lang_Byte) == YES)
+  if ((*env)->IsInstanceOf (env, object, java_lang_Number) == YES)
     {
-      return GSJNI_NSNumberFromJByte (env, object);
+      return GSJNI_NSNumberFromJNumber (env, object);
     }
-
-  // java.lang.Character - this is better not morphed, otherwise if
-  // you put a java.lang.Character in an NSArray, you could get a
-  // java.lang.Integer when you get it back, and they are objects of
-  // completely different classes!
-
-  // java.lang.Double
-  if ((*env)->IsInstanceOf (env, object, java_lang_Double) == YES)
-    {
-      return GSJNI_NSNumberFromJDouble (env, object);
-    }
-
-  // java.lang.Float
-  if ((*env)->IsInstanceOf (env, object, java_lang_Float) == YES)
-    {
-      return GSJNI_NSNumberFromJFloat (env, object);
-    }
-
-  // java.lang.Integer
-  if ((*env)->IsInstanceOf (env, object, java_lang_Integer) == YES)
-    {
-      return GSJNI_NSNumberFromJInteger (env, object);
-    }
-
-  // java.lang.Long
-  if ((*env)->IsInstanceOf (env, object, java_lang_Long) == YES)
-    {
-      return GSJNI_NSNumberFromJLong (env, object);
-    }
-
-  // java.lang.Short
-  if ((*env)->IsInstanceOf (env, object, java_lang_Short) == YES)
-    {
-      return GSJNI_NSNumberFromJShort (env, object);
-    }
-
-  // NB: We do *not* morph arbitrary java.lang.Number which could be
-  // of classes we don't know how to properly morph, such as like
-  // BigDecimal or BigInteger or other custom defined classes
-
+  
   // Something else - check if it is already proxied
   ret = _JIGSMapperGetProxyFromProxiedJava (object);
   if (ret != nil)
