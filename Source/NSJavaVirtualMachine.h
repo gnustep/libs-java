@@ -93,6 +93,10 @@
 // NB: JIGSJNIEnv () does the same as the following but it is faster.
 + (JNIEnv *) JNIEnvHandleOfCurrentThread;
 
++ (void) attachCurrentThread;
+
++ (void) detachCurrentThread;
+
 /*
  * The following is used to 'register' a running virtual machine
  * (started in some other way) with this class.  It is sort of
@@ -139,6 +143,8 @@ inline JNIEnv *JIGSJNIEnv ();
 - (id) initWithLibraryPath: (NSString *)libraryPath;
 - (id) initWithClassPath: (NSString *)classPath
 	     libraryPath: (NSString *)libraryPath;
+- (void) attachCurrentThread;
+- (void) detachCurrentThread;
 @end
 
 
