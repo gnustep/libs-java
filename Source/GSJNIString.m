@@ -97,14 +97,29 @@ jstring GSJNI_JStringFromNSString (JNIEnv *env, NSString *string)
 {
   jstring javaString;
   int length = [string length];
-  unichar uniString[length];
 
-  // Get a unicode representation of the string in the buffer
-  [string getCharacters: uniString];
+  /* We allocate strings of up to 10k on the stack - others using
+     malloc.  */
+  if (length < 10000)
+    {
+      unichar uniString[length];
+      
+      // Get a unicode representation of the string in the buffer
+      [string getCharacters: uniString];
+      
+      // Create a java string using the buffer
+      javaString = (*env)->NewString (env, uniString, length);
+      // NB: if javaString is NULL, an exception has been thrown.
+    }
+  else
+    {
+      unichar *uniString;
 
-  // Create a java string using the buffer
-  javaString = (*env)->NewString (env, uniString, length);
-  // NB: if javaString is NULL, an exception has been thrown.
+      uniString = malloc (sizeof (unichar) * length);
+      [string getCharacters: uniString];
+      javaString = (*env)->NewString (env, uniString, length);
+      free (uniString);
+    }
 
   return javaString;
 }
