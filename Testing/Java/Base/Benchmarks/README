@@ -1,0 +1,16 @@
+These tests are meant to benchmark the gnustep-base library wrappers.  So,
+before trying these benchmarks, you obviously need to install the base
+library wrappers :)
+
+To compile the tests, type 'make'.  To run all of them, type 'make
+benchmark'.  This should not only warn you that accessing ObjC objects from
+Java is considerably slower than normal Java operations (except string
+manipulations and anything involving string manipulations), but should
+possibly give you an idea of the order of magnitude of the various
+operations.
+
+If you encounter problems (crashes) loading libraries, try running the
+script GNUstep.sh before running the tests.  For example, I do:
+
+. /opt/gnustep/System/Makefiles/GNUstep.sh 
+
