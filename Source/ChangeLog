@@ -6,7 +6,7 @@ Fri Jul 28 12:47:16 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 Fri Jul 28 12:44:30 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGSProxyIMP.m (_JIGS_id_IMP_JavaMethod): After the constructor 
-	is succesfull, insert the objects in the JIGSMapper table.
+	is succesful, insert the objects in the JIGSMapper table.
 	* JIGSProxy.m (_java_lang_Object__dealloc_): Remove the object 
 	from the JIGSMapper table.
 	
