@@ -29,15 +29,16 @@ JAVA_PACKAGE_NAME = gnu.gnustep.java-test
 # Keep the gui tests after the base tests so that people can 
 # compile all the base tests anyway if they don't use the gui
 #
-gnu.gnustep.java-test_JAVA_FILES = \
-    NSObjectTest.java              \
-    NSObjectSubclassTest.java      \
-    NSArrayTest.java               \
-    NSProcessInfoTest.java         \
-    NSDateTest.java                \
-    NSTaskTest.java                \
-    NSNotificationCenterTest.java  \
-    NSSelectorTest.java            \
+gnu.gnustep.java-test_JAVA_FILES =       \
+    NSObjectTest.java                    \
+    NSObjectSubclassTest.java            \
+    NSArrayTest.java                     \
+    NSProcessInfoTest.java               \
+    NSDateTest.java                      \
+    NSTaskTest.java                      \
+    NSNotificationCenterTest.java        \
+    NSSelectorTest.java                  \
+    NSPropertyListSerializationTest.java \
     NSApplicationTest.java              
 
 
