@@ -258,6 +258,8 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FI
 	  echo "Copying $(WRAPPER_SCRIPT_IN_FILE)...";          \
 	  cp $(WRAPPER_SCRIPT_IN_FILE) $(WRAPPER_DIR);          \
 	fi
+	@echo Cleaning up any obsolete Reference documentation...
+	rm -Rf $(JAVA_WRAPPER_DIR)/Reference
 	@echo Running the preprocessor on the header file...
 	$(CC) $(WRAPPER_HEADER) -E $(ALL_CPPFLAGS) $(ALL_OBJCFLAGS) \
 	      -o $(WRAPPER_DIR)/preprocessedHeader
