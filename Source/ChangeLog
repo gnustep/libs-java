@@ -1,3 +1,9 @@
+Sun Nov 25 02:23:14 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* NSObject.m (Java_gnu_gnustep_base_NSObject_finalize_1native):
+	Rewritten in an attempt to fix potential deadlocks and other weird
+	bugs.  Not sure it's stable yet.
+
 Sat Nov 24 18:28:53 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* NSObject.m (Java_gnu_gnustep_base_NSObject_finalize_1native):
