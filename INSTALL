@@ -87,6 +87,10 @@ make
 
     make install
 
-5) Play with JIGS.  The directory Examples/ contains examples of JIGS 
-in action.  You probably want to have a look at WrapCreator and its 
-examples, which you find in Tools/WrapCreator/.
+5) Play with JIGS.  The directory Examples/ contains examples of JIGS
+in action.  You probably want to have a look at WrapCreator and its
+examples, which you find in Tools/WrapCreator/.  The directory
+Wrappers contains a first attempt at a wrapper for the gnustep base
+library.
+
+
