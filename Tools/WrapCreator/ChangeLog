@@ -1,3 +1,9 @@
+Mon Feb 19 11:21:54 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Makefiles/java-wrapper.objc.template (VERSION): New variable.
+	* Makefiles/java-wrapper.make ($(WRAPPER_DIR)/stamp-file): Replace 
+	VERSIONHERE with VERSION in java-wrapper.objc.template.
+	
 Fri Feb  9 10:03:42 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* WCMethod.m ([-outputJavaWrapper]), ([-outputObjcWrapper]):
