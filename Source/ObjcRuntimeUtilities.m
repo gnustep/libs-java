@@ -43,9 +43,8 @@
 
 #include "ObjcRuntimeUtilities.h"
 
-BOOL
-GSJavaInterface_new_class
-(const char *name, const char *superclassName, int ivarNumber, ...)
+BOOL GSJavaInterface_new_class (const char *name, const char *superclassName, 
+				int ivarNumber, ...)
 {
   extern void __objc_exec_class (Module_t module);
   extern void __objc_resolve_class_links ();
@@ -166,9 +165,7 @@ GSJavaInterface_new_class
   return YES;
 }
 
-void 
-GSJavaInterface_add_method_list 
-(Class class, MethodList *ml)
+void GSJavaInterface_add_method_list (Class class, MethodList *ml)
 {
   extern void class_add_method_list (Class class, MethodList_t list);
   extern objc_mutex_t __objc_runtime_mutex;
@@ -178,8 +175,8 @@ GSJavaInterface_add_method_list
   objc_mutex_unlock (__objc_runtime_mutex);
 }
 
-inline const char *
-GSJavaInterface_build_runtime_Objc_signature (const char *types)
+inline const char *GSJavaInterface_build_runtime_Objc_signature (const char 
+								 *types)
 {
   NSMethodSignature *sig;
   

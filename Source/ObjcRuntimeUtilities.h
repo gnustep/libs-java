@@ -73,9 +73,8 @@
  * This method is completely general and could be used in other 
  * interfaces.  */
 
-BOOL
-GSJavaInterface_new_class
-(const char *name, const char *superclassName, int ivarNumber, ...);
+BOOL GSJavaInterface_new_class (const char *name, const char *superclassName, 
+				int ivarNumber, ...);
 
 /*
  * GSJavaInterface_add_method_list:
@@ -90,9 +89,7 @@ GSJavaInterface_new_class
  * 
  */
 
-void 
-GSJavaInterface_add_method_list 
-(Class class, MethodList *ml);
+void GSJavaInterface_add_method_list (Class class, MethodList *ml);
 
 /*
  * GSJavaInterface_build_runtime_Objc_signature:
@@ -124,9 +121,7 @@ GSJavaInterface_add_method_list
  *
  */
 
-inline const char *
-GSJavaInterface_build_runtime_Objc_signature 
-(const char *);
+inline const char *GSJavaInterface_build_runtime_Objc_signature (const char *);
 
 #endif /* __ObjcRuntimeUtilitis_h_GNUSTEP_JAVA_INCLUDE */
 
