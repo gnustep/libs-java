@@ -1,5 +1,7 @@
 # Automatically generated! Do not edit.  
 
+# SETINSTALLATIONDIRHERE
+
 include $(GNUSTEP_MAKEFILES)/common.make
 
 SUBPROJECTS = Java Objc 
