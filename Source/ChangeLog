@@ -1,3 +1,12 @@
+Fri Jul 27 11:18:51 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* JIGSInit.m (_jigs_lookup_class): Wrap the attempt to register
+	the Java class in an exception handler to fail gracefully if the
+	Java class does not exist.
+	* JIGSProxy.m (JIGSRegisterJavaClass): Detect Java exceptions in
+	GSJNI_SuperclassNameFromClassName and convert them into ObjC
+	exceptions.
+
 Fri Jul 27 10:26:00 2001  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* GSJNIClass.m: GSJNI_SuperclassNameFromClassName()
