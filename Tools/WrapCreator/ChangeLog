@@ -1,3 +1,10 @@
+Thu Nov 30 11:24:53 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	Patches by Helge Hess <helge.hess@skyrix.com>:
+	* main.m (main): Initialize libFoundation if we are 
+	building on libFoundation.
+	* WCClass.m ([-description]): New method.
+
 Mon Nov 20 15:13:29 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* WCLibrary.m ([+outputWrappers]): Output the new macros
