@@ -163,10 +163,10 @@ OBJC_WRAPPER_DIR = $(WRAPPER_DIR)/Objc
 LIBRARY_NAME = lib$(JAVA_WRAPPER_NAME)
 
 # The header file - please note that you can only use a single one
-ifeq ($(HEADER_FILES),)
+ifeq ($($(GNUSTEP_INSTANCE)_HEADER_FILES),)
 HEADER_FILE = $(JAVA_WRAPPER_NAME).h
 else
-HEADER_FILE = $(HEADER_FILES)
+HEADER_FILE = $($(GNUSTEP_INSTANCE)_HEADER_FILES)
 endif
 
 # Try to find the header file - WRAPPER_HEADER is the full absolute
@@ -177,7 +177,7 @@ endif
 # prevent other targets (eg, make distclean) from working just because
 # the header is not found.
 WRAPPER_HEADER = $(shell $(GNUSTEP_MAKEFILES)/search_header.sh \
-                          $(HEADER_FILE) $(HEADER_FILES_DIR))
+                          $(HEADER_FILE) $($(GNUSTEP_INSTANCE)_HEADER_FILES_DIR))
 LIBRARY_HEADER_FLAGS = -I$(dir $(WRAPPER_HEADER))
 
 WRAP_CREATOR = opentool WrapCreator
