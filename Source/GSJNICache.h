@@ -33,6 +33,6 @@
 /* Return a new global reference to class className.
  * Return NULL upon exception thrown
  */
-jclass GSJNI_NewGlobalClassCache (JNIEnv *env, const char *className);
+jclass GSJNI_NewClassCache (JNIEnv *env, const char *className);
 
 #endif /*__GSJNICache_h_GNUSTEP_JAVA_INCLUDE*/

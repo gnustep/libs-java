@@ -65,7 +65,7 @@ void JIGSRaiseNSExceptionFromJException (JNIEnv *env)
   {
     if (gnu_gnustep_base_NSException == NULL)
       {
-	gnu_gnustep_base_NSException = GSJNI_NewGlobalClassCache 
+	gnu_gnustep_base_NSException = GSJNI_NewClassCache 
 	  (env, "gnu/gnustep/base/NSException");
 	
       if (gnu_gnustep_base_NSException == NULL)
@@ -119,8 +119,7 @@ void JIGSRaiseNSExceptionFromJException (JNIEnv *env)
 
   if (java_lang_Exception == NULL)
     {
-      java_lang_Exception = GSJNI_NewGlobalClassCache 
-	(env, "java/lang/Exception");
+      java_lang_Exception = GSJNI_NewClassCache (env, "java/lang/Exception");
       
       if (java_lang_Exception == NULL)
 	{
@@ -221,7 +220,7 @@ void JIGSRaiseJException (JNIEnv *env, NSString *name, NSString *reason)
   
   if (gnu_gnustep_base_NSException == NULL)
     {
-      gnu_gnustep_base_NSException = GSJNI_NewGlobalClassCache 
+      gnu_gnustep_base_NSException = GSJNI_NewClassCache 
 	(env, "gnu/gnustep/base/NSException");
       
       if (gnu_gnustep_base_NSException == NULL)
