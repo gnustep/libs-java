@@ -46,10 +46,10 @@ JIGSSelectorMappingEntry list[count] =
 JNIEXPORT jint JNICALL
 JNI_OnLoad (JavaVM *jvm, void *reserved)
 {
+  JIGS_ONLOAD_ENTER;
   JIGSRegisterJavaProxyClass (JIGSJNIEnv (), @"SimpleGUI", @"SimpleGUI");
   JIGSRegisterJavaProxySelectors (JIGSJNIEnv (), count, list);
-
-  return JNI_VERSION_1_2;
+  JIGS_ONLOAD_EXIT;
 }
 
 /*
