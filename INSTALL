@@ -22,7 +22,10 @@ argument of --prefix with a directory you may want to install to).
 [FIXME: for snapshots before the 2000xxxx (for any snapshot as of today,
 31 Jul 2000), please edit the file egcs-20000703/libobjc/Makefile.in
 and remove NXConstStr.lo from the list of OBJS, otherwise you will not
-be able to use your shared libobjc with GNUstep]
+be able to use your shared libobjc with GNUstep.  But - this gives problems 
+when configuring GNUstep, since some tests fail.  You may want to configure 
+GNUstep using the static libobjc, and then compile it using the shared
+libobjc.]
 
 At this point, instead of installing everything, you may want to install 
 only the shared libobjc: 
@@ -80,14 +83,7 @@ make
 
 4) Install JIGS: 
 
-  * If you want to install JIGS in your ~/GNUstep/ directory, type: 
-
-    GNUSTEP_INSTALLATION_DIR=$GNUSTEP_USER_ROOT make install
-
-    If you do this, you do not need to become root to install it.
-
-  * Otherwise, if you want to install it system-wide, become root,
-    then type:
+  * Become root, then type:
 
     make install
 
