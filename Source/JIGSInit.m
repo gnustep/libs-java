@@ -42,9 +42,21 @@ void JIGSInit (JNIEnv *env)
   if (JIGS == NULL)
     {
       JavaVM *jvm;
-#if	defined(GS_FAKE_MAIN) || defined(GS_PASS_ARGUMENTS)
-      extern char**	environ;
-      static char	*args[2] = { "java", 0 };
+      /*
+       * On some systems, GNUstep can't really read the arguments 
+       * and environment without help/hack from the programmer. 
+       *
+       * This is a first hack of that kind for JIGS.  A more refined
+       * version will allow the programmer to call a function from
+       * Java to initialize GNUstep with the program arguments he
+       * provides.  If the programmer does not call the function, it
+       * would anyway work like the following.  NB: The following is 
+       * not used if on your system GNUstep can reliably get the args 
+       * and program name (eg, from the /proc filesystem).
+       */
+#if defined(GS_FAKE_MAIN) || defined(GS_PASS_ARGUMENTS)
+      extern char **environ;
+      static char  *args[2] = { "java", 0 };
       
       [NSProcessInfo initializeWithArguments: args
 				       count: 1
