@@ -1,3 +1,8 @@
+Sun May  5 23:33:53 2002  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* JIGSInit.m (_jigs_lookup_class): Register/unregister the current
+	thread.
+
 Fri May  3 18:17:33 2002  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* JIGSProxySetup.m (_JIGS_prepare_method_struct): Fixed bug
