@@ -27,6 +27,8 @@ GNUSTEP_INSTALLATION_DIR=$(GNUSTEP_SYSTEM_ROOT)
 include $(GNUSTEP_MAKEFILES)/common.make
 include $(GNUSTEP_MAKEFILES)/jni.make
 
+SUBPROJECTS = loader
+
 LIBRARY_NAME = libgnustep-java
 
 libgnustep-java_HEADER_FILES = \
@@ -70,6 +72,8 @@ ADDITIONAL_INCLUDE_DIRS += -I../Java/
 ADDITIONAL_OBJCFLAGS += -Wall
 
 include $(GNUSTEP_MAKEFILES)/library.make
+include $(GNUSTEP_MAKEFILES)/aggregate.make
+
 
 
 
