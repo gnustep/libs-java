@@ -36,8 +36,13 @@ WCDoubleType.m \
 WCFloatType.m \
 WCIdType.m \
 WCIntType.m \
+WCLongType.m \
+WCShortType.m \
 WCUnsignedIntType.m \
+WCUnsignedLongType.m \
 WCUnsignedShortType.m \
+WCLongLongType.m \
+WCUnsignedLongLongType.m \
 WCMorphType.m \
 WCObjectType.m \
 WCPrimitiveType.m \
