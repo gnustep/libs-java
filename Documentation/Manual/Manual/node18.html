@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 99.2beta8 (1.43)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>4.7 Including Special Code in the Wrapper GNUmakefiles</TITLE>
+<META NAME="description" CONTENT="4.7 Including Special Code in the Wrapper GNUmakefiles">
+<META NAME="keywords" CONTENT="Manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="LaTeX2HTML v99.2beta8">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="Manual.css">
+
+<LINK REL="previous" HREF="node17.html">
+<LINK REL="up" HREF="node11.html">
+<LINK REL="next" HREF="node19.html">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" text="#000000" link="#0000FF" vlink="#4444FF" alink="#3388FF">
+<B> Next: <A NAME="tex2html333"
+  HREF="node19.html">About this document ...</A> </B>
+<B>Up: <A NAME="tex2html331"
+  HREF="node11.html">4. Wrapping Objective-C Libraries</A>  </B>
+<B> Previous: <A NAME="tex2html327"
+  HREF="node17.html">4.6 Useful Make Options</A> </B>
+<BR> <P>
+
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00570000000000000000">
+4.7 Including Special Code in the Wrapper GNUmakefiles</A>
+</H1>
+
+<P>
+This section describes a feature which is usually not needed, so you
+may skip it at a first reading.  As a prerequisite, you probably need
+to have read the section <A HREF="node12.html#wrapper-structure">4.1.2</A> to make any use of
+this section.
+
+<P>
+It is possible that you may need/want to insert special code in the
+GNUmakefile.preamble and GNUmakefile.postamble for the wrappers.  For
+example, some special flags required to compile an Objective-C library
+(the Objective-C wrapper library for your library) against your
+Objective-C library.
+
+<P>
+JIGS itself by default does not generate GNUmakefile.preamble and
+GNUmakefile.postamble at all; but it will look in the library
+directory for the files 
+<PRE>
+GNUmakefile.wrapper.objc.preamble
+GNUmakefile.wrapper.objc.postamble
+GNUmakefile.wrapper.java.preamble
+GNUmakefile.wrapper.java.postamble
+</PRE>
+and, if any of them is present, copy them into the <TT>JavaWrapper</TT> 
+directory, in the following way:
+<PRE>
+GNUmakefile.wrapper.objc.preamble --&gt; JavaWrapper/Objc/GNUmakefile.preamble
+GNUmakefile.wrapper.objc.postamble --&gt; JavaWrapper/Objc/GNUmakefile.postamble
+GNUmakefile.wrapper.java.preamble --&gt; JavaWrapper/Java/GNUmakefile.preamble
+GNUmakefile.wrapper.java.postamble --&gt; JavaWrapper/Java/GNUmakefile.postamble
+</PRE>
+
+<P>
+In this way, by adding one of these files to your library's directory,
+you can have it copied into the generated wrappers in the appropriate
+place.
+
+<P>
+<BR><HR>
+<ADDRESS>
+Nicola Pero
+2000-11-27
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 99.2beta8 (1.43)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>2.2 Which Components are Used for What</TITLE>
+<META NAME="description" CONTENT="2.2 Which Components are Used for What">
+<META NAME="keywords" CONTENT="Manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="LaTeX2HTML v99.2beta8">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="Manual.css">
+
+<LINK REL="previous" HREF="node4.html">
+<LINK REL="up" HREF="node3.html">
+<LINK REL="next" HREF="node6.html">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" text="#000000" link="#0000FF" vlink="#4444FF" alink="#3388FF">
+<B> Next: <A NAME="tex2html117"
+  HREF="node6.html">3. Programming GNUstep in</A> </B>
+<B>Up: <A NAME="tex2html115"
+  HREF="node3.html">2. Quick Overview of</A>  </B>
+<B> Previous: <A NAME="tex2html111"
+  HREF="node4.html">2.1 Components of JIGS</A> </B>
+<BR> <P>
+
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html118"
+  HREF="node5.html#SECTION00321000000000000000">2.2.1 Starting a Java VM inside an Objective-C program</A>
+<LI><A NAME="tex2html119"
+  HREF="node5.html#SECTION00322000000000000000">2.2.2 Using the GNUstep Base and Gui Libraries from Java</A>
+<LI><A NAME="tex2html120"
+  HREF="node5.html#SECTION00323000000000000000">2.2.3 Using Other GNUstep Libraries from Java</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00320000000000000000">
+2.2 Which Components are Used for What</A>
+</H1>
+
+<P>
+
+<H2><A NAME="SECTION00321000000000000000">
+2.2.1 Starting a Java VM inside an Objective-C program</A>
+</H2>
+To start a Java Virtual Machine and access Java from an Objective-C
+GNUstep program, you need only the JIGS core engine.  It must be said
+that this will not work out the box.  You need to find out what
+libraries you need to link with in order to start a Java Virtual
+Machine from native code in your Java Environment, because of a lack
+of standardization between different Java Environments.  It's just a
+couple of library flags for the compiler, but it can be painful, and
+non-portable.  The example is in <TT>Testing/Objc</TT>.  If you are
+lucky, you might also find the flags for your java platform there.
+
+<P>
+
+<H2><A NAME="SECTION00322000000000000000">
+2.2.2 Using the GNUstep Base and Gui Libraries from Java</A>
+</H2>
+To use the GNUstep Base and Gui libraries from Java, you only need the
+JIGS core engine and the GNUstep Base and Gui libraries wrappers.
+Once you have installed JIGS, it should just work out of the box.  The
+examples are in <TT>Testing/Java/</TT>.
+
+<P>
+
+<H2><A NAME="SECTION00323000000000000000">
+2.2.3 Using Other GNUstep Libraries from Java</A>
+</H2>
+To use a generic GNUstep Objective-C library from Java, you need the
+JIGS core engine, and wrappers for that library.  To generate the
+wrappers, you need to use the WrapCreator tool.  Complete examples of
+wrapping a library and then accessing it from Java are in
+<TT>Tools/WrapCreator/Examples/</TT>.
+
+<P>
+<HR><B> Next: <A NAME="tex2html117"
+  HREF="node6.html">3. Programming GNUstep in</A> </B>
+<B>Up: <A NAME="tex2html115"
+  HREF="node3.html">2. Quick Overview of</A> </B>
+<B> Previous: <A NAME="tex2html111"
+  HREF="node4.html">2.1 Components of JIGS</A> </B>
+
+<!--End of Navigation Panel-->
+<ADDRESS>
+Nicola Pero
+2000-11-27
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 99.2beta8 (1.43)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>4.1 Compiling the Wrappers of an Already Configured Library</TITLE>
+<META NAME="description" CONTENT="4.1 Compiling the Wrappers of an Already Configured Library">
+<META NAME="keywords" CONTENT="Manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="LaTeX2HTML v99.2beta8">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="Manual.css">
+
+<LINK REL="next" HREF="node13.html">
+<LINK REL="previous" HREF="node11.html">
+<LINK REL="up" HREF="node11.html">
+<LINK REL="next" HREF="node13.html">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" text="#000000" link="#0000FF" vlink="#4444FF" alink="#3388FF">
+<B> Next: <A NAME="tex2html253"
+  HREF="node13.html">4.2 Turning on Generation</A> </B>
+<B>Up: <A NAME="tex2html251"
+  HREF="node11.html">4. Wrapping Objective-C Libraries</A>  </B>
+<B> Previous: <A NAME="tex2html245"
+  HREF="node11.html">4. Wrapping Objective-C Libraries</A> </B>
+<BR> <P>
+
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html254"
+  HREF="node12.html#SECTION00511000000000000000">4.1.1 Creating and Compiling the Wrappers</A>
+<LI><A NAME="tex2html255"
+  HREF="node12.html#SECTION00512000000000000000">4.1.2 Structure of the Wrappers</A>
+<UL>
+<LI><A NAME="tex2html256"
+  HREF="node12.html#SECTION00512100000000000000">4.1.2.1 The Java Subdirectory</A>
+<LI><A NAME="tex2html257"
+  HREF="node12.html#SECTION00512200000000000000">4.1.2.2 The Objc Subdirectory</A>
+</UL></UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00510000000000000000">
+4.1 Compiling the Wrappers of an Already Configured Library</A>
+</H1>
+We start by reviewing the simplest case: you download the source code
+of a library which is already configured to generate java wrappers
+when it is compiled.  You can try the discussion out by using any
+example in the <TT>Tools/WrapCreator/Examples/</TT> directory.
+
+<P>
+
+<H2><A NAME="SECTION00511000000000000000">
+4.1.1 Creating and Compiling the Wrappers</A>
+</H2>
+
+<P>
+In this case, when you type <TT>make</TT>, the Objective-C will be
+compiled as usual; after it is compiled, JIGS will automatically
+create a directory called <TT>JavaWrapper</TT> (or
+<TT>JavaWrapper_debug</TT> if you are compiling with debug enabled),
+and generate inside this directory source code for the wrappers.  To
+compile the wrappers, you just need to enter the <TT>JavaWrapper</TT>
+directory, and type <TT>make</TT> there.
+
+<P>
+It is quite important to understand that at this point you have two
+different entities: the original Objective-C library, and the Java
+wrappers for this library.  The two things can be compiled and
+installed separately.  To access your library from Objective-C you
+only need to have compiled and installed your original library, while
+to access it from Java you need to have compiled and installed both
+the original library and the wrappers.
+
+<P>
+
+<H2><A NAME="SECTION00512000000000000000">&#160;</A><A NAME="wrapper-structure">&#160;</A>
+<BR>
+4.1.2 Structure of the Wrappers
+</H2>
+
+<P>
+It's not strictly necessary for you to know the structure of the
+wrappers to create or use them, so you may safely skip this section.
+
+<P>
+In the following discussion, we consider wrappers for an imaginary
+library called <TT>libexample.so</TT>.
+
+<P>
+The wrappers for the library are composed of two parts: a set of Java
+classes, and a native Objective-C library, called
+<TT>libexample.A.so</TT> in the example.  This is called after the 
+original library (<TT>libexample.so</TT>) with a <TT>.A</TT> appended
+to the name.
+
+<P>
+If you go into the <TT>JavaWrapper</TT> directory, you can inspect
+these parts yourself.  There are two main subdirectories in the
+<TT>JavaWrapper</TT> directory, the <TT>Java</TT> and the
+<TT>Objc</TT> subdirectories.
+
+<P>
+
+<H3><A NAME="SECTION00512100000000000000">
+4.1.2.1 The Java Subdirectory</A>
+</H3>
+
+<P>
+The <TT>Java</TT> subdirectory contains the Java classes.  All methods
+which are not explicitly marked as <TT>public</TT> in these classes
+are to be considered internal to the JIGS engine and you should not
+access them directly (you probably will not be allowed to anyway).
+
+<P>
+All these classes contain a static initializer of the following form:
+<PRE>
+ static
+  {
+    JIGS.loadLibrary ("example.A");
+  }
+</PRE>
+This will load the native library <TT>libexample.A.so</TT> as soon as
+the first Java class is accessed (<TT>libexample.A.so</TT> will
+implicitly load <TT>libexample.so</TT>).
+
+<P>
+Then, most methods are <TT>native</TT>, as in the following example: 
+<PRE>
+  public native void start ();
+</PRE>
+
+<P>
+The implementation of the Java methods marked as <TT>native</TT> will
+be found by the JVM inside the native library <TT>libexample.A.so</TT>.
+
+<P>
+
+<H3><A NAME="SECTION00512200000000000000">
+4.1.2.2 The Objc Subdirectory</A>
+</H3>
+
+<P>
+The <TT>Objc</TT> subdirectory contains the Objective-C library 
+<TT>libexample.A.so</TT>, which provides to Java the implementation 
+of all the <TT>native</TT> methods in the Java classes.  The
+implementation of these methods will call the corresponding methods in
+the (pure Objective-C) <TT>libexample.so</TT> library, by using the
+JIGS core engine to catch exceptions, convert arguments and return
+types, etc.
+
+<P>
+<HR><B> Next: <A NAME="tex2html253"
+  HREF="node13.html">4.2 Turning on Generation</A> </B>
+<B>Up: <A NAME="tex2html251"
+  HREF="node11.html">4. Wrapping Objective-C Libraries</A> </B>
+<B> Previous: <A NAME="tex2html245"
+  HREF="node11.html">4. Wrapping Objective-C Libraries</A> </B>
+
+<!--End of Navigation Panel-->
+<ADDRESS>
+Nicola Pero
+2000-11-27
+</ADDRESS>
+</BODY>
+</HTML>

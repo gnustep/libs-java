@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 99.2beta8 (1.43)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>4.4 The Wrapper Directory</TITLE>
+<META NAME="description" CONTENT="4.4 The Wrapper Directory">
+<META NAME="keywords" CONTENT="Manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="LaTeX2HTML v99.2beta8">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="Manual.css">
+
+<LINK REL="next" HREF="node16.html">
+<LINK REL="previous" HREF="node14.html">
+<LINK REL="up" HREF="node11.html">
+<LINK REL="next" HREF="node16.html">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" text="#000000" link="#0000FF" vlink="#4444FF" alink="#3388FF">
+<B> Next: <A NAME="tex2html287"
+  HREF="node16.html">4.5 The .jigs File</A> </B>
+<B>Up: <A NAME="tex2html285"
+  HREF="node11.html">4. Wrapping Objective-C Libraries</A>  </B>
+<B> Previous: <A NAME="tex2html279"
+  HREF="node14.html">4.3 Specifying the Main</A> </B>
+<BR> <P>
+
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00540000000000000000">
+4.4 The Wrapper Directory</A>
+</H1>
+JIGS generates full code for the java wrappers into a specific
+directory, which we call the wrapper directory.  By default, this
+directory is called <TT>JavaWrapper</TT> (or
+<TT>JavaWrapper_debug</TT> if you are compiling with debugging
+enabled), but you can change the name of the directory by simply
+setting the <TT>WRAPPER_DIR</TT> variable in your
+<TT>GNUmakefile.wrapper</TT>.  This is not very common.
+
+<P>
+To determine if the wrappers are to be rebuilt or not, JIGS keeps a
+stamp file in the wrapper directory.
+
+<P>
+Everything which is inside the wrapper directory is automatically
+generated - this means that
+
+<OL>
+<LI>you can always remove the wrapper directory without loosing anything, 
+since you can always regenerate the wrappers;
+</LI>
+<LI>you should not edit or modify directly the contents of the wrapper 
+directory, because when the wrappers are recreated, the content of the 
+directory is destroyed.
+</LI>
+</OL>
+
+<P>
+<BR><HR>
+<ADDRESS>
+Nicola Pero
+2000-11-27
+</ADDRESS>
+</BODY>
+</HTML>

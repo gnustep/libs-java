@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 99.2beta8 (1.43)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>4.6 Useful Make Options when Creating Wrappers</TITLE>
+<META NAME="description" CONTENT="4.6 Useful Make Options when Creating Wrappers">
+<META NAME="keywords" CONTENT="Manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="LaTeX2HTML v99.2beta8">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="Manual.css">
+
+<LINK REL="next" HREF="node18.html">
+<LINK REL="previous" HREF="node16.html">
+<LINK REL="up" HREF="node11.html">
+<LINK REL="next" HREF="node18.html">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" text="#000000" link="#0000FF" vlink="#4444FF" alink="#3388FF">
+<B> Next: <A NAME="tex2html321"
+  HREF="node18.html">4.7 Including Special Code</A> </B>
+<B>Up: <A NAME="tex2html319"
+  HREF="node11.html">4. Wrapping Objective-C Libraries</A>  </B>
+<B> Previous: <A NAME="tex2html313"
+  HREF="node16.html">4.5 The .jigs File</A> </B>
+<BR> <P>
+
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html322"
+  HREF="node17.html#SECTION00561000000000000000">4.6.1 Silencing the Wrapper Generator</A>
+<LI><A NAME="tex2html323"
+  HREF="node17.html#SECTION00562000000000000000">4.6.2 Enabling Debugging</A>
+<LI><A NAME="tex2html324"
+  HREF="node17.html#SECTION00563000000000000000">4.6.3 Debugging or Non-Debugging</A>
+<UL>
+<LI><A NAME="tex2html325"
+  HREF="node17.html#SECTION00563100000000000000">4.6.3.1 The Fine Prints About Debugging</A>
+</UL></UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00560000000000000000">
+4.6 Useful Make Options when Creating Wrappers</A>
+</H1>
+
+<P>
+At this point, typing <TT>make</TT> should be enough to generate
+wrappers for your library.  
+
+<P>
+
+<H2><A NAME="SECTION00561000000000000000">
+4.6.1 Silencing the Wrapper Generator</A>
+</H2>
+
+<P>
+By default, wrapper generation is quite verbose - it tells you
+exactly what it is doing - for example, it lists all the classes and
+methods which are being wrapped.  If you find this annoying, you can
+turn it off by compiling with the <TT>verbose=no</TT> option, as in:
+<PRE>
+make verbose=no
+</PRE>
+
+<P>
+
+<H2><A NAME="SECTION00562000000000000000">
+4.6.2 Enabling Debugging</A>
+</H2>
+
+<P>
+If you are compiling your library with debugging enabled  - ie, typing
+<PRE>
+make debug=yes
+</PRE>
+the wrapper library will also be generated with debugging enabled.
+This means that the GNUmakefiles for the wrapping library will
+always automatically use <TT>debug=yes</TT> when the wrapping library
+is compiled.  The wrapping code itself will be generated in the
+<TT>JavaWrapper_debug</TT> directory rather than in the <TT>JavaWrapper</TT>, 
+to allow you to keep the two versions.
+
+<P>
+
+<H2><A NAME="SECTION00563000000000000000">
+4.6.3 Debugging or Non-Debugging</A>
+</H2>
+
+<P>
+When Objective-C GNUstep libraries are loaded from Java using JIGS,
+all the libraries must be of the same type - or debugging libraries
+or non-debugging libraries.  
+
+<P>
+In general, the simplest way you can manage this issue is by
+consistently using only libraries of one of the two kind on your
+system; ie, compile everything (from the GNUstep Base Library up) with
+`<TT>make</TT>', or compile everything with `<TT>make debug=yes</TT>'.
+
+<P>
+If you don't, then you need to read carefully the following part.
+
+<P>
+
+<H3><A NAME="SECTION00563100000000000000">
+4.6.3.1 The Fine Prints About Debugging</A>
+</H3>
+
+<P>
+JIGS will decide whether to use debugging or non-debugging libraries
+at run-time, when it is first initialized from Java.  Debugging
+libraries are easy to tell because the name ends with <TT>_d</TT>.
+For example, the core JIGS library is
+<TT>libgnustep-java</TT>; if you compile it without debugging, it will 
+be in the file 
+<PRE>
+libgnustep-java.so
+</PRE>
+but if you compile it with debugging, it will be in the file 
+<PRE>
+libgnustep-java_d.so
+</PRE>
+Because the name is different, you can have both versions on your
+system.  JIGS will choose to load debugging or non-debugging libraries
+in the following way:
+
+<OL>
+<LI>If you have only one version of JIGS installed (ie, only the debugging 
+or the non-debugging, but not both), there is no choice - JIGS will
+load libraries of the same kind as itself.  This means if you have a
+debugging version of JIGS installed, you will need to have a version
+of all libraries you need with debugging enabled.  If you only have a
+non-debugging version of JIGS installed, you will need to have a
+version of all libraries you need without debugging.
+</LI>
+<LI>If you have both version of JIGS (the debugging and the non-debugging), 
+JIGS will decide at run-time which version of itself to use (and
+consequently, which version of all other libraries to use).  By
+default, it will load the non-debugging version.  This is the default
+because the idea is that using a debugger to debug libraries when
+accessed from Java in this way is so difficult that most people will
+not want to do it (I actually don't know how to do it myself).  But
+you can override the default by setting the <TT>JIGS_DEBUG</TT>
+environment variable.  Setting it to <TT>YES</TT> or <TT>yes</TT> will
+give priority to the debugging libraries.
+</LI>
+</OL>
+Once JIGS has chosen an option, it will follow it consistently.  For
+example, if it decided to load debugging libraries, it will ignore all
+non-debugging libraries.
+
+<P>
+<HR><B> Next: <A NAME="tex2html321"
+  HREF="node18.html">4.7 Including Special Code</A> </B>
+<B>Up: <A NAME="tex2html319"
+  HREF="node11.html">4. Wrapping Objective-C Libraries</A> </B>
+<B> Previous: <A NAME="tex2html313"
+  HREF="node16.html">4.5 The .jigs File</A> </B>
+
+<!--End of Navigation Panel-->
+<ADDRESS>
+Nicola Pero
+2000-11-27
+</ADDRESS>
+</BODY>
+</HTML>

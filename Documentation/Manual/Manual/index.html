@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 99.2beta8 (1.43)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Manual</TITLE>
+<META NAME="description" CONTENT="Manual">
+<META NAME="keywords" CONTENT="Manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="LaTeX2HTML v99.2beta8">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="Manual.css">
+
+<LINK REL="next" HREF="node1.html">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" text="#000000" link="#0000FF" vlink="#4444FF" alink="#3388FF">
+<B> Next: <A NAME="tex2html4"
+  HREF="node1.html">Manual</A> </B>
+<BR> <P>
+
+<!--End of Navigation Panel-->
+
+<DIV ALIGN="LEFT">
+
+</DIV>
+<P>
+<DIV ALIGN="LEFT"><FONT SIZE="+2"><B>GNUstep Java Interface (JIGS) Manual</B></FONT></DIV>
+<P>
+<DIV ALIGN="LEFT">
+</DIV>
+<P>
+<DIV ALIGN="LEFT"></DIV>
+<P>
+<DIV ALIGN="LEFT"><I>Written by:  Nicola Pero (n.pero@mi.flashnet.it)
+</I></DIV>
+<P>
+<DIV ALIGN="LEFT"><I>Date: November 2000</I>
+
+</DIV>
+
+<P>
+<P>
+C<SMALL>OPYRIGHT </SMALL>&#169; 2000 F<SMALL>REE </SMALL>S<SMALL>OFTWARE </SMALL>F<SMALL>OUNDATION, </SMALL>I<SMALL>NC.</SMALL>
+
+<P>
+Permission is granted to make and distribute verbatim copies of this
+manual provided the copyright notice and this permission notice are
+preserved on all copies.
+
+<P>
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided that the
+entire resulting derived work is distributed under the terms of a
+permission notice identical to this one.  Permission is granted to
+copy and distribute translations of this manual into another language,
+under the above conditions for modified versions.
+
+<P>
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS">&#160;</A>
+
+<UL>
+<LI><A NAME="tex2html5"
+  HREF="node1.html">Manual</A>
+<LI><A NAME="tex2html6"
+  HREF="node2.html">1. What is JIGS</A>
+<LI><A NAME="tex2html7"
+  HREF="node3.html">2. Quick Overview of JIGS</A>
+<UL>
+<LI><A NAME="tex2html8"
+  HREF="node4.html">2.1 Components of JIGS</A>
+<LI><A NAME="tex2html9"
+  HREF="node5.html">2.2 Which Components are Used for What</A>
+<UL>
+<LI><A NAME="tex2html10"
+  HREF="node5.html#SECTION00321000000000000000">2.2.1 Starting a Java VM inside an Objective-C program</A>
+<LI><A NAME="tex2html11"
+  HREF="node5.html#SECTION00322000000000000000">2.2.2 Using the GNUstep Base and Gui Libraries from Java</A>
+<LI><A NAME="tex2html12"
+  HREF="node5.html#SECTION00323000000000000000">2.2.3 Using Other GNUstep Libraries from Java</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html13"
+  HREF="node6.html">3. Programming GNUstep in Java</A>
+<UL>
+<LI><A NAME="tex2html14"
+  HREF="node7.html">3.1 Compiling Java Code Using GNUstep Make</A>
+<UL>
+<LI><A NAME="tex2html15"
+  HREF="node7.html#SECTION00411000000000000000">3.1.1 Compiling a Single Class</A>
+<LI><A NAME="tex2html16"
+  HREF="node7.html#SECTION00412000000000000000">3.1.2 Compiling Classes Belonging to a Package</A>
+</UL>
+<LI><A NAME="tex2html17"
+  HREF="node8.html">3.2 Accessing the GNUstep Base Library From Java</A>
+<UL>
+<LI><A NAME="tex2html18"
+  HREF="node8.html#SECTION00421000000000000000">3.2.1 A First Example</A>
+<LI><A NAME="tex2html19"
+  HREF="node8.html#SECTION00422000000000000000">3.2.2 The General Idea</A>
+</UL>
+<LI><A NAME="tex2html20"
+  HREF="node9.html">3.3 How the Wrapping Works</A>
+<UL>
+<LI><A NAME="tex2html21"
+  HREF="node9.html#SECTION00431000000000000000">3.3.1 Classes</A>
+<LI><A NAME="tex2html22"
+  HREF="node9.html#SECTION00432000000000000000">3.3.2 Methods</A>
+<LI><A NAME="tex2html23"
+  HREF="node9.html#SECTION00433000000000000000">3.3.3 Constructors</A>
+<LI><A NAME="tex2html24"
+  HREF="node9.html#SECTION00434000000000000000">3.3.4 Primitive Types</A>
+<LI><A NAME="tex2html25"
+  HREF="node9.html#SECTION00435000000000000000">3.3.5 Strings</A>
+<LI><A NAME="tex2html26"
+  HREF="node9.html#SECTION00436000000000000000">3.3.6 Exceptions</A>
+<LI><A NAME="tex2html27"
+  HREF="node9.html#SECTION00437000000000000000">3.3.7 Base Library Structs</A>
+</UL>
+<LI><A NAME="tex2html28"
+  HREF="node10.html">3.4 Advanced Topics</A>
+<UL>
+<LI><A NAME="tex2html29"
+  HREF="node10.html#SECTION00441000000000000000">3.4.1 Weak References to Java Objects</A>
+<LI><A NAME="tex2html30"
+  HREF="node10.html#SECTION00442000000000000000">3.4.2 Selectors</A>
+<LI><A NAME="tex2html31"
+  HREF="node10.html#SECTION00443000000000000000">3.4.3 Subclassing GNUstep Objects in Java</A>
+<LI><A NAME="tex2html32"
+  HREF="node10.html#SECTION00444000000000000000">3.4.4 Using Java Threads</A>
+<UL>
+<LI><A NAME="tex2html33"
+  HREF="node10.html#SECTION00444100000000000000">3.4.4.1 The Fine Prints About Threads</A>
+</UL>
+</UL>
+</UL>
+<LI><A NAME="tex2html34"
+  HREF="node11.html">4. Wrapping Objective-C Libraries</A>
+<UL>
+<LI><A NAME="tex2html35"
+  HREF="node12.html">4.1 Compiling the Wrappers of an Already Configured Library</A>
+<UL>
+<LI><A NAME="tex2html36"
+  HREF="node12.html#SECTION00511000000000000000">4.1.1 Creating and Compiling the Wrappers</A>
+<LI><A NAME="tex2html37"
+  HREF="node12.html#SECTION00512000000000000000">4.1.2 Structure of the Wrappers</A>
+<UL>
+<LI><A NAME="tex2html38"
+  HREF="node12.html#SECTION00512100000000000000">4.1.2.1 The Java Subdirectory</A>
+<LI><A NAME="tex2html39"
+  HREF="node12.html#SECTION00512200000000000000">4.1.2.2 The Objc Subdirectory</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html40"
+  HREF="node13.html">4.2 Turning on Generation of Java Wrappers</A>
+<LI><A NAME="tex2html41"
+  HREF="node14.html">4.3 Specifying the Main Library Header</A>
+<LI><A NAME="tex2html42"
+  HREF="node15.html">4.4 The Wrapper Directory</A>
+<LI><A NAME="tex2html43"
+  HREF="node16.html">4.5 The .jigs File</A>
+<UL>
+<LI><A NAME="tex2html44"
+  HREF="node16.html#SECTION00551000000000000000">4.5.1 Determining which .jigs file to read</A>
+<LI><A NAME="tex2html45"
+  HREF="node16.html#SECTION00552000000000000000">4.5.2 Overview of the .jigs file</A>
+<LI><A NAME="tex2html46"
+  HREF="node16.html#SECTION00553000000000000000">4.5.3 The Classes Section</A>
+<UL>
+<LI><A NAME="tex2html47"
+  HREF="node16.html#SECTION00553100000000000000">4.5.3.1 java name</A>
+<LI><A NAME="tex2html48"
+  HREF="node16.html#SECTION00553200000000000000">4.5.3.2 objective-c name</A>
+<LI><A NAME="tex2html49"
+  HREF="node16.html#SECTION00553300000000000000">4.5.3.3 initializers</A>
+<LI><A NAME="tex2html50"
+  HREF="node16.html#SECTION00553400000000000000">4.5.3.4 class methods</A>
+<LI><A NAME="tex2html51"
+  HREF="node16.html#SECTION00553500000000000000">4.5.3.5 instance methods</A>
+<LI><A NAME="tex2html52"
+  HREF="node16.html#SECTION00553600000000000000">4.5.3.6 method declarations</A>
+<LI><A NAME="tex2html53"
+  HREF="node16.html#SECTION00553700000000000000">4.5.3.7 hardcoded constants</A>
+</UL>
+<LI><A NAME="tex2html54"
+  HREF="node16.html#SECTION00554000000000000000">4.5.4 Method Name Mapping</A>
+<LI><A NAME="tex2html55"
+  HREF="node16.html#SECTION00555000000000000000">4.5.5 Prerequisite Libraries</A>
+<LI><A NAME="tex2html56"
+  HREF="node16.html#SECTION00556000000000000000">4.5.6 Types</A>
+<LI><A NAME="tex2html57"
+  HREF="node16.html#SECTION00557000000000000000">4.5.7 Enumerations</A>
+</UL>
+<LI><A NAME="tex2html58"
+  HREF="node17.html">4.6 Useful Make Options when Creating Wrappers</A>
+<UL>
+<LI><A NAME="tex2html59"
+  HREF="node17.html#SECTION00561000000000000000">4.6.1 Silencing the Wrapper Generator</A>
+<LI><A NAME="tex2html60"
+  HREF="node17.html#SECTION00562000000000000000">4.6.2 Enabling Debugging</A>
+<LI><A NAME="tex2html61"
+  HREF="node17.html#SECTION00563000000000000000">4.6.3 Debugging or Non-Debugging</A>
+<UL>
+<LI><A NAME="tex2html62"
+  HREF="node17.html#SECTION00563100000000000000">4.6.3.1 The Fine Prints About Debugging</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html63"
+  HREF="node18.html">4.7 Including Special Code in the Wrapper GNUmakefiles</A>
+</UL>
+<LI><A NAME="tex2html64"
+  HREF="node19.html">About this document ...</A>
+</UL>
+<!--End of Table of Child-Links-->
+<BR><HR>
+<ADDRESS>
+Nicola Pero
+2000-11-27
+</ADDRESS>
+</BODY>
+</HTML>
