@@ -43,7 +43,6 @@ classes = (
   "instance methods" = ("encoding",
 			"makeNodeWithNamespace:name:content:",
 			"root",
-			"save:",
 			"setRoot:",
 			"writeToFile:atomically:",
 			"version");
