@@ -1,3 +1,29 @@
+Tue Jul 24 11:43:03 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	Implemented parsing ObjC header file for enumerations, and
+	automatical wrapping of them on request.
+	* WCHeaderParser.h: New instance variables and methods to support
+	enumeration.
+	* WCHeaderParser.m ([+initialize]): Prepare new static variables
+	used in enumeration parsing.
+	([-parseObjectiveC]): Moved the existing Objective-C class/method
+	declarations parsing code in here.
+	([-parseC]): New method with new parsing code to parse C
+	enum/typedef enum declarations in the C header code.
+	([-initWithHeaderFile:]): Invoke the parseXXX methods; set up
+	enumeration ivars.
+	([-parseEnumBodyUsingScanner:]): New method.
+	([-recordEnumeration:withDictionary:]): New method.
+	([-dictionaryForEnumeration:]): New method.
+	([-enumerationTypes]): New method.
+	(trimString): New function.
+	* WCLibrary.m ([+initializeWithOptions:]): Automatically load in
+	as custom types all the enumerations parsed by the header parser.
+	* WCClass.h: Added ivar to record enumerations for this class.
+	* WCClass.m ([-initWithDictionary:]): Set the enumeration ivar.
+	([-outputWrappers]): Generate automatically code wrapping all
+	enumerations for this class.
+	
 Tue Jul 24 11:17:27 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Makefiles/java-wrapper.make ($(WRAPPER_DIR)/stamp-file): Pass
