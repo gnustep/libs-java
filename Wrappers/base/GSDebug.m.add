@@ -25,6 +25,58 @@
 
 @implementation GSDebug
 
+/**
+ * Turn on recording of all allocated objects of the named class.
+ * Slows things a lot.
+ */
++ (BOOL) allocationActiveRecordingObjects: (NSString*)className
+{
+  Class c = NSClassFromString(className);
+
+  if (c != 0)
+    {
+      GSDebugAllocationActiveRecordingObjects(c);
+      return YES;
+    }
+  return NO;
+}
+
+/**
+ * Turn on/off recording of object allocation stats
+ */
++ (BOOL) allocationActive: (BOOL)flag
+{
+  BOOL f = GSDebugAllocationActive(flag);
+  return f;
+}
+
+/**
+ * List number of allocated objects since recording was turned on or,
+ * if flag is YES, since the last call to this method.
+ */
++ (NSString*) allocationList: (BOOL)flag
+{   
+  const char    *str = GSDebugAllocationList(flag);
+  NSString      *s = [NSString stringWithUTF8String: str];
+    
+  return s;
+}
+
+/**
+ * Return all the currently allocated objects of the specified class
+ * which were created since recording started.
+ */
++ (NSArray*) allocationListRecordedObjects: (NSString*)className
+{
+  Class c = NSClassFromString(className);
+
+  if (c != 0)
+    {
+      return GSDebugAllocationListRecordedObjects(c);
+    }
+  return nil;
+}
+
 + (void) setDebugAllocationActive: (BOOL)active
 {
   GSDebugAllocationActive (active);

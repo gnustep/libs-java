@@ -12,9 +12,15 @@ classes = (
     "file to include in objective-c code" 
       = "GSDebug.m.add";
 
-    "class methods" = ("setDebugAllocationActive:",
-		       "printAllocationList",
-		       "printAllocationListSinceLastCheck");
+    "class methods" = (
+      "allocationActiveRecordingObjects:",
+      "allocationActive:",
+      "allocationList:",
+      "allocationListRecordedObjects:",
+      "printAllocationList",
+      "printAllocationListSinceLastCheck",
+      "setDebugAllocationActive:"
+    );
   },
 
 {

@@ -28,6 +28,11 @@
 
 @interface GSDebug : NSObject
 
++ (BOOL) allocationActiveRecordingObjects: (NSString*)className;
++ (BOOL) allocationActive: (BOOL)flag;
++ (NSString*) allocationList: (BOOL)flag;
++ (NSArray*) allocationListRecordedObjects: (NSString*)className;
+
 /*
  * Turn on/off debugging of allocation.  Equivalent to
  * GSDebugAllocationActive (active);

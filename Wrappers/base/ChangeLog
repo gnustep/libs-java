@@ -1,9 +1,8 @@
-Fri Sep 19 14:15:42 2003  Nicola Pero  <n.pero@mi.flashnet.it>
+2003-09-25  Richard Frith-Macdonald <rfm@gnu.org>
 
-	* GSDebug.h: Wrapped a few GSDebugAllocation functions.
+	* GSDebug.h: More GSDebugAllocation functions.
 	* GSDebug.m.add: idem.
 	* gnustep-base.jigs: Expose to Java.
-	* gnustep-base.h: Include GSDebug.h.
 	
 2003-07-28  Richard Frith-Macdonald <rfm@gnu.org>
 
