@@ -1,0 +1,5 @@
+Wed Jul 26 12:49:12 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* gnu/gnustep/base/NSObject.java: Rewritten constructor code.
+	* gnu/gnustep/base/GSInitializationType.java: New class.
+	* GNUmakefile: Added new class.
