@@ -1,3 +1,12 @@
+Fri Sep 29 17:59:18 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Objc: New directory.
+	* Objc/GNUmakefile: New file.
+	* Objc/main.m: New file.
+	* Objc/jigs.make: New file.
+	* Objc/openjavatool: New file.
+	* Objc/README: New file.
+	
 Tue Sep 26 15:47:18 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Java/NSTaskTest.java: Added test for NSTask.
