@@ -433,6 +433,10 @@ static NSMutableArray *classList;
     {
       return @"gnu.gnustep.base.NSArray";
     }
+  else if ([objcClassName isEqualToString: @"NSData"])
+    {
+      return @"gnu.gnustep.base.NSData";
+    }
   else if ([objcClassName isEqualToString: @"NSDictionary"])
     {
       return @"gnu.gnustep.base.NSDictionary";
@@ -440,6 +444,10 @@ static NSMutableArray *classList;
   else if ([objcClassName isEqualToString: @"NSMutableArray"])
     {
       return @"gnu.gnustep.base.NSMutableArray";
+    }
+  else if ([objcClassName isEqualToString: @"NSMutableData"])
+    {
+      return @"gnu.gnustep.base.NSMutableData";
     }
   else if ([objcClassName isEqualToString: @"NSMutableDictionary"])
     {
