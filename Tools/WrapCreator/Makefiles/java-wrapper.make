@@ -212,18 +212,22 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FI
 	       $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2        \
 	        > $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp
 	@rm $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2
-	@sed -e 's/REPLACEME/$(LIBRARY_NAME)/g' \
-	      $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp \
-	      > $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2
+	@sed -e 's/VERSIONHERE/$(VERSION)/g'           \
+	       $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp        \
+	        > $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2
 	@rm $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp
-	@sed -e 's/REPLACEWITHSHORTNAME/$(LIBRARY_SHORT_NAME)/g'                 \
-	      $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2                             \
+	@sed -e 's/REPLACEME/$(LIBRARY_NAME)/g' \
+	      $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2 \
 	      > $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp
 	@rm $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2
-	@sed -e 's/REPLACEWITHLIBRARYHEADERDIRS/$(HEADER_FILES_DIR)/g'           \
-	      $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp                               \
-	      > $(OBJC_WRAPPER_DIR)/GNUmakefile
+	@sed -e 's/REPLACEWITHSHORTNAME/$(LIBRARY_SHORT_NAME)/g'           \
+	      $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp                          \
+	      > $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2
 	@rm $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp
+	@sed -e 's/REPLACEWITHLIBRARYHEADERDIRS/$(HEADER_FILES_DIR)/g'      \
+	      $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2                         \
+	      > $(OBJC_WRAPPER_DIR)/GNUmakefile
+	@rm $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2
 	@echo Copying Custom GNUmakefiles...
 	@if [ -f GNUmakefile.wrapper.java.preamble ]; then           \
 	  $(INSTALL_DATA) GNUmakefile.wrapper.java.preamble         \
