@@ -35,6 +35,7 @@
 #include "WCType.h"
 #include "WCTypeLoader.h"
 #include "WCUnsignedIntType.h"
+#include "WCUnsignedShortType.h"
 #include "WCVoidType.h"
 
 /* Default morphing types.  Oh - it would be nice to have constant objects */
@@ -123,6 +124,10 @@ static const struct morphType
   else if ([name isEqualToString: @"double"] == YES)
     {
       t = [[WCDoubleType alloc] initWithObjcType: name];
+    }
+  else if ([name isEqualToString: @"unsigned short"] == YES) 
+    {
+      t = [[WCUnsignedShortType alloc] initWithObjcType: name];
     }
   else
     {
