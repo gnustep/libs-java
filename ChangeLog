@@ -1,3 +1,7 @@
+Tue May 22 00:27:18 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* TODO: Added subclassing in Java an Objc class.
+
 Mon May 21 02:58:23 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* GNUmakefile (VERSION): Version is now 1.4.0.
