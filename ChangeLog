@@ -1,3 +1,7 @@
+Thu Jan 25 11:30:57 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* INSTALL: Added comment about installing libobjc from RPM.
+
 Mon Nov 27 16:39:41 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* NEWS: Added news for 1.0.0.
