@@ -1,5 +1,13 @@
+Sun Aug 13 15:00:30 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Makefiles/java-wrapper.make (java-wrapper): Depend on a stamp
+	file rather than on GNUmakefile.  ($(WRAPPER_DIR)/GNUmakefile):
+	Changed to $(WRAPPER_DIR)/stamp-file; create stamp-file at the
+	end.
+
 Sat Aug  5 15:46:27 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Makefiles/java-wrapper.make (WRAP_CREATOR): Use opentool 
 	to run WrapCreator more safely.
 
+	
