@@ -1,6 +1,11 @@
+Tue Sep  5 23:37:07 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* libgnustep-base.jigs (NSNotification): New wrapper.
+	(NSDate): New (partial) wrapper.
+
 Tue Sep  5 15:49:00 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
-	* libgnustep-base.jigs: (NSProcessInfo), (NSUserDefaults): New
+	* libgnustep-base.jigs (NSProcessInfo), (NSUserDefaults): New
 	wrappers.
 
 Sat Aug 19 20:37:01 2000  Nicola Pero  <nicola@brainstorm.co.uk>
