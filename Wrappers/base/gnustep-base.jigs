@@ -282,8 +282,8 @@ classes = (
 			  "timeIntervalSinceReferenceDate", 
 			  "timeIntervalSince1970",
 			  "description", 
-			  "descriptionWithLocale:" 
-			  //"descriptionWithCalendarFormat:timeZone:locale:",
+			  "descriptionWithLocale:",
+			  "descriptionWithCalendarFormat:timeZone:locale:"
 			  //"dateWithCalendarFormat:timeZone:"
 			  );
   },
@@ -587,6 +587,33 @@ classes = (
     "initializers" = ("init");
   },
     
+  {
+    "java name" = "gnu.gnustep.base.NSTimeZone";
+    
+    "class methods" = ("timeZoneWithAbbreviation:", 
+		       "timeZoneWithName:",
+		       "timeZoneWithName:data:",
+		       "timeZoneForSecondsFromGMT:",
+		       "localTimeZone",
+		       "defaultTimeZone",
+		       "setDefaultTimeZone:",
+		       "resetSystemTimeZone",       
+		       // "knownTimeZoneNames", MISSING IN GNUSTEP
+		       "abbreviationDictionary");
+
+    "initializers" = ("initWithName:", "initWithName:data:");
+    
+    "instance methods" = ("abbreviation",
+			  "abbreviationForDate:",
+			  "name", 
+			  "secondsFromGMT",
+			  "secondsFromGMTForDate:", 
+			  "isDaylightSavingTime", 
+			  "isDaylightSavingTimeForDate:", 
+			  // "data", MISSING IN GNUSTEP
+			  "isEqualToTimeZone:");
+  },
+
   {
     "java name" = "gnu.gnustep.base.NSTimer";
     

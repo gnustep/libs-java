@@ -1,3 +1,9 @@
+Wed Jun 20 16:45:34 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* gnustep-base.jigs (NSDate): Exposed
+	descriptionWithCalendarFormat:timeZone:locale:.
+	(NSTimeZone): New wrapper for this class.
+
 Mon May 11 13:55:28 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GNUmakefile (VERSION): Raise to 1.0.2.
