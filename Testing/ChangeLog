@@ -1,3 +1,8 @@
+Fri Feb  9 15:40:34 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Java/Base/NSDictionaryTest.java: New test.
+	* Java/Base/GNUmakefile, Java/Base/test-base: Added test.
+
 Fri Feb  9 14:39:09 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Java/Base/NSArrayTest.java: Added tests for NSArray methods 
