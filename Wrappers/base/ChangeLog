@@ -1,3 +1,8 @@
+Mon May 27 06:30:00 2001  Richard Frith-Macdonald <richard@brainstorm.co.uk>
+
+	* gnustep-base.jigs: GSMime API dded, and resolved some return
+	value conflicts with XML parser.
+
 Wed Jan 02 14:16:00 2001  Richard Frith-Macdonald <richard@brainstorm.co.uk>
 
 	* gnustep-base.jigs: GSXMLDocument API modified for consistency etc

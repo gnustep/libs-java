@@ -59,6 +59,10 @@ classes = (
     "setContent:type:subType:name:",
     "setHeader:"
   );
+  "method declarations" = (
+    "- (id) content",
+    "- (id) document"
+  );
 },
 
 {
@@ -151,9 +155,13 @@ classes = (
     "type",
     "typeDescription"
   );
-  /* The following conflicts with other GSXML* classes */
-  "method declarations" = ("- (GSXMLNode *)next",
-			   "- (GSXMLNode *)previous");
+  /* The following conflicts with other classes */
+  "method declarations" = (
+    "- (id) content",
+    "- (id) document",
+    "- (GSXMLNode *)next",
+    "- (GSXMLNode *)previous"
+  );
 },
 
 {
