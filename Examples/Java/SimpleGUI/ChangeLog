@@ -1,3 +1,9 @@
+Tue Oct 17 13:10:58 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* WrappingLibrary/Objc/SimpleGUI.m: Use the new
+	JIGSNSStringFromJstring functions instead of the low-levelish
+	GSJNI ones.
+
 Mon Oct  2 10:24:36 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JavaApp/run: Hacked in support for running the Example 
