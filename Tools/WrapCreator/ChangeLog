@@ -1,3 +1,8 @@
+Thu Nov 30 12:18:20 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* main.m (main): Initialize NSProcessInfo if building 
+	with GS_PASS_ARGUMENTS.
+
 Thu Nov 30 11:24:53 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	Patches by Helge Hess <helge.hess@skyrix.com>:
