@@ -1,0 +1,5 @@
+Sat Aug  5 15:47:55 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* JavaApp/run: Use ld_library_path.sh to set the LD_LIBRARY_PATH 
+	before going on.
+
