@@ -1,0 +1,873 @@
+{
+  "prerequisite libraries" = ("gnustep-base");
+  "classes" = (
+                {
+                  "java name" = "gnu.gnustep.gui.NSActionCell";
+		  
+                  "initializers" = ("init", "initImageCell:", "initTextCell:");
+		  "instance methods" = (
+                     "controlView",
+		     //"setAction:", 
+		     //"action", 
+		     "setTarget:", 
+		     "target",
+		     "setTag:", 
+		     "tag");
+                },
+
+                {
+                  "java name" = "gnu.gnustep.gui.NSApplication";
+
+		  /* "beginModalSessionForWindow:" has the problem 
+		     that NSModalSession is not supported by the wrapper. 
+                     The wrapper potentially can add types at run-time 
+		     anyway - TODO: make this. */
+
+		  "class methods" = ("sharedApplication");
+                  "instance methods" = (
+		    "finishLaunching",
+		    "activateIgnoringOtherApps:",
+		    "isActive",
+		    "deactivate",
+		    "run",
+		    "isRunning", 
+		    "stop:", 
+		    "runModalForWindow:", 
+		    "stopModal", 
+		    "stopModalWithCode:", 
+		    "abortModal", 		    
+		    //"beginModalSessionForWindow:", 
+	            //"runModalSession:", 
+		    //"endModalSession:", 
+		    "sendEvent:",
+		    "currentEvent", 
+		    "nextEventMatchingMask:untilDate:inMode:dequeue:", 
+		    "discardEventsMatchingMask:beforeEvent:", 
+		    "postEvent:atStart:",
+		    "keyWindow", 
+		    "mainWindow", 
+		    "windowWithWindowNumber:", 
+		    "windows", 
+		    //"makeWindowsPerform:inOrder:", 
+		    "setWindowsNeedUpdate:", 
+		    "updateWindows", 
+		    "miniaturizeAll:", 
+		    "preventWindowOrdering",
+		    "hide:", 
+		    "isHidden", 
+		    "unhide:", 
+		    "unhideWithoutActivation",
+		    "setApplicationIconImage:", 
+		    "applicationIconImage",
+		    "setMainMenu:", 
+		    "mainMenu",
+		    "setWindowsMenu:", 
+		    "windowsMenu", 
+		    "arrangeInFront:",
+		    "addWindowsItem:title:filename:",
+		    "changeWindowsItem:title:filename:", 
+		    "removeWindowsItem:",
+		    "updateWindowsItem:",
+		    "setServicesMenu:", 
+		    "servicesMenu",
+		    "registerServicesMenuSendTypes:returnTypes:", 
+		    "validRequestorForSendType:returnType:", 
+		    "setServicesProvider:", 
+		    "servicesProvider",
+		    "orderFrontColorPanel:", 
+		    "runPageLayout:",
+		    //"showHelp:",
+		    //"sendAction:to:from:", 
+		    //"tryToPerform:with:",
+		    //"targetForAction:",
+		    "context",
+		    //"reportException:",
+		    "terminate:",
+		    "setDelegate:",
+		    "delegate");
+
+                  "initializers" = ("init");
+                },
+
+                {
+                  "java name" = "gnu.gnustep.gui.NSBox";
+		  
+                  "initializers" = ("init", "initWithFrame:");
+		  "instance methods" = (
+		    "borderRect", 
+		    //"borderType", 
+		    //"setBorderType:", 
+		    "setTitle:", 
+		    "setTitleFont:", 
+		    //"setTitlePosition:", 
+		    "title", 
+		    "titleCell", 
+		    "titleFont", 
+		    //"titlePosition", 
+		    "titleRect",
+		    "contentView", 
+		    "contentViewMargins", 
+		    "setContentView:",
+		    "setContentViewMargins:",
+		    "setFrameFromContentFrame:",
+		    "sizeToFit");
+                },
+
+                {
+                  "java name" = "gnu.gnustep.gui.NSButton";
+		  
+		  // TODO
+                  "initializers" = ("init");
+                },
+
+                {
+                  "java name" = "gnu.gnustep.gui.NSButtonCell";
+		  
+		  // TODO
+                  "initializers" = ("init");
+                },
+
+                {
+                  "java name" = "gnu.gnustep.gui.NSCell";
+		  
+		  // TODO
+                  "initializers" = ("init", "initImageCell:", "initTextCell:");
+		  "class methods" = ("prefersTrackingUntilMouseUp"); 
+		  "instance methods" = (
+		     "setObjectValue:",
+		     "objectValue", 
+		     "hasValidObjectValue", 
+		     "setIntValue:", 
+		     "intValue", 
+		     "setStringValue:", 
+		     "stringValue", 
+		     "setDoubleValue:", 
+		     "doubleValue", 
+		     "setFloatValue:", 
+		     "floatValue",
+		     //"setCellAttribute:to:", 
+		     //"cellAttribute:", 
+		     //"setType:", 
+		     //"type", 
+		     "setEnabled:", 
+		     "isEnabled", 
+		     "setBezeled:", 
+		     "isBezeled", 
+		     "setBordered:", 
+		     "isBordered", 
+		     "isOpaque",
+		     "allowsMixedState", 
+		     "nextState", 
+		     "setAllowsMixedState:", 
+		     "setNextState", 
+		     "setState:", 
+		     "state",
+		     "setEditable:", 
+		     "isEditable", 
+		     "setSelectable:", 
+		     "isSelectable", 
+		     "setScrollable:", 
+		     "isScrollable", 
+		     //"setAlignment:", 
+		     //"alignment", 
+		     "setFont:", 
+		     "font", 
+		     "setWraps:", 
+		     "wraps", 
+		     //"setAttributedStringValue:", 
+		     //"attributedStringValue", 
+	             "setAllowsEditingTextAttributes:", 
+		     "allowsEditingTextAttributes", 
+		     "setImportsGraphics:", 
+		     "importsGraphics", 
+		     "setUpFieldEditorAttributes:",
+		     //"setAction:", 
+		     //"action", 
+		     "setTarget:", 
+		     "target", 
+		     "setContinuous:", 
+		     "isContinuous", 
+		     "sendActionOn:",
+		     "setImage:", 
+		     "image",
+		     "setTag:", 
+		     "tag",
+		     //"setFormatter:",
+		     //"formatter", 
+		     "setEntryType:", 
+		     "entryType", 
+		     "isEntryAcceptable:", 
+		     "setFloatingPointFormat:left:right:",
+		     //"compare:",
+		     "acceptsFirstResponder",  
+		     "setShowsFirstResponder:", 
+		     "showsFirstResponder",  
+		     "refusesFirstResponder",  
+		     "setRefusesFirstResponder:",  
+		     "performClick:", 
+		     "takeObjectValueFrom:", 
+		     "takeIntValueFrom:",  
+		     "takeStringValueFrom:",  
+		     "takeDoubleValueFrom:",  
+		     "takeFloatValueFrom:", 
+		     // TODO: protocols
+		     //"setRepresentedObject:",  
+		     //"representedObject", 
+		     "trackMouse:inRect:ofView:untilMouseUp:",  
+		     "startTrackingAt:inView:",  
+		     "continueTracking:at:inView:",  
+		     "stopTracking:at:inView:mouseIsUp:",  
+		     "mouseDownFlags",  
+		     //"getPeriodicDelay:interval:", 
+		     "resetCursorRect:inView:", 
+		     "keyEquivalent", 
+		     "calcDrawInfo:",  
+		     "cellSize",  
+		     "cellSizeForBounds:",  
+		     "drawingRectForBounds:",  
+		     "imageRectForBounds:",  
+		     "titleRectForBounds:", 
+		     "drawWithFrame:inView:",  
+		     "drawInteriorWithFrame:inView:",  
+		     "controlView",  
+		     "highlight:withFrame:inView:",  
+		     "isHighlighted", 
+		     "editWithFrame:inView:editor:delegate:event:",  
+		     "selectWithFrame:inView:editor:delegate:start:length:",  
+		     "sendsActionOnEndEditing", 
+		     "setSendsActionOnEndEditing:",  
+		     "endEditing:"); 
+                },
+
+                {
+                  "java name" = "gnu.gnustep.gui.NSColor";
+		  
+		  // TODO
+                  "initializers" = ("init");
+                },
+
+                {
+                  "java name" = "gnu.gnustep.gui.NSControl";
+		  
+                  "initializers" = ("init", "initWithFrame:");
+		  // TODO: What about Class ??
+	          //"class methods" = ("cellClass", "setCellClass:");
+		  "instance methods" = (
+		    "cell",
+		    "setCell:",
+		    "isEnabled",
+		    "setEnabled:",
+		    "selectedCell", 
+		    "selectedTag",
+		    "doubleValue", 
+		    "setDoubleValue:", 
+		    "floatValue", 
+		    "setFloatValue:", 
+		    "intValue", 
+		    "setIntValue:", 
+		    "objectValue", 
+		    "setObjectValue:", 
+		    "stringValue", 
+		    "setStringValue:", 
+		    "setNeedsDisplay",
+		    "takeDoubleValueFrom:", 
+		    "takeFloatValueFrom:", 
+		    "takeIntValueFrom:", 
+		    "takeObjectValueFrom:", 
+		    "takeStringValueFrom:",
+		    //"alignment", 
+		    //"setAlignment:", 
+		    "font", 
+		    "setFont:", 
+		    "setFloatingPointFormat:left:right:",
+		    "abortEditing", 
+		    "currentEditor", 
+		    "validateEditing",
+		    "calcSize", 
+		    "sizeToFit",
+		    "selectCell:", 
+		    "drawCell:", 
+		    "drawCellInside:", 
+		    "updateCell:", 
+		    "updateCellInside:",
+		    //"action", 
+		    //"setAction:", 
+		    "target", 
+		    "setTarget:", 
+		    "isContinuous", 
+		    "setContinuous:", 
+		    //"sendAction:to:", 
+		    "sendActionOn:",
+		    //"attributedStringValue", 
+		    //"setAttributedStringValue:",
+		    "tag", 
+		    "setTag:",
+		    "performClick:", 
+		    //"refusesFirstResponder", 
+		    //"setRefusesFirstResponder:",
+		    "mouseDown:", 
+		    "ignoresMultiClick", 
+		    "setIgnoresMultiClick:");
+                },
+
+                {
+                  "java name" = "gnu.gnustep.gui.NSClipView";
+		  
+		  // TODO
+                  "initializers" = ("init");
+                },
+
+                {
+                  "java name" = "gnu.gnustep.gui.NSCursor";
+		  
+		  // TODO
+                  "initializers" = ("init");
+                },
+
+                {
+                  "java name" = "gnu.gnustep.gui.NSEvent";
+
+		  "class methods" = (
+		    // TODO/BUG FIX: Method not found ??
+                    //"keyEventWithType:location:modifierFlags:timestamp:windowNumber:context:characters:charactersIgnoringModifier:isARepeat:keyCode:",
+
+		    // NSEventType
+                    //"mouseEventWithType:location:modifierFlags:timestamp:windowNumber:context:eventNumber:clickCount:pressure:",
+                    //"enterExitEventWithType:location:modifierFlags:timestamp:windowNumber:context:eventNumber:trackingNumber:userData:",
+                    //"otherEventWithType:location:modifierFlags:timestamp:windowNumber:context:subtype:data1:data2:",
+
+		    // NSTimeInterval
+                    //"startPeriodicEventsAfterDelay:withPeriod:",
+                    "stopPeriodicEvents");
+
+		  "instance methods" = (
+                    "context",
+                    "locationInWindow", 
+		    "modifierFlags", 
+                    //"timestamp", 
+                    //"type", 
+                    "window", 
+                    "windowNumber",
+                    "characters", 
+                    "charactersIgnoringModifiers", 
+                    "isARepeat", 
+		    // TODO: unsigned short
+                    //"keyCode",
+                    "clickCount", 
+                    "eventNumber", 
+                    "pressure",
+                    "trackingNumber", 
+                    "userData",
+                    "data1", 
+                    "data2" 
+		    // TODO: short
+                    //"subtype"
+		    );
+                 },
+
+                {
+                  "java name" = "gnu.gnustep.gui.NSFont";
+		  
+		  // TODO
+                  "initializers" = ("init");
+                },
+
+                {
+                  "java name" = "gnu.gnustep.gui.NSGraphicsContext";
+		  
+		  // TODO
+                  "initializers" = ("init");
+                },
+
+                {
+                  "java name" = "gnu.gnustep.gui.NSImage";
+		  
+		  // TODO
+                  "initializers" = ("init");
+                },
+
+                {
+                  "java name" = "gnu.gnustep.gui.NSMenu";
+		  
+                  "initializers" = ("init", "initWithTitle:");
+		  //"class methods" = ("setMenuZone:", "menuZone");
+		  "instance methods" = (
+		    // TODO: Support protocols !
+		    //"insertItem:atIndex:", 
+		    //"insertItemWithTitle:action:keyEquivalent:atIndex:", 
+		    //"addItem:", 
+		    //"addItemWithTitle:action:keyEquivalent:", 
+		    //"removeItem:", 
+		    "removeItemAtIndex:",  
+		    //"itemChanged:", 
+		    //"itemWithTag:", 
+		    //"itemWithTitle:", 
+		    //"itemAtIndex:", 
+		    "numberOfItems", 
+		    "itemArray", 
+		    //"indexOfItem:",  
+		    "indexOfItemWithTitle:",  
+		    "indexOfItemWithTag:",  
+		    //"indexOfItemWithTarget:andAction:",  
+		    "indexOfItemWithRepresentedObject:",  
+		    "indexOfItemWithSubmenu:", 
+		    //"setSubmenu:forItem:",  
+		    "submenuAction:",  
+		    "attachedMenu",  
+		    "isAttached",  
+		    "isTornOff",  
+		    "locationForSubmenu:",  
+		    "supermenu",  
+		    "setSupermenu:", 
+		    "autoenablesItems",  
+		    "setAutoenablesItems:",  
+		    "update", 
+		    "performKeyEquivalent:", 
+		    "performActionForItemAtIndex:", 
+		    "setTitle:",  
+		    "title", 
+		    "setMenuRepresentation:",  
+		    "menuRepresentation", 
+		    "menuChangedMessagesEnabled",  
+		    "setMenuChangedMessagesEnabled:",  
+		    "sizeToFit", 
+		    "helpRequested:"
+	          );
+                },
+
+                {
+
+                  "java name" = "gnu.gnustep.gui.NSMenuItem";
+
+             	  // TODO
+		  "initializers" = ("init");
+		},
+
+                {
+                  "java name" = "gnu.gnustep.gui.NSPanel";
+		  
+		  "initializers" = (
+                    "init"
+		    // NSBackingStoreType TODO
+                    //"initWithContentRect:styleMask:backing:defer:",
+                    //"initWithContentRect:styleMask:backing:defer:screen:"
+		    );
+		  "instance methods" = (
+		    "setFloatingPanel:",  
+		    "isFloatingPanel",  
+		    "setBecomesKeyOnlyIfNeeded:",  
+		    "becomesKeyOnlyIfNeeded",  
+		    "setWorksWhenModal:", 
+		    "worksWhenModal");
+                },
+
+                {
+                  "java name" = "gnu.gnustep.gui.NSPasteboard";
+		  
+		  // TODO
+                  "initializers" = ("init");
+                },
+
+                {
+                  "java name" = "gnu.gnustep.gui.NSResponder";
+
+		  "instance methods" = (
+                    "acceptsFirstResponder", 
+		    "becomeFirstResponder", 
+		    "resignFirstResponder",
+		    "setNextResponder:", 
+		    "nextResponder",
+		    "mouseDown:", 
+		    "mouseDragged:", 
+		    "mouseUp:", 
+		    "mouseMoved:", 
+		    "mouseEntered:", 
+		    "mouseExited:", 
+		    "rightMouseDown:", 
+		    "rightMouseDragged:", 
+		    "rightMouseUp:", 
+		    "keyDown:", 
+		    "keyUp:", 
+		    "flagsChanged:",
+		    "helpRequested:",
+		    "interpretKeyEvents:", 
+		    "performKeyEquivalent:", 
+		    //"doCommandBySelector:", 
+		    //"tryToPerform:with:",
+		    //"noResponderFor:",
+		    "validRequestorForSendType:returnType:");
+		  
+		  "initializers"  = ("init");
+              },
+
+                {
+                  "java name" = "gnu.gnustep.gui.NSSavePanel";
+		  
+		  "initializers" = ("init");
+		  "class methods" = ("savePanel");
+		  "instance methods" = (
+		    "setAccessoryView:", 
+		    "accessoryView",  
+		    "setTitle:",  
+		    "title",  
+		    "setPrompt:",  
+		    "prompt", 
+		    "setDirectory:",  
+		    "setRequiredFileType:",  
+		    "requiredFileType",  
+		    "treatsFilePackagesAsDirectories",  
+		    "setTreatsFilePackagesAsDirectories:",  
+		    "validateVisibleColumns", 
+		    "runModal",  
+		    "runModalForDirectory:file:", 
+		    "directory",  
+		    "filename", 
+		    "cancel:",  
+		    "ok:", 
+		    "selectText:", 
+		    "setDelegate:"
+		  );
+		},
+
+                {
+                  "java name" = "gnu.gnustep.gui.NSScreen";
+		  
+		  // TODO
+                  "initializers" = ("init");
+                },
+
+                {
+                  "java name" = "gnu.gnustep.gui.NSScrollView";
+		  
+		  // TODO
+                  "initializers" = ("init");
+                },
+
+                {
+                  "java name" = "gnu.gnustep.gui.NSText";
+		  
+		  // TODO
+                  "initializers" = ("init");
+                },
+
+                {
+                  "java name" = "gnu.gnustep.gui.NSView";
+		  
+                  "initializers" = ("init", "initWithFrame:");
+		  "class methods" = ("focusView"); 
+		  "instance methods" = (
+                    "superview", 
+		    "subviews",  
+		    "window",  
+		    "addSubview:",  
+		    //"addSubview:positioned:relativeTo:",  
+		    "removeFromSuperview",  
+		    "removeFromSuperviewWithoutNeedingDisplay",  
+		    "replaceSubview:with:",  
+		    "isDescendantOf:",  
+		    "opaqueAncestor",  
+		    "ancestorSharedWithView:",  
+		    "viewWillMoveToSuperview:",  
+		    "viewWillMoveToWindow:", 
+		    "viewWithTag:", 
+		    "tag",
+		    "setFrame:", 
+		    "frame",  
+		    "setFrameOrigin:",  
+		    "setFrameSize:",  
+		    "setFrameRotation:",  
+		    "frameRotation", 
+		    "setBounds:",  
+		    "bounds",  
+		    "setBoundsOrigin:",  
+		    "setBoundsSize:",  
+		    "setBoundsRotation:",  
+		    "boundsRotation", 
+		    "translateOriginToPoint:",  
+		    "scaleUnitSquareToSize:",  
+		    "rotateByAngle:", 
+		    "isFlipped",  
+		    "isRotatedFromBase",  
+		    "isRotatedOrScaledFromBase", 
+		    "convertPoint:fromView:",  
+		    "convertPoint:toView:",  
+		    "convertSize:fromView:",  
+		    "convertSize:toView:",  
+		    "convertRect:fromView:",  
+		    "convertRect:toView:",  
+		    "centerScanRect:", 
+		    "setPostsFrameChangedNotifications:",  
+		    "postsFrameChangedNotifications", 
+		    "setPostsBoundsChangedNotifications:",  
+		    "postsBoundsChangedNotifications", 
+		    "resizeSubviewsWithOldSize:",  
+		    "resizeWithOldSuperviewSize:",  
+		    "setAutoresizesSubviews:",  
+		    "autoresizesSubviews",  
+		    "setAutoresizingMask:",  
+		    "autoresizingMask", 
+		    "lockFocus",  
+		    "unlockFocus",  
+		    "setNeedsDisplay:",  
+		    "setNeedsDisplayInRect:",  
+		    "needsDisplay",  
+		    "display",  
+		    "displayRect:",  
+		    "displayRectIgnoringOpacity:",  
+		    "displayIfNeeded",  
+		    "displayIfNeededInRect:",  
+		    "displayIfNeededIgnoringOpacity",  
+		    "displayIfNeededInRectIgnoringOpacity:",  
+		    "isOpaque", 
+		    "drawRect:",  
+		    "visibleRect",  
+		    "canDraw",  
+		    "shouldDrawColor", 
+		    "allocateGState",  
+		    "gState",  
+		    "setUpGState",  
+		    "renewGState",  
+		    "releaseGState", 
+		    "acceptsFirstMouse:",  
+		    "hitTest:",  
+		    "mouse:inRect:",  
+		    "performKeyEquivalent:",  
+		    "performMnemonic:", 
+		    "dragImage:at:offset:event:pasteboard:source:slideBack:",  
+		    "dragFile:fromRect:slideBack:event:",  
+		    "registerForDraggedTypes:",  
+		    "unregisterDraggedTypes",  
+		    "shouldDelayWindowOrderingForEvent:", 
+		    "addCursorRect:cursor:",  
+		    "removeCursorRect:cursor:",  
+		    "discardCursorRects",  
+		    "resetCursorRects", 
+		    //"addTrackingRect:owner:userData:assumeInside:",  
+		    //"removeTrackingRect:", 
+		    "scrollPoint:",  
+		    "scrollRectToVisible:",  
+		    "autoscroll:",  
+		    "adjustScroll:",  
+		    "scrollRect:by:",  
+		    "enclosingScrollView",  
+		    "scrollClipView:toPoint:",  
+		    "reflectScrolledClipView:", 
+		    "setNextKeyView:",  
+		    "nextKeyView",  
+		    "nextValidKeyView",  
+		    "previousKeyView",  
+		    "previousValidKeyView", 
+		    "print:",  
+		    "fax:",  
+		    //"dataWithEPSInsideRect:",  
+		    "writeEPSInsideRect:toPasteboard:",
+		    "heightAdjustLimit",  
+		    "widthAdjustLimit",  
+		    /* Containing (float *) */
+		    //"adjustPageWidthNew:left:right:limit:",  
+		    //"adjustPageHeightNew:top:bottom:limit:",  
+		    //"knowsPagesFirst:last:",  
+		    "rectForPage:",  
+		    "locationOfPrintRect:", 
+		    "drawPageBorderWithSize:",  
+		    "drawSheetBorderWithSize:", 
+		    "beginPrologueBBox:creationDate:createdBy:fonts:forWhom:pages:title:",  
+		    "endHeaderComments",  
+		    "endPrologue",  
+		    "beginSetup",  
+		    "endSetup",  
+		    "beginPage:label:bBox:fonts:",  
+		    "beginPageSetupRect:placement:",  
+		    "addToPageSetup",  
+		    "endPageSetup",  
+		    "endPage",  
+		    "beginTrailer",  
+		    "endTrailer"); 
+		  "method name mapping" = 
+                    {
+                       "convertPoint:fromView:" = "convertPointFromView";
+                       "convertPoint:toView:"   = "convertPointToView";
+                       "convertSize:fromView:"  = "convertSizeFromView";
+                       "convertSize:toView:"    = "convertSizeToView";
+                       "convertRect:fromView:"  = "convertRectFromView";
+                       "convertRect:toView:"    = "convertRectToView";
+                    };
+                },
+
+	      {
+                  "java name" = "gnu.gnustep.gui.NSWindow";
+
+		  "initializers" = (
+                    "init"
+		    // NSBackingStoreType TODO
+                    //"initWithContentRect:styleMask:backing:defer:",
+                    //"initWithContentRect:styleMask:backing:defer:screen:"
+                    );
+
+		  "class methods" = (
+		    "contentRectForFrameRect:styleMask:", 
+		    "frameRectForContentRect:styleMask:", 
+		    "minFrameWidthWithTitle:styleMask:",
+		    "removeFrameUsingName:"
+		    // NSWindowDepth 
+		    //"defaultDepthLimit"
+                    );
+
+		  "instance methods" = (
+		    "convertBaseToScreen:", 
+		    "convertScreenToBase:", 
+		    "setFrame:display:",  
+		    "frame",  
+		    "setFrameOrigin:",  
+		    "setFrameTopLeftPoint:",  
+		    "setContentSize:",  
+		    "cascadeTopLeftFromPoint:",  
+		    "center",  
+		    "resizeFlags",  
+		    "performZoom:",  
+		    "zoom:", 
+		    "maxSize",
+		    "minSize", 
+		    "setMaxSize:", 
+		    "setMinSize:", 
+		    "setAspectRatio:", 
+		    "aspectRatio", 
+		    "setResizeIncrements:", 
+		    "resizeIncrements", 
+		    "constrainFrameRect:toScreen:",
+		    "saveFrameUsingName:", 
+		    "setFrameUsingName:", 
+		    "setFrameAutosaveName:", 
+		    "frameAutosaveName", 
+		    "setFrameFromString:", 
+		    "stringWithSavedFrame",
+		    "orderBack:",
+		    "orderFront:", 
+		    "orderFrontRegardless", 
+		    "orderOut:", 
+		    // NSWindowOrderingMode TODO
+		    //"orderWindow:relativeTo:", 
+		    "setLevel:", 
+		    "level", 
+		    "isVisible",
+		    "becomeKeyWindow", 
+		    "canBecomeKeyWindow", 
+		    "isKeyWindow", 
+		    "makeKeyAndOrderFront:", 
+		    "makeKeyWindow", 
+		    "resignKeyWindow", 
+		    "becomeMainWindow",
+		    "canBecomeMainWindow", 
+		    "isMainWindow", 
+		    "makeMainWindow", 
+		    "resignMainWindow",
+		    "defaultButtonCell", 
+		    "setDefaultButtonCell:", 
+		    "disableKeyEquivalentForDefaultButtonCell", 
+		    "enableKeyEquivalentForDefaultButtonCell",
+		    "display", 
+		    "displayIfNeeded", 
+		    "setViewsNeedDisplay:", 
+		    "viewsNeedDisplay", 
+		    "useOptimizedDrawing:", 
+		    "setAutodisplay:", 
+		    "isAutodisplay", 
+		    "update",
+		    //"setInterfaceStyle:", 
+		    //"interfaceStyle",
+		    "flushWindow", 
+		    "flushWindowIfNeeded", 
+		    "enableFlushWindow", 
+		    "disableFlushWindow", 
+		    "isFlushWindowDisabled",
+		    "cacheImageInRect:", 
+		    "restoreCachedImage", 
+		    "discardCachedImage",
+		    "windowNumber", 
+		    "gState", 
+		    "deviceDescription", 
+		    //"setBackingType:", 
+		    //"backingType", 
+		    "setOneShot:", 
+		    "isOneShot", 
+		    //"setDepthLimit:", 
+		    //"depthLimit", 
+		    "setDynamicDepthLimit:", 
+		    "hasDynamicDepthLimit", 
+		    "canStoreColor",
+		    "deepestScreen", 
+		    "screen",
+		    "makeFirstResponder:", 
+		    "firstResponder",
+		    "currentEvent", 
+		    "nextEventMatchingMask:", 
+		    //"nextEventMatchingMask:untilDate:inMode:dequeue:", 
+		    "discardEventsMatchingMask:beforeEvent:", 
+		    "postEvent:atStart:", 
+		    "sendEvent:", 
+		    //"tryToPerform:with:", 
+		    "keyDown:", 
+		    "mouseLocationOutsideOfEventStream", 
+		    "setAcceptsMouseMovedEvents:", 
+		    "acceptsMouseMovedEvents",
+		    "fieldEditor:forObject:", 
+		    "endEditingFor:",
+		    "setInitialFirstResponder:", 
+		    "initialFirstResponder", 
+		    "selectKeyViewFollowingView:", 
+		    "selectKeyViewPrecedingView:", 
+		    "selectNextKeyView:", 
+		    "selectPreviousKeyView:", 
+		    //"keyViewSelectionDirection",
+		    "setTitle:", 
+		    "setTitleWithRepresentedFilename:", 
+		    "title", 
+		    "setRepresentedFilename:", 
+		    "representedFilename",
+		    "setDocumentEdited:", 
+		    "isDocumentEdited",
+		    "close", 
+		    "performClose:", 
+		    "setReleasedWhenClosed:", 
+		    "isReleasedWhenClosed",
+		    "miniaturize:", 
+		    "performMiniaturize:", 
+		    "deminiaturize:", 
+		    "isMiniaturized", 
+		    "setMiniwindowImage:", 
+		    "miniwindowImage", 
+		    "setMiniwindowTitle:", 
+		    "miniwindowTitle",
+		    "setExcludedFromWindowsMenu:", 
+		    "isExcludedFromWindowsMenu",
+		    "areCursorRectsEnabled", 
+		    "enableCursorRects", 
+		    "disableCursorRects", 
+		    "discardCursorRects", 
+		    "invalidateCursorRectsForView:", 
+		    "resetCursorRects",
+		    "dragImage:at:offset:event:pasteboard:source:slideBack:", 
+		    "registerForDraggedTypes:", 
+		    "unregisterDraggedTypes",
+		    "setHidesOnDeactivate:", 
+		    "hidesOnDeactivate", 
+		    "worksWhenModal",
+		    "setContentView:", 
+		    "contentView",
+		    "setBackgroundColor:", 
+		    "backgroundColor",
+		    "styleMask",
+		    "validRequestorForSendType:returnType:",
+		    "print:", 
+		    //"dataWithEPSInsideRect:", 
+		    "fax:",
+		    "setDelegate:", 
+		    "delegate");
+		  }
+
+		);		    
+}		    
+
+
+
+

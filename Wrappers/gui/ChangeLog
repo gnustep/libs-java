@@ -1,0 +1,7 @@
+Tue Sep  5 19:46:47 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* libgnustep-gui.jigs: New file.
+	* GNUmakefile: New file.
+	* GNUmakefile.wrapper.objc.preamble: New file.
+	* README: New file.
+	* gnustep-gui.h: New file.
