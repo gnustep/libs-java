@@ -1,4 +1,4 @@
-/* GSJNIClass.m - Class name related utilities
+/* GSJNIClass.m - Class name related utilities -*-objc-*-
    Copyright (C) 2000 Free Software Foundation, Inc.
    
    Written by:  Nicola Pero <nicola@brainstorm.co.uk>
@@ -117,7 +117,7 @@ NSString *GSJNI_NSStringFromJClass (JNIEnv *env, jclass class)
   static jmethodID jid = NULL; // Cached
   jstring j;
   NSString *returnString;
-  
+
   if ((*env)->PushLocalFrame (env, 2) < 0)
     {
       return nil;
@@ -163,7 +163,8 @@ NSString *GSJNI_NSStringFromJClass (JNIEnv *env, jclass class)
 }
 
 
-NSString *GSJNI_SuperclassNameFromClassName (JNIEnv *env, NSString *className)
+NSString *GSJNI_SuperclassNameFromClassName (JNIEnv *env, 
+					         NSString *className)
 {
   const char *cClassName;
   jclass class;
