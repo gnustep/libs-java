@@ -33,6 +33,47 @@
                 },
 
                 {
+                  "java name" = "gnu.gnustep.base.NSDate";
+
+		  "class methods" = (
+		    "date",  
+                    //"dateWithTimeIntervalSinceNow:",  
+                    "dateWithString:",  
+                    "dateWithNaturalLanguageString:",  
+                    //"dateWithNaturalLanguageString:locale:",  
+                    //"dateWithTimeIntervalSinceReferenceDate:",  
+                    //"dateWithTimeIntervalSince1970:",  
+                    "distantFuture", 
+                    "distantPast" 
+                    //"timeIntervalSinceReferenceDate"
+                    );
+
+                  "initializers" = (
+                    //"initWithTimeIntervalSinceNow:", 
+                    "initWithString:",
+                    //"initWithTimeInterval:sinceDate:",
+                    "init"
+                    //"initWithTimeIntervalSinceReferenceDate:"
+                    );
+
+                  "instance methods" = (
+                    //"addTimeInterval:",
+                    "isEqualToDate:", 
+                    "earlierDate:", 
+                    "laterDate:", 
+                    //"compare:",
+                    //"timeIntervalSinceDate:", 
+                    //"timeIntervalSinceNow", 
+                    //"timeIntervalSinceReferenceDate", 
+                    //"timeIntervalSince1970",
+                    "description", 
+                    "descriptionWithLocale:" 
+                    //"descriptionWithCalendarFormat:timeZone:locale:",
+                    //"dateWithCalendarFormat:timeZone:"
+                    );
+                },
+
+                {
                   "java name" = "gnu.gnustep.base.NSDictionary";
 
                   "instance methods" = ("count",
@@ -128,6 +169,16 @@
 				    "initWithSet:"
 				    //"initWithSet:copyItems:"
 				    );
+                },
+
+                {
+                  "java name" = "gnu.gnustep.base.NSNotification";
+
+		  "class methods" = (
+                    //"notificationWithName:object:", 
+		    "notificationWithName:object:userInfo:");
+
+		  "instance methods" = ("name", "object", "userInfo");		   
                 },
 
                 {
