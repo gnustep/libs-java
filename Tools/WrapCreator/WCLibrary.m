@@ -24,6 +24,7 @@
 #include "WCClass.h"
 #include "WCLibrary.h"
 #include "WCHeaderParser.h"
+#include "WCCustomType.h"
 
 static NSString *libraryName;
 static NSString *libraryHeader;
@@ -95,7 +96,11 @@ static BOOL verboseOutput;
 {
   NSAutoreleasePool *pool;
   NSArray *classes;
+  NSDictionary *customTypes;
   NSDictionary *classInfo;
+  NSEnumerator *enumerator;
+  NSString *customType;
+  NSString *primitiveType;
   NSString *path;
   WCClass *class;
   int i, count;
@@ -123,6 +128,36 @@ static BOOL verboseOutput;
   [libraryInitCode appendString: @"JNI_OnLoad (JavaVM *jvm, void *reserved)\n"];
   [libraryInitCode appendString: @"{\n"];
 
+  /* Load custom types */
+  pool = [NSAutoreleasePool new];
+  customTypes = [wrappingPreferences objectForKey: @"types"];
+
+  
+  enumerator = [customTypes keyEnumerator];
+  
+  while (1)
+    {
+      customType = [enumerator nextObject];
+      if (customType == nil)
+	{
+	  break;
+	}
+      primitiveType = [customTypes objectForKey: customType];
+      
+      if (verboseOutput == YES)
+	{
+	  printf ("Loading type mapping %s --> %s\n", 
+		  [customType cString], [primitiveType cString]);
+	}
+      /* Allocating the type registers it in WCType's internal table
+	 so it will be returned next time WCType's is asked for this
+	 type. */
+      [[WCCustomType alloc] initWithObjcType: customType
+			    primitiveType: primitiveType];
+    }
+  [pool release];
+
+  /* Wrap classes */
   classes = [wrappingPreferences objectForKey: @"classes"];
   count = [classes count];
   for (i = 0; i < count; i++)
