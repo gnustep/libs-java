@@ -132,7 +132,6 @@ static inline id _JIGSMapperGetProxyFromProxiedJava (jobject java)
   
   objc_mutex_lock (_JIGSProxiedJavaMapLock);
   objc = NSMapGet (_JIGSProxiedJavaMap, java);
-  AUTORELEASE(RETAIN(objc));
   objc_mutex_unlock (_JIGSProxiedJavaMapLock);
   return objc;
 }
@@ -610,8 +609,19 @@ id JIGSIdFromJobject (JNIEnv *env, jobject object)
   // gnu.gnustep.NSObject
   if ((*env)->IsInstanceOf (env, object, gnu_gnustep_base_NSObject) == YES)
     {
-      return JIGS_JLONG_TO_ID((*env)->GetLongField (env, object, 
+      ret = JIGS_JLONG_TO_ID((*env)->GetLongField (env, object, 
 						    fidRealObject));
+      /* The 'object' is a java proxy to an ObjC object, and it's possible
+       * that it could be garbage collected by another thread almost
+       * immediately after this function returns.
+       * If that happens, the finalization of the proxy will release the
+       * ObjC instance ... which might be in use by the ObjC code we return
+       * it to.  If the ObjC code has not yet retained the ObjC instance,
+       * that instance may be deallocated and the ObjC code could crash.
+       * To prevent that happening, we retain and autorelease the instance
+       * so that we guarantee enough time for the ObjC code to retain it.
+       */
+      return AUTORELEASE(RETAIN(ret));
     }  
 
   // FIXME - how slow is going to be the following class examination session
@@ -619,11 +629,13 @@ id JIGSIdFromJobject (JNIEnv *env, jobject object)
   // java.lang.String
   if ((*env)->IsInstanceOf (env, object, java_lang_String) == YES)
     {
+      // Returns an autoreleased NSString
       return GSJNI_NSStringFromJString (env, object);
     }
 
   if ((*env)->IsInstanceOf (env, object, java_lang_Number) == YES)
     {
+      // Returns an autoreleased NSNumber
       return GSJNI_NSNumberFromJNumber (env, object);
     }
   
@@ -631,10 +643,11 @@ id JIGSIdFromJobject (JNIEnv *env, jobject object)
   ret = _JIGSMapperGetProxyFromProxiedJava (object);
   if (ret != nil)
     {
-      return ret;
+      // Returns a retained and autoreleased object from the map (see above).
+      return AUTORELEASE(RETAIN(ret));
     }
 
-  // Otherwise, create a proxy
+  // Otherwise, create a proxy ... returns the autoreleased proxy.
   return JIGSCreateNewObjcProxy (env, object);
 }
 
