@@ -1,3 +1,11 @@
+Fri Oct  6 11:26:42 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* gnu/gnustep/java/GSJNIMethods.java (jniSignatureOfClass),
+	(getMethodArgumentSignature), (argumentSignature),
+	(parameterTypes), (nextClassFromJniSignature): New methods.
+	* gnu/gnustep/base/NSSelector.java: New file.
+	* GNUmakefile (gnu.gnustep.java_JAVA_FILES): Added NSSelector.
+
 Fri Sep 29 15:46:53 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* gnu/gnustep/java/JIGS.java: Don't call JIGS.initialize () 
