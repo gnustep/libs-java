@@ -1,0 +1,11 @@
+{
+  "classes" = (
+                {
+                  "java name" = "SimpleGUI";
+                  "objective-c name" = "SimpleGUI";
+                  "instance methods" = ("start",
+                                        "addButtonWithTitle:action:target:");
+                  "initializers" = ("init", "initWithTitle:");
+                }
+              );
+}
