@@ -1,4 +1,11 @@
-Thu Jul 27 16:09:52 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+Fri Jul 28 12:44:30 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* JIGSProxyIMP.m (_JIGS_id_IMP_JavaMethod): After the constructor 
+	is succesfull, insert the objects in the JIGSMapper table.
+	* JIGSProxy.m (_java_lang_Object__dealloc_): Remove the object 
+	from the JIGSMapper table.
+	
+Thu Jul 27 16:09:52 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGSException.m (JIGSRaiseNSExceptionFromJException): Fixed
 	critical typo/bug; fixed leakage of the local reference to the
@@ -6,7 +13,7 @@ Thu Jul 27 16:09:52 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 	* JIGSProxyIMP.m (_JIGS_id_IMP_JavaMethod): PushLocalFrame to get
 	memory for the local reference to the returned object.
 
-Thu Jul 27 11:44:13 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+Thu Jul 27 11:44:13 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGSProxyIMP.h: New file.
 	* JIGSProxyIMP.m: New file.
@@ -15,22 +22,22 @@ Thu Jul 27 11:44:13 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 	* JIGSProxy.h: New file.
 	* JIGSProxy.m: New file.
 
-Thu Jul 27 11:36:59 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+Thu Jul 27 11:36:59 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* ObjcRuntimeUtilities.m: Added missing include.
 
-Thu Jul 27 11:33:40 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+Thu Jul 27 11:33:40 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GSJNICache.h (GSJNI_NewClassCache): Renamed function 
 	to be shorter and make code more readable.  
 	Updated all calls to the function.
 
-Wed Jul 26 12:56:55 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+Wed Jul 26 12:56:55 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGSClass.m: New file.
 	* JIGSClass.h: New file.
 
-Mon Jul 24 11:19:34 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+Mon Jul 24 11:19:34 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GSJNIClass.m (GSJNI_NSStringFromClassOfObject): Simplified; removed 
 	unused global reference cache.
