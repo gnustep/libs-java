@@ -7,8 +7,8 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
   Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
 <HTML>
 <HEAD>
-<TITLE>4.3 Specifying the Main Library Header</TITLE>
-<META NAME="description" CONTENT="4.3 Specifying the Main Library Header">
+<TITLE>4.3 Specifying the main library header</TITLE>
+<META NAME="description" CONTENT="4.3 Specifying the main library header">
 <META NAME="keywords" CONTENT="Manual">
 <META NAME="resource-type" CONTENT="document">
 <META NAME="distribution" CONTENT="global">
@@ -26,88 +26,25 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 </HEAD>
 
 <BODY BGCOLOR="#FFFFFF" text="#000000" link="#0000FF" vlink="#4444FF" alink="#3388FF">
-<B> Next: <A NAME="tex2html312"
-  HREF="node15.html">4.4 The Wrapper Directory</A> </B>
-<B>Up: <A NAME="tex2html310"
+<B> Next: <A NAME="tex2html318"
+  HREF="node15.html">4.4 Library header name</A> </B>
+<B>Up: <A NAME="tex2html316"
   HREF="node11.html">4. Wrapping Objective-C Libraries</A>  </B>
-<B> Previous: <A NAME="tex2html304"
-  HREF="node13.html">4.2 Turning on Generation</A> </B>
+<B> Previous: <A NAME="tex2html310"
+  HREF="node13.html">4.2 The GNUmakefile for</A> </B>
 <BR> <P>
 
 <!--End of Navigation Panel-->
 
 <H1><A NAME="SECTION00530000000000000000">
-4.3 Specifying the Main Library Header</A>
+4.3 Specifying the main library header</A>
 </H1>
-JIGS automatically parses your library headers to determine the exact
-method declarations of the methods you want to expose.  
 
 <P>
-You need to specify a single header file for your library which
-includes all the header files for your library.  JIGS tries to
-determine it in the following way: it takes the name of your library 
-(the one you set by setting the <TT>LIBRARY_NAME</TT>), removes 
-the trailing <TT>lib</TT>, then looks for a header file with that name 
-in the directory <TT>HEADER_FILES_DIR</TT>. 
-
-<P>
-For example, if the GNUmakefile for your library is the following:
-
-<P>
-<PRE>
-include $(GNUSTEP_MAKEFILES)/common.make
-
-LIBRARY_NAME = libGame
-
-libGame_OBJC_FILES = Alien.m Fuel.m SpaceShip.m Sprite.m
-
-libGame_HEADER_FILES_DIR = Headers
-libGame_HEADER_FILES_INSTALL_DIR = /Game
-libGame_HEADER_FILES = Alien.h Game.h Fuel.h SpaceShip.h Sprite.h
-
-include $(GNUSTEP_MAKEFILES)/library.make
-
-# Comment the following line to disable java wrappers
-include $(GNUSTEP_MAKEFILES)/java-wrapper.make
-</PRE>
-
-<P>
-Then your library name is <TT>libGame</TT>, which is shortened to
-<TT>Game</TT>.  The header file dir is <TT>Headers</TT>, so that 
-by default JIGS will (try to) parse the file <TT>Headers/Game.h</TT>
-as the library header file.  This header file should include all the
-header files which might be need to compile code against your library.
-
-<P>
-If the header which JIGS needs to parse is not correctly determined in
-this way, you can override it by adding a <TT>GNUmakefile.wrapper</TT>
-to your project, and defining <TT>WRAPPER_HEADER</TT> manually there.
-For example, if the header you want to be parsed is called
-<TT>game.h</TT> rather than <TT>Game.h</TT>, you can add the following 
-<TT>GNUmakefile.wrapper</TT> to fix this: 
-<PRE>
-WRAPPER_HEADER = Headers/game.h
-</PRE>
-The <TT>GNUmakefile.wrapper</TT> is automatically included (if present) 
-by JIGS at the correct stage.
-
-<P>
-The other variables you may want to set in the
-<TT>GNUmakefile.wrapper</TT> are <TT>JIGS_FILE</TT> and
-<TT>WRAPPER_DIR</TT>.  We will talk about these in the next section.
-
-<P>
-<HR><B> Next: <A NAME="tex2html312"
-  HREF="node15.html">4.4 The Wrapper Directory</A> </B>
-<B>Up: <A NAME="tex2html310"
-  HREF="node11.html">4. Wrapping Objective-C Libraries</A> </B>
-<B> Previous: <A NAME="tex2html304"
-  HREF="node13.html">4.2 Turning on Generation</A> </B>
-
-<!--End of Navigation Panel-->
+<BR><HR>
 <ADDRESS>
 Nicola Pero
-2001-05-06
+2001-05-21
 </ADDRESS>
 </BODY>
 </HTML>

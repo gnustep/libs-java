@@ -7,8 +7,8 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
   Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
 <HTML>
 <HEAD>
-<TITLE>4.2 Turning on Generation of Java Wrappers</TITLE>
-<META NAME="description" CONTENT="4.2 Turning on Generation of Java Wrappers">
+<TITLE>4.2 The GNUmakefile for java wrappers</TITLE>
+<META NAME="description" CONTENT="4.2 The GNUmakefile for java wrappers">
 <META NAME="keywords" CONTENT="Manual">
 <META NAME="resource-type" CONTENT="document">
 <META NAME="distribution" CONTENT="global">
@@ -26,46 +26,38 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 </HEAD>
 
 <BODY BGCOLOR="#FFFFFF" text="#000000" link="#0000FF" vlink="#4444FF" alink="#3388FF">
-<B> Next: <A NAME="tex2html302"
-  HREF="node14.html">4.3 Specifying the Main</A> </B>
-<B>Up: <A NAME="tex2html300"
+<B> Next: <A NAME="tex2html308"
+  HREF="node14.html">4.3 Specifying the main</A> </B>
+<B>Up: <A NAME="tex2html306"
   HREF="node11.html">4. Wrapping Objective-C Libraries</A>  </B>
-<B> Previous: <A NAME="tex2html294"
-  HREF="node12.html">4.1 Compiling the Wrappers</A> </B>
+<B> Previous: <A NAME="tex2html300"
+  HREF="node12.html">4.1 Compiling ready-to-use wrappers</A> </B>
 <BR> <P>
 
 <!--End of Navigation Panel-->
 
 <H1><A NAME="SECTION00520000000000000000">
-4.2 Turning on Generation of Java Wrappers</A>
+4.2 The GNUmakefile for java wrappers</A>
 </H1>
-We assume that your library is an objective-C library which is managed
-using the GNUstep make package.
+We are now going to learn how to write the <TT>GNUmakefile</TT> and
+the other support files to have JIGS wrap an Objective-C library.  We
+begin with the <TT>GNUmakefile</TT>.  Here is a simple example:
 
 <P>
-To turn on the generation of the java wrappers for your objective-C
-library, all you need to do is to add the line
 <PRE>
+include $(GNUSTEP_MAKEFILES)/common.make
+
+JAVA_WRAPPER_NAME = Name
+
 include $(GNUSTEP_MAKEFILES)/java-wrapper.make
 </PRE>
-after including <TT>library.make</TT>, that is, after the line
-<PRE>
-include $(GNUSTEP_MAKEFILES)/library.make
-</PRE>
 
 <P>
-When you now compile your library (by typing <TT>make</TT>), JIGS will
-try to generate the java wrappers.  In this way, you can simply turn
-off and on generation of the java wrappers by commenting and
-uncommenting the inclusion of <TT>java-wrapper.make</TT>.  
-You may also want to consider using 
-<PRE>
--include $(GNUSTEP_MAKEFILES)/java-wrapper.make
-</PRE>
-which will cause <TT>java-wrapper.make</TT> (and thus code for wrapper
-generation) to be included if and only if it can be found (which
-should happen if and only if jigs is installed), without complaining
-if it can't.
+You need to create a new directory, and put this <TT>GNUmakefile</TT>
+into it.  The <TT>JAVA_WRAPPER_NAME</TT> must be the same as the name
+of the library you want to wrap, after removing the <TT>lib</TT> in
+front of the library name.  In the example, we are wrapping a library
+called <TT>libName</TT>.
 
 <P>
 To correctly generate the java wrappers, you will actually need to
@@ -75,8 +67,9 @@ how.  This will be discussed in detail in the following sections.
 <P>
 As a last comment, you may want to stop JIGS from automatically trying
 to compile the java wrapper after creating them, and from installing
-it automatically after installing your library.  To do this, you just
-need to add
+it automatically after installing your library.  I don't see why this
+could be useful except if you are debugging JIGS itself, anyway if you
+ever need this, just add
 <PRE>
 BUILD_JAVA_WRAPPER_AUTOMATICALLY=no
 </PRE>
@@ -85,21 +78,21 @@ wrapper source, but will not automatically compile it.  When you want
 to compile it, you have to <TT>cd</TT> into the java wrapper
 directory, and type <TT>make</TT> there.  Similarly, to install the
 java wrappers <TT>cd</TT> into the java wrapper directory, and type
-<TT>make install</TT> (you probably need to be root) - JIGS will not 
+<TT>make install</TT> (you probably need to be root) - JIGS will not
 install them automatically when you install the library.
 
 <P>
-<HR><B> Next: <A NAME="tex2html302"
-  HREF="node14.html">4.3 Specifying the Main</A> </B>
-<B>Up: <A NAME="tex2html300"
+<HR><B> Next: <A NAME="tex2html308"
+  HREF="node14.html">4.3 Specifying the main</A> </B>
+<B>Up: <A NAME="tex2html306"
   HREF="node11.html">4. Wrapping Objective-C Libraries</A> </B>
-<B> Previous: <A NAME="tex2html294"
-  HREF="node12.html">4.1 Compiling the Wrappers</A> </B>
+<B> Previous: <A NAME="tex2html300"
+  HREF="node12.html">4.1 Compiling ready-to-use wrappers</A> </B>
 
 <!--End of Navigation Panel-->
 <ADDRESS>
 Nicola Pero
-2001-05-06
+2001-05-21
 </ADDRESS>
 </BODY>
 </HTML>

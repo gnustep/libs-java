@@ -19,18 +19,18 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 
 <LINK REL="STYLESHEET" HREF="Manual.css">
 
-<LINK REL="next" HREF="node21.html">
+<LINK REL="next" HREF="node23.html">
 <LINK REL="previous" HREF="node6.html">
 <LINK REL="up" HREF="Manual.html">
 <LINK REL="next" HREF="node12.html">
 </HEAD>
 
 <BODY BGCOLOR="#FFFFFF" text="#000000" link="#0000FF" vlink="#4444FF" alink="#3388FF">
-<B> Next: <A NAME="tex2html239"
-  HREF="node12.html">4.1 Compiling the Wrappers</A> </B>
-<B>Up: <A NAME="tex2html237"
+<B> Next: <A NAME="tex2html242"
+  HREF="node12.html">4.1 Compiling ready-to-use wrappers</A> </B>
+<B>Up: <A NAME="tex2html240"
   HREF="Manual.html">Manual</A>  </B>
-<B> Previous: <A NAME="tex2html231"
+<B> Previous: <A NAME="tex2html234"
   HREF="node10.html">3.4 Advanced Topics</A> </B>
 <BR> <P>
 
@@ -43,7 +43,33 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 <P>
 In this chapter we are going to learn how to use JIGS to expose an
 existing Objective-C library to Java.  Technically, we call this
-procedure <I>wrapping</I> the library.  
+procedure <I>wrapping</I> the library.
+
+<P>
+
+<H2><A NAME="SECTION00501000000000000000">
+4.0.1 Historical Notes</A>
+</H2>
+Building java wrappers for an objective-C library in JIGS used to be
+strongly coupled with building the library itself.  Starting with JIGS
+1.4.0, the wrapping mechanism has been redesigned to be totally
+independent from the original library: building the objective-C
+library and building the java wrappers for it are now totally
+independent processes.  You can now build the objective-C library,
+install it, and only later on create java wrappers for the library.
+You can also easily wrap objective-c libraries which you got in binary
+form (as soon as you have the header files from them).
+
+<P>
+You can still build wrappers in the old way by including
+<PRE>
+old-java-wrapper.make
+</PRE>
+rather than <TT>java-wrapper.make</TT>.  But please - whenever
+possible - use the new - much better - way, and please update any old
+wrapper to the new design.  In this manual, we only document the new
+design.  The old backward compatibility code will be dropped at some
+point in the future.
 
 <P>
 <BR><HR>
@@ -51,109 +77,130 @@ procedure <I>wrapping</I> the library.
 <A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
 
 <UL>
-<LI><A NAME="tex2html240"
-  HREF="node12.html">4.1 Compiling the Wrappers of an Already Configured Library</A>
-<UL>
-<LI><A NAME="tex2html241"
-  HREF="node12.html#SECTION00511000000000000000">4.1.1 Creating and Compiling the Wrappers</A>
-<LI><A NAME="tex2html242"
-  HREF="node12.html#SECTION00512000000000000000">4.1.2 Structure of the Wrappers</A>
-<UL>
+<LI><UL>
 <LI><A NAME="tex2html243"
-  HREF="node12.html#SECTION00512100000000000000">4.1.2.1 The Java Subdirectory</A>
+  HREF="#SECTION00501000000000000000">4.0.1 Historical Notes</A>
+</UL>
+<BR>
 <LI><A NAME="tex2html244"
-  HREF="node12.html#SECTION00512200000000000000">4.1.2.2 The Objc Subdirectory</A>
-</UL>
-</UL>
-<BR>
+  HREF="node12.html">4.1 Compiling ready-to-use wrappers</A>
+<UL>
 <LI><A NAME="tex2html245"
-  HREF="node13.html">4.2 Turning on Generation of Java Wrappers</A>
+  HREF="node12.html#SECTION00511000000000000000">4.1.1 Creating and compiling the wrappers</A>
 <LI><A NAME="tex2html246"
-  HREF="node14.html">4.3 Specifying the Main Library Header</A>
+  HREF="node12.html#SECTION00512000000000000000">4.1.2 Structure of the wrappers</A>
+<UL>
 <LI><A NAME="tex2html247"
-  HREF="node15.html">4.4 The Wrapper Directory</A>
+  HREF="node12.html#SECTION00512100000000000000">4.1.2.1 The Java subdirectory</A>
 <LI><A NAME="tex2html248"
-  HREF="node16.html">4.5 The .jigs File</A>
-<UL>
+  HREF="node12.html#SECTION00512200000000000000">4.1.2.2 The Objc subdirectory</A>
+</UL>
+</UL>
+<BR>
 <LI><A NAME="tex2html249"
-  HREF="node16.html#SECTION00551000000000000000">4.5.1 Determining which .jigs file to read</A>
+  HREF="node13.html">4.2 The GNUmakefile for java wrappers</A>
 <LI><A NAME="tex2html250"
-  HREF="node16.html#SECTION00552000000000000000">4.5.2 Overview of the .jigs file</A>
+  HREF="node14.html">4.3 Specifying the main library header</A>
 <LI><A NAME="tex2html251"
-  HREF="node16.html#SECTION00553000000000000000">4.5.3 The Classes Section</A>
-<UL>
+  HREF="node15.html">4.4 Library header name</A>
 <LI><A NAME="tex2html252"
-  HREF="node16.html#SECTION00553100000000000000">4.5.3.1 java name</A>
+  HREF="node16.html">4.5 Library header location</A>
+<UL>
 <LI><A NAME="tex2html253"
-  HREF="node16.html#SECTION00553200000000000000">4.5.3.2 objective-c name</A>
+  HREF="node16.html#SECTION00551000000000000000">4.5.1 Special header flags</A>
+</UL>
+<BR>
 <LI><A NAME="tex2html254"
-  HREF="node16.html#SECTION00553300000000000000">4.5.3.3 initializers</A>
+  HREF="node17.html">4.6 The wrapper directory</A>
 <LI><A NAME="tex2html255"
-  HREF="node16.html#SECTION00553400000000000000">4.5.3.4 class methods</A>
+  HREF="node18.html">4.7 The .jigs File</A>
+<UL>
 <LI><A NAME="tex2html256"
-  HREF="node16.html#SECTION00553500000000000000">4.5.3.5 instance methods</A>
+  HREF="node18.html#SECTION00571000000000000000">4.7.1 Determining which .jigs file to read</A>
 <LI><A NAME="tex2html257"
-  HREF="node16.html#SECTION00553600000000000000">4.5.3.6 method declarations</A>
+  HREF="node18.html#SECTION00572000000000000000">4.7.2 Overview of the .jigs file</A>
 <LI><A NAME="tex2html258"
-  HREF="node16.html#SECTION00553700000000000000">4.5.3.7 hardcoded constants</A>
+  HREF="node18.html#SECTION00573000000000000000">4.7.3 The Classes section</A>
+<UL>
 <LI><A NAME="tex2html259"
-  HREF="node16.html#SECTION00553800000000000000">4.5.3.8 file to include in java code</A>
+  HREF="node18.html#SECTION00573100000000000000">4.7.3.1 java name</A>
 <LI><A NAME="tex2html260"
-  HREF="node16.html#SECTION00553900000000000000">4.5.3.9 file to include in preamble java code</A>
+  HREF="node18.html#SECTION00573200000000000000">4.7.3.2 objective-c name</A>
 <LI><A NAME="tex2html261"
-  HREF="node16.html#SECTION005531000000000000000">4.5.3.10 file to include in objective-c code</A>
-</UL>
+  HREF="node18.html#SECTION00573300000000000000">4.7.3.3 initializers</A>
 <LI><A NAME="tex2html262"
-  HREF="node16.html#SECTION00554000000000000000">4.5.4 Method Name Mapping</A>
+  HREF="node18.html#SECTION00573400000000000000">4.7.3.4 class methods</A>
 <LI><A NAME="tex2html263"
-  HREF="node16.html#SECTION00555000000000000000">4.5.5 Prerequisite Libraries</A>
+  HREF="node18.html#SECTION00573500000000000000">4.7.3.5 instance methods</A>
 <LI><A NAME="tex2html264"
-  HREF="node16.html#SECTION00556000000000000000">4.5.6 Types</A>
+  HREF="node18.html#SECTION00573600000000000000">4.7.3.6 method declarations</A>
 <LI><A NAME="tex2html265"
-  HREF="node16.html#SECTION00557000000000000000">4.5.7 Enumerations</A>
-</UL>
-<BR>
+  HREF="node18.html#SECTION00573700000000000000">4.7.3.7 hardcoded constants</A>
 <LI><A NAME="tex2html266"
-  HREF="node17.html">4.6 Useful Make Options when Creating Wrappers</A>
-<UL>
+  HREF="node18.html#SECTION00573800000000000000">4.7.3.8 file to include in java code</A>
 <LI><A NAME="tex2html267"
-  HREF="node17.html#SECTION00561000000000000000">4.6.1 Silencing the Wrapper Generator</A>
+  HREF="node18.html#SECTION00573900000000000000">4.7.3.9 file to include in preamble java code</A>
 <LI><A NAME="tex2html268"
-  HREF="node17.html#SECTION00562000000000000000">4.6.2 Enabling Debugging</A>
-<LI><A NAME="tex2html269"
-  HREF="node17.html#SECTION00563000000000000000">4.6.3 Debugging or Non-Debugging</A>
-<UL>
-<LI><A NAME="tex2html270"
-  HREF="node17.html#SECTION00563100000000000000">4.6.3.1 The Fine Prints About Debugging</A>
+  HREF="node18.html#SECTION005731000000000000000">4.7.3.10 file to include in objective-c code</A>
 </UL>
+<LI><A NAME="tex2html269"
+  HREF="node18.html#SECTION00574000000000000000">4.7.4 Method Name Mapping</A>
+<LI><A NAME="tex2html270"
+  HREF="node18.html#SECTION00575000000000000000">4.7.5 Prerequisite Libraries</A>
 <LI><A NAME="tex2html271"
-  HREF="node17.html#SECTION00564000000000000000">4.6.4 Turning off the Generation of Quick Reference Doc</A>
+  HREF="node18.html#SECTION00576000000000000000">4.7.6 Types</A>
+<LI><A NAME="tex2html272"
+  HREF="node18.html#SECTION00577000000000000000">4.7.7 Enumerations</A>
 </UL>
 <BR>
-<LI><A NAME="tex2html272"
-  HREF="node18.html">4.7 Including Special Code in the Wrapper GNUmakefiles</A>
 <LI><A NAME="tex2html273"
-  HREF="node19.html">4.8 Controlling the Quick Reference Documentation</A>
+  HREF="node19.html">4.8 Useful Make Options when Creating Wrappers</A>
 <UL>
 <LI><A NAME="tex2html274"
-  HREF="node19.html#SECTION00581000000000000000">4.8.1 Generating Documentation for Packages</A>
+  HREF="node19.html#SECTION00581000000000000000">4.8.1 Silencing the Wrapper Generator</A>
 <LI><A NAME="tex2html275"
-  HREF="node19.html#SECTION00582000000000000000">4.8.2 Installation Directory</A>
-</UL>
-<BR>
+  HREF="node19.html#SECTION00582000000000000000">4.8.2 Enabling Debugging</A>
 <LI><A NAME="tex2html276"
-  HREF="node20.html">4.9 Generating RPMs for the Wrapper Library</A>
+  HREF="node19.html#SECTION00583000000000000000">4.8.3 Debugging or Non-Debugging</A>
 <UL>
 <LI><A NAME="tex2html277"
-  HREF="node20.html#SECTION00591000000000000000">4.9.1 Standard RPMs</A>
+  HREF="node19.html#SECTION00583100000000000000">4.8.3.1 The Fine Prints About Debugging</A>
+</UL>
 <LI><A NAME="tex2html278"
-  HREF="node20.html#SECTION00592000000000000000">4.9.2 Debugging RPMs</A>
-</UL></UL>
+  HREF="node19.html#SECTION00584000000000000000">4.8.4 Turning off the Generation of Quick Reference Doc</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html279"
+  HREF="node20.html">4.9 Including Special Code in the Wrapper GNUmakefiles</A>
+<UL>
+<LI><A NAME="tex2html280"
+  HREF="node20.html#SECTION00591000000000000000">4.9.1 Finding the library</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html281"
+  HREF="node21.html">4.10 Controlling the Quick Reference Documentation</A>
+<UL>
+<LI><A NAME="tex2html282"
+  HREF="node21.html#SECTION005101000000000000000">4.10.1 Generating Documentation for Packages</A>
+<LI><A NAME="tex2html283"
+  HREF="node21.html#SECTION005102000000000000000">4.10.2 Installation Directory</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html284"
+  HREF="node22.html">4.11 Generating RPMs for the wrapper library</A>
+</UL>
 <!--End of Table of Child-Links-->
-<BR><HR>
+<HR><B> Next: <A NAME="tex2html242"
+  HREF="node12.html">4.1 Compiling ready-to-use wrappers</A> </B>
+<B>Up: <A NAME="tex2html240"
+  HREF="Manual.html">Manual</A> </B>
+<B> Previous: <A NAME="tex2html234"
+  HREF="node10.html">3.4 Advanced Topics</A> </B>
+
+<!--End of Navigation Panel-->
 <ADDRESS>
 Nicola Pero
-2001-05-06
+2001-05-21
 </ADDRESS>
 </BODY>
 </HTML>

@@ -7,8 +7,8 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
   Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
 <HTML>
 <HEAD>
-<TITLE>4.9 Generating RPMs for the Wrapper Library</TITLE>
-<META NAME="description" CONTENT="4.9 Generating RPMs for the Wrapper Library">
+<TITLE>4.9 Including Special Code in the Wrapper GNUmakefiles</TITLE>
+<META NAME="description" CONTENT="4.9 Including Special Code in the Wrapper GNUmakefiles">
 <META NAME="keywords" CONTENT="Manual">
 <META NAME="resource-type" CONTENT="document">
 <META NAME="distribution" CONTENT="global">
@@ -19,18 +19,19 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 
 <LINK REL="STYLESHEET" HREF="Manual.css">
 
+<LINK REL="next" HREF="node21.html">
 <LINK REL="previous" HREF="node19.html">
 <LINK REL="up" HREF="node11.html">
 <LINK REL="next" HREF="node21.html">
 </HEAD>
 
 <BODY BGCOLOR="#FFFFFF" text="#000000" link="#0000FF" vlink="#4444FF" alink="#3388FF">
-<B> Next: <A NAME="tex2html394"
-  HREF="node21.html">About this document ...</A> </B>
-<B>Up: <A NAME="tex2html392"
+<B> Next: <A NAME="tex2html401"
+  HREF="node21.html">4.10 Controlling the Quick</A> </B>
+<B>Up: <A NAME="tex2html399"
   HREF="node11.html">4. Wrapping Objective-C Libraries</A>  </B>
-<B> Previous: <A NAME="tex2html388"
-  HREF="node19.html">4.8 Controlling the Quick</A> </B>
+<B> Previous: <A NAME="tex2html393"
+  HREF="node19.html">4.8 Useful Make Options</A> </B>
 <BR> <P>
 
 <!--End of Navigation Panel-->
@@ -38,103 +39,106 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 <A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
 
 <UL>
-<LI><A NAME="tex2html395"
-  HREF="#SECTION00591000000000000000">4.9.1 Standard RPMs</A>
-<LI><A NAME="tex2html396"
-  HREF="#SECTION00592000000000000000">4.9.2 Debugging RPMs</A>
+<LI><A NAME="tex2html402"
+  HREF="#SECTION00591000000000000000">4.9.1 Finding the library</A>
 </UL>
 <!--End of Table of Child-Links-->
 <HR>
 
-<H1><A NAME="SECTION00590000000000000000">
-4.9 Generating RPMs for the Wrapper Library</A>
+<H1><A NAME="SECTION00590000000000000000">&#160;</A><A NAME="special-code-in-GNUmakefiles">&#160;</A>
+<BR>
+4.9 Including Special Code in the Wrapper GNUmakefiles
 </H1>
 
 <P>
-This section is about generating RPMs.  If you are not interested in
-this topic, you may safely skip this section.
+This section describes a feature which is usually not needed, so you
+may skip it at a first reading.  As a prerequisite, you probably need
+to have read the section <A HREF="node12.html#wrapper-structure">4.1.2</A> to make any use of
+this section.
 
 <P>
-Please make sure you are confident about how the GNUstep make package
-manages generating RPMs in the standard case before you read this
-section.
+It is possible that you may need/want to insert special code in the
+GNUmakefile.preamble and GNUmakefile.postamble for the wrappers.  For
+example, some special flags required to compile an Objective-C library
+(the Objective-C wrapper library for your library) against your
+Objective-C library.
+
+<P>
+JIGS itself by default does not generate GNUmakefile.preamble and
+GNUmakefile.postamble at all; but it will look in the library
+directory for the files 
+<PRE>
+GNUmakefile.wrapper.objc.preamble
+GNUmakefile.wrapper.objc.postamble
+GNUmakefile.wrapper.java.preamble
+GNUmakefile.wrapper.java.postamble
+</PRE>
+and, if any of them is present, copy them into the <TT>JavaWrapper</TT> 
+directory, in the following way:
+<PRE>
+GNUmakefile.wrapper.objc.preamble --&gt; JavaWrapper/Objc/GNUmakefile.preamble
+GNUmakefile.wrapper.objc.postamble --&gt; JavaWrapper/Objc/GNUmakefile.postamble
+GNUmakefile.wrapper.java.preamble --&gt; JavaWrapper/Java/GNUmakefile.preamble
+GNUmakefile.wrapper.java.postamble --&gt; JavaWrapper/Java/GNUmakefile.postamble
+</PRE>
+
+<P>
+In this way, by adding one of these files to your library's directory,
+you can have it copied into the generated wrappers in the appropriate
+place.
 
 <P>
 
 <H2><A NAME="SECTION00591000000000000000">
-4.9.1 Standard RPMs</A>
+4.9.1 Finding the library</A>
 </H2>
+A typical usage of this is to wrap libraries which have not yet been
+installed.  Normally, you create java wrappers for libraries which you
+have already installed.  Sometimes though, you need to create java
+wrappers for a library before it is installed.  In this case, you
+might need to help the compiler to find your actual library when it
+links the java wrappers.
 
 <P>
-The RPM for the wrapper library are generated independently from the
-RPM for the library itself.  For example, suppose the library is
-packaged in a package called <TT>hippo</TT>.  You have a
-<TT>hippo.spec.in</TT> file in the hippo project directory to generate 
-the RPM for the <TT>hippo</TT> package.  To generate an RPM for the 
-wrapper, you need to add a 
-<PRE> 
-hippo-wrapper.spec.in
-</PRE>
-file in the library directory, following the same syntax you use for the 
-normal <TT>hippo.spec.in</TT> file.  You can also add a 
+You would do so by creating a file called
 <PRE>
-hippo-wrapper.script.spec.in
+GNUmakefile.wrapper.objc.postamble
 </PRE>
-file if you need.  These two files are automatically copied into the
-<TT>JavaWrapper</TT> directory when JIGS generates it; JIGS uses these two 
-files to set all up and ready to generate the RPM for the wrapper.
-
-<P>
-The RPM package for the wrappers will have name
-<TT>hippo-wrapper</TT>, and the same version number as <TT>hippo</TT>.
-
-<P>
-To create the RPM, you need to <TT>cd</TT> into the wrapper directory,
-and use the standard commands to build it (usually simply
+and adding to this file something like the following line
 <PRE>
-su
-export RPM_TOPDIR=/usr/src/redhat
-make rpm
+ADDITIONAL_LIB_DIRS = -L/opt/nicola/MyLibrary/
 </PRE>
-(replace <TT>/usr/src/redhat</TT> with the appropriate directory for
-your system).
+Please note that you will need to install your library anyway before
+you can use the java wrappers, because the library must be found at
+run-time as well!
 
 <P>
-
-<H2><A NAME="SECTION00592000000000000000">
-4.9.2 Debugging RPMs</A>
-</H2>
-
-<P>
-When you create the debugging wrapper, the package is called
-<TT>hippo-wrapper-debug</TT>; and the files which are copied into the
-<TT>JavaWrapper_debug</TT> directory have different names:
+A classical case in which you need this trick is if you are building
+the java wrappers with the library itself (that is, if you have a
+<TT>GNUmakefile</TT> which includes both <TT>library.make</TT> and
+<TT>java-wrapper.make</TT> and which you use to compile both.  In that
+case, you need to add
 <PRE>
-hippo-wrapper-debug.spec.in
-hippo-wrapper-debug.script.spec.in
+ADDITIONAL_LIB_DIRS = -L../../$(GNUSTEP_OBJ_DIR)
 </PRE>
+to your <TT>GNUmakefile.wrapper.objc.preamble</TT> to make sure that,
+when the java wrappers are built, the compiler will find the original
+library (and you also need to make sure that <TT>library.make</TT> is
+included before <TT>java-wrapper.make</TT> so that the library is
+compiled before the wrappers.
 
 <P>
-The debugging wrapper will not contain the Java classes, and it will
-depend on having installed the non debugging wrapper package first.
-
-<P>
-Hint on a counter-intuitive trick: make sure you type <TT>make
-rpm</TT> and not <TT>make debug=yes rpm</TT> inside
-<TT>JavaWrapper_debug</TT> when building the RPM.
-
-<P>
-<HR><B> Next: <A NAME="tex2html394"
-  HREF="node21.html">About this document ...</A> </B>
-<B>Up: <A NAME="tex2html392"
+<HR><B> Next: <A NAME="tex2html401"
+  HREF="node21.html">4.10 Controlling the Quick</A> </B>
+<B>Up: <A NAME="tex2html399"
   HREF="node11.html">4. Wrapping Objective-C Libraries</A> </B>
-<B> Previous: <A NAME="tex2html388"
-  HREF="node19.html">4.8 Controlling the Quick</A> </B>
+<B> Previous: <A NAME="tex2html393"
+  HREF="node19.html">4.8 Useful Make Options</A> </B>
 
 <!--End of Navigation Panel-->
 <ADDRESS>
 Nicola Pero
-2001-05-06
+2001-05-21
 </ADDRESS>
 </BODY>
 </HTML>
