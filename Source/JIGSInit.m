@@ -37,6 +37,8 @@ static jclass JIGS = NULL;
 
 void JIGSInit (JNIEnv *env)
 {
+  NSAutoreleasePool *pool = [NSAutoreleasePool new]; 
+  
   NSDebugLog (@"JIGSInit");
   
   if (JIGS == NULL)
@@ -48,6 +50,7 @@ void JIGSInit (JNIEnv *env)
       if (JIGS == NULL)
 	{
 	  // Exception raised
+	  RELEASE (pool);
 	  return;
 	}
 
@@ -55,6 +58,7 @@ void JIGSInit (JNIEnv *env)
       if ((*env)->GetJavaVM (env, &jvm) < 0)
 	{
 	  // Exception raised !
+	  RELEASE (pool);
 	  return;	  
 	}
       [NSJavaVirtualMachine registerJavaVM: jvm];
@@ -64,6 +68,7 @@ void JIGSInit (JNIEnv *env)
       _JIGSMapperInitialize (env);
       _JIGSBaseStructInitialize (env);
     }
+  RELEASE (pool);
 }
 
 
