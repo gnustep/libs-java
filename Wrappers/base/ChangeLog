@@ -1,3 +1,12 @@
+Sat Aug 19 20:37:01 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* libgnustep-base.jigs (NSArray): Uncommented some methods 
+	which now work due to fixes in java/Source.
+
+Fri Aug 18 22:59:07 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* libgnustep-base.jigs (NSSet), (NSMutableSet): New wrappers.
+
 Fri Aug 18 20:01:10 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* libgnustep-base.jigs: New file.
