@@ -31,16 +31,16 @@ Java_gnu_gnustep_base_NSObject_NSObject_1alloc (JNIEnv *env, jobject this)
 {
   Class objectClass;
   id objc;
+  jlong java;
 
   JIGS_ENTER;
 
   objectClass = _JIGSAllocClassForThis (env, this);
   objc = [objectClass alloc];
   _JIGSMapperAddJavaProxy (env, objc, this);
+  java = JIGS_ID_TO_JLONG (objc);
 
-  JIGS_EXIT_WITH_FAIL_VALUE (0);
-
-  return JIGS_ID_TO_JLONG (objc);
+  JIGS_EXIT_WITH_VALUE (java);
 }
 
 JNIEXPORT jlong JNICALL 
@@ -48,16 +48,16 @@ Java_gnu_gnustep_base_NSObject_NSObject_1new (JNIEnv *env, jobject this)
 {
   Class objectClass;
   id objc;
+  jlong java;
 
   JIGS_ENTER;
 
   objectClass = _JIGSAllocClassForThis (env, this);
   objc = [objectClass new];
   _JIGSMapperAddJavaProxy (env, objc, this);
+  java = JIGS_ID_TO_JLONG (objc);
 
-  JIGS_EXIT_WITH_FAIL_VALUE (0);
-
-  return JIGS_ID_TO_JLONG (objc);
+  JIGS_EXIT_WITH_VALUE (java);
 }
 
 JNIEXPORT jboolean JNICALL 
@@ -73,9 +73,7 @@ Java_gnu_gnustep_base_NSObject_equals (JNIEnv *env, jobject this,
   they =  JIGSIdFromJobject (env, other);
   return_value = (jboolean)[we isEqual: they];
 
-  JIGS_EXIT_WITH_FAIL_VALUE (JNI_FALSE);  
-
-  return return_value;
+  JIGS_EXIT_WITH_VALUE (return_value);  
 }
 
 /*
@@ -109,9 +107,7 @@ Java_gnu_gnustep_base_NSObject_hashCode (JNIEnv *env, jobject this)
   we = JIGSIdFromThis (env, this);
   return_value = (jint)[we hash];
   
-  JIGS_EXIT_WITH_FAIL_VALUE (-1);
-
-  return return_value;
+  JIGS_EXIT_WITH_VALUE (return_value);
 }
 
 
@@ -128,9 +124,7 @@ Java_gnu_gnustep_base_NSObject_clone (JNIEnv *env, jobject this)
   newObject = [thisObject copy];
   newProxyObject = JIGSCreateNewJavaProxy (env, newObject);
   
-  JIGS_EXIT_WITH_FAIL_VALUE (NULL);
-
-  return newProxyObject;
+  JIGS_EXIT_WITH_VALUE (newProxyObject);
 }
 
 JNIEXPORT jobject JNICALL 
@@ -146,9 +140,7 @@ Java_gnu_gnustep_base_NSObject_mutableClone (JNIEnv *env, jobject this)
   newObject = [thisObject mutableCopy];
   newProxyObject = JIGSCreateNewJavaProxy (env, newObject);
   
-  JIGS_EXIT_WITH_FAIL_VALUE (NULL);
-
-  return newProxyObject;
+  JIGS_EXIT_WITH_VALUE (newProxyObject);
 }
 
 JNIEXPORT jstring JNICALL 
@@ -164,9 +156,7 @@ Java_gnu_gnustep_base_NSObject_toString (JNIEnv *env, jobject this)
   description = [thisObject description];
   result = JIGSJobjectFromId (env, description);
   
-  JIGS_EXIT_WITH_FAIL_VALUE (NULL);
-  
-  return result;
+  JIGS_EXIT_WITH_VALUE (result);
 }
 
 JNIEXPORT void JNICALL 
@@ -197,3 +187,8 @@ Java_gnu_gnustep_base_NSObject_releaseObject
     
   JIGS_EXIT;  
 }
+
+
+
+
+
