@@ -16,6 +16,7 @@ classes = (
   "instance methods" = (
     "name",
     "objectForKey:",
+    "objects",
     "parameterForKey:",
     "parameters",
     "setName:",
@@ -42,6 +43,9 @@ classes = (
     "addHeader:",
     "allHeaders",
     "content",
+    "contentID",
+    "contentSubType",
+    "contentType",
     "deleteHeader:",
     "deleteHeaderNamed:",
     "headerNamed:",
@@ -55,17 +59,18 @@ classes = (
   "java name" = "gnu.gnustep.base.GSMimeParser";
   
   "class methods" = (
+    "documentFromData:",
     "mimeParser"
   );
   "instance methods" = (
     "data",
     "document",
+    "expectNoHeaders",
     "isComplete",
     "isInBody",
     "isInHeaders",
     "parse:",
-    "parseHeader:",
-    "setNoHeaders"
+    "parseHeader:"
   );
 },
 
