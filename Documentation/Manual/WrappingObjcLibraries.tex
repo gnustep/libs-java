@@ -100,8 +100,18 @@ include $(GNUSTEP_MAKEFILES)/library.make
 When you now compile your library (by typing \texttt{make}), JIGS will
 try to generate the java wrappers.  In this way, you can simply turn
 off and on generation of the java wrappers by commenting and
-uncommenting the inclusion of \texttt{java-wrapper.make}.  To
-correctly generate the java wrappers, you will actually need to
+uncommenting the inclusion of \texttt{java-wrapper.make}.  
+You may also want to consider using 
+\begin{verbatim}
+-include $(GNUSTEP_MAKEFILES)/java-wrapper.make
+\end{verbatim}
+%$
+which will cause java-wrapper.make (and thus code for wrapper
+generation) to be included if and only if it can be found (which
+should happen if and only if jigs is installed), without complaining
+if it can't.
+
+To correctly generate the java wrappers, you will actually need to
 instruct JIGS about what classes and methods you want exposed, and
 how.  This will be discussed in detail in the following sections.
 
