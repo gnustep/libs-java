@@ -62,7 +62,7 @@ before-$(TARGET)-all::
 	 echo "* WARNING *: Java Wrappers of static libraries are meaningless!";\
 	fi
 
-ifeq ($(BUILD_JAVA_WRAPPER_AUTOMATICALLY),yes)
+ifneq ($(BUILD_JAVA_WRAPPER_AUTOMATICALLY),no)
 
 after-$(TARGET)-all::
 	cd $(WRAPPER_DIR); unset MAKEFLAGS; $(MAKE)
@@ -250,7 +250,7 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FI
 	@echo Creating the stamp file...
 	@touch $(WRAPPER_DIR)/stamp-file
 	@echo 
-	@if [ "$(BUILD_JAVA_WRAPPER_AUTOMATICALLY)" = "" ]; then             \
+	@if [ "$(BUILD_JAVA_WRAPPER_AUTOMATICALLY)" = "no" ]; then           \
 	  echo "To compile and install the wrapper library, please go into"; \
 	  echo "the $(WRAPPER_DIR) directory,";                              \
 	  echo "and make, make install there.";                              \
@@ -258,7 +258,7 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FI
 	  echo "if you want me to do this for you automatically next time";  \
 	else                                                                 \
 	  echo "Now trying to automatically compile the wrapper library for you..."; \
-	  echo "Undefine BUILD_JAVA_WRAPPER_AUTOMATICALLY in the makefile to disable this."; \
+	  echo "Add \`BUILD_JAVA_WRAPPER_AUTOMATICALLY=no' in the makefile to disable this."; \
 	fi
 	@echo
 
