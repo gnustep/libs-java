@@ -1,3 +1,11 @@
+Wed Feb  7 12:26:56 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Makefiles/java-wrapper.java.template: Changed default install to
+	be into Developer/LIBRARYNAME/Java/Reference/.
+	* Makefiles/java-wrapper.make ($(WRAPPER_DIR)/stamp-file):
+	Accordingly, do not substitute PACKAGEHERE in
+	java-wrapper.java.template.
+	
 Tue Feb  6 18:49:58 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Makefiles/java-wrapper.java.template: Add -public to 
