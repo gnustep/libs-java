@@ -1,3 +1,8 @@
+Thu Apr 26 12:45:23 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Makefiles/java-wrapper.make ($(WRAPPER_DIR)/stamp-file): Clean
+	up the obsolete Reference javadoc documentation.
+
 Wed Feb 21 15:24:35 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* WCUnsignedShortType.h: New file.
