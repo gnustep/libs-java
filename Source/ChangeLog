@@ -1,3 +1,8 @@
+Fri Jul 27 10:26:00 2001  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* GSJNIClass.m: GSJNI_SuperclassNameFromClassName()
+	pop stack on failure.
+
 Thu Jul 26 19:44:00 2001  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* NSJavaVirtualMachine.m: New class method - 'JIGSInit' as
