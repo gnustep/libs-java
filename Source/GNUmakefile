@@ -46,6 +46,7 @@ JIGSInit.h \
 JIGSNative.h \
 JIGSMapper.h \
 JIGSProxy.h \
+JIGSSelectorMapping.h \
 java.lang.Object.h
 
 libgnustep-java_HEADER_FILES_INSTALL_DIR = /gnustep/java
@@ -63,6 +64,7 @@ JIGSMapper.m \
 JIGSProxy.m \
 JIGSProxySetup.m \
 JIGSProxyIMP.m \
+JIGSSelectorMapping.m \
 NSJavaVirtualMachine.m \
 JIGS.m \
 NSObject.m     
