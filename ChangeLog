@@ -1,5 +1,11 @@
-Thu Jan 25 11:30:57 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+Thu Jan 25 11:32:06 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
+	* GNUmakefile (PACKAGE_NAME): Changed to gnustep-java.
+	(VERSION): New variable for RPM packaging.
+	(GNUSTEP_INSTALLATION_DIR): Idem.
+	(RPM_DISABLE_RELOCATABLE): Idem.
+	* jigs.spec.in: New file.
+	* jigs-debug.spec.in: New file.
 	* INSTALL: Added comment about installing libobjc from RPM.
 
 Mon Nov 27 16:39:41 2000  Nicola Pero  <n.pero@mi.flashnet.it>
