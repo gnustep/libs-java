@@ -497,9 +497,9 @@ classes = (
 
     /* WARNING: We are forced to expose these methods in this way not
        to get conflicting selectors with NSDictionary and
-       NSMutableDictionary, but the truth is - these methods REALLY
-       accept only strings as keys - passing a generic objects will
-       CRASH them. */
+       NSMutableDictionary, but the truth is - these methods want
+       strings as keys - even if the Java declaration we are force to
+       use is more generic. */
     "method declarations" = ("- (id) objectForKey: (id)aKey", 
 			     "- (void) setObject: (id)anObject forKey: (id)aKey");
   }
