@@ -23,8 +23,8 @@
 
 #include "NSPropertyListSerialization.h"
 
+@implementation NSPropertyListSerialization (JigsExtension)
 
-@implementation NSPropertyListSerialization
 + (id) propertyListFromString: (NSString *)aString
 {
   return [aString propertyList];
