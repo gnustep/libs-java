@@ -592,10 +592,6 @@ static void setNeedsLongJniName (NSMutableArray *jniNames,
 	      printf ("Generating constants for enumeration %s\n", 
 		      [string lossyCString]);
 	    }
-	  [javaOutput appendString: @"  /* "];
-	  [javaOutput appendString: string];
-	  [javaOutput appendString: @" */\n"];
-
 	  dict = [wc dictionaryForEnumeration: string];
 	  keys = [dict allKeys];
 	  keysCount = [keys count];
@@ -609,7 +605,7 @@ static void setNeedsLongJniName (NSMutableArray *jniNames,
 		  [javaOutput appendString: @"  /** Wraps a constant from the Objective-C enumeration type\n"];
 		  [javaOutput appendString: @"   * <B>"];
 		  [javaOutput appendString: string];
-		  [javaOutput appendString: @"</B>\n */\n"];
+		  [javaOutput appendString: @"</B>\n   */\n"];
 		}
 	      [javaOutput appendString: @"  public static int "];
 	      [javaOutput appendString: key];
