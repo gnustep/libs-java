@@ -66,12 +66,11 @@ void _JIGSMapperRemoveJavaProxy (JNIEnv *env, id objc)
   objc_mutex_lock (_JIGSProxiedObjcMapLock);
 
   weak_java = NSMapGet (_JIGSProxiedObjcMap, objc);
-  (*env)->DeleteWeakGlobalRef (env, weak_java);
-
   NSMapRemove (_JIGSProxiedObjcMap, objc);
 
   objc_mutex_unlock (_JIGSProxiedObjcMapLock);
-  
+
+  (*env)->DeleteWeakGlobalRef (env, weak_java); 
 }
 
 /***
@@ -136,24 +135,100 @@ void _JIGSMapperRemoveObjcProxy (JNIEnv* env, jobject java)
  *** Table mapping GNUstep classes to the corresponding java proxy classes 
  ***/
 
-/* 
- * It maps a Class to a jclass reference, as in a pointer to the
- * NSObject class mapped to a jclass reference to gnu/gnustep/base/NSObject 
- */
-static NSMapTable* _JIGSProxiedObjcClassMap = NULL;
-static objc_mutex_t _JIGSProxiedObjcClassMapLock = NULL;
+/* A node holding an ObjC class <--> Java class mapping.  For example,
+   it maps a jclass reference to gnu/gnustep/base/NSObject to a pointer
+   to the NSObject class, and viceversa.  
+*/
+typedef struct _JIGSClassNode_
+{
 
-/*
- * The same map in reverse, mapping a jclass reference to
- * gnu/gnustep/base/NSObject to a pointer to the NSObject class.
- * Protected by the same lock.
- */
+  /* Pointer to next entry on the list.  NULL indicates end of list.  */
+  struct _JIGSClassNode_ *next;
 
-static NSMapTable* _JIGSProxiedObjcClassReverseMap = NULL;
+  jclass javaClass; /* The Java class.  */
+  Class objcClass;  /* The ObjC class.  */
+  /* store the class name as well ? */
+  
+} *_JIGSClassMap;
+
+
+/* The table itself.  */
+static _JIGSClassMap _JIGSProxiedObjCClassMap = NULL;
+
+/* A lock protecting the class from multiple concurrent writings.  We
+   can read thread-safe without locks as we assume pointer
+   assignment/comparison to be an atomic operation.  We also perform
+   the minimal possible number of JNI calls when looking up stuff in
+   the table.  */
+static objc_mutex_t _JIGSProxiedObjCClassMapWriteLock = NULL;
+
+/* We only insert in the table, never remove.  */
+static inline void _JIGSClassMapInsert (jclass java, Class objc)
+{
+  _JIGSClassMap new = objc_malloc (sizeof (struct _JIGSClassNode_));
+
+  new->javaClass = java;
+  new->objcClass = objc;
+  new->next = NULL;
+  
+  objc_mutex_lock (_JIGSProxiedObjCClassMapWriteLock);
+
+  if (_JIGSProxiedObjCClassMap == NULL)
+    {
+      _JIGSProxiedObjCClassMap = new;
+    }
+  else
+    {
+      /* Add new classes at the end so the more fundamental remain at
+	 the beginning.  */
+      _JIGSClassMap iter = _JIGSProxiedObjCClassMap;
+      while (iter->next != NULL)
+	{
+	  iter = iter->next;
+	}
+      iter->next = new;
+    }
+
+  objc_mutex_unlock (_JIGSProxiedObjCClassMapWriteLock);
+}
+
+
+/* Return Nil if it can't find the class.  */
+static Class _JIGSClassMapGetObjCClassFromJavaClass (JNIEnv *env, 
+						         jclass java)
+
+{
+  _JIGSClassMap iter = _JIGSProxiedObjCClassMap;
+  while (iter != NULL)
+    {
+      if ((*env)->IsSameObject (env, java, iter->javaClass))
+	{
+	  return iter->objcClass;
+	}
+      iter = iter->next;
+    }
+  return Nil;
+}
+
+/* Return NULL if it can't find the class.  */
+static jclass _JIGSClassMapGetJavaClassFromObjCClass (Class objc)
+{
+  _JIGSClassMap iter = _JIGSProxiedObjCClassMap;
+  while (iter != NULL)
+    {
+      if (objc == iter->objcClass)
+	{
+	  return iter->javaClass;
+	}
+      iter = iter->next;
+    }
+  return NULL;
+}
+
 
 /* We only insert in the table, never remove */
 void JIGSRegisterJavaProxyClass (JNIEnv *env, NSString *fullJavaClassName, 
-				 NSString *objcClassName)
+				    NSString *objcClassName)
 {
   jclass javaClass;
   Class objcClass;
@@ -177,10 +252,7 @@ void JIGSRegisterJavaProxyClass (JNIEnv *env, NSString *fullJavaClassName,
       return;
     }
 
-  objc_mutex_lock (_JIGSProxiedObjcClassMapLock);
-  NSMapInsert (_JIGSProxiedObjcClassMap, objcClass, javaClass);
-  NSMapInsert (_JIGSProxiedObjcClassReverseMap, javaClass, objcClass);
-  objc_mutex_unlock (_JIGSProxiedObjcClassMapLock);
+  _JIGSClassMapInsert (javaClass, objcClass);
 
   RELEASE (pool);
 }
@@ -193,8 +265,8 @@ void JIGSRegisterJavaProxyClass (JNIEnv *env, NSString *fullJavaClassName,
    Also, beware that this function call wants a local reference as 
    argument, and it destroys it during processing ! 
 */
-static inline Class _JIGSFirstJavaProxySuperClass (JNIEnv *env, 
-						   jclass inClass)
+static inline Class _JIGSFirstJavaProxySuperClass (JNIEnv *env,
+                                                      jclass inClass)
 {
   Class outClass;
 
@@ -205,11 +277,9 @@ static inline Class _JIGSFirstJavaProxySuperClass (JNIEnv *env,
       return Nil;
     }
 
-  objc_mutex_lock (_JIGSProxiedObjcClassMapLock);
-  
   while (1)
     {
-      outClass = NSMapGet (_JIGSProxiedObjcClassReverseMap, inClass);
+      outClass = _JIGSClassMapGetObjCClassFromJavaClass (env, inClass);
 
       if (outClass != NULL)
 	{
@@ -232,8 +302,6 @@ static inline Class _JIGSFirstJavaProxySuperClass (JNIEnv *env,
 	}
     }
 
-  objc_mutex_unlock (_JIGSProxiedObjcClassMapLock);
-
   (*env)->DeleteLocalRef (env, inClass);
 
   return outClass;
@@ -243,7 +311,8 @@ Class JIGSClassFromThisClass (JNIEnv *env, jclass class)
 {
 
   /* The new local ref we create is destroyed by the function call itself */
-  return _JIGSFirstJavaProxySuperClass (env, (*env)->NewLocalRef (env, class));
+  return _JIGSFirstJavaProxySuperClass (env, 
+					(*env)->NewLocalRef (env, class));
 }
 
 Class _JIGSAllocClassForThis (JNIEnv *env, jobject this)
@@ -270,9 +339,7 @@ NSString *_JIGSLongJavaClassNameForObjcClassName (JNIEnv *env,
   jclass result = NULL;
   Class objcClass = NSClassFromString (className);
 
-  objc_mutex_lock (_JIGSProxiedObjcClassMapLock); 
-  result = NSMapGet (_JIGSProxiedObjcClassMap, objcClass);
-  objc_mutex_unlock (_JIGSProxiedObjcClassMapLock); 
+  result = _JIGSClassMapGetJavaClassFromObjCClass (objcClass);
 
   if (result == NULL)
     {
@@ -290,6 +357,7 @@ static jclass java_lang_Number = NULL;
 static Class java_lang_Object = Nil;
 static Class nsstring = Nil;
 static Class nsnumber = Nil;
+static Class nsarray = Nil;
 
 /***
  *** Functions
@@ -314,16 +382,8 @@ void _JIGSMapperInitialize (JNIEnv *env)
 					  NSNonOwnedPointerMapValueCallBacks, 
 					  20);
   _JIGSProxiedJavaMapLock = objc_mutex_allocate ();
-  
-  _JIGSProxiedObjcClassMap 
-    = NSCreateMapTable (NSNonOwnedPointerMapKeyCallBacks, 
-			NSNonOwnedPointerMapValueCallBacks, 
-			20);
-  _JIGSProxiedObjcClassReverseMap 
-    = NSCreateMapTable (JIGSJavaReferenceMapKeyCallBacks,
-			NSNonOwnedPointerMapValueCallBacks, 
-			20);
-  _JIGSProxiedObjcClassMapLock = objc_mutex_allocate ();
+
+  _JIGSProxiedObjCClassMapWriteLock = objc_mutex_allocate ();
   
   gnu_gnustep_base_NSObject = GSJNI_NewClassCache 
     (env, "gnu/gnustep/base/NSObject");
@@ -361,6 +421,7 @@ if (VAR == NULL)                                        \
   
   nsstring = NSClassFromString (@"NSString");
   nsnumber = NSClassFromString (@"NSNumber");
+  nsarray = NSClassFromString (@"NSArray");
 }
 
 /*
@@ -377,10 +438,9 @@ static inline jclass _JIGSMapperGetBestJavaProxyClass (Class objcClass)
 {
   jclass result = NULL;
   
-  objc_mutex_lock (_JIGSProxiedObjcClassMapLock); 
   while (1)
     {
-      result = NSMapGet (_JIGSProxiedObjcClassMap, objcClass);
+      result = _JIGSClassMapGetJavaClassFromObjCClass (objcClass);
       if (result != NULL) 
 	{
 	  break;
@@ -393,7 +453,6 @@ static inline jclass _JIGSMapperGetBestJavaProxyClass (Class objcClass)
 	  break;
 	}  
     }
-  objc_mutex_unlock (_JIGSProxiedObjcClassMapLock);
   return result;
 }
 
@@ -649,11 +708,19 @@ jobjectArray JIGSJobjectArrayFromNSArray (JNIEnv *env, NSArray *array)
 	  return NULL;
 	}
       [array getObjects: gnustepObjects];
-      
+
+      if ((*env)->EnsureLocalCapacity (env, length + 1) < 0)
+	{
+	  /* Exception thrown */
+	  free (gnustepObjects);
+	  return NULL;
+	}
+
       javaArray = (*env)->NewObjectArray (env, length, Object_class, NULL);
       if (javaArray == NULL)
 	{
 	  /* OutOfMemory exception thrown */
+	  free (gnustepObjects);
 	  return NULL;
 	}
       
@@ -692,6 +759,13 @@ NSArray *JIGSInitNSArrayFromJobjectArray (JNIEnv *env, NSArray *array,
 	  return nil;
 	}
 
+      if ((*env)->EnsureLocalCapacity (env, length + 1) < 0)
+	{
+	  /* Exception thrown */
+	  free (gnustepObjects);
+	  return NULL;
+	}
+
       /* Get the objects and convert them to GNUstep objects */
       for (i = 0; i < length; i++)
 	{
@@ -710,7 +784,7 @@ NSArray *JIGSInitNSArrayFromJobjectArray (JNIEnv *env, NSArray *array,
 
 NSArray *JIGSNSArrayFromJobjectArray (JNIEnv *env, jobjectArray objects)
 {
-  return AUTORELEASE (JIGSInitNSArrayFromJobjectArray (env, [NSArray alloc],
+  return AUTORELEASE (JIGSInitNSArrayFromJobjectArray (env, [nsarray alloc],
 						       objects));
 }
 
