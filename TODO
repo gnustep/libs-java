@@ -9,7 +9,7 @@
    * automatically wrapping all the methods in the protocol for each
      class which implements it
 
- O Support for inserting arbitrary java code in wrapped class
+ O Support for inserting arbitrary java code in wrapped class (Done!)
 
  O Morphing NSNumber
 
@@ -33,5 +33,3 @@
  O Support for automatically wrapping functions and methods of other classes
 
  O Support for automatically get the value of constants from source code
-
-
