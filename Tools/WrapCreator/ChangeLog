@@ -1,3 +1,12 @@
+Wed Dec 12 16:45:28 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Makefiles/java-wrapper.make ($(WRAPPER_DIR)/stamp-file): Replace
+	INSTALL_AS_USER and INSTALL_AS_GROUP in the generated top level
+	GNUmakefile.  Changed line to be replaced by
+	GNUSTEP_INSTALLATION_DIR to be prettier.
+	* Makefiles/java-wrapper.top.template: Updated for changes.
+	* Makefiles/java-wrapper.top.debug.template: Updated.
+
 2001-12-05 Richard Frith-Macdonald <rfm@gnu.org>
 
 	* Makefiles/java-wrapper.make:a filter out -MMD and -MP flags
