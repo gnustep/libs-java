@@ -1,3 +1,9 @@
+Wed Aug  2 23:27:27 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* README: Added description of 0.2, simplified.
+	* INSTALL: Fixed some bugs, more info on installing 
+	a shared libobjc.
+
 Mon Jul 31 17:26:15 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* README: Fixed download URL.
