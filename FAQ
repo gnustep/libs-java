@@ -17,8 +17,8 @@ current plans to port JIGS to JNI 1.1.
 2. Can I use JIGS to access Objective-C libraries inside a Java servlet ? 
 =========================================================================
 
-Yes!  You're welcome to do it.  Here are a few hints: you need to make
-sure that:
+Yes!  You're welcome to do it.  Beware about yet-to-resolve problems
+with threads though. Here are a few hints: you need to make sure that:
 
  * your java servlet has the classpath set so that it can access the
    java classes you want to use.  In apache, this is controlled by the
@@ -39,11 +39,6 @@ sure that:
    before starting apache.
 
  * the NSLog output of your java servlets goes into httpsd_error_log.  
-   To tell the NSLog of one servlet from the NSLog of another, you 
-   should set a different process name for each servlet, as described 
-   at question 3.
-
- * see below question 3. if you need to use user defaults.
 
 3. What about user defaults ? - they are all saved under 'java'
 ===============================================================
@@ -55,18 +50,6 @@ the other.  To workaround this, you just need to set the process name
 of your process at the beginning of your code.  Something like:
 
   (NSProcessInfo.processInfo ()).setProcessName ("myApp");
-
-Setting the process name is particularly important for code which runs
-inside a JVM in a different process.  For example, if you have a java
-servlet running inside Apache, you may want to set a different process
-name for each java servlet.  I put something like
-
-  (NSProcessInfo.processInfo ()).setProcessName ("Validate-servlet");
-
-(where 'Validate-servlet' is replaced with a suitable name for each
-servlet) at the beginning of each of my servlets.  [FIXME FIXME: not
-sure this is the best way to go - servlets are not destroyed but
-reused etc]
 
 4. What about NSLog output ?  It always uses 'java' as process
 ==============================================================
