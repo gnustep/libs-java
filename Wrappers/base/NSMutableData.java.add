@@ -1,5 +1,3 @@
-  native long initWithBytes (byte[] bytes);
-
   /**
     * Wraps the Objective-C method <B>initWithBytes:</B>.
     */
