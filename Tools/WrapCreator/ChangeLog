@@ -1,3 +1,28 @@
+Fri Aug 18 18:19:10 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* WCPrimitiveType.m ([-initWithObjcType:]): Fixed typo/bug
+	preventing primitive types from being wrapped.
+
+Fri Aug 18 17:14:10 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	Major speed up of WrapCreator, by parsing the header file 
+	only once.
+	* WCHeaderParser.m ([-initWithHeaderFile:]): Parse the whole
+	header file once, saving all the method declarations.
+	([-declarationOfMethod:isClassMethod:]): Moved all the parsing
+	code to [-initWithHeaderFile:].  (skipObjcType): Made function
+	inline.
+	* WCHeaderParser.h: Added two ivars to store the parsed methods.
+	* WCLibrary.m ([+initializeWithJigsFile:preprocessedHeaderFile:
+	headerFile:wrapDirectory:libraryName:verboseOutput:]): Set verbose
+	output before anything else, so it can be accessed by
+	WCHeaderParser during initialization.
+	
+Fri Aug 18 16:05:10 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* WCClass.m ([-initWithDictionary:]): Fixed typo/bug when
+	objective-c name is not specified.
+
 Sun Aug 13 15:00:30 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Makefiles/java-wrapper.make (java-wrapper): Depend on a stamp
