@@ -3,11 +3,11 @@
 #
 #   Makefile rules to build a java wrapper for a GNUstep base library.
 #
-#   Copyright (C) 2000 Free Software Foundation, Inc.
+#   Copyright (C) 2000, 2001 Free Software Foundation, Inc.
 #
-#   Author:  Nicola Pero <nicola@brainstorm.co.uk> 
+#   Author:  Nicola Pero <n.pero@mi.flashnet.it>
 #
-#   This file is part of the GNUstep Makefile Package.
+#   This file is part of JIGS, the GNUstep Java Interface
 #
 #   This library is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU General Public License
@@ -24,15 +24,52 @@ ifeq ($(JAVA_WRAPPER_MAKE_LOADED),)
 JAVA_WRAPPER_MAKE_LOADED=yes
 
 #
-# Include this file after your library.make.
+# Include in the common makefile rules
 #
-# Note the trick: we use the same variables the library uses.
-# This way, we have access to all the variables and special settings 
-# used to compile the library :-)
-#
-#
+include $(GNUSTEP_MAKEFILES)/rules.make
 
-JAVA_WRAPPER_NAME:=$(strip $(LIBRARY_NAME))
+
+# The name of the java wrapper is in the JAVA_WRAPPER_NAME variable.
+# This name must be the same as the name of the library you want to
+# wrap, with the leading `lib' removed, such as `gnustep-base' when
+# you wrap the libgnustep-base library.
+
+# Assuming that xxx is the name of the java wrapper:
+
+# The name of the header file of the library to wrap is in the
+# xxx_HEADER_FILES variable.  If you don't set it, xxx.h is assumed.
+# Please note that it should be a single header.
+# It should be in the full form you use for including it into C source
+# code, such as in `Foundation/Foundation.h'.  It must be in this form
+# because it *will* end up in a C source file :-).
+
+# The name of the directory where the library header file is located
+# is in the xxx_HEADER_FILES_DIR (eg, ../Nicola/).  If not specified,
+# then the current directory is searched; failing that,
+# $GNUSTEP_SYSTEM_ROOT/Headers, $GNUSTEP_NETWORK_ROOT/Headers,
+# $GNUSTEP_LOCAL_ROOT/Headers and $GNUSTEP_USER_ROOT/Headers are
+# searched.
+
+# Put any special -I flags needed to read the library header files in
+# the xxx_ADDITIONAL_CPP_FLAGS - these are the same flags you would
+# need to use in any library/application compiled against this
+# library.
+
+# If your library is installed in a standard location, it will be
+# found.  Otherwise, you might specify any additional -L directives
+# needed by using ADDITIONAL_LIB_DIRS in your
+# GNUmakefile.wrapper.objc.postamble.  For example, if you are creating the
+# wrappers on site with the library, you need to use
+# ADDITIONAL_LIB_DIRS = -L../../$(GNUSTEP_OBJ_DIR)
+# in GNUmakefile.wrapper.objc.postamble.
+
+# The name of the wrapper dir is JavaWrapper or JavaWrapper_debug if
+# you use debugging; you can modify it by setting the WRAPPER_DIR_NAME
+# variable.
+
+
+JAVA_WRAPPER_NAME:=$(strip $(JAVA_WRAPPER_NAME))
+
 
 ifeq ($(INTERNAL_java_wrapper_NAME),)
 
@@ -55,11 +92,12 @@ else
 #
 # Targets
 #
-internal-java_wrapper-all:: before-$(TARGET)-all java-wrapper after-$(TARGET)-all
+internal-java_wrapper-all:: before-$(TARGET)-all java-wrapper \
+                               after-$(TARGET)-all
 
 before-$(TARGET)-all::
 	@if [ "$(shared)" = "no" ]; then \
-	 echo "* WARNING *: Java Wrappers of static libraries are meaningless!";\
+	 echo "* WARNING *: static Java Wrappers are meaningless!";\
 	fi
 
 ifneq ($(BUILD_JAVA_WRAPPER_AUTOMATICALLY),no)
@@ -89,13 +127,12 @@ uninstall-java_wrapper::
 # The file containing instructions about which classes to wrap and how.
 # A rule generates .jigs from .jobs if needed (TODO).
 #
-JIGS_FILE = $(LIBRARY_NAME).jigs
+JIGS_FILE = $(JAVA_WRAPPER_NAME).jigs
 
-
-# The suffix to use for the wrapper library directory.
-# NB: debug/profile refer to the library we are wrapping; the wrapper 
-# library for simplicity is compiled with exactly the same flags.
-TMP_LONG_SUFFIX = 
+# The suffix to use for the wrapper library directory.  NB: you are
+# warned to use the same flags (debug/profile) you used for the
+# library you are wrapping 
+TMP_LONG_SUFFIX =
 
 ifeq ($(debug), yes)
   TMP_LONG_SUFFIX =_debug
@@ -105,32 +142,47 @@ ifeq ($(profile), yes)
   TMP_LONG_SUFFIX +=_profile
 endif
 
-JIGS_LONG_SUFFIX = $(shell echo $(TMP_LONG_SUFFIX) | sed 's/ //g')
+# Replace space with nothing
+empty_j:=
+space_j:= $(empty_j) $(empty_j)
+JIGS_LONG_SUFFIX = $(subst $(space_j),,$(TMP_LONG_SUFFIX))
 
 # The directory to create and where to put the automatically generated 
 # wrapper library
-WRAPPER_DIR = $(shell pwd)/JavaWrapper$(JIGS_LONG_SUFFIX)
+ifeq ($(WRAPPER_DIR_NAME),)
+WRAPPER_DIR_NAME = JavaWrapper$(JIGS_LONG_SUFFIX)
+endif
+WRAPPER_DIR = $(shell pwd)/$(WRAPPER_DIR_NAME)
 # The subdirs containing the java and the objc code
 JAVA_WRAPPER_DIR = $(WRAPPER_DIR)/Java
 OBJC_WRAPPER_DIR = $(WRAPPER_DIR)/Objc
 
-# FIXME - this needs to remove 'lib' from the beginning of the name
-LIBRARY_SHORT_NAME = $(subst lib,,$(LIBRARY_NAME))
+# The name of the library we are wrapping
+LIBRARY_NAME = lib$(JAVA_WRAPPER_NAME)
 
-# This is a wild guess which usually needs to be corrected 
-# in GNUmakefile.wrapper.  It is the header which should include 
-# all the declarations of the classes you want to expose
-ifeq ($(HEADER_FILES_DIR),)
-WRAPPER_HEADER = $(LIBRARY_SHORT_NAME).h
+# The header file - please note that you can only use a single one
+ifeq ($(HEADER_FILES),)
+HEADER_FILE = $(JAVA_WRAPPER_NAME).h
 else
-WRAPPER_HEADER = $(HEADER_FILES_DIR)/$(LIBRARY_SHORT_NAME).h
+HEADER_FILE = $(HEADER_FILES)
 endif
+
+# Try to find the header file - WRAPPER_HEADER is the full absolute
+# path of the header file.  NB: in the rule which uses WRAPPER_HEADER,
+# we check that it is non-null - it is null if it couldn't be found.
+# That check should *not* be moved here, because otherwise the check
+# would be done always - which is more inefficient and would also
+# prevent other targets (eg, make distclean) from working just because
+# the header is not found.
+WRAPPER_HEADER = $(shell $(GNUSTEP_MAKEFILES)/search_header.sh \
+                          $(HEADER_FILE) $(HEADER_FILES_DIR))
+LIBRARY_HEADER_FLAGS = -I$(dir $(WRAPPER_HEADER))
 
 WRAP_CREATOR = opentool WrapCreator
 
-# Run WrapCreator in silent mode if `verbose=no' was passed on the
+# Run WrapCreator in silent mode unless `verbose=yes' was passed on the
 # make command line
-ifeq ($(verbose), no)
+ifneq ($(verbose), yes)
   SILENT_FLAGS = --no-verbose
 endif
 
@@ -140,51 +192,31 @@ ifeq ($(javadoc), no)
   SILENT_FLAGS = --no-javadoc
 endif
 
-# The following should override, if needed: 
-# JIGS_FILE, WRAPPER_DIR, WRAPPER_HEADER
--include GNUmakefile.wrapper
-
-#
-# This is needed to remake only if the library changed.
-# It must be kept in sync with library.make
-#
-LIBRARY_FILE = $(LIBRARY_NAME)$(LIBRARY_NAME_SUFFIX)$(SHARED_LIBEXT)
-VERSION_LIBRARY_FILE = $(LIBRARY_FILE).$(VERSION)
-
 #
 # We copy the RPM .spec.in and .script.in files 
 #
 ifeq ($(debug),yes)
   JAVA_WRAPPER_TOP_TEMPLATE=java-wrapper.top.debug.template
-  WRAPPER_SPEC_IN_FILE=$(PACKAGE_NAME)-wrapper-debug.spec.in
-  WRAPPER_SCRIPT_IN_FILE=$(PACKAGE_NAME)-wrapper-debug.script.spec.in
-  WRAPPER_REQUIRES="Requires: $(PACKAGE_NAME)-wrapper = $(VERSION)"
 else
   JAVA_WRAPPER_TOP_TEMPLATE=java-wrapper.top.template
-  WRAPPER_SPEC_IN_FILE=$(PACKAGE_NAME)-wrapper.spec.in
-  WRAPPER_SCRIPT_IN_FILE=$(PACKAGE_NAME)-wrapper.script.spec.in
-  WRAPPER_REQUIRES=""
 endif
 
 java-wrapper:: $(WRAPPER_DIR)/stamp-file
 
-$(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FILE)
+$(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE)
+	@if [ -z "$(WRAPPER_HEADER)" ]; then \
+	  echo "Could not find wrapper header $(HEADER_FILE)"; \
+	  exit 1; \
+	 fi;
 	@echo Creating the Wrapper Directories and GNUmakefiles...
 	@$(MKDIRS) $(WRAPPER_DIR)
-	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/$(JAVA_WRAPPER_TOP_TEMPLATE)   \
-	      $(WRAPPER_DIR)/GNUmakefile.tmp
-	@sed -e 's/PACKAGEHERE/$(PACKAGE_NAME)/g' $(WRAPPER_DIR)/GNUmakefile.tmp   \
-	      > $(WRAPPER_DIR)/GNUmakefile 
-	@rm $(WRAPPER_DIR)/GNUmakefile.tmp
-	@mv $(WRAPPER_DIR)/GNUmakefile $(WRAPPER_DIR)/GNUmakefile.tmp 
-	@sed -e 's/VERSIONHERE/$(VERSION)/g' $(WRAPPER_DIR)/GNUmakefile.tmp   \
-	      > $(WRAPPER_DIR)/GNUmakefile 
-	@rm $(WRAPPER_DIR)/GNUmakefile.tmp
-	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/java-wrapper.readme.template       \
-	      $(WRAPPER_DIR)/README
+	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/$(JAVA_WRAPPER_TOP_TEMPLATE) \
+	                 $(WRAPPER_DIR)/GNUmakefile
+	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/java-wrapper.readme.template \
+	                 $(WRAPPER_DIR)/README
 	@$(MKDIRS) $(JAVA_WRAPPER_DIR)
-	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/java-wrapper.java.template         \
-	      $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
+	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/java-wrapper.java.template \
+	                 $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
 	@sed -e 's/DEBUGHERE/$(debug)/g'           \
 	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp        \
 	        > $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp.2
@@ -202,7 +234,7 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FI
 	        > $(JAVA_WRAPPER_DIR)/GNUmakefile
 	@rm $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp.2
 	@$(MKDIRS) $(OBJC_WRAPPER_DIR)
-	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/java-wrapper.objc.template         \
+	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/java-wrapper.objc.template \
 	      $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp 
 	@sed -e 's/DEBUGHERE/$(debug)/g'           \
 	       $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp        \
@@ -220,12 +252,12 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FI
 	      $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2 \
 	      > $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp
 	@rm $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2
-	@sed -e 's/REPLACEWITHSHORTNAME/$(LIBRARY_SHORT_NAME)/g'           \
-	      $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp                          \
+	@sed -e 's/REPLACEWITHSHORTNAME/$(JAVA_WRAPPER_NAME)/g'  \
+	      $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp   \
 	      > $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2
 	@rm $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp
-	@sed -e 's/REPLACEWITHLIBRARYHEADERDIRS/$(HEADER_FILES_DIR)/g'      \
-	      $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2                         \
+	@sed -e 's/REPLACEWITHLIBRARYHEADERFLAGS/$(subst /,\/,$(LIBRARY_HEADER_FLAGS))/g'   \
+	      $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2        \
 	      > $(OBJC_WRAPPER_DIR)/GNUmakefile
 	@rm $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2
 	@echo Copying Custom GNUmakefiles...
@@ -245,21 +277,6 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FI
 	  $(INSTALL_DATA) GNUmakefile.wrapper.objc.postamble         \
 	                  $(OBJC_WRAPPER_DIR)/GNUmakefile.postamble; \
         fi;
-	@if [ -f $(WRAPPER_SPEC_IN_FILE) ]; then              \
-	  echo "Copying $(WRAPPER_SPEC_IN_FILE)...";          \
-	  cp $(WRAPPER_SPEC_IN_FILE) $(WRAPPER_DIR);          \
-	  echo "Adding RPM dependency on $(PACKAGE_NAME)-wrapper"; \
-	  mv $(WRAPPER_DIR)/$(WRAPPER_SPEC_IN_FILE) $(WRAPPER_DIR)/spec.tmp; \
-	  echo "$(WRAPPER_REQUIRES)" > $(WRAPPER_DIR)/$(WRAPPER_SPEC_IN_FILE);\
-	  cat $(WRAPPER_DIR)/spec.tmp >> $(WRAPPER_DIR)/$(WRAPPER_SPEC_IN_FILE); \
-	  rm $(WRAPPER_DIR)/spec.tmp; \
-	fi
-	@if [ -f $(WRAPPER_SCRIPT_IN_FILE) ]; then              \
-	  echo "Copying $(WRAPPER_SCRIPT_IN_FILE)...";          \
-	  cp $(WRAPPER_SCRIPT_IN_FILE) $(WRAPPER_DIR);          \
-	fi
-	@echo Cleaning up any obsolete Reference documentation...
-	rm -Rf $(JAVA_WRAPPER_DIR)/Reference
 	@echo Running the preprocessor on the header file...
 	$(CC) $(WRAPPER_HEADER) -E $(ALL_CPPFLAGS) $(ALL_OBJCFLAGS) \
 	      -o $(WRAPPER_DIR)/preprocessedHeader
@@ -268,7 +285,7 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FI
 	                --wrapper-dir $(WRAPPER_DIR) \
 	                --preprocessed-header $(WRAPPER_DIR)/preprocessedHeader \
 	                --library-name $(LIBRARY_NAME) \
-	                --library-header $(WRAPPER_HEADER) \
+	                --library-header $(HEADER_FILE) \
 	         	$(SILENT_FLAGS)
 	@echo Removing the temporary preprocessor header...
 	@rm $(WRAPPER_DIR)/preprocessedHeader
@@ -294,10 +311,10 @@ internal-java_wrapper-clean::
 	rm -Rf $(WRAPPER_DIR)
 
 internal-java_wrapper-distclean::
-	-rm -Rf $(shell pwd)/JavaWrapper
-	-rm -Rf $(shell pwd)/JavaWrapper_debug
-	-rm -Rf $(shell pwd)/JavaWrapper_profile
-	-rm -Rf $(shell pwd)/JavaWrapper_debug_profile
+	-rm -Rf JavaWrapper
+	-rm -Rf JavaWrapper_debug
+	-rm -Rf JavaWrapper_profile
+	-rm -Rf JavaWrapper_debug_profile
 
 endif # INTERNAL_java_wrapper_NAME
 
