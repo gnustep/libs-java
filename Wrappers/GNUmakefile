@@ -25,6 +25,8 @@
 # library separated from the base library itself
 #
 
+export GNUSTEP_INSTALLATION_DIR=$(GNUSTEP_SYSTEM_ROOT)
+
 .PHONY: all base gui install install-base install-gui \
         clean clean-base clean-gui distclean distclean-base distclean-gui
 
