@@ -1,3 +1,7 @@
+2005-03-09  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* gnustep-base.jigs: NSCharacterSets update.
+
 2005-02-29  Richard Frith-Macdonald <rfm@gnu.org>
 
 	* gnustep-base.jigs: remove NSPort close method (doesn't exist).
