@@ -1,3 +1,10 @@
+Sun May  6 20:47:17 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* gnu/gnustep/base/NSObject.java (valueForKey),
+	(takeValueForKey): Added.
+	* gnu/gnustep/java/JIGSKeyValueCoding.java: New class.
+	* GNUmakefile: Compile the new class.
+
 Fri Feb  9 10:00:41 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* gnu/gnustep/base/NSObject.java: Made realObject protected;
