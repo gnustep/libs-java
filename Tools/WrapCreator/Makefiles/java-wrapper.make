@@ -19,15 +19,14 @@
 #   If not, write to the Free Software Foundation,
 #   59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
-# prevent multiple inclusions
-ifeq ($(JAVA_WRAPPER_MAKE_LOADED),)
-JAVA_WRAPPER_MAKE_LOADED=yes
+#
+# You need gnustep-make > 1.3.0 to run this file!
+#
 
 #
 # Include in the common makefile rules
 #
 include $(GNUSTEP_MAKEFILES)/rules.make
-
 
 # The name of the java wrapper is in the JAVA_WRAPPER_NAME variable.
 # This name must be the same as the name of the library you want to
@@ -67,11 +66,9 @@ include $(GNUSTEP_MAKEFILES)/rules.make
 # you use debugging; you can modify it by setting the WRAPPER_DIR_NAME
 # variable.
 
-
 JAVA_WRAPPER_NAME:=$(strip $(JAVA_WRAPPER_NAME))
 
-
-ifeq ($(INTERNAL_java_wrapper_NAME),)
+ifeq ($(GNUSTEP_INSTANCE),)
 
 # This part gets included by the first invoked make process.
 internal-all:: $(JAVA_WRAPPER_NAME:=.all.java-wrapper.variables)
@@ -82,18 +79,23 @@ internal-uninstall:: $(JAVA_WRAPPER_NAME:=.uninstall.java-wrapper.variables)
 
 internal-clean:: $(JAVA_WRAPPER_NAME:=.clean.java-wrapper.variables)
 
-internal-distclean:: $(JAVA_WRAPPER_NAME:=.distclean.java-wrapper.variables)
+internal-distclean:: $(JAVA_WRAPPER_NAME:=.distclean.java-wrapper.subprojects)
+	-rm -Rf JavaWrapper
+	-rm -Rf JavaWrapper_debug
+	-rm -Rf JavaWrapper_profile
+	-rm -Rf JavaWrapper_debug_profile
 
 java-wrapper-make::
 	@$(MAKE) -f $(MAKEFILE_NAME) --no-print-directory \
 		$@.all.java-wrapper.variables
+
 else
+
+ifeq ($(GNUSTEP_TYPE),java_wrapper)
 
 #
 # Targets
 #
-internal-java_wrapper-all:: before-$(TARGET)-all java-wrapper \
-                               after-$(TARGET)-all
 
 before-$(TARGET)-all::
 	@if [ "$(shared)" = "no" ]; then \
@@ -105,11 +107,11 @@ ifneq ($(BUILD_JAVA_WRAPPER_AUTOMATICALLY),no)
 after-$(TARGET)-all::
 	cd $(WRAPPER_DIR); unset MAKEFLAGS; $(MAKE) 
 
-internal-java_wrapper-install::
+internal-java_wrapper-install_::
 	cd $(WRAPPER_DIR); unset MAKEFLAGS; \
 	$(MAKE) install GNUSTEP_INSTALLATION_DIR=$(GNUSTEP_INSTALLATION_DIR)
 
-internal-java_wrapper-uninstall::
+internal-java_wrapper-uninstall_::
 	cd $(WRAPPER_DIR); unset MAKEFLAGS; \
 	$(MAKE) uninstall GNUSTEP_INSTALLATION_DIR=$(GNUSTEP_INSTALLATION_DIR)
 
@@ -117,9 +119,9 @@ else
 
 after-$(TARGET)-all::
 
-internal-java_wrapper-install::
+internal-java_wrapper-install_::
 
-internal-java_wrapper-uninstall::
+internal-java_wrapper-uninstall_::
 
 endif # BUILD_JAVA_WRAPPER_AUTOMATICALLY
 
@@ -198,7 +200,7 @@ else
   JAVA_WRAPPER_TOP_TEMPLATE=java-wrapper.top.template
 endif
 
-java-wrapper:: $(WRAPPER_DIR)/stamp-file
+internal-java_wrapper-all_:: $(WRAPPER_DIR)/stamp-file
 
 $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE)
 	@if [ -z "$(WRAPPER_HEADER)" ]; then \
@@ -309,15 +311,9 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE)
 internal-java_wrapper-clean::
 	rm -Rf $(WRAPPER_DIR)
 
-internal-java_wrapper-distclean::
-	-rm -Rf JavaWrapper
-	-rm -Rf JavaWrapper_debug
-	-rm -Rf JavaWrapper_profile
-	-rm -Rf JavaWrapper_debug_profile
+endif # Instance java_wrapper code
 
-endif # INTERNAL_java_wrapper_NAME
-
-endif # java-wrapper.make loaded
+endif # Instance invocation
 
 ## Local variables:
 ## mode: makefile
