@@ -1,8 +1,8 @@
 /* JIGSLibraryLoader.java - class loading JIGS libraries
-   Copyright (C) 2000 Free Software Foundation, Inc.
+   Copyright (C) 2000, 2001 Free Software Foundation, Inc.
 
    Written by:  Nicola Pero <nicola@brainstorm.co.uk>
-   Date: September 2000
+   Date: September 2000, June 2001
    
    This file is part of the GNUstep Java Interface Library.
 
@@ -24,11 +24,11 @@ package gnu.gnustep.java;
 
 class JIGSLibraryLoader
 {
-   static
-    {
-      System.loadLibrary ("gnustep-java-loader");
-    }
-
+  static
+  {
+    System.loadLibrary ("gnustep-java-loader");
+  }
+  
   /* The 'debug' flag is set according to whether we link in debugging
      versions of the libraries or not.
      All libraries linked in *must* be of the same type, so we have a 
@@ -78,12 +78,31 @@ class JIGSLibraryLoader
   static void loadLibrary (String name)
     throws UnsatisfiedLinkError, SecurityException
     {
-      System.loadLibrary (completeName (name));
+      /* In case of an exception, we need to catch the exception and
+	 print the library name to stderr, otherwise the
+	 UnsatisfiedLinkError does not tell us which library could not
+	 be found ! */
+      try 
+	{
+	  System.loadLibrary (completeName (name));
+	} 
+      catch (UnsatisfiedLinkError e) 
+	{
+	  System.err.println ("Could not load library " 
+			      + completeName (name));
+	  throw e;
+	} 
+      catch (SecurityException e)
+	{
+	  System.err.println ("Could not load library " 
+			      + completeName (name));
+	  throw e;
+	}
     }
-
+  
   static boolean tryLoading (String completeName)
     throws SecurityException
-    {
+  {
       try 
 	{
 	  System.loadLibrary (completeName);
@@ -100,54 +119,56 @@ class JIGSLibraryLoader
      sets the debug flag accordingly */
   static void initialize ()
     throws UnsatisfiedLinkError, SecurityException
-    {
-      int result = debuggingEnabled ();
-
-      if (result == yes)
-	{
-	  if (tryLoading ("gnustep-java_d"))
-	    {
-	      debug = true;
-	      return;
-	    }
-	  else
-	    {
-	      System.out.println ("Warning: JIGS_DEBUG=yes but we could not load the debugging version");
-	      System.out.println ("of the gnustep-java library!  Trying with the not-debugging one.");
-	    }
-	}
-      else if (result == no)
-	{
-	  if (tryLoading ("gnustep-java"))
-	    {
-	      debug = false;
-	      return;
-	    }
-	  else
-	    {
-	      System.out.println ("Warning: JIGS_DEBUG=no but we could not load the not debugging version");
-	      System.out.println ("of the gnustep-java library!  Trying with the debugging one.");
-	    }
-	} 
-
-      /* Then try the not-debugging version */
-      if (tryLoading ("gnustep-java"))
-	{
-	  debug = false;
-	  return;
-	}
-
-      /* Then try the debugging version */
-      if (tryLoading ("gnustep-java_d"))
-	{
-	  debug = true;
-	  return;
-	}
-
-      /* Not any luck - give up */
-      throw new UnsatisfiedLinkError ();
-    }
-
+  {
+    int result = debuggingEnabled ();
+    
+    if (result == yes)
+      {
+	if (tryLoading ("gnustep-java_d"))
+	  {
+	    debug = true;
+	    return;
+	  }
+	else
+	  {
+	    System.out.println ("Warning: JIGS_DEBUG=yes but we could not load the debugging version");
+	    System.out.println ("of the gnustep-java library!  Trying with the not-debugging one.");
+	  }
+      }
+    else if (result == no)
+      {
+	if (tryLoading ("gnustep-java"))
+	  {
+	    debug = false;
+	    return;
+	  }
+	else
+	  {
+	    System.out.println ("Warning: JIGS_DEBUG=no but we could not load the not debugging version");
+	    System.out.println ("of the gnustep-java library!  Trying with the debugging one.");
+	  }
+      } 
+    
+    /* Then try the not-debugging version */
+    if (tryLoading ("gnustep-java"))
+      {
+	debug = false;
+	return;
+      }
+    
+    /* Then try the debugging version */
+    if (tryLoading ("gnustep-java_d"))
+      {
+	debug = true;
+	return;
+      }
+    
+    /* Not any luck - give up - but make sure we tell the users what
+       the problem is */
+    System.err.println ("Could not load libgnustep-java");
+    throw new UnsatisfiedLinkError ("Could not load libgnustep-java");
+  }
+  
   /* Read from environment (from the JIGS_DEBUG variable) whether 
      to enable debugging or not. */
   static final int notDefined = 0;
