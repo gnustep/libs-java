@@ -37,6 +37,9 @@
   NSArray *arguments;
   BOOL isClassMethod;
   BOOL isConstructor;
+  /* YES if we need to output the full JNI method name to avoid 
+     clashes with other methods */
+  BOOL outputFullJniName;
   /* We are a method of this class */
   WCClass *class;
 }
@@ -48,9 +51,13 @@
 			       class: (WCClass *)aClass
 		       isConstructor: (BOOL)flag;
 
+- (void) setOutputFullJniName: (BOOL)flag;
+
 - (NSString *) outputJavaWrapper;
 
 - (NSString *) outputObjcWrapper;
+
+- (NSString *) outputJniMethodName;
 
 - (NSString *) outputSelectorMapping;
 @end
@@ -58,7 +65,6 @@
 @interface WCMethod (InternalMethods)
 - (NSString *) outputJavaMethodName;
 - (NSString *) outputJavaArguments;
-- (NSString *) outputJniMethodName;
 - (NSString *) outputJavaArgumentSignature;
 @end
 

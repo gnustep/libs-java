@@ -65,6 +65,56 @@ static WCType *scanObjcType (NSScanner *scanner)
   return ret;
 }
 
+static NSString *convertToJNI (NSString *string)
+{
+  int i, length;
+  unichar c;
+  NSMutableString *convertedString;
+  static NSCharacterSet *alphanum = nil;
+
+  if (alphanum == nil)
+    {
+      alphanum = RETAIN ([NSCharacterSet alphanumericCharacterSet]);
+    }
+
+  length = [string length];
+
+  convertedString = [NSMutableString new];
+
+  for (i = 0; i < length; i++)
+    {
+      c = [string characterAtIndex: i];
+      if (c == '_')
+	{	  
+	  [convertedString appendString: @"_1"];
+	}
+      else if (c == ';')
+	{	  
+	  [convertedString appendString: @"_2"];
+	}
+      else if (c == '[')
+	{	  
+	  [convertedString appendString: @"_3"];
+	}
+      else if (c == '.')
+	{	  
+	  [convertedString appendString: @"_"];
+	}
+      else if ([alphanum characterIsMember: c] == NO)
+	{
+	  /* This needs to output _0XXX for UNICODE character XXX */
+	  [convertedString appendFormat: @"_0%d", c];
+	}
+      else
+	{
+	  [convertedString appendString: [NSString stringWithCharacters: &c 
+						   length: 1]];
+	}
+    }
+
+  return convertedString;
+}
+
 
 @implementation WCMethod
 
@@ -544,6 +594,11 @@ static WCType *scanObjcType (NSScanner *scanner)
   return output;
 }
 
+- (void) setOutputFullJniName: (BOOL)flag
+{
+  outputFullJniName = flag;
+}
+
 - (NSString *) outputJniMethodName
 {
   NSMutableString *output;
@@ -553,6 +608,34 @@ static WCType *scanObjcType (NSScanner *scanner)
   // TODO: Convert strange characters in java method name 
   // into the JNI convention
   [output appendString: [self outputJavaMethodName]];
+
+  if (outputFullJniName == YES)
+    {
+      int count = [arguments count];
+      
+      if (count > 0)
+	{
+	  int i;
+
+	  /* Output the long full JNI name to prevent clashes for
+	     overridden methods */
+	  [output appendString: @"__"];
+	
+	  for (i = 0; i < count; i++)
+	    {
+	      WCType *t = (WCType *)[arguments objectAtIndex: i];
+
+	      /* __FIXME__: Argh - here we could have a nightmare problem:
+		 we could have an argument of a class which we determine
+		 at run-time... It's impossible then to go on with the
+		 wrapping unless further help/input is given by the .jigs
+		 file in some way (to determine/decide - probably a `hints' 
+		 section in the .jigs file). */
+	      [output appendString: convertToJNI ([t javaArgumentType])];
+	    }
+	}
+    }
+      
 
   return output;
 }
