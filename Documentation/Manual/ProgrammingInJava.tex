@@ -12,25 +12,25 @@ instructions coming with JIGS.
 Even without JIGS, the GNUstep make package has builtin support for
 compilation of generic java projects.
 
-As an example, consider the following java program: 
+As an example, consider the following java class: 
 \begin{verbatim}
 import java.lang.*;
 
 class Pisa
 { 
-  public static void main (String[] args) 
+  public static void printQuote ()
     throws Throwable
   {
     System.out.println ("Ahi Pisa, vituperio de le genti");
   }
 }
 \end{verbatim}
-This program just prints out the famous quote by Dante about the
-Italian city of Pisa; it makes only use of the standard java classes,
-so there is no need to have JIGS to compile or run it.
+This class just prints out the famous quote by Dante about the Italian
+city of Pisa; it makes only use of the standard java classes, so there
+is no need to have JIGS to compile or run it.
 
-Compiling this program can be quite easily done directly, but we want 
-to start learning how to use the GNUstep make package facilities for 
+Compiling this class can be quite easily done directly, but we want to
+start learning how to use the GNUstep make package facilities for
 java, so we write the following \texttt{GNUmakefile}:
 \begin{verbatim}
 include $(GNUSTEP_MAKEFILES)/common.make
@@ -40,7 +40,6 @@ test_JAVA_FILES = Pisa.java
 
 include $(GNUSTEP_MAKEFILES)/java.make
 \end{verbatim}
-
 The makefile is straightforward: the \texttt{JAVA\_PACKAGE\_NAME} is
 just a name identifying the package (any name would do);
 \texttt{JAVA\_FILES} is a list of java files to be compiled.
@@ -61,8 +60,7 @@ Since the GNUstep initialization script -- usually
 \end{verbatim}
 -- adds \texttt{/usr/GNUstep/Local/Libraries/Java} to the
 \texttt{CLASSPATH}, after you have installed \texttt{Pisa.class}, you
-can just type
-\texttt{java Pisa} from any directory, and your little program will be run.
+can just access \texttt{java Pisa} from any Java program automatically.
 
 This can be unfortunate, because if you install many different
 classes, you end up with all the classes being installed in the same
@@ -82,7 +80,7 @@ import java.lang.*;
 
 class Pisa
 { 
-  public static void main (String[] args) 
+  public static void printQuote ()
     throws Throwable
   {
     System.out.println ("Ahi Pisa, vituperio de le genti");
@@ -107,12 +105,8 @@ include $(GNUSTEP_MAKEFILES)/java.make
 Typing \texttt{make} will compile the \texttt{misc.quotes.Pisa} class
 as usual.
 
-To execute the class, or to include it in other classes, we need now 
-to always specify the full package name, as in (the command line command) 
-\begin{verbatim}
-java misc.quotes.Pisa
-\end{verbatim}
-or as in (the java import statement)
+To include the class in other classes, we need now to always specify
+the full package name, as in 
 \begin{verbatim}
 import misc.quotes.Pisa;
 \end{verbatim}
@@ -130,17 +124,10 @@ In my case, this means that it is installed into:
 /usr/GNUstep/Local/Libraries/Java/misc/quotes/Pisa.class
 \end{verbatim}
 
-From any directory on your system you can now run your little program
-by typing at the prompt \texttt{java misc.quotes.Pisa}.  The good
-thing is that you can always import it as easily, by adding at the
-beginning of your java code the line \texttt{import
-misc.quotes.Pisa;}.
-
-It is important to understand that the GNUstep make package does not
-know about java packages, but just preserves the relative paths of the
-classes when installing.  This means that it is perfectly correct to
-compile and install classes belonging to different java packages with
-the same \texttt{GNUmakefile}, as in the following example:
+Since the GNUstep make package does not really know about java
+packages, it is perfectly correct to compile and install classes
+belonging to different java packages with the same
+\texttt{GNUmakefile}, as in the following example:
 \begin{verbatim}
 include $(GNUSTEP_MAKEFILES)/common.make
 
@@ -190,6 +177,56 @@ include $(GNUSTEP_MAKEFILES)/java.make
 This GNUmakefile will compile your servlet, and install it into 
 \texttt{/usr/local/servlets}.
 
+\subsection{Creating Java Tools}
+
+In GNUstep, a tool is a program which is run directly from the command
+line.  The GNUstep make package 
+% avoid using $> 1.0.0$ because that enters math mode, which generates 
+% images rather than normal text when converted to HTML
+(versions newer than 1.0.0) supports natively Java tools.
+
+As an example, we now show how to turn our Pisa class into a Java
+tool.  We modify the code to be:
+\begin{verbatim}
+import java.lang.*;
+
+class Pisa
+{ 
+  public static void main (String[] args)
+    throws Throwable
+  {
+    System.out.println ("Ahi Pisa, vituperio de le genti");
+  }
+}
+\end{verbatim}
+and we replace the \texttt{GNUmakefile} with the following one:
+\begin{verbatim}
+include $(GNUSTEP_MAKEFILES)/common.make
+
+JAVA_TOOL_NAME = Pisa
+Pisa_JAVA_FILES = Pisa.java
+Pisa_PRINCIPAL_CLASS = Pisa
+
+include $(GNUSTEP_MAKEFILES)/java-tool.make
+\end{verbatim}
+There are some differences with the \texttt{GNUmakefile} we use
+before.  We include \texttt{java-tool.make} rather than
+\texttt{java.make} because we want to create a Java tool rather than a
+generic Java class.
+\texttt{JAVA\_TOOL\_NAME} is the name of the tool - this is quite important 
+now, because it is the name we will use to invoke the tool from the
+command line: when you install the tool, GNUstep make will generate
+and install a shell script in \texttt{\$GNUSTEP\_LOCAL\_ROOT/Tools}
+%$ [Fool Emacs' buggy TeX mode]
+with that name (\texttt{Pisa} in this case), which runs your java
+program (setting up the class path and the library path if needed).
+So, once you have installed the Java tool, just typing \texttt{Pisa}
+at the shell prompt will run your it.
+\texttt{JAVA\_FILES} are, as usual, the Java source files for the tool.  
+\texttt{PRINCIPAL\_CLASS} is the class which implements the \texttt{main} 
+method -- the GNUstep make package needs this information, so that it
+can prepare the shell script to run this class.
+
 \subsection{Documenting Classes Using Javadoc}
 
 The GNUstep make package has also some support for generating
@@ -197,7 +234,7 @@ documentation using \texttt{javadoc}; if you want to use this
 facility, please read on.  Otherwise, you may safely skip this
 section.
 
-Here is an example of the same \texttt{GNUmakefile} with added
+Here is an example of the usual \texttt{GNUmakefile} with added
 documentation using javadoc:
 \begin{verbatim}
 include $(GNUSTEP_MAKEFILES)/common.make
