@@ -388,7 +388,8 @@ classes = (
 		      "initWithObjects:forKeys:",
 		      "initWithContentsOfFile:");
 
-    "method declarations" = ("- (void) setObject: (id)anObject forKey: (id)aKey");
+    "method declarations" = ("- (void) setObject: (id)anObject forKey: (id)aKey",
+			     "- (void) removeObjectForKey: (id)aKey");
   },
     
   {
@@ -650,7 +651,8 @@ classes = (
        strings as keys - even if the Java declaration we are forced to
        use is more generic. */
     "method declarations" = ("- (id) objectForKey: (id)aKey", 
-			     "- (void) setObject: (id)anObject forKey: (id)aKey");
+			     "- (void) setObject: (id)anObject forKey: (id)aKey",
+     			     "- (void) removeObjectForKey: (id)aKey");
   }
 );
 "method name mapping" = {
