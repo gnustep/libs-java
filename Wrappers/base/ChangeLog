@@ -1,3 +1,8 @@
+Fri Feb  9 15:04:20 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* *.handmade: Changed extension from .handmade to .add.
+	* libgnustep-base.jigs: Updated as a consequence.
+
 Fri Feb  9 14:56:49 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* libgnustep-base.jigs (NSCountedSet): New wrapper.

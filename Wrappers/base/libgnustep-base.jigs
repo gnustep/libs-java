@@ -7,8 +7,8 @@ classes = (
 {
   "java name" = "gnu.gnustep.base.NSArray";
   
-  "file to include in java code" = "NSArray.java.handmade";
-  "file to include in objective-c code" = "NSArray.m.handmade";
+  "file to include in java code" = "NSArray.java.add";
+  "file to include in objective-c code" = "NSArray.m.add";
   
   "instance methods" = ("containsObject:",
 			"count", 
@@ -81,8 +81,8 @@ classes = (
   {
     "java name" = "gnu.gnustep.base.NSData";
     
-    "file to include in java code" = "NSData.java.handmade";
-    "file to include in objective-c code" = "NSData.m.handmade";
+    "file to include in java code" = "NSData.java.add";
+    "file to include in objective-c code" = "NSData.m.add";
     
     "instance methods" = 
     (
@@ -172,8 +172,8 @@ classes = (
   {
     "java name" = "gnu.gnustep.base.NSMutableArray";
     
-    "file to include in java code" = "NSMutableArray.java.handmade";
-    "file to include in objective-c code" = "NSMutableArray.m.handmade";
+    "file to include in java code" = "NSMutableArray.java.add";
+    "file to include in objective-c code" = "NSMutableArray.m.add";
     
     "instance methods" = ("addObject:",
 			  "addObjectsFromArray:",
@@ -200,8 +200,8 @@ classes = (
     
   {
     "java name" = "gnu.gnustep.base.NSMutableData";
-    "file to include in java code" = "NSMutableData.java.handmade";
-    "file to include in objective-c code" = "NSMutableData.m.handmade";
+    "file to include in java code" = "NSMutableData.java.add";
+    "file to include in objective-c code" = "NSMutableData.m.add";
     
     "instance methods" = ("increaseLengthBy:",
 			  "setLength:",
@@ -378,7 +378,10 @@ classes = (
     
   {
     "java name" = "gnu.gnustep.base.NSSet";
-    
+    /*
+    "file to include in java code" = "NSSet.java.add";
+    "file to include in objective-c code" = "NSSet.m.add";
+    */
     "instance methods" = ("count", 
 			  "allObjects",
 			  "anyObject",
