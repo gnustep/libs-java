@@ -216,6 +216,7 @@ static NSMutableArray *classList;
   [libraryInitCode appendString: @"JNIEXPORT jint JNICALL\n"];
   [libraryInitCode appendString: @"JNI_OnLoad (JavaVM *jvm, void *reserved)\n"];
   [libraryInitCode appendString: @"{\n"];
+  [libraryInitCode appendString: @"  JIGS_ONLOAD_ENTER;\n"];
 
   /* Wrap classes */
   count = [classList count];
@@ -244,7 +245,7 @@ static NSMutableArray *classList;
       [pool release];
     }
 
-  [libraryInitCode appendString: @"  return JNI_VERSION_1_2;\n"];
+  [libraryInitCode appendString: @"  JIGS_ONLOAD_EXIT;\n"];
   [libraryInitCode appendString: @"}\n\n/* END OF FILE */\n"];
   /* Write libraryName-init.m */
   path = [NSString stringWithFormat: @"%@/Objc/%@-init.m", wrapDir, libraryName];
