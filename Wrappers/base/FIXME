@@ -1,0 +1,9 @@
+For completeness, the methods wrapped by hand need to be added to the class
+selector map table, unless they are constructors.  TODO - modify the
+WrapCreator tool to allow us to insert new methods in the table; do that for
+all the hand made methods in this directory - which are -
+
+NSData -bytes
+NSArray -objects
+
+(quite useless to have them in the table but anyway).
