@@ -46,3 +46,4 @@ check:: all
 after-distclean::
 	rm -f test.array
 	rm -f MyThread.class
+	rm -f test-base.log
