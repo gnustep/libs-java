@@ -58,6 +58,7 @@
  */
 
 #define JIGS_ENTER                                   \
+BOOL registeredThread = [NSThread registerCurrentThread]; \
 NSAutoreleasePool *pool = [NSAutoreleasePool new];   \
 NS_DURING
 
@@ -65,14 +66,17 @@ NS_DURING
 NS_HANDLER                                                   \
 JIGSRaiseJExceptionFromNSException (env, localException);    \
 NS_ENDHANDLER                                                \
-RELEASE (pool);
+RELEASE (pool);                                              \
+if (registeredThread) [NSThread unregisterCurrentThread];
 
 #define JIGS_EXIT_WITH_VALUE(ret_value)                      \
 NS_HANDLER                                                   \
 JIGSRaiseJExceptionFromNSException (env, localException);    \
 ret_value = 0;                                               \
 NS_ENDHANDLER                                                \
-RELEASE (pool); return (ret_value);
+RELEASE (pool);                                              \
+if (registeredThread) [NSThread unregisterCurrentThread];    \
+return (ret_value);
      
 
 #endif /*__JIGSNative_h_GNUSTEP_JAVA_INCLUDE*/
