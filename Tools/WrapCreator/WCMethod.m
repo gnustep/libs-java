@@ -670,6 +670,7 @@ static NSString *convertToJNI (NSString *string)
 		  printf ("telling me how to map that name!  Otherwise, your java code\n");
 		  printf ("will crash whenever you try accessing the method wrapping\n");
 		  printf ("`%s'\n\n", [methodName cString]);
+		  printf ("* IF YOU IGNORE THIS WARNING, YOUR WRAPPER LIBRARY WILL BE BROKEN *\n\n\n");
 		}
 	      [output appendString: convertToJNI ([t javaArgumentType])];
 	    }
