@@ -1,3 +1,11 @@
+Wed Sep 12 11:11:28 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Objc/main.m (print_object): New function. 
+	(test_primitive_type, main): Use print_object whenever printing an
+	object description using printf; removed all calls to
+	JIGSRegisterJavaClass as with the new JIGS engine those are not
+	needed any longer.
+
 Tue Sep 11 16:16:23 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Objc/main.m (main): Make sure we can manage nil results.
