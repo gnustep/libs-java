@@ -1,3 +1,8 @@
+2003-01-09  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* gnustep-base.jigs: Add NSCalendar date weekOfYear method.
+	* gnustep-base.h: Include new GSCategories.h
+
 2002-11-27  Richard Frith-Macdonald <rfm@gnu.org>
 
 	* gnustep-base.jigs: Updated GSMime API.

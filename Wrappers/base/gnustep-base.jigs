@@ -420,6 +420,7 @@ classes = (
       "timeIntervalSinceReferenceDate", 
       "timeIntervalSince1970",
       "timeZone",
+      "weekOfYear",
       "yearOfCommonEra"
       //"compare:"
       //"dateWithCalendarFormat:timeZone:"
