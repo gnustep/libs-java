@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 
-<!--Converted with LaTeX2HTML 2K.1beta (1.48)
+<!--Converted with LaTeX2HTML 99.2beta8 (1.43)
 original version by:  Nikos Drakos, CBLU, University of Leeds
 * revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
 * with significant contributions from:
@@ -14,7 +14,7 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 <META NAME="distribution" CONTENT="global">
 
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META NAME="Generator" CONTENT="LaTeX2HTML v2K.1beta">
+<META NAME="Generator" CONTENT="LaTeX2HTML v99.2beta8">
 <META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
 
 <LINK REL="STYLESHEET" HREF="Manual.css">
@@ -40,42 +40,41 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 
 <UL>
 <LI><A NAME="tex2html360"
-  HREF="#SECTION00571000000000000000">4.7.1 Determining which .jigs file to read</A>
+  HREF="node18.html#SECTION00571000000000000000">4.7.1 Determining which .jigs file to read</A>
 <LI><A NAME="tex2html361"
-  HREF="#SECTION00572000000000000000">4.7.2 Overview of the .jigs file</A>
+  HREF="node18.html#SECTION00572000000000000000">4.7.2 Overview of the .jigs file</A>
 <LI><A NAME="tex2html362"
-  HREF="#SECTION00573000000000000000">4.7.3 The Classes section</A>
+  HREF="node18.html#SECTION00573000000000000000">4.7.3 The Classes section</A>
 <UL>
 <LI><A NAME="tex2html363"
-  HREF="#SECTION00573100000000000000">4.7.3.1 java name</A>
+  HREF="node18.html#SECTION00573100000000000000">4.7.3.1 java name</A>
 <LI><A NAME="tex2html364"
-  HREF="#SECTION00573200000000000000">4.7.3.2 objective-c name</A>
+  HREF="node18.html#SECTION00573200000000000000">4.7.3.2 objective-c name</A>
 <LI><A NAME="tex2html365"
-  HREF="#SECTION00573300000000000000">4.7.3.3 initializers</A>
+  HREF="node18.html#SECTION00573300000000000000">4.7.3.3 initializers</A>
 <LI><A NAME="tex2html366"
-  HREF="#SECTION00573400000000000000">4.7.3.4 class methods</A>
+  HREF="node18.html#SECTION00573400000000000000">4.7.3.4 class methods</A>
 <LI><A NAME="tex2html367"
-  HREF="#SECTION00573500000000000000">4.7.3.5 instance methods</A>
+  HREF="node18.html#SECTION00573500000000000000">4.7.3.5 instance methods</A>
 <LI><A NAME="tex2html368"
-  HREF="#SECTION00573600000000000000">4.7.3.6 method declarations</A>
+  HREF="node18.html#SECTION00573600000000000000">4.7.3.6 method declarations</A>
 <LI><A NAME="tex2html369"
-  HREF="#SECTION00573700000000000000">4.7.3.7 hardcoded constants</A>
+  HREF="node18.html#SECTION00573700000000000000">4.7.3.7 hardcoded constants</A>
 <LI><A NAME="tex2html370"
-  HREF="#SECTION00573800000000000000">4.7.3.8 file to include in java code</A>
+  HREF="node18.html#SECTION00573800000000000000">4.7.3.8 enumerations</A>
 <LI><A NAME="tex2html371"
-  HREF="#SECTION00573900000000000000">4.7.3.9 file to include in preamble java code</A>
+  HREF="node18.html#SECTION00573900000000000000">4.7.3.9 file to include in java code</A>
 <LI><A NAME="tex2html372"
-  HREF="#SECTION005731000000000000000">4.7.3.10 file to include in objective-c code</A>
-</UL>
-<BR>
+  HREF="node18.html#SECTION005731000000000000000">4.7.3.10 file to include in preamble java code</A>
 <LI><A NAME="tex2html373"
-  HREF="#SECTION00574000000000000000">4.7.4 Method Name Mapping</A>
+  HREF="node18.html#SECTION005731100000000000000">4.7.3.11 file to include in objective-c code</A>
+</UL>
 <LI><A NAME="tex2html374"
-  HREF="#SECTION00575000000000000000">4.7.5 Prerequisite Libraries</A>
+  HREF="node18.html#SECTION00574000000000000000">4.7.4 Method Name Mapping</A>
 <LI><A NAME="tex2html375"
-  HREF="#SECTION00576000000000000000">4.7.6 Types</A>
+  HREF="node18.html#SECTION00575000000000000000">4.7.5 Prerequisite Libraries</A>
 <LI><A NAME="tex2html376"
-  HREF="#SECTION00577000000000000000">4.7.7 Enumerations</A>
+  HREF="node18.html#SECTION00576000000000000000">4.7.6 Types</A>
 </UL>
 <!--End of Table of Child-Links-->
 <HR>
@@ -114,11 +113,10 @@ is the section name, the value is an array or a dictionary containing
 the information referring to that section.  For example, we have the
 <TT>classes</TT> section (containing an array of classes to be wrapped), the
 <TT>types</TT> section (containing a dictionary of mapping of custom C 
-types to already known C types), the <TT>enumerations</TT> section
-(containing an array listing enumeration types), the <TT>method
-name mapping</TT> section (containing a dictionary of mappings from
-objective-C method names to Java method names, to be used for the
-whole library).  Here is an example:
+types to already known C types), the <TT>method name mapping</TT>
+section (containing a dictionary of mappings from objective-C method
+names to Java method names, to be used for the whole library).  Here
+is an example:
 <PRE>
 {
   classes = (
@@ -351,12 +349,54 @@ is not found.
 If your Objective-C library defines some constants, and some methods
 which you expose to Java return or accept these constants, you may
 want to make these constants available to Java as well by using the
-<TT>hardcoded constants</TT> section.
+<TT>hardcoded constants</TT> section.  Enumerations are exposed using 
+the <TT>enumerations</TT> section, as explained in the next
+paragraphs.
 
 <P>
 
 <H3><A NAME="SECTION00573800000000000000">
-4.7.3.8 file to include in java code</A>
+4.7.3.8 enumerations</A>
+</H3>
+
+<P>
+Starting from JIGS 1.5.0, enumeration types are automatically
+recognized in the header file, and treated by the wrapper tool exactly
+as if they were simple <TT>int</TT>s.  Usually, that is not enough -
+you want also to have the enumeration constants available from Java as
+static integer constants of some class.  You can use the
+<TT>hardcoded constants</TT> section to manually add them to the
+class; this is quite clumsy, because you have to enter all the
+enumeration constants manually in the jigs file, and if you change the
+enumeration values in the Objective-C code, you have to manually
+update the jigs file.
+
+<P>
+Recent versions of JIGS (1.5.0 and newer) offer a new better option,
+in the form of the <TT>enumerations</TT> section.  For example, the
+following line inside a class section
+<PRE>
+enumerations = (NSComparisonResult);
+</PRE>
+will cause the following code to be automatically added to the
+generated Java class code:
+<PRE> 
+public static int NSOrderedDescending = 1;
+public static int NSOrderedSame = 0;
+public static int NSOrderedAscending = -1;
+</PRE>
+
+<P>
+Please notice that the wrapper tool has parsed your Objective-C header
+file, and extracted the constant values from there automatically!
+This means that you don't have to enter the constants in the first
+place, and if you ever change the enumeration, the Java wrappers will
+be immediately and automatically updated as soon as you recreate them.
+
+<P>
+
+<H3><A NAME="SECTION00573900000000000000">
+4.7.3.9 file to include in java code</A>
 </H3>
 This is a string - a filename (relative to the current directory).
 When WrapCreator generates the Java class, it will read the contents
@@ -385,8 +425,8 @@ when the Java wrapper is created.
 
 <P>
 
-<H3><A NAME="SECTION00573900000000000000">
-4.7.3.9 file to include in preamble java code</A>
+<H3><A NAME="SECTION005731000000000000000">
+4.7.3.10 file to include in preamble java code</A>
 </H3>
 This is a string - a filename (relative to the current directory).
 The only difference with <TT>file to include in java code</TT>
@@ -396,8 +436,8 @@ implementation.
 
 <P>
 
-<H3><A NAME="SECTION005731000000000000000">
-4.7.3.10 file to include in objective-c code</A>
+<H3><A NAME="SECTION005731100000000000000">
+4.7.3.11 file to include in objective-c code</A>
 </H3>
 This is a string - a filename (relative to the current directory).
 When WrapCreator generates the Objective-C code, it will read the
@@ -479,60 +519,12 @@ of type <TT>NSTimeInterval</TT> in an Objective-C method declaration, it
 has to treat it in the same way as if it were a <TT>double</TT>.
 
 <P>
-
-<H2><A NAME="SECTION00577000000000000000">
-4.7.7 Enumerations</A>
-</H2>
-The <TT>enumerations</TT> section is simply a short-hand to make
-wrapping enumerations simpler.  This section contains an array, in
-which you can list all the new enumeration types in your Objective-C
-library that you want to be exposed:
-<PRE>
-enumerations = (NSTitlePosition);
-</PRE>
-The enumeration types are exposed in the same way as <TT>int</TT>s
-are.  In other words, this is completely equivalent to putting
-<TT>NSTitlePosition</TT> in the <TT>types</TT> section mapping it to
-the <TT>int</TT> type:
-<PRE>
-types = { NSTitlePosition = int; };
-</PRE>
-Using the <TT>enumerations</TT> section rather than mixing
-enumerations with the other types makes simply the wrapping file
-clearer to read, and lets you type less.
-
-<P>
-Usually, after declaring an enumeration in the <TT>enumerations</TT> 
-section, you need to add the various values as hardcoded constants 
-in one of your Java classes.  For example, in the GNUstep Gui 
-Library, after having declared <TT>NSTitlePosition</TT> as an 
-enumeration, the following entry is added to the <TT>NSBox</TT> 
-class entry:
-<PRE>
-"hardcoded constants" = (
-   "int NoTitle = 0",
-   "int AboveTop = 1",
-   "int AtTop = 2",
-   "int BelowTop = 3",
-   "int AboveBottom = 4",
-   "int AtBottom = 5",
-   "int BelowBottom = 6");
-</PRE>
-This will generate the following code in the Java <TT>NSBox</TT> class:
-<PRE>
-/* Constants */
-
-public static int NoTitle = 0;
-public static int AboveTop = 1;
-public static int AtTop = 2;
-public static int BelowTop = 3;
-public static int AboveBottom = 4;
-public static int AtBottom = 5;
-public static int BelowBottom = 6;
-</PRE>
-This makes sure the various values for <TT>NSTitlePosition</TT>
-arguments are available from Java quite simply as <TT>NSBox.NoTitle</TT> 
-etc.
+Starting from JIGS 1.5.0, the wrapper tool recognizes enumerations
+when it parses your header file, and it automatically treats them as
+new types corresponding to <TT>int</TT>.  This means that you don't
+need to do anything special to have JIGS wrap methods taking or
+returning enumerations - enumerations should be recognized
+automatically, and treated automatically as <TT>int</TT>s.
 
 <P>
 <HR><B> Next: <A NAME="tex2html359"
@@ -545,7 +537,7 @@ etc.
 <!--End of Navigation Panel-->
 <ADDRESS>
 Nicola Pero
-2001-05-21
+2001-07-24
 </ADDRESS>
 </BODY>
 </HTML>
