@@ -29,6 +29,7 @@
 @interface WCObjectType : WCType
 {
   NSString *javaType;
+  NSString *longJavaType;
 }
 @end
 
