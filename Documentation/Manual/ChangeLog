@@ -1,3 +1,16 @@
+Wed Feb  7 13:59:52 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* TitlePage.tex, .latex2html-init: Updated date.
+	* ProgrammingInJava.tex (Documenting Classes Using Javadoc): New
+	subsection.  (The General Idea): Quote the quick reference
+	documentation for the GNUstep Base Library Wrappers.
+	* WrappingObjcLibraries.tex (The Java Subdirectory): Talk about
+	the quick reference documentation.  (file to include in java
+	code), (file to include in preamble java code), (file to include
+	in objective-c code): New subsubsections.  (Turning off the
+	Generation of Quick Reference doc): New subsection.  (Controlling
+	the Quick Reference Documentation): New section.
+
 Thu Jan 25 16:18:44 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* WrappingObjcLibraries.tex (Generating RPMs for the Wrapper
