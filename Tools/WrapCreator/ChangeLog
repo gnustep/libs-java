@@ -1,3 +1,13 @@
+Thu Mar 21 15:36:36 2002  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Makefiles/java-wrapper.make: Updated internal-java_wrapper-all,
+	internal-java_wrapper-install and internal-java_wrapper-uninstall
+	for gnustep-make from CVS; don't include the instance part if this
+	is not a java wrapper instance invocation; use GNUSTEP_INSTANCE
+	instead of INTERNAL_java_wrapper_NAME.  Do not run any instance
+	invocation on make distclean.  Do not protect against multiple
+	inclusions.
+	
 Fri Dec 14 12:13:00 2001  Richard Frith-Macdonald <rfm@gnu.org>
 
 	* GNUmakefile: Don't try to install recently deleted 'old' stuff.
