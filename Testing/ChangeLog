@@ -1,3 +1,37 @@
+Wed Nov 21 15:48:23 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Java/Base/Benchmarks: New directory.
+	* Java/Base/Benchmarks/README: New file.
+	* Java/Base/Benchmarks/GNUmakefile: New file.
+	* Java/Base/Benchmarks/ArrayBenchmark.java: New file.
+	* Java/Base/Benchmarks/Benchmark.java: New file.
+	* Java/Base/Benchmarks/Driver.java: New file.
+	* Java/Base/Benchmarks/EmptyBenchmark.java: New file.
+	* Java/Base/Benchmarks/JavaMethodBenchmark.java: New file.
+	* Java/Base/Benchmarks/JavaNewObjectBenchmark.java: New file.
+	* Java/Base/Benchmarks/JavaToStringBenchmark.java: New file.
+	* Java/Base/Benchmarks/NSArray0Benchmark.java: New file.
+	* Java/Base/Benchmarks/NSArray1Benchmark.java: New file.
+	* Java/Base/Benchmarks/NSArray2Benchmark.java: New file.
+	* Java/Base/Benchmarks/NSArray3Benchmark.java: New file.
+	* Java/Base/Benchmarks/NSArray4Benchmark.java: New file.
+	* Java/Base/Benchmarks/NSArray5Benchmark.java: New file.
+	* Java/Base/Benchmarks/NSArray6Benchmark.java: New file.
+	* Java/Base/Benchmarks/NSArray7Benchmark.java: New file.
+	* Java/Base/Benchmarks/ObjCMethodBenchmark.java: New file.
+	* Java/Base/Benchmarks/ObjCNewObjectBenchmark.java: New file.
+	* Java/Base/Benchmarks/ObjCToStringBenchmark.java: New file.
+	* Java/Base/Benchmarks/StringComparisonBenchmark.java: New file.
+	* Java/Base/Benchmarks/StringConcatenationBenchmark.java: New file.
+	* Java/Base/Benchmarks/Vector0Benchmark.java: New file.
+	* Java/Base/Benchmarks/Vector1Benchmark.java: New file.
+	* Java/Base/Benchmarks/Vector2Benchmark.java: New file.
+	* Java/Base/Benchmarks/Vector3Benchmark.java: New file.
+	* Java/Base/Benchmarks/Vector4Benchmark.java: New file.
+	* Java/Base/Benchmarks/Vector5Benchmark.java: New file.
+	* Java/Base/Benchmarks/Vector6Benchmark.java: New file.
+	* Java/Base/Benchmarks/Vector7Benchmark.java: New file.
+
 Wed Sep 12 11:11:28 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Objc/main.m (print_object): New function. 
