@@ -40,8 +40,7 @@ NSString *GSJNI_ConvertJavaClassNameFromJNI (NSString *name)
 
 NSString *GSJNI_NSStringFromClassOfObject (JNIEnv *env, jobject object)
 {
-  static jclass java_lang_Class = NULL; // Cached
-  static jmethodID jid = NULL;          // Cached
+  static jmethodID jid = NULL; // Cached
   jclass class;
   jstring j;
   NSString *returnString;
@@ -52,7 +51,7 @@ NSString *GSJNI_NSStringFromClassOfObject (JNIEnv *env, jobject object)
       return @"Null";
     }
   
-  if ((*env)->PushLocalFrame (env, 2) < 0)
+  if ((*env)->PushLocalFrame (env, 3) < 0)
     {
       return nil;
     }      
@@ -60,19 +59,18 @@ NSString *GSJNI_NSStringFromClassOfObject (JNIEnv *env, jobject object)
   // Get object's class
   class  = (*env)->GetObjectClass (env, object);
   
-  // Initialize java_lang_Class if needed
-  if (java_lang_Class == NULL)
+  if (jid == NULL)
     {
-      java_lang_Class = GSJNI_NewGlobalClassCache (env, "java/lang/Class");
+      jclass java_lang_Class = NULL;
+
+      java_lang_Class = (*env)->FindClass (env, "java/lang/Class");
       if (java_lang_Class == NULL)
 	{
+	  (*env)->PopLocalFrame (env, NULL);
 	  // Exception thrown
 	  return nil;
 	}
-    }
-  
-  if (jid == NULL)
-    {
+
       jid = (*env)->GetMethodID (env, java_lang_Class, "getName", 
 				 "()Ljava/lang/String;");
       if (jid == NULL)
@@ -112,4 +110,92 @@ inline NSString *GSJNI_ShortClassNameFromLongClassName (NSString *className)
     {
       return className;
     }
+}
+
+NSString *GSJNI_NSStringFromJClass (JNIEnv *env, jclass class)
+{
+  static jmethodID jid = NULL; // Cached
+  jstring j;
+  NSString *returnString;
+  
+  if ((*env)->PushLocalFrame (env, 2) < 0)
+    {
+      return nil;
+    }
+
+  // Prepare call to get class name
+  if (jid == NULL)
+    {
+      jclass java_lang_Class = NULL;
+
+      java_lang_Class = (*env)->FindClass (env, "java/lang/Class");
+      if (java_lang_Class == NULL)
+	{
+	  (*env)->PopLocalFrame (env, NULL);
+	  // Exception thrown
+	  return nil;
+	}
+
+      jid = (*env)->GetMethodID (env, java_lang_Class, "getName", 
+				 "()Ljava/lang/String;");
+      if (jid == NULL)
+	{
+	  (*env)->PopLocalFrame (env, NULL);
+	  // Exception Thrown
+	  return nil;
+	}
+    }
+  
+  // Get class name
+  j = (*env)->CallObjectMethod (env, class, jid);
+  
+  if ((*env)->ExceptionCheck (env)) // Oh oh - something really weird 
+    {
+      (*env)->PopLocalFrame (env, NULL);
+      // Exception Thrown
+      return nil;
+    }
+
+  // Convert it to GNUstep and return
+  returnString = GSJNI_NSStringFromASCIIJString (env, j);
+  (*env)->PopLocalFrame (env, NULL);
+  return returnString;  
+}
+
+
+NSString *GSJNI_SuperclassNameFromClassName (JNIEnv *env, NSString *className)
+{
+  const char *cClassName;
+  jclass class;
+  jclass superClass;
+  NSString *returnString;
+  
+  cClassName = [GSJNI_ConvertJavaClassNameToJNI (className)  cString];
+
+  if ((*env)->PushLocalFrame (env, 2) < 0)
+    {
+      return nil;
+    }      
+
+  // Find class
+  class = (*env)->FindClass (env, cClassName);
+  if (class == NULL)
+    {
+      // Exception thrown
+      return nil;
+    }
+
+  // Get superclass
+  superClass = (*env)->GetSuperclass (env, class);
+  if (superClass == NULL)
+    {
+      // Root Class - no exception thrown
+      return nil;
+    }
+  
+  // Get superclass name
+  returnString = GSJNI_NSStringFromJClass (env, superClass);
+
+  (*env)->PopLocalFrame (env, NULL);
+  return returnString;
 }
