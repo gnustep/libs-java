@@ -1,3 +1,8 @@
+Thu Feb 22 15:28:47 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* FAQ (2): Explain how to pass GNUSTEP_SYSTEM_ROOT and
+	GNUSTEP_LOCAL_ROOT to servlets.
+
 Tue Feb  6 18:33:15 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* NEWS: Added news for 1.2.

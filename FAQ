@@ -38,6 +38,14 @@ that:
    then, you need to `. /usr/GNUstep/System/Makefiles/GNUstep.sh'
    before starting apache.
 
+ * you pass GNUSTEP_SYSTEM_ROOT to the java servlet -- the GNUstep
+   Base Library needs GNUSTEP_SYSTEM_ROOT to access some files, such
+   as character sets.  To make it work, add the following lines to
+   jserv.properties:
+
+   wrapper.env.copy=GNUSTEP_SYSTEM_ROOT
+   wrapper.env.copy=GNUSTEP_LOCAL_ROOT
+
  * the NSLog output of your java servlets goes into httpsd_error_log.  
 
 3. What about user defaults ? - they are all saved under 'java'
