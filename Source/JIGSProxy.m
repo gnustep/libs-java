@@ -40,7 +40,7 @@ void _java_lang_Object__dealloc_ (id rcv, SEL sel)
   // Delete Global Reference to realObject so that the java garbage
   // collector can free it
   realObject = ((_java_lang_Object *)(rcv))->realObject;
-  _JIGSMapperRemoveProxiedJava (realObject);
+  _JIGSMapperRemoveObjcProxy (env, realObject);
   (*env)->DeleteGlobalRef (env, realObject);
 
   // Following code is the equivalent of [super dealloc]
