@@ -71,6 +71,9 @@ void JIGSInit (JNIEnv *env)
 	  return;
 	}
 
+      // Make sure the default thread is initialized 
+      GSCurrentThread ();
+
       // Get the JavaVM to register it with NSJavaVirtualMachine
       if ((*env)->GetJavaVM (env, &jvm) < 0)
 	{
