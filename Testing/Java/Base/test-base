@@ -30,7 +30,7 @@
 
 log_file=test-base.log
 
-tests_to_run="NSArrayTest NSDataTest NSDateTest NSDictionaryTest NSKeyValueCodingTest NSNotificationCenterTest NSNumberTest NSObjectSubclassTest NSObjectTest NSProcessInfoTest NSPropertyListSerializationTest NSSelectorTest NSTaskTest ThreadsTest"
+tests_to_run="NSArrayTest NSDataTest NSDateTest NSDictionaryTest NSExceptionTest NSKeyValueCodingTest NSNotificationCenterTest NSNumberTest NSObjectSubclassTest NSObjectTest NSProcessInfoTest NSPropertyListSerializationTest NSSelectorTest NSTaskTest ThreadsTest"
 
 failed=no
 
@@ -54,3 +54,4 @@ if [ "$failed" = "yes" ]; then
 else
   echo "All tests have PASSED";
 fi
+
