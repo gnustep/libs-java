@@ -1,3 +1,23 @@
+Wed Nov  1 15:06:56 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* WCLibrary.m ([+initializeWithJigsFile:preprocessedHeaderFile:
+	headerFile:wrapDirectory:libraryName:verboseOutput:]): Some code
+	from ([+outputWrappers]) has been moved here, so that all the
+	classes to wrap are loaded in before the wrapping takes place.
+	([+javaClassNameForObjcClassName:]): New method made possible by
+	the afore mentioned rearranging of class loading.  All the code
+	trying to guess the class name mapping has been moved here from
+	[WCObjectType -javaArgumentType].
+	* WCLibrary.h: Updated.
+	* WCObjectType.h: Added ivar longJavaType.
+	* WCObjectType.m ([-initWithObjcType:]): Ask the library to do the
+	mapping of class names.  ([-javaArgumentType]): Moved most of the
+	code to WCLibrary.m; now simply use the mapped name.
+	* WCMethod.m ([-outputJniMethodName]): Warn the user if we don't
+	have enough information to output a working wrapper for this
+	method and he needs to help us by adding a `class method name
+	mapping hints' section to his .jigs file.
+	
 Wed Nov  1 14:55:45 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* Makefiles/java-wrapper.make: Run WrapCreator in silent mode if
