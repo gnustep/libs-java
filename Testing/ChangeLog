@@ -1,3 +1,10 @@
+Fri Jul 27 11:28:35 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Objc/main.m (main): Do not register the java.lang.System class
+	because now we hack the runtime to load it in automatically when
+	not found.  Try messaging a non-existing class to check that the
+	new code doesn't crash in that situation.
+
 Mon Jul  9 15:30:33 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Java/Base/NSDictionaryTest.java: Added tests for
