@@ -22,7 +22,7 @@
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA. */
 
 #include <Foundation/Foundation.h>
-#include <java/JIGS.h>
+#include <GNUstepJava/JIGS.h>
 
 /* Get a {char *} description of an object, making sure we manage nil */
 const char *
