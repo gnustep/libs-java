@@ -24,10 +24,10 @@
 
 include $(GNUSTEP_MAKEFILES)/common.make
 
-GNUSTEP_INSTALLATION_DIR = $(GNUSTEP_USER_ROOT)
+# Uncomment the following to install in your ~/GNUstep/
+#GNUSTEP_INSTALLATION_DIR = $(GNUSTEP_USER_ROOT)
 
 JAVA_PACKAGE_NAME = gnu.gnustep.java
-CLASSPATH := $(CLASSPATH):./
 
 gnu.gnustep.java_JAVA_FILES =                 \
    gnu/gnustep/java/GSJNIMethods.java         \
