@@ -173,6 +173,11 @@ int main (void)
   result = imp (javaLangSystem, selector, @"user.dir");
   printf (" user.dir == %s\n", [result cString]);
 
+  /* Testing overloaded methods */
+  printf ("Now testing overloaded methods by loading in the java.lang.StringBuffer class...");
+  JIGSRegisterJavaClass (env, @"java.lang.StringBuffer");
+  printf ("ok\n");
+
   printf ("And that's enough for today: test passed.\n");
 
   /*
