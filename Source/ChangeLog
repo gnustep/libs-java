@@ -1,3 +1,18 @@
+Sat May  5 15:47:09 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* GSJNIArray.h: Removed `inline' attributes without effect.
+	* GSJNIArray.m: Idem.
+	* GSJNIClass.h: Idem.
+	* GSJNIClass.m: Idem.
+	* GSJNIString.h: Idem.
+	* GSJNIString.m: Idem.
+	* JIGSMapper.h: Idem. 
+	* JIGSMapper.m: Idem.
+	* NSJavaVirtualMachine.h: Idem.
+	* NSJavaVirtualMachine.m: Idem.
+	* ObjcRuntimeUtilities.h: Idem.
+	* ObjcRuntimeUtilities.m: Idem.
+	
 Sat May  5 02:14:27 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* JIGSSelectorMapping.m
