@@ -19,6 +19,10 @@ a method to a java object from inside objective-C code.  It is the java
 method which prints 'Hello World 1' or 'Hello World 2' to the standard
 output.
 
+Warning: this example does not make any use of selector morphing, thus 
+the selector morphing init code has been left out.  Have a look at the 
+SimpleGUI-action example for the morphing init code.
+
 Quick try of the example
 ========================
 
