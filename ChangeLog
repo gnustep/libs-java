@@ -1,3 +1,12 @@
+Mon Jun  4 15:48:02 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* GNUmakefile (SUBPROJECTS): Added Makefiles.
+	* Makefiles: New directory.
+	* Makefiles/GNUmakefile: New file.
+	* Makefiles/jigs.make: Moved here from Testing/Objc.
+	* Makefiles/GNUstep-Java.sh: Moved here from Testing/Objc.
+	* Makefiles/README: New file.
+
 Tue May 22 00:27:18 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* TODO: Added subclassing in Java an Objc class.
