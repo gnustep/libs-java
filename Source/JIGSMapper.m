@@ -567,6 +567,22 @@ id JIGSIdFromJobject (JNIEnv *env, jobject object)
   return JIGSCreateNewObjcProxy (env, object);
 }
 
+inline jstring JIGSJstringFromNSString (JNIEnv *env, NSString *string)
+{
+  if (string == nil)
+    return NULL;
+  else
+    return GSJNI_JStringFromNSString (env, string);
+}
+
+inline NSString *JIGSNSStringFromJstring (JNIEnv *env, jstring string)
+{
+  if (string == NULL)
+    return nil;
+  else
+    return GSJNI_NSStringFromJString (env, string);
+}
+
 inline id JIGSIdFromThis (JNIEnv *env, jobject this)
 {
   return JIGS_JLONG_TO_ID((*env)->GetLongField (env, this, fidRealObject));

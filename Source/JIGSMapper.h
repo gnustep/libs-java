@@ -69,9 +69,9 @@ inline id JIGSIdFromThis (JNIEnv *env, jobject this);
  *
  * Exceptions: 
  * For strings, if you can be sure they are strings, you can use
- * GSJNI_NSStringFromJString directly.  Arguments of java methods have
+ * JIGSJstringFromNSString directly.  Arguments of java methods have
  * their classes checked by the java runtime so if the argument is
- * declared of type String, using GSJNI_NSStringFromJString should be
+ * declared of type String, using JIGSJstringFromNSString should be
  * safe.  
  *
  * To morph a java object of class NSPoint, NSSize, NSRect or NSRange
@@ -81,6 +81,10 @@ inline id JIGSIdFromThis (JNIEnv *env, jobject this);
 jobject JIGSJobjectFromId (JNIEnv *env, id object);
 
 id JIGSIdFromJobject (JNIEnv *env, jobject object);
+
+inline jstring JIGSJstringFromNSString (JNIEnv *env, NSString *string);
+
+inline NSString *JIGSNSStringFromJstring (JNIEnv *env, jstring string);
 
 /*
  * Create new proxies. 
