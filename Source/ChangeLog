@@ -1,3 +1,16 @@
+Sun May  6 20:51:46 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* NSObject.m: Added native implementations of valueForKey and
+	takeValueForKey.
+	* JIGSProxy.m 
+	(_java_lang_Object__handleTakeValueForUnboundKey_),
+	(_java_lang_Object__handleQueryWithUnboundKey_): New functions
+	calling gnu.gnustep.java.JIGSKeyValueCoding methods to do
+	key/value coding.  (JIGSRegisterJavaRootClass): Register the two
+	functions as the handleTakeValue:forUnboundKey: and
+	handleQueryWithUnboundKey: methods of the Objective-C class
+	java.lang.Object.
+
 Sat May  5 23:37:42 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	Removed morphing of booleans, so that the morphing
