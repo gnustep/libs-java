@@ -39,7 +39,6 @@ GSJNIString.h \
 NSJavaVirtualMachine.h \
 JIGS.h \
 JIGSBaseStruct.h \
-JIGSClass.h \
 JIGSException.h \
 JIGSInit.h \
 JIGSNative.h \
@@ -56,7 +55,6 @@ GSJNIClass.m \
 GSJNIDebug.m \
 GSJNIString.m \
 JIGSBaseStruct.m \
-JIGSClass.m \
 JIGSException.m \
 JIGSInit.m \
 JIGSMapper.m \
