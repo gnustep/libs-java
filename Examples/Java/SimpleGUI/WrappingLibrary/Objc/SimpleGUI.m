@@ -31,8 +31,9 @@
 JNIEXPORT jint JNICALL
 JNI_OnLoad (JavaVM *jvm, void *reserved)
 {
+  JNI_ONLOAD_ENTER;
   JIGSRegisterJavaProxyClass (JIGSJNIEnv (), @"SimpleGUI", @"SimpleGUI");
-  return JNI_VERSION_1_2;
+  JNI_ONLOAD_EXIT;
 }
 
 /*
