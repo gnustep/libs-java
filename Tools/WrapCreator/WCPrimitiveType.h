@@ -30,6 +30,7 @@
 {
   NSString *javaType;
   NSString *jniType;
+  NSString *javaArgumentType;
 }
 @end
 
