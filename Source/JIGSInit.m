@@ -67,8 +67,18 @@ _jigs_lookup_class(const char* name)
   NSString	*className = [NSString stringWithCString: name];
 
   _objc_lookup_class = _original_lookup_class;
-  JIGSRegisterJavaClass (JIGSJNIEnv (), className);
-  c = NSClassFromString (className);
+
+  NS_DURING
+    {
+      JIGSRegisterJavaClass (JIGSJNIEnv (), className);
+      c = NSClassFromString (className);
+    }
+  NS_HANDLER
+    {
+      c = Nil;
+    }
+  NS_ENDHANDLER
+
   _objc_lookup_class = _jigs_lookup_class;
   RELEASE(pool);
   return c;
