@@ -1,0 +1,439 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 99.2beta8 (1.43)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.3 How the Wrapping Works</TITLE>
+<META NAME="description" CONTENT="3.3 How the Wrapping Works">
+<META NAME="keywords" CONTENT="Manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="LaTeX2HTML v99.2beta8">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="Manual.css">
+
+<LINK REL="next" HREF="node10.html">
+<LINK REL="previous" HREF="node8.html">
+<LINK REL="up" HREF="node6.html">
+<LINK REL="next" HREF="node10.html">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" text="#000000" link="#0000FF" vlink="#4444FF" alink="#3388FF">
+<B> Next: <A NAME="tex2html184"
+  HREF="node10.html">3.4 Advanced Topics</A> </B>
+<B>Up: <A NAME="tex2html182"
+  HREF="node6.html">3. Programming GNUstep in</A>  </B>
+<B> Previous: <A NAME="tex2html176"
+  HREF="node8.html">3.2 Accessing the GNUstep</A> </B>
+<BR> <P>
+
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html185"
+  HREF="node9.html#SECTION00431000000000000000">3.3.1 Classes</A>
+<LI><A NAME="tex2html186"
+  HREF="node9.html#SECTION00432000000000000000">3.3.2 Methods</A>
+<LI><A NAME="tex2html187"
+  HREF="node9.html#SECTION00433000000000000000">3.3.3 Constructors</A>
+<LI><A NAME="tex2html188"
+  HREF="node9.html#SECTION00434000000000000000">3.3.4 Primitive Types</A>
+<LI><A NAME="tex2html189"
+  HREF="node9.html#SECTION00435000000000000000">3.3.5 Strings</A>
+<LI><A NAME="tex2html190"
+  HREF="node9.html#SECTION00436000000000000000">3.3.6 Exceptions</A>
+<LI><A NAME="tex2html191"
+  HREF="node9.html#SECTION00437000000000000000">3.3.7 Base Library Structs</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00430000000000000000">
+3.3 How the Wrapping Works</A>
+</H1>
+
+<P>
+In this section, we review how the various Objective-C entities are
+exposed to Java.
+
+<P>
+
+<H2><A NAME="SECTION00431000000000000000">
+3.3.1 Classes</A>
+</H2>
+Objective-C classes are usually exposed to Java with the same name
+they have in Objective-C.  JIGS provides facilities to allow exposing
+Objective-C classes with a different name to Java; it's better to
+avoid it if possible.
+
+<P>
+
+<H2><A NAME="SECTION00432000000000000000">
+3.3.2 Methods</A>
+</H2>
+Not all Objective-C methods are exposed to Java; some methods can not
+be exposed for obvious reasons (such as methods taking <TT>void *</TT>
+arguments).  In general, methods taking pointer arguments (not
+pointing to objects) or an arbitrary number of arguments (in the way 
+the <TT>printf</TT> function does) are not exposed to Java.
+
+<P>
+Arguments and return types are automatically converted by the interface.
+
+<P>
+Methods without arguments are (usually) exposed as they are: for example, 
+the <TT>NSProcessInfo</TT> method
+<PRE>
+- (NSString *) processName;
+</PRE>
+is exposed to Java as 
+<PRE>
+ public native String processName ();
+</PRE>
+
+<P>
+Sometime, the name is changed.  JIGS allows to do this - but the less
+it is done, the easier for the programmer.  Anyway sometimes it is
+appropriate; for example, the GNUstep method <TT>description</TT>
+(which can be invoked on any object to return a string describing the
+object) is exposed to Java with the name <TT>toString ()</TT> (which
+is the standard method for doing the equivalent job in the Java
+world).  
+
+<P>
+In Objective-C, methods have their arguments introduced by
+`<TT>:</TT>', as in the following example:
+<PRE>
+- (void) addObject: (id)anObject;
+</PRE>
+This method is accessible from Java as
+<PRE>
+public native void addObject (Object arg0);
+</PRE>
+The only difference is that in Java the argument is enclosed in 
+brackets.
+
+<P>
+Things get more complicated if the method has multiple arguments.  In
+Objective-C, each argument is introduced by a little string followed
+by `<TT>:</TT>', as in the following example:
+<PRE>
+- (BOOL) writeToFile: (NSString *)fileName  
+          atomically: (BOOL)flag;
+</PRE>
+In this example, <TT>fileName</TT> is the first argument, and
+<TT>flag</TT> is the second one.  The method name is 
+<PRE>
+writeToFile:atomically:
+</PRE>
+The method is invoked as follows:
+<PRE>
+/* Objective-C example */
+[array writeToFile: @"bar"  atomically: YES];
+</PRE>
+
+<P>
+In Java, these methods are (usually) exposed by keeping only the first
+part of the name (which is what comes before the first `<TT>:</TT>').
+For example, <TT>writeToFile:atomically:</TT> is exposed as:
+<PRE> 
+public native boolean writeToFile (String arg0, boolean arg1);
+</PRE>
+and can be then invoked as follows:
+<PRE>
+/* Java example */
+array.writeToFile ("bar", true);
+</PRE>
+
+<P>
+It is possible that different Objective-C methods have a name which
+begins in the same way, but differs in the next parts.  For example,
+imagine that an hypothetical Objective-C class <TT>LocalizedArray</TT>
+had both the method 
+<PRE>
+- (BOOL) writeToFile: (NSString *)fileName  
+          atomically: (BOOL)flag;
+</PRE>
+and the method
+<PRE>
+- (BOOL) writeToFile: (NSString *)fileName  
+          atomically: (BOOL)flag
+          inLanguage: (NSString *)language;
+</PRE>
+This second method would translate all the entries of the hypothetical
+array object into <TT>language</TT>, and then save it.
+
+<P>
+The methods would be exposed to Java as:
+<PRE> 
+public native boolean writeToFile (String arg0, boolean arg1);
+public native boolean writeToFile (String arg0, boolean arg1, String arg2);
+</PRE>
+which causes no conflict, because Java allows overloading of methods,
+and the two methods have a different Java signature.  It is worth to
+remark here that the two methods are different in Objective-C because
+their names are different, while they are different in Java because
+their (name + Java signature)s are different.  This will be important
+later in the discussion of selectors.
+
+<P>
+In rare cases, the conflict can't be escaped - JIGS allows the
+programmer doing the wrapper to resolve the conflict by exposing one
+of the two conflicting methods with a different name to Java.
+
+<P>
+
+<H2><A NAME="SECTION00433000000000000000">
+3.3.3 Constructors</A>
+</H2>
+In GNUstep, you create objects using <TT>alloc</TT>, followed by some
+variant of <TT>init</TT>.  When you expose your class to Java, a
+corresponding constructor is created for each
+(<TT>alloc</TT> + <TT>init</TT>) pair.  
+
+<P>
+In short, for each Objective-C <TT>init</TT> method, the Java class
+has a constructor.
+
+<P>
+Let us consider for example the <TT>NSArray</TT> class, which is
+available in Java as the <TT>gnu.gnustep.base.NSArray</TT> class.
+
+<P>
+In Objective-C, the class has the following <TT>init</TT> methods:
+<PRE>
+- (id) init;
+- (id) initWithArray: (NSArray*)array;
+- (id) initWithContentsOfFile: (NSString*)file;
+- (id) initWithObjects: firstObj, ...;
+- (id) initWithObjects: (id*)objects count: (unsigned)count;
+</PRE>
+The last two methods are not exposed to Java (the first one because it
+takes an arbitrary number of arguments, which Java does not support;
+the second one because it takes a pointer argument).
+
+<P>
+The corresponding Java class has the following constructors:
+<PRE>
+public NSArray ();
+public NSArray (NSArray array);
+public NSArray (String fileName);
+</PRE>
+
+<P>
+For example, to create an array from the contents of the
+<TT>array.debug</TT> file in my home directory, I would do:
+<PRE>
+/* Java Example */
+NSArray array = new NSArray ("/home/nicola/array.debug");
+</PRE>
+
+<P>
+When two Objective-C <TT>init</TT> methods have different names but
+arguments of the same type, it is of course impossible to expose both
+of them to Java.  This case is rare and the only solution is to change
+or extend the Objective-C API (or expose only one of the two).
+
+<P>
+
+<H2><A NAME="SECTION00434000000000000000">
+3.3.4 Primitive Types</A>
+</H2>
+
+<P>
+Primitive types are mapped automatically by the interface.  For
+example, an Objective-C method returning a <TT>BOOL</TT> (the
+Objective-C type for boolean variables) will return a <TT>boolean</TT>
+in Java.
+
+<P>
+
+<H2><A NAME="SECTION00435000000000000000">
+3.3.5 Strings</A>
+</H2>
+
+<P>
+Strings are transparently <I>morphed</I> through the interface.  To
+the end-user programmer, this simply means that Objective-C methods
+having as argument (or returning) Objective-C <TT>NSString</TT>
+objects take as argument (or return) in Java Java <TT>String</TT>
+objects.
+
+<P>
+Internally, when the method is called, the interface generates on the
+fly a GNUstep <TT>NSString</TT> object corresponding to the Java
+<TT>String</TT> object, and passes it to Objective-C.  Viceversa, when
+an Objective-C method returns a <TT>NSString</TT>, a Java
+<TT>String</TT> object is generated on the fly from the returned string and
+returned to Java.  This design is very comfortable for the programmer,
+who always uses the string objects of the environment he is
+programming in, but it is not very efficient.  This will only have an
+effect on your program's performance if you pass very big strings -
+and (or) a huge number of them - through the interface, while normally 
+it doesn't make any appreciable difference in terms of performance.
+
+<P>
+
+<H2><A NAME="SECTION00436000000000000000">
+3.3.6 Exceptions</A>
+</H2>
+
+<P>
+Exception generated during calls to the GNUstep Objective-C code are
+made available to Java as objects of the
+<TT>gnu.gnustep.base.NSException</TT> class.  This is a subclass of
+<TT>java.lang.RuntimeException</TT>.  GNUstep Objective-C exception
+usually have a <TT>name</TT> and a <TT>reason</TT>.  For example,
+<TT>NSArray</TT>'s <TT>objectAtIndex ()</TT> method can generate an
+exception if you ask for an object which lies past the end of the
+array; in this case the name of the exception is
+`<TT>NSRangeException</TT>', and the reason is `<TT>Index out of
+bounds</TT>'.  Here is an example:
+<PRE>
+/* Java Example */
+NSArray array;
+Object object;
+
+array = new NSArray ();
+try 
+{
+  /* Raises an exception because array is empty */
+  object = array.objectAtIndex (5);
+}
+catch (NSException e)
+{
+  System.out.println ("Name is " + e.name ());
+  System.out.println ("Reason is " + e.reason ());
+  System.out.println ("Full Description is:" + e);
+}
+</PRE>
+The example shows how to access the information about the GNUstep 
+exception.  On my system, it prints:
+<PRE>
+Name is NSRangeException
+Reason is Index out of bounds
+Full Description is gnu.gnustep.base.NSException(NSRangeException):Index out of bounds
+</PRE>
+
+<P>
+Many GNUstep methods can raise exceptions, even if these exceptions
+are not declared in the Java method declarations (contrary to the Java
+convention) because in Objective-C the exceptions raised by methods
+are declared in the documentation, not in the code - so it's
+important to understand that, when accessing GNUstep from Java, you
+could need to use an exception handler for delicate parts of your code
+even if your Java compiler does not force you to do so.
+
+<P>
+
+<H2><A NAME="SECTION00437000000000000000">
+3.3.7 Base Library Structs</A>
+</H2>
+The fundamental structs defined in the base library
+<PRE>
+NSRange, NSPoint, NSSize, NSRect
+</PRE>
+are exposed as the Java classes
+<PRE>
+gnu.gnustep.base.NSRange
+gnu.gnustep.base.NSPoint
+gnu.gnustep.base.NSSize
+gnu.gnustep.base.NSRect
+</PRE>
+The important thing to understand is that you should think of objects
+of these classes as C struct - that is, very lightweight objects
+which are not meant to be subclassed (actually, you can't subclass
+them at all, since they are <TT>final</TT>), and only act as a
+container for information which you want to access and pass around as
+fast as possible.  This is actually why they are structs and not
+objects in the GNUstep Objective-C libraries in the first place.
+
+<P>
+We discuss here the case of <TT>NSPoint</TT>; the other cases are
+completely similar.
+
+<P>
+Whenever an Objective-C method takes a <TT>NSPoint</TT> as argument,
+the corresponding Java method takes a
+<TT>gnu.gnustep.base.NSPoint</TT> object as argument.  When the method 
+is called, JIGS internally creates a struct (allocated on the stack so
+it's fast) and initializes it with the <TT>x</TT> and <TT>y</TT>
+coordinates stored in the Java <TT>NSPoint</TT> object; it passes this
+struct as argument to the method call<A NAME="tex2html1"
+  HREF="footnode.html#foot397"><SUP>3.1</SUP></A>.
+
+<P>
+Whenever an Objective-C method returns a <TT>NSPoint</TT> (C struct),
+the corresponding Java methods returns a Java <TT>NSPoint</TT> object.
+When the method is called, JIGS converts the returned struct by
+creating a corresponding Java <TT>NSPoint</TT> object, and returning
+this object to Java.
+
+<P>
+To create an <TT>NSPoint</TT>, you just use the constructor
+<TT>NSPoint (float x, float y)</TT>, as follows:
+<PRE>
+/* Java Example */
+NSPoint point;
+
+point = new NSPoint (1, 1);
+</PRE>
+Once you have created a <TT>NSPoint</TT>, you can read and set its
+<TT>x</TT> and <TT>y</TT> coordinates directly, as in the following
+example:
+<PRE>
+/* Java Example */
+point.x = 5;
+point.y = 4;
+</PRE>
+What is extremely nice in this approach is that you read and set the
+coordinates of the point with <B>exactly</B> the same code you would
+use in Objective-C:
+<PRE>
+/* Objective-C Example */
+point.x = 5;
+point.y = 4;
+</PRE>
+
+<P>
+Some functionality which is provided by the GNUstep Base Library in
+functions has been exposed as methods of the class
+<TT>gnu.gnustep.base.NSPoint</TT>.  This mainly includes:
+<PRE>
+public boolean isEqualToPoint (NSPoint aPoint);
+public String toString ();
+</PRE>
+which provide the equivalent of the GNUstep Base Library functions
+<PRE>
+BOOL NSEqualPoints (NSPoint aPoint, NSPoint bPoint);
+NSString *NSStringFromPoint (NSPoint aPoint);
+</PRE>
+Since <TT>gnu.gnustep.base.NSPoint</TT> is <TT>final</TT> (ie, it
+can't be subclassed), your Java compiler should be able to inline all
+the Java equivalent of these little functions, and they should be
+reasonably fast.
+
+<P>
+<HR><B> Next: <A NAME="tex2html184"
+  HREF="node10.html">3.4 Advanced Topics</A> </B>
+<B>Up: <A NAME="tex2html182"
+  HREF="node6.html">3. Programming GNUstep in</A> </B>
+<B> Previous: <A NAME="tex2html176"
+  HREF="node8.html">3.2 Accessing the GNUstep</A> </B>
+
+<!--End of Navigation Panel-->
+<ADDRESS>
+Nicola Pero
+2000-11-27
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 99.2beta8 (1.43)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>4.2 Turning on Generation of Java Wrappers</TITLE>
+<META NAME="description" CONTENT="4.2 Turning on Generation of Java Wrappers">
+<META NAME="keywords" CONTENT="Manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="LaTeX2HTML v99.2beta8">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="Manual.css">
+
+<LINK REL="next" HREF="node14.html">
+<LINK REL="previous" HREF="node12.html">
+<LINK REL="up" HREF="node11.html">
+<LINK REL="next" HREF="node14.html">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" text="#000000" link="#0000FF" vlink="#4444FF" alink="#3388FF">
+<B> Next: <A NAME="tex2html267"
+  HREF="node14.html">4.3 Specifying the Main</A> </B>
+<B>Up: <A NAME="tex2html265"
+  HREF="node11.html">4. Wrapping Objective-C Libraries</A>  </B>
+<B> Previous: <A NAME="tex2html259"
+  HREF="node12.html">4.1 Compiling the Wrappers</A> </B>
+<BR> <P>
+
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00520000000000000000">
+4.2 Turning on Generation of Java Wrappers</A>
+</H1>
+We assume that your library is an objective-C library which is managed
+using the GNUstep make package.
+
+<P>
+To turn on the generation of the java wrappers for your objective-C
+library, all you need to do is to add the line
+<PRE>
+include $(GNUSTEP_MAKEFILES)/java-wrapper.make
+</PRE>
+after including <TT>library.make</TT>, that is, after the line
+<PRE>
+include $(GNUSTEP_MAKEFILES)/library.make
+</PRE>
+
+<P>
+When you now compile your library (by typing <TT>make</TT>), JIGS will
+try to generate the java wrappers.  In this way, you can simply turn
+off and on generation of the java wrappers by commenting and
+uncommenting the inclusion of <TT>java-wrapper.make</TT>.  To
+correctly generate the java wrappers, you will actually need to
+instruct JIGS about what classes and methods you want exposed, and
+how.  This will be discussed in detail in the following sections.
+
+<P>
+<BR><HR>
+<ADDRESS>
+Nicola Pero
+2000-11-27
+</ADDRESS>
+</BODY>
+</HTML>
