@@ -1,5 +1,9 @@
 2003-02-21  Richard Frith-Macdonald <rfm@gnu.org>
 
+	* gnustep-base.jigs: Added escapedContent method to GSXMLNode class
+
+2003-02-21  Richard Frith-Macdonald <rfm@gnu.org>
+
 	* gnustep-base.jigs: Wrapped NSDistributedNotificationCenter and
 	NSNotificationQueue
 
