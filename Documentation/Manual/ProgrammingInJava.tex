@@ -1,0 +1,914 @@
+\chapter{Programming GNUstep in Java}
+
+In this chapter, we will learn how to write GNUstep programs in Java.
+This is the simplest task.  We assume that you have installed all the
+components of JIGS on your system, by following the installation
+instructions coming with JIGS.
+
+\section{Compiling Java Code Using GNUstep Make}
+
+\subsection{Compiling a Single Class}
+
+Even without JIGS, the GNUstep make package has builtin support for
+compilation of generic java projects.
+
+As an example, consider the following java program: 
+\begin{verbatim}
+import java.lang.*;
+
+class Pisa
+{ 
+  public static void main (String[] args) 
+    throws Throwable
+  {
+    System.out.println ("Ahi Pisa, vituperio de le genti");
+  }
+}
+\end{verbatim}
+This program just prints out the famous quote by Dante about the
+Italian city of Pisa; it makes only use of the standard java classes,
+so there is no need to have JIGS to compile or run it.
+
+Compiling this program can be quite easily done directly, but we want 
+to start learning how to use the GNUstep make package facilities for 
+java, so we write the following \texttt{GNUmakefile}:
+\begin{verbatim}
+include $(GNUSTEP_MAKEFILES)/common.make
+
+JAVA_PACKAGE_NAME = test
+test_JAVA_FILES = Pisa.java
+
+include $(GNUSTEP_MAKEFILES)/java.make
+\end{verbatim}
+
+The makefile is straightforward: the \texttt{JAVA\_PACKAGE\_NAME} is
+just a name identifying the package (any name would do);
+\texttt{JAVA\_FILES} is a list of java files to be compiled.
+
+You should now try to compile this java program by typing
+\texttt{make}.  This -- quite simply -- compiles the java class.
+What is more interesting is what happens when you type \texttt{make
+install}: in this case, the java class is installed into
+\texttt{\$GNUSTEP\_LOCAL\_ROOT/Libraries/Java/}, which in my case means 
+that the compiled class is installed into
+\begin{verbatim}
+/usr/GNUstep/Local/Libraries/Java/Pisa.class
+\end{verbatim}
+
+Since the GNUstep initialization script -- usually 
+\begin{verbatim}
+/usr/GNUstep/System/Makefiles/GNUstep.sh
+\end{verbatim}
+-- adds \texttt{/usr/GNUstep/Local/Libraries/Java} to the
+\texttt{CLASSPATH}, after you have installed \texttt{Pisa.class}, you
+can just type
+\texttt{java Pisa} from any directory, and your little program will be run.
+
+This can be unfortunate, because if you install many different
+classes, you end up with all the classes being installed in the same
+big flat messy directory.  The java approach to this is to use
+packages, an approach which is fully and simply supported by the
+GNUstep make package.
+
+\subsection{Compiling Classes Belonging to a Package}
+
+To organize our java classes better, we decide to create a new
+package, called \texttt{misc.quotes}, and to make our class part of
+it.  To do this, we rewrite our program as follows
+\begin{verbatim}
+package misc.quotes;
+
+import java.lang.*;
+
+class Pisa
+{ 
+  public static void main (String[] args) 
+    throws Throwable
+  {
+    System.out.println ("Ahi Pisa, vituperio de le genti");
+  }
+}
+\end{verbatim}
+and we save it into the file 
+\begin{verbatim}
+misc/quotes/Pisa.java
+\end{verbatim}
+This directory is relative to the position of the GNUmakefile, which
+is where we will run the compiler.  We then rewrite our GNUmakefile to
+be as follows:
+\begin{verbatim}
+include $(GNUSTEP_MAKEFILES)/common.make
+
+JAVA_PACKAGE_NAME = test
+test_JAVA_FILES = misc/quotes/Pisa.java
+
+include $(GNUSTEP_MAKEFILES)/java.make
+\end{verbatim}
+Typing \texttt{make} will compile the \texttt{misc.quotes.Pisa} class
+as usual.
+
+To execute the class, or to include it in other classes, we need now 
+to always specify the full package name, as in (the command line command) 
+\begin{verbatim}
+java misc.quotes.Pisa
+\end{verbatim}
+or as in (the java import statement)
+\begin{verbatim}
+import misc.quotes.Pisa;
+\end{verbatim}
+
+The GNUstep Make Package knows nothing about java packages; but, when
+installing java class files, it preserves the relative path of the
+classes, so that running \texttt{make install} will install
+\texttt{Pisa.class} into
+\begin{verbatim}
+$GNUSTEP_LOCAL_ROOT/Libraries/Java/misc/quotes/
+\end{verbatim}
+%$ [Fool Emacs buggy TeX mode]
+In my case, this means that it is installed into:
+\begin{verbatim}
+/usr/GNUstep/Local/Libraries/Java/misc/quotes/Pisa.class
+\end{verbatim}
+
+From any directory on your system you can now run your little program
+by typing at the prompt \texttt{java misc.quotes.Pisa}.  The good
+thing is that you can always import it as easily, by adding at the
+beginning of your java code the line \texttt{import
+misc.quotes.Pisa;}.
+
+It is important to understand that the GNUstep make package does not
+know about java packages, but just preserves the relative paths of the
+classes when installing.  This means that it is perfectly correct to
+compile and install classes belonging to different java packages with
+the same \texttt{GNUmakefile}, as in the following example:
+\begin{verbatim}
+include $(GNUSTEP_MAKEFILES)/common.make
+
+JAVA_PACKAGE_NAME = fun
+fun_JAVA_FILES = \
+  misc/quotes/Pisa.java       \
+  misc/quotes/Farinata.java   \
+  misc/quotes/Ulisse.java     \
+  misc/jokes/Sailor.java      \
+  misc/jokes/Worker.java
+
+include $(GNUSTEP_MAKEFILES)/java.make
+\end{verbatim}
+
+This will correctly compile and install the classes belonging to the
+two different packages \texttt{misc.quotes} and \texttt{misc.jokes};
+please don't be confused by the \texttt{JAVA\_PACKAGE\_NAME} variable,
+which bears no relation with java packages, and it is just a temporary
+name used internally by the make package.
+
+\section{Accessing the GNUstep Base Library From Java}
+
+\subsection{A First Example}
+
+Accessing the GNUstep Base Library from your Java code is very easy.
+The GNUstep Base Library classes are made available from Java as part
+of the \texttt{gnu.gnustep.base} package.  If you have correctly
+installed JIGS, this package has been installed as any other Java
+package by the GNUstep Makefile package in your GNUstep directory
+tree.  For example, on my system the GNUstep Base Library classes are
+in:
+\begin{verbatim}
+/usr/GNUstep/System/Libraries/Java/gnu/gnustep/base/
+\end{verbatim}
+To use the classes, it is enough to import them with the statement:
+\begin{verbatim}
+import gnu.gnustep.base.*;
+\end{verbatim}
+
+As a simple example, here is a java program which reads the host name
+using GNUstep, and prints it out:
+\begin{verbatim}
+import gnu.gnustep.base.*;
+
+class PrintHostName
+{ 
+  public static void main (String[] args) 
+    throws Throwable
+  {
+    NSProcessInfo process;
+
+    process = NSProcessInfo.processInfo ();
+    System.out.println (process.hostName ());
+  }
+}
+\end{verbatim}
+We will comment in detail the code in the next section.
+
+The GNUmakefile for this program is the usual, trivial, one:
+\begin{verbatim}
+include $(GNUSTEP_MAKEFILES)/common.make
+
+JAVA_PACKAGE_NAME = PrintHostName
+PrintHostName_JAVA_FILES = PrintHostName.java
+
+include $(GNUSTEP_MAKEFILES)/java.make
+\end{verbatim}
+This is probably a good moment to pause and try out this little
+program on your system, to get a feeling of how simple and easy the
+whole thing is.
+
+\subsection{The General Idea}
+The previous code example showed the basic idea behind the GNUstep
+Java Interface: Java and Objective-C are very similar languages, so
+that Objective-C classes can be exposed as Java classes nearly as they
+are, with very little (if any) changings in the API.
+
+In this example, the Objective-C class \texttt{NSProcessInfo} provided
+by the GNUstep Base Library is exposed to Java as the Java class
+\begin{verbatim}
+gnu.gnustep.base.NSProcessInfo
+\end{verbatim}
+Usually, classes in the same Objective-C library are exposed as
+classes belonging to the same Java package; for example all classes in
+the GNUstep Base Library are exposed as part of the
+\texttt{gnu.gnustep.base} package, and all the classes in the GNUstep 
+Gui Library are exposed as part of the \texttt{gnu.gnustep.gui}
+package.
+
+Both in Java and Objective-C there are class methods (called {\sl static
+methods} in Objective-C) and instance methods.  The interface
+preservers both the name and the role of the Objective-C methods when
+they are exposed to Java: static methods are made available as class
+methods with the same name, and instance methods are made available as
+instance methods with the same name.  This is the general plan -- but
+there are exceptions and pitfalls, because the languages differ in
+some details -- we will carefully study these exceptions and details
+in the next sections.
+
+In the example, the Objective-C static method \texttt{processInfo} is
+accessible in Java as the class method \texttt{processInfo}; the
+Objective-C instance method \texttt{hostName} is exposed as a Java
+method \texttt{hostName}.
+
+The only difference is in the syntax: in Objective-C you would write
+\begin{verbatim}
+NSProcessInfo *process;
+
+process = [NSProcessInfo processInfo];
+\end{verbatim}
+because this is the Objective-C syntax for method calls; in Java the 
+same code is written as 
+\begin{verbatim}
+NSProcessInfo process;
+
+process = NSProcessInfo.processInfo ();
+\end{verbatim}
+because this is the Java syntax for method calls.
+
+\section{How the Wrapping Works}
+
+In this section, we review how the various Objective-C entities are
+exposed to Java.
+
+\subsection{Classes}
+Objective-C classes are usually exposed to Java with the same name
+they have in Objective-C.  JIGS provides facilities to allow exposing
+Objective-C classes with a different name to Java; it's better to
+avoid it if possible.
+
+\subsection{Methods}
+Not all Objective-C methods are exposed to Java; some methods can not
+be exposed for obvious reasons (such as methods taking \texttt{void *}
+arguments).  In general, methods taking pointer arguments (not
+pointing to objects) or an arbitrary number of arguments (in the way 
+the \texttt{printf} function does) are not exposed to Java.
+
+Arguments and return types are automatically converted by the interface.
+
+Methods without arguments are (usually) exposed as they are: for example, 
+the \texttt{NSProcessInfo} method
+\begin{verbatim}
+- (NSString *) processName;
+\end{verbatim}
+is exposed to Java as 
+\begin{verbatim}
+ public native String processName ();
+\end{verbatim}
+
+Sometime, the name is changed.  JIGS allows to do this -- but the less
+it is done, the easier for the programmer.  Anyway sometimes it is
+appropriate; for example, the GNUstep method \texttt{description}
+(which can be invoked on any object to return a string describing the
+object) is exposed to Java with the name \texttt{toString ()} (which
+is the standard method for doing the equivalent job in the Java
+world).  
+
+In Objective-C, methods have their arguments introduced by
+`\texttt{:}', as in the following example:
+\begin{verbatim}
+- (void) addObject: (id)anObject;
+\end{verbatim}
+This method is accessible from Java as
+\begin{verbatim}
+public native void addObject (Object arg0);
+\end{verbatim}
+The only difference is that in Java the argument is enclosed in 
+brackets.
+
+Things get more complicated if the method has multiple arguments.  In
+Objective-C, each argument is introduced by a little string followed
+by `\texttt{:}', as in the following example:
+\begin{verbatim}
+- (BOOL) writeToFile: (NSString *)fileName  
+          atomically: (BOOL)flag;
+\end{verbatim}
+In this example, \texttt{fileName} is the first argument, and
+\texttt{flag} is the second one.  The method name is 
+\begin{verbatim}
+writeToFile:atomically:
+\end{verbatim}
+The method is invoked as follows:
+\begin{verbatim}
+/* Objective-C example */
+[array writeToFile: @"bar"  atomically: YES];
+\end{verbatim}
+
+In Java, these methods are (usually) exposed by keeping only the first
+part of the name (which is what comes before the first `\texttt{:}').
+For example, \texttt{writeToFile:atomically:} is exposed as:
+\begin{verbatim} 
+public native boolean writeToFile (String arg0, boolean arg1);
+\end{verbatim}
+and can be then invoked as follows:
+\begin{verbatim}
+/* Java example */
+array.writeToFile ("bar", true);
+\end{verbatim}
+
+It is possible that different Objective-C methods have a name which
+begins in the same way, but differs in the next parts.  For example,
+imagine that an hypothetical Objective-C class \texttt{LocalizedArray}
+had both the method 
+\begin{verbatim}
+- (BOOL) writeToFile: (NSString *)fileName  
+          atomically: (BOOL)flag;
+\end{verbatim}
+and the method
+\begin{verbatim}
+- (BOOL) writeToFile: (NSString *)fileName  
+          atomically: (BOOL)flag
+          inLanguage: (NSString *)language;
+\end{verbatim}
+This second method would translate all the entries of the hypothetical
+array object into \texttt{language}, and then save it.
+
+The methods would be exposed to Java as:
+\begin{verbatim} 
+public native boolean writeToFile (String arg0, boolean arg1);
+public native boolean writeToFile (String arg0, boolean arg1, String arg2);
+\end{verbatim}
+which causes no conflict, because Java allows overloading of methods,
+and the two methods have a different Java signature.  It is worth to
+remark here that the two methods are different in Objective-C because
+their names are different, while they are different in Java because
+their (name + Java signature)s are different.  This will be important
+later in the discussion of selectors.
+
+In rare cases, the conflict can't be escaped -- JIGS allows the
+programmer doing the wrapper to resolve the conflict by exposing one
+of the two conflicting methods with a different name to Java.
+
+\subsection{Constructors}
+In GNUstep, you create objects using \texttt{alloc}, followed by some
+variant of \texttt{init}.  When you expose your class to Java, a
+corresponding constructor is created for each
+(\texttt{alloc} + \texttt{init}) pair.  
+
+In short, for each Objective-C \texttt{init} method, the Java class
+has a constructor.
+
+Let us consider for example the \texttt{NSArray} class, which is
+available in Java as the \texttt{gnu.gnustep.base.NSArray} class.
+
+In Objective-C, the class has the following \texttt{init} methods:
+\begin{verbatim}
+- (id) init;
+- (id) initWithArray: (NSArray*)array;
+- (id) initWithContentsOfFile: (NSString*)file;
+- (id) initWithObjects: firstObj, ...;
+- (id) initWithObjects: (id*)objects count: (unsigned)count;
+\end{verbatim}
+The last two methods are not exposed to Java (the first one because it
+takes an arbitrary number of arguments, which Java does not support;
+the second one because it takes a pointer argument).
+
+The corresponding Java class has the following constructors:
+\begin{verbatim}
+public NSArray ();
+public NSArray (NSArray array);
+public NSArray (String fileName);
+\end{verbatim}
+
+For example, to create an array from the contents of the
+\texttt{array.debug} file in my home directory, I would do:
+\begin{verbatim}
+/* Java Example */
+NSArray array = new NSArray ("/home/nicola/array.debug");
+\end{verbatim}
+
+When two Objective-C \texttt{init} methods have different names but
+arguments of the same type, it is of course impossible to expose both
+of them to Java.  This case is rare and the only solution is to change
+or extend the Objective-C API (or expose only one of the two).
+
+\subsection{Primitive Types}
+
+Primitive types are mapped automatically by the interface.  For
+example, an Objective-C method returning a \texttt{BOOL} (the
+Objective-C type for boolean variables) will return a \texttt{boolean}
+in Java.
+
+\subsection{Strings}
+
+Strings are transparently \emph{morphed} through the interface.  To
+the end-user programmer, this simply means that Objective-C methods
+having as argument (or returning) Objective-C \texttt{NSString}
+objects take as argument (or return) in Java Java \texttt{String}
+objects.
+
+Internally, when the method is called, the interface generates on the
+fly a GNUstep \texttt{NSString} object corresponding to the Java
+\texttt{String} object, and passes it to Objective-C.  Viceversa, when
+an Objective-C method returns a \texttt{NSString}, a Java
+\texttt{String} object is generated on the fly from the returned string and
+returned to Java.  This design is very comfortable for the programmer,
+who always uses the string objects of the environment he is
+programming in, but it is not very efficient.  This will only have an
+effect on your program's performance if you pass very big strings --
+and (or) a huge number of them -- through the interface, while normally 
+it doesn't make any appreciable difference in terms of performance.
+
+\subsection{Exceptions}
+
+Exception generated during calls to the GNUstep Objective-C code are
+made available to Java as objects of the
+\texttt{gnu.gnustep.base.NSException} class.  This is a subclass of
+\texttt{java.lang.RuntimeException}.  GNUstep Objective-C exception
+usually have a \texttt{name} and a \texttt{reason}.  For example,
+\texttt{NSArray}'s \texttt{objectAtIndex ()} method can generate an
+exception if you ask for an object which lies past the end of the
+array; in this case the name of the exception is
+`\texttt{NSRangeException}', and the reason is `\texttt{Index out of
+bounds}'.  Here is an example:
+\begin{verbatim}
+/* Java Example */
+NSArray array;
+Object object;
+
+array = new NSArray ();
+try 
+{
+  /* Raises an exception because array is empty */
+  object = array.objectAtIndex (5);
+}
+catch (NSException e)
+{
+  System.out.println ("Name is " + e.name ());
+  System.out.println ("Reason is " + e.reason ());
+  System.out.println ("Full Description is:" + e);
+}
+\end{verbatim}
+The example shows how to access the information about the GNUstep 
+exception.  On my system, it prints:
+\begin{verbatim}
+Name is NSRangeException
+Reason is Index out of bounds
+Full Description is gnu.gnustep.base.NSException(NSRangeException):Index out of bounds
+\end{verbatim}
+
+Many GNUstep methods can raise exceptions, even if these exceptions
+are not declared in the Java method declarations (contrary to the Java
+convention) because in Objective-C the exceptions raised by methods
+are declared in the documentation, not in the code -- so it's
+important to understand that, when accessing GNUstep from Java, you
+could need to use an exception handler for delicate parts of your code
+even if your Java compiler does not force you to do so.
+
+\subsection{Base Library Structs}
+The fundamental structs defined in the base library
+\begin{verbatim}
+NSRange, NSPoint, NSSize, NSRect
+\end{verbatim}
+are exposed as the Java classes
+\begin{verbatim}
+gnu.gnustep.base.NSRange
+gnu.gnustep.base.NSPoint
+gnu.gnustep.base.NSSize
+gnu.gnustep.base.NSRect
+\end{verbatim}
+The important thing to understand is that you should think of objects
+of these classes as C struct -- that is, very lightweight objects
+which are not meant to be subclassed (actually, you can't subclass
+them at all, since they are \texttt{final}), and only act as a
+container for information which you want to access and pass around as
+fast as possible.  This is actually why they are structs and not
+objects in the GNUstep Objective-C libraries in the first place.
+
+We discuss here the case of \texttt{NSPoint}; the other cases are
+completely similar.
+
+Whenever an Objective-C method takes a \texttt{NSPoint} as argument,
+the corresponding Java method takes a
+\texttt{gnu.gnustep.base.NSPoint} object as argument.  When the method 
+is called, JIGS internally creates a struct (allocated on the stack so
+it's fast) and initializes it with the \texttt{x} and \texttt{y}
+coordinates stored in the Java \texttt{NSPoint} object; it passes this
+struct as argument to the method call\footnote{Please note that this
+is completely consistent with C, where \texttt{NSPoint} is a struct,
+which is passed to the called function by value -- the Objective-C
+function/method can not modify the original
+\texttt{NSPoint} argument, because it is only given a local copy of
+it.  This works from Java in the same way: you pass to your method a
+Java \texttt{NSPoint} object as the argument; the method will not
+modify it.  This is an important point if you want to compare JIGS
+with Apple's Java Bridge.  Recent releases of Apple's OPENSTEP-like
+environment add a flock of new C types to their Foundation library --
+namely, \texttt{NSPointPointer}, \texttt{NSSizePointer},
+\texttt{NSRectPointer}, \texttt{NSRangePointer}, \texttt{NSPointArray}, 
+\texttt{NSSizeArray}, \texttt{NSRectArray} and \texttt{NSRangeArray}  
+-- which are then all mapped in a different way to Java;
+correspondingly, they have different Java classes (for example they
+have \texttt{NSMutablePoint}, corresponding to their new C type
+\texttt{NSPointPointer}).  GNUstep will possibly have these C types 
+for compatibility with Apple, but their use is discouraged, and the
+same must be said for future implementation of \texttt{NSMutablePoint}
+and similar.  JIGS's wrapping of \texttt{NSPoint} has been designed to
+be as easy, intuitive and fast as possible -- and in the spirit of the
+original OPENSTEP design/specification.}.
+
+Whenever an Objective-C method returns a \texttt{NSPoint} (C struct),
+the corresponding Java methods returns a Java \texttt{NSPoint} object.
+When the method is called, JIGS converts the returned struct by
+creating a corresponding Java \texttt{NSPoint} object, and returning
+this object to Java.
+
+To create an \texttt{NSPoint}, you just use the constructor
+\texttt{NSPoint (float x, float y)}, as follows:
+\begin{verbatim}
+/* Java Example */
+NSPoint point;
+
+point = new NSPoint (1, 1);
+\end{verbatim}
+Once you have created a \texttt{NSPoint}, you can read and set its
+\texttt{x} and \texttt{y} coordinates directly, as in the following
+example:
+\begin{verbatim}
+/* Java Example */
+point.x = 5;
+point.y = 4;
+\end{verbatim}
+What is extremely nice in this approach is that you read and set the
+coordinates of the point with {\bf exactly} the same code you would
+use in Objective-C:
+\begin{verbatim}
+/* Objective-C Example */
+point.x = 5;
+point.y = 4;
+\end{verbatim}
+
+Some functionality which is provided by the GNUstep Base Library in
+functions has been exposed as methods of the class
+\texttt{gnu.gnustep.base.NSPoint}.  This mainly includes:
+\begin{verbatim}
+public boolean isEqualToPoint (NSPoint aPoint);
+public String toString ();
+\end{verbatim}
+which provide the equivalent of the GNUstep Base Library functions
+\begin{verbatim}
+BOOL NSEqualPoints (NSPoint aPoint, NSPoint bPoint);
+NSString *NSStringFromPoint (NSPoint aPoint);
+\end{verbatim}
+Since \texttt{gnu.gnustep.base.NSPoint} is \texttt{final} (ie, it
+can't be subclassed), your Java compiler should be able to inline all
+the Java equivalent of these little functions, and they should be
+reasonably fast.
+
+\section{Advanced Topics}
+
+\subsection{Weak References to Java Objects}
+
+Usually, when you pass a Java object as an argument to an Objective-C 
+method, you do not need to do anything particular:
+\begin{verbatim}
+/* Java Example */
+NSMutableArray array = new NSMutableArray ();
+FileReader nicola = new FileReader ("nicola");
+
+array.addObject (nicola);
+\end{verbatim}
+In this example (assuming the file \texttt{nicola} exists), we create
+a java \texttt{FileReader} object, and then put it into a GNUstep
+\texttt{NSMutableArray}.
+
+This is the standard case -- all works fine and out-of-the-box;
+unfortunately, there is an exception.  The following methods need
+special treatment to be used from Java:
+\begin{verbatim}
+public void setDelegate (Object delegate);
+public void setTarget (Object target);
+\end{verbatim}
+These methods are quite common in the GNUstep API, so it's quite
+important that you know how to correctly call them.  These methods are
+special, because the Objective-C implementation uses a special memory
+management for the argument: it saves it as a weak reference rather
+than a normal reference.  This is not a problem from Objective-C, but
+in Java to use these methods you need to prepare the call by using the
+method
+\begin{verbatim}
+public void retainObject (Object object);
+\end{verbatim}
+provided by the \texttt{gnu.gnustep.base.NSObject} class\footnote{The
+Apple Java Bridge has the same memory management problem, but it does
+not provide this method, so on their platform the Java programmer has
+to use a hack (an auxiliary array) to deal with it.}, as in the
+following example:
+\begin{verbatim}
+/* Java Example */
+FileReader nicola = new FileReader ("nicola");
+NSButton button = new NSButton ();
+
+/* Retain object before calling setTarget */
+NSObject.retainObject (nicola);
+
+button.setTarget (nicola);
+\end{verbatim}
+The example (setting a \texttt{FileReader} as the target of a
+\texttt{NSButton}) is not necessarily meaningful, but it shows quite 
+clearly how you should call \texttt{setTarget}.
+
+In most cases, you use \texttt{setTarget} and \texttt{setDelegate}
+only at the beginning, and then keep the target and delegate you have 
+set for the whole life of you application.  In these cases, a single 
+call to \texttt{retainObject} is enough.
+
+In particular cases, you may want to change the target and delegate
+during the lifetime of your application, or you may want to destroy
+the object whose target (or delegate) you have set.  In these cases,
+the single call to \texttt{retainObject} is enough to prevent your
+application from crashing, but you will be leaking a little amount of
+memory each time you change the target or delegate, or destroy an
+object having a target or delegate set.  To stop this leaking, you
+need to use \texttt{releaseObject} on the old target/delegate after
+you have relieved it of its duty as target/delegate (or after you have
+destroyed your object having it as its target/delegate).  In other 
+words, you need to compensate each \texttt{retainObject} with a 
+\texttt{releaseObject} call.
+
+Here is a full example, in which we call \texttt{setTarget} to set
+\texttt{oldTarget} as target, and then later we call it again to
+change the target to be \texttt{newTarget}:
+\begin{verbatim}
+/* Java Example */
+
+/* Set the old target */
+NSObject.retainObject (oldTarget);
+button.setTarget (oldTarget);
+
+/* Do something else */
+
+/* Many lines later... */
+
+/* Set the new target */
+NSObject.retainObject (newTarget);
+button.setTarget (newTarget);
+
+/* Balance the retain you did of the old target */
+NSObject.releaseObject (oldTarget);
+\end{verbatim}
+This example is correct and leaks no memory; but hey -- in some cases,
+you don't remember what was the old target!  You can still get it from
+the button before setting the new one:
+\begin{verbatim}
+/* Java Example */
+
+Object old;
+
+/* Get the old target */
+old = button.target ();
+
+/* Set the new target */
+NSObject.retainObject (newTarget);
+button.setTarget (newTarget);
+
+/* Release the old target */
+NSObject.releaseObject (old);
+\end{verbatim}
+
+\subsection{Selectors}
+
+{\sl Selectors} are a typical feature of the Objective-C language, and
+are used quite often in the GNUstep API.  
+
+For example, in Objective-C you can tell a button that, when it is
+pressed, it needs to send a message with a certain name to a certain
+object.  The crucial point is that in Objective-C you can dynamically
+change indipendently both the object which is to receive the message
+(and consequently its class) and the name of the message you want to
+be sent to the object.  
+
+A selector represents just this -- a method with a certain name --
+leaving unspecified the class the method belongs to.  In Objective-C
+you can then ask (at runtime) to the libraries to know if a class
+implements a certain selector, or if an object responds to the
+selector (which happens if and only if its class implements the
+method), and if it does, invoke it.  Selectors are used instead of
+using directly method names so that the Objective-C runtime can keep
+selector tables and heavily optimize this kind of operations.
+
+JIGS {\sl morphs} selectors to Java \texttt{NSSelector} objects.  This
+means that you can create a selector in Java, as a \texttt{NSSelector}
+object, and then pass it as an argument to methods which in
+Objective-C would accept a \texttt{SEL} (the C type for a selector)
+argument; and vice versa, methods returning a \texttt{SEL} in
+Objective-C will return an \texttt{NSSelector} object in Java.
+
+There is an important difference to learn here: in Objective-C, a
+method is univocally identified by its name; in Java, different
+methods can have the same name, and be distinguished only because they
+have different argument types (overloaded methods).  Thus the correct
+way of interpreting a selector in Java is as a method name and a list
+of argument types.  When you create a Java \texttt{NSSelector} object,
+you must specify both the Java name and the type of the arguments.
+The JIGS core engine takes care of mapping selectors from Java to
+Objective-C and vice versa, so that you use selectors on the Java side
+by specifying both java name and argument types, and on the
+Objective-C side by only specifying the objective-C name.  Where is
+the trick ?  Well, don't forget that Objective-C method names are
+longer than Java method names -- in Objective-C a method name has an
+additional part for each argument -- such as in
+`\texttt{writeToFile:atomically:}', while in Java only the first part
+of the name is used, such as in `\texttt{writeToFile}'.  To map the
+Java method name to the full Objective-C name you need to know the
+type of arguments -- which in this case are a \texttt{String} and a
+\texttt{BOOL}.  By knowing the argument type, the JIGS engine can find
+out that the short Java name \texttt{writeToFile} has to be expanded
+when crossing the interface to the long Objective-C name
+\texttt{writeToFile:atomically:}.  This is why in Objective-C the name 
+of the method (which has an additional string per parameter) is
+enough, while in Java, where the name is very short and brief, you
+need the argument types too.
+
+We now make a complete example to make clear how selectors are used
+from Java in practice.  We want to create a button from java, and have
+it print out
+\begin{verbatim}
+Ahi Pisa, vituperio de le genti
+\end{verbatim}
+when the user pushes it.  A full working example which you can compile
+and run is in 
+\begin{verbatim}
+Testing/Java/NSButtonTest.java
+\end{verbatim}
+here we only examine the parts related to selectors.
+
+First of all, we implement the callback in a Java object: 
+\begin{verbatim}
+/* Java Example */
+include java.lang.*;
+
+class MyObject
+{
+  public MyObject () { }
+
+  public void buttonPress (Object sender)
+  {
+    System.out.println ("Ahi Pisa, vituperio de le genti");
+  }
+}
+\end{verbatim}
+This is the method we want to be invoked when the button is pressed;
+it is standard in GNUstep that such callback methods should take a
+single object argument, which is the object which generated the
+callback -- so that in this case, when the user pushes the button, the
+method \texttt{buttonPress} will be invoked with a single argument:
+the (object representing the) button which was pressed.  If you have
+more than one button all using the same action, this could be useful
+to tell which button was pushed.
+
+These callbacks are called \emph{actions} in the GNUstep API.  So, we
+have implemented the action that we want to be invoked when the button
+is pressed.
+
+Then (somewhere else) we create the button, 
+\begin{verbatim}
+/* Java Example */
+ NSButton button;
+
+ button = new NSButton ();
+\end{verbatim}
+we create an object which implements the method \texttt{buttonPress},
+and set it as the \emph{target} of the button -- when the button is
+pushed, the button tries to invoke the \emph{action} on the
+\emph{target} object:
+\begin{verbatim}
+/* Java Example */
+ MyObject object = new MyObject (); 
+
+ NSObject.retain (object);
+ button.setTarget (object);
+\end{verbatim}
+(why the call to \texttt{retain} is needed was explained in the
+previous section), then we create a \texttt{NSSelector} object
+representing the method we want to be invoked (more comments below),
+and set it to be the button action:
+\begin{verbatim}
+/* Java Example */
+NSSelector selector;
+
+selector = new NSSelector ("buttonPress", new Class[] {Object.class}));
+button.setAction (selector);
+\end{verbatim}
+And finally (just to make the example complete), we set the title of
+the button, and make it of the correct size:
+\begin{verbatim}
+/* Java Example */
+button.setTitle ("Print Quote");
+button.sizeToFit ();
+\end{verbatim}
+
+As exemplified in the code, \texttt{NSSelector} has a single
+constructor which should be used from Java, and it is:
+\begin{verbatim}
+ public NSSelector (String aMethodName, Class[] someParameterTypes);
+\end{verbatim}
+The first argument is the name of the method (`\texttt{buttonPress}'
+in our case), the second argument is a Java array of \texttt{Class}
+objects representing the types of the method arguments.  In the
+example, our method has a single argument, which must be an 
+\texttt{Object}; and 
+\begin{verbatim}
+new Class [] {Object.class}
+\end{verbatim}
+is the Java code to create a new array of \texttt{Class} objects
+containing a single \texttt{Object.class} object -- if this is
+unclear, please refer to your Java documentation.
+
+{\bf FIXME}: Explain why in some circumstances selectors for class
+methods are not safe to use from Java.
+
+\subsection{Subclassing GNUstep Objects in Java}
+
+Classes of GNUstep Libraries exposed to Java are Java classes in all
+respects, so you can subclass them directly and simply.  
+
+\texttt{NSObject} implements \texttt{finalize ()} to make some important 
+cleanup -- so if your \texttt{NSObject}'s subclass implements
+\texttt{finalize ()}, you must call \texttt{super.finalize ()} 
+at the end of your subclass implementation, as in the following template:
+\begin{verbatim}
+public void finalize ()
+{
+  /* Insert any cleanup specific to this class here */
+
+  super.finalize ();
+}
+\end{verbatim}
+
+{\bf WARNING}: This does not work yet (as of JIGS 0.9.3) if you pass
+the object back to Objective-C.
+
+\subsection{Using Java Threads}
+
+You can access GNUstep from multiple Java threads.  Make sure that the
+GNUstep libraries you access are themselves thread-safe before trying
+to use them in multithreading !  Otherwise you need to properly
+synchronize access to the library facilities using the standard Java
+synchronization support.
+
+\subsubsection{The Fine Prints About Threads}
+
+This section gives you a rough idea of how threads work in JIGS.  You
+may skip it at a first reading.
+
+The first Java thread which accesses GNUstep will be registered as the
+default Objective-C thread.  If this is the only thread you use to
+access Objective-C, no other thread will be registered with
+Objective-C, and GNUstep will happily go single-threaded.  But as soon
+as you access GNUstep from a different thread, GNUstep will detect
+that you are using a different thread, and switch to multi-threading
+mode.  When multi-threading is enabled, the behaviour of JIGS is also
+different: each time you call GNUstep, the thread is attached to
+GNUstep, and detached when the call to GNUstep returns (unless it is
+the default thread).  This is quite expensive -- which implies that
+your default Java thread (the first one you use to access GNUstep)
+will access GNUstep much faster than other Java threads; and that -- if
+you are aiming at performance -- multi-threaded code is not
+necessarily going to be faster than single-threaded code.
+
+In some rare cases, the default behaviour could not be appropriate for
+your needs, and you could want to force GNUstep into multithreading
+mode before you access it from a secondary thread.  The standard trick
+to do this is to start an auxiliary Java thread, and run any GNUstep
+command inside this thread.  The other solution is to call the method
+\begin{verbatim}
+  static native public void forceMultithreading ();
+\end{verbatim}
+of the \texttt{gnu.gnustep.java.JIGS} class.  This is a GNUstep
+extension which simply forces GNUstep into multithreading mode by
+starting an auxiliary GNUstep thread.
