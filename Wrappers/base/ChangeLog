@@ -1,3 +1,8 @@
+Tue Feb  6 18:52:46 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* GNUmakefile.wrapper.java.preamble (gnustep-base_JAVADOC_FILES):
+	No need to add -public to flags for javadoc.
+
 Tue Feb  6 18:35:28 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* gnustep-base-wrapper.spec.in (Summary, description): Fixed.
