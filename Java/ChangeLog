@@ -1,3 +1,8 @@
+Fri Feb  9 10:00:41 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* gnu/gnustep/base/NSObject.java: Made realObject protected;
+	updated comments about how to wrap constructors for subclasses.
+
 Tue Feb  6 11:55:59 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* gnu/gnustep/base/NSObject.java: Added some short javadoc
