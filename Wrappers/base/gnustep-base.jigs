@@ -72,6 +72,7 @@ classes = (
     "headersNamed:",
     "makeBoundary",
     "makeContentID",
+    "makeHeader:name:parameters:",
     "makeMessageID",
     "rawMimeData",
     "rawMimeData:",
@@ -130,12 +131,13 @@ classes = (
 {
   "java name" = "gnu.gnustep.base.GSXMLDocument";
   
-  "instance methods" = ("encoding",
-			"makeNodeWithNamespace:name:content:",
-			"root",
-			"setRoot:",
-			"writeToFile:atomically:",
-			"version");
+  "instance methods" = (
+    "encoding",
+    "makeNodeWithNamespace:name:content:",
+    "root",
+    "setRoot:",
+    "writeToFile:atomically:",
+    "version");
   "class methods" = ("documentWithVersion:" );
 },
 
@@ -166,6 +168,8 @@ classes = (
     "firstAttribute",
     "firstChild",
     "firstChildElement",
+    "isElement",
+    "isText",
     "makeAttributeWithName:value:",
     "makeChildWithNamespace:name:content:",
     "makeComment:",
