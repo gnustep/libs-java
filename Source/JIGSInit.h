@@ -28,6 +28,13 @@
 #include <Foundation/Foundation.h>
 #include "GSJNI.h"
 
+#if defined(LIB_FOUNDATION_LIBRARY)
+
+BOOL GSRegisterCurrentThread (void);
+void GSUnregisterCurrentThread (void);
+
+#endif /* LIB_FOUNDATION_LIBRARY */
+
 /*
  * Initialize JIGS. 
  * Calling this more than once is safe, but useless.
