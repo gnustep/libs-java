@@ -1,0 +1,18 @@
+
+
+JNI support functions
+=====================
+
+* Every JNI function returning a Java reference should return a local
+  reference unless espressely stated otherwise.
+
+* Every JNI function needing to create additional local references
+  should push a reference frame upon entering, and pop it upon
+  exiting.
+
+* The result of any JNI call should be checked if needed.  Most JNI
+  calls could raise Java exceptions - if that happens, the code should
+  return to Java as soon as possible, where the exception can be
+  handled.  The general policy is that any GSJNI support function
+  returning a jobject, a jclass or a NSObject should return NULL or
+  nil if and only if it has thrown an exception which is now pending.
