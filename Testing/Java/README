@@ -1,3 +1,7 @@
+These tests are meant to test the gnustep-base and gnustep-gui library 
+wrappers.  So, before trying these tests, you obviously need to install 
+the base and gui library wrappers :) 
+
 To compile the tests, type 'make'.
 To run them, do as in the following example:
 
