@@ -143,6 +143,9 @@ classes = (
     
   {
     "java name" = "gnu.gnustep.base.NSDictionary";
+
+    "file to include in java code" = "NSDictionary.java.add";
+    "file to include in objective-c code" = "NSDictionary.m.add";    
     
     "instance methods" = ("count",
 			  "allKeys",
@@ -161,6 +164,9 @@ classes = (
 		      "initWithDictionary:copyItems:",
 		      "initWithObjects:forKeys:",
 		      "initWithContentsOfFile:");
+
+    /* The following conflicts with UserDefaults' one */
+    "method declarations" = ("- (id) objectForKey: (id)aKey");
   },
     
   {
@@ -219,20 +225,23 @@ classes = (
     
   {
     "java name" = "gnu.gnustep.base.NSMutableDictionary";
+
+    "file to include in java code" = "NSMutableDictionary.java.add";
     
     "instance methods" = ("addEntriesFromDictionary:",
 			  "removeAllObjects",
 			  "removeObjectForKey:",
 			  "removeObjectsForKeys:",
 			  "setDictionary:",
-			  "setObject:forKey:"
-			  );
+			  "setObject:forKey:");
     "initializers" = ("init", 
 		      "initWithCapacity:", 
 		      "initWithDictionary:",
 		      "initWithDictionary:copyItems:",
 		      "initWithObjects:forKeys:",
 		      "initWithContentsOfFile:");
+
+    "method declarations" = ("- (void) setObject: (id)anObject forKey: (id)aKey");
   },
     
   {
@@ -485,6 +494,14 @@ classes = (
 			  "volatileDomainNames",
 			  "registerDefaults:");
     "initializers" = ("init", "initWithUser:"); 
+
+    /* WARNING: We are forced to expose these methods in this way not
+       to get conflicting selectors with NSDictionary and
+       NSMutableDictionary, but the truth is - these methods REALLY
+       accept only strings as keys - passing a generic objects will
+       CRASH them. */
+    "method declarations" = ("- (id) objectForKey: (id)aKey", 
+			     "- (void) setObject: (id)anObject forKey: (id)aKey");
   }
 );
 "method name mapping" = {
@@ -494,6 +511,7 @@ classes = (
   "runMode:beforeDate:" = "runModeBeforeDate";
   "addPort:forMode:" = "addPortForMode";
   "removePort:forMode:" = "removePortForMode";
+  "setObject:forKey:" = "setObjectForKey";
 };
 }
 
