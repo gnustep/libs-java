@@ -42,8 +42,20 @@ install ::
 include $(GNUSTEP_MAKEFILES)/common.make
 
 PACKAGE_NAME = gnustep-base
-# NB: This version needs/should not be in sync with JIGS version
-VERSION = 1.2.0
+
+# NB: VERSION should be the same as the gnustep-base library version
+# we are wrapping.  Here is the code to get it from
+# $(GNUSTEP_SYSTEM_ROOT)/Headers/gnustep/base/preface.h where it is
+# declared as follows:
+#define GNUSTEP_BASE_VERSION            0.9.3
+
+# Extract the line we want
+tmp_version_0 = $(shell grep "\#define" $(GNUSTEP_SYSTEM_ROOT)/Headers/gnustep/base/preface.h | grep "GNUSTEP_BASE_VERSION")
+# Remove `#define' and `GNUSTEP_BASE_VERSION'
+tmp_version_1 = $(subst \#define,,$(tmp_version_0))
+tmp_version_2 = $(subst GNUSTEP_BASE_VERSION,,$(tmp_version_1))
+# Remove any remaining spaces
+VERSION = $(strip $(tmp_version_2))
 
 LIBRARY_NAME = libgnustep-base
 
