@@ -22,6 +22,13 @@ Maintainers
 
 JIGS is currently maintained by Nicola Pero <nicola@brainstorm.co.uk>.
 
+Release Notes for JIGS version 0.6
+==================================
+
+This release supports building wrappers of debugging libraries, and
+keeping and running them on the same system as wrappers of
+not-debugging libraries.
+
 Release Notes for JIGS version 0.5
 ==================================
 
