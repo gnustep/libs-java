@@ -994,8 +994,6 @@ classes = (
     
     "class methods" = ("currentRunLoop");
     
-    "initializers" = ("init");
-    
     "instance methods" = (
 			  "acceptInputForMode:beforeDate:",
 			  "addTimer:forMode:",
