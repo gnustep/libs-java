@@ -1,3 +1,15 @@
+Mon May 21 02:12:26 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* SimpleGUI/Library/GNUmakefile: Use old-java-wrapper.make.
+	* SimpleGUI-action/Library/GNUmakefile: Idem.
+
+Mon May 21 02:07:01 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* NameTest/Library/libName.jigs: Moved to Name.jigs.
+	* NameTest/Library/GNUmakefile: Updated for new java-wrapper.make.
+	* NameTest/Library/GNUmakefile.wrapper.objc.preamble: New file, 
+	needed for new java-wrapper.make.
+	
 Mon May  7 03:26:30 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* NameTest: New directory.
