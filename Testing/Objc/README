@@ -1,25 +1,12 @@
-SUPPORTED PLATFORMS
-===================
-
-Should work out of the box on Sun's JDK 1.2.2 and Sun's JDK 1.3.0.  It
-should not be difficult to port to other platforms; just figure out
-the flags for your Java platform, and send them to me
-(n.pero@mi.flashnet.it) so I can include them in next release of these
-files.  You need to figure out which libraries you need to link
-against in order to start a Java virtual machine on your platform.  A
-good start could be to look at the `java' or `java_vm' executable, run
-`ldd' on it, and spy the libraries used in that executable.
-
-
 INSTRUCTIONS
 ============
 
 1. Source the GNUstep-Java.sh script
 
 Before playing with this, you need to source the GNUstep-Java.sh
-script which you find in this directory:
+script:
 
-. ./GNUstep-Java.sh
+. $(GNUSTEP_MAKEFILES)/GNUstep-Java.sh
 
 The script will set up your library path so that the linker can find
 your Java libraries.
@@ -31,4 +18,3 @@ Type `make'.
 3. Run the script from the command line
 
 ./obj/JavaTest
-
