@@ -1,6 +1,7 @@
-Wed Jan 02 13:57:00 2001  Richard Frith-Macdonald <richard@brainstorm.co.uk>
+Wed Jan 02 14:16:00 2001  Richard Frith-Macdonald <richard@brainstorm.co.uk>
 
-	* gnustep-base.jigs: GSXMLDocument API modified for consisitency
+	* gnustep-base.jigs: GSXMLDocument API modified for consistency
+	Corrected error in last modification.
 	
 Mon Nov 19 12:20:00 2001  Richard Frith-Macdonald <richard@brainstorm.co.uk>
 
