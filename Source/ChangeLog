@@ -1,3 +1,8 @@
+Mon Nov 20 15:11:53 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* JIGSNative.h (JIGS_ONLOAD_ENTER), (JIGS_ONLOAD_EXIT): New macros 
+	to be used upon entering/exiting a JNI_OnLoad function.
+
 Mon Nov 13 10:11:17 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* JIGSInit.m (JIGSInit): Make sure the default thread is
