@@ -411,7 +411,7 @@ static void setNeedsLongJniName (NSMutableArray *jniNames,
   
   [objcOutput appendString: @"#include <Foundation/Foundation.h>\n"];
   [objcOutput appendString: @"#include <jni.h>\n"];
-  [objcOutput appendString: @"#include <java/JIGS.h>\n"];
+  [objcOutput appendString: @"#include <GNUstepJava/JIGS.h>\n"];
   // FIXME: #include "./SimpleGUI.h"
   [objcOutput appendFormat: @"#include \"%@\"\n", [WCLibrary libraryHeader]];
   [objcOutput appendString: @"\n"];

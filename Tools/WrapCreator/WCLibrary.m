@@ -231,7 +231,7 @@ static NSMutableArray *classList;
   [libraryInitCode appendString: @"\n"];
   [libraryInitCode appendString: @"#include <Foundation/Foundation.h>\n"];
   [libraryInitCode appendString: @"#include <jni.h>\n"];
-  [libraryInitCode appendString: @"#include <java/JIGS.h>\n"];
+  [libraryInitCode appendString: @"#include <GNUstepJava/JIGS.h>\n"];
   [libraryInitCode appendString: @"\n"];
   [libraryInitCode appendFormat: @"#include \"%@-map.c\"\n", libraryName];  
   [libraryInitCode appendString: @"\n"];
