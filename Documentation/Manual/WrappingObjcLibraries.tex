@@ -71,11 +71,28 @@ implicitly load \texttt{libexample.so}).
 
 Then, most methods are \texttt{native}, as in the following example: 
 \begin{verbatim}
+ /**
+   * Wraps the Objective-C method
+   * <B>start</B>
+   */
   public native void start ();
 \end{verbatim}
 
 The implementation of the Java methods marked as \texttt{native} will
-be found by the JVM inside the native library \texttt{libexample.A.so}.
+be found by the JVM inside the native library \texttt{libexample.A.so}
+(see next section).
+
+As it is shown in the example, each class and public method has a tiny
+minimal javadoc description.  When the java classes are compiled,
+quick reference documentation for the classes will be generated from
+these comments by using javadoc, and put into the subdirectory
+\texttt{Reference}.  This documentation is minimal, and basically
+consists in the list of all Java wrapper classes and methods which
+were compiled, and for each one, a comment explaining which
+Objective-C class or method it wraps.  While minimal, this
+documentation can be quite useful for someone already knowing the
+Objective-C API (or having the Objective-C documentation to refer to)
+and wanting to use the library from Java.
 
 \subsubsection{The Objc Subdirectory}
 
@@ -435,6 +452,51 @@ which you expose to Java return or accept these constants, you may
 want to make these constants available to Java as well by using the
 \texttt{hardcoded constants} section.
 
+\subsubsection{file to include in java code}
+This is a string -- a filename (relative to the current directory).
+When WrapCreator generates the Java class, it will read the contents
+of this file, and add them -- without any change -- inside the Java
+class.
+
+For example, to insert a Java method of your own into the generated 
+Java wrapper class, you could use the following entry:
+\begin{verbatim}
+"file to include in java code" = "MyClass.java.add";
+\end{verbatim}
+Then, you need to put the Java code you want to add into the file
+\texttt{MyClass.java.add}.  Here is a trivial example:
+\begin{verbatim}
+  /**
+    * Returns the sum of the arguments.
+    */
+  public int test (int a, int b)
+  {
+    return a + b;
+  }
+\end{verbatim}
+This code would be inserted {\em inside} the Java class implementation 
+when the Java wrapper is created.
+
+\subsubsection{file to include in preamble java code}
+This is a string -- a filename (relative to the current directory).
+The only difference with \texttt{file to include in java code}
+(described above) is that in this case the code is included {\em
+before} the Java class, between the \texttt{import} statements and the
+class implementation, rather than {\em inside} the class
+implementation.
+
+\subsubsection{file to include in objective-c code}
+This is a string -- a filename (relative to the current directory).
+When WrapCreator generates the Objective-C code, it will read the
+contents of this file, and add them -- without any change -- at the
+end of the Objective-C file for that class.  In this way, you can add
+arbitrary functions and C or Objective-C code to the wrapper library.
+
+The combination of this feature with the one to include arbitrary java
+code into the wrapper allows you to add hand-made wrapped methods to
+the java wrapper.  This is a very advanced feature and is not
+documented here.
+
 \subsection{Method Name Mapping}
 This section is a dictionary -- mapping Objective-C method names 
 to Java method names, as in the following example:
@@ -622,7 +684,16 @@ Once JIGS has chosen an option, it will follow it consistently.  For
 example, if it decided to load debugging libraries, it will ignore all
 non-debugging libraries.
 
-\section{Including Special Code in the Wrapper GNUmakefiles}
+\subsection{Turning off the Generation of Quick Reference Doc}
+
+To stop JIGS from automatically generating minimal javadoc comments
+and the quick reference documentation from them, it's enough to
+compile using \texttt{javadoc=no}, as in:
+\begin{verbatim}
+make javadoc=no
+\end{verbatim}
+
+\section{Including Special Code in the Wrapper GNUmakefiles}\label{special-code-in-GNUmakefiles}
 
 This section describes a feature which is usually not needed, so you
 may skip it at a first reading.  As a prerequisite, you probably need
@@ -657,7 +728,55 @@ In this way, by adding one of these files to your library's directory,
 you can have it copied into the generated wrappers in the appropriate
 place.
 
+\section{Controlling the Quick Reference Documentation}
+
+This section documents special options which control the quick
+reference documentation which JIGS automatically generates with the
+wrappers.  You may safely skip this section at a first reading.  You
+need to read the section \ref{special-code-in-GNUmakefiles} before
+reading this one.
+
+\subsection{Generating Documentation for Packages}
+By default, JIGS will treat the Java classes as separate classes, and
+document them accordingly.  If you are rather creating a complete
+package you may want javadoc documentation for the package.  This is
+not very different, it just additionally includes a useful index with 
+the list of all the classes in the package.
+
+To get this behaviour, you need to write a 
+\begin{verbatim}
+GNUmakefile.wrapper.java.preamble
+\end{verbatim}
+and set \texttt{Reference\_JAVADOC\_FILES} in it.  For example, when 
+wrapping the GNUstep Base Library we do:
+\begin{verbatim}
+Reference_JAVADOC_FILES = gnu.gnustep.base
+\end{verbatim}
+
+\subsection{Installation Directory}
+By default, JIGS will install the quick reference documentation into 
+\begin{verbatim}
+$(GNUSTEP_INSTALLATION_DIR)/Developer/libMyLibrary/Java/Reference/
+\end{verbatim}%$
+where of course \texttt{libMyLibrary} is replaced with your library name.
+If you want to change it, you need to write a 
+\begin{verbatim}
+GNUmakefile.wrapper.java.preamble
+\end{verbatim}
+and set \texttt{Reference\_DOC\_INSTALL\_DIR} in it.  For example, 
+when compiling the GNUstep Base Library wrappers we use
+\begin{verbatim}
+Reference_DOC_INSTALL_DIR = Developer/Base/Java/
+\end{verbatim}
+which installs the documentation into
+\begin{verbatim}
+$(GNUSTEP_INSTALLATION_DIR)/Developer/Base/Java/Reference/
+\end{verbatim}%$
+
 \section{Generating RPMs for the Wrapper Library}
+
+This section is about generating RPMs.  If you are not interested in
+this topic, you may safely skip this section.
 
 Please make sure you are confident about how the GNUstep make package
 manages generating RPMs in the standard case before you read this
