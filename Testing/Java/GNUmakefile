@@ -1,4 +1,4 @@
-#  NSObjectTest: test of gnu.gnustep.base.NSObject
+#  GNUmakefile for the JIGS's Java Tests
 #
 #  Copyright (C) 2000 Free Software Foundation, Inc.
 #
