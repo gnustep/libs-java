@@ -132,6 +132,7 @@ static inline id _JIGSMapperGetProxyFromProxiedJava (jobject java)
   
   objc_mutex_lock (_JIGSProxiedJavaMapLock);
   objc = NSMapGet (_JIGSProxiedJavaMap, java);
+  AUTORELEASE(RETAIN(objc));
   objc_mutex_unlock (_JIGSProxiedJavaMapLock);
   return objc;
 }

@@ -1,3 +1,10 @@
+Wed May 12 18:05:00 2004  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* JIGSMapper.m: _JIGSMapperGetProxyFromProxiedJava() retain and
+	autorelease the ObjC object before returning it, so that a java GC
+	operation in another thread can't cause it to be deallocated before
+	the current thread uses it.
+
 Tue Jul 29 15:08:16 2003  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* GNUmakefile (libgnustep-java_HEADER_FILES_INSTALL_DIR): Install headers
