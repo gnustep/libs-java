@@ -1,3 +1,23 @@
+Sun May  6 15:55:43 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* WCShortType.h: New file.
+	* WCShortType.m: New file.
+	* WCLongType.h: New file.
+	* WCLongType.m: New file.
+	* WCUnsignedLongType.h: New file.
+	* WCUnsignedLongType.m: New file.
+	* WCLongLongType.h: New file.
+	* WCLongLongType.m: New file.
+	* WCUnsignedLongLongType.h: New file.
+	* WCUnsignedLongLongType.m: New file.
+	* GNUmakefile (WrapCreator_OBJC_FILES): Added the new files.
+	* WCTypeLoader.m ([+typeWithObjcType:]): Added code to recognize
+	`short', `short int', `signed short', `signed short int',
+	`unsigned short int', `long', `long int', `signed long', `signed
+	long int', `unsigned long', `unsigned long int', `long long',
+	`long long int', `signed long long', `signed long long int',
+	`unsigned long long', `unsigned long long int'.
+
 Sat May  5 23:56:50 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* WCTypeLoader.m (defaultMorphTypes): Added morphing of
