@@ -1,3 +1,8 @@
+Sat May  5 23:16:11 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Java/Base/NSNumberTest.java: Test passing back and forth simple
+	BigInteger objects.
+
 Sat May  5 21:40:31 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* Java/Base/NSNumberTest.java: New test.
