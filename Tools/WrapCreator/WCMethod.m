@@ -557,4 +557,83 @@ static WCType *scanObjcType (NSScanner *scanner)
   return output;
 }
 
+- (NSString *) outputJavaArgumentSignature
+{
+  NSMutableString *output;
+  int i, count;
+  BOOL flag = NO;
+
+  output = [NSMutableString stringWithString: @"\""];
+  
+  count = [arguments count];
+  for (i = 0; i < count; i ++)
+    {
+      WCType *t = (WCType *)[arguments objectAtIndex: i];
+      NSString *arg = [t javaArgumentType];
+      
+      if (arg == nil)
+	{
+	  /* Try a last guess - it is our own class name ? */
+	  arg = [t javaType];
+	  if ([[class objcName] isEqualToString: arg])
+	    {
+	      /* Yes, so we know what the long java name of our class is */
+	      [output appendFormat: @"L%@;", [class javaName]];
+	    }
+	  else 
+	    {
+	      /* No - Worst case - conversion could not be done here */
+	      [output appendFormat: @"L%@;", arg];
+	      /* Set the flag meaning that the conversion has to be done 
+		 at run-time */
+	      flag = YES;
+	    }
+	}
+      else
+	{
+	  [output appendString: arg];
+	}
+    }
+
+  [output appendString: @"\", "];
+  if (flag)
+    {
+      [output appendString: @"YES"];
+    }
+  else
+    {
+      [output appendString: @"NO"];
+    }
+
+  return output;
+}
+
+
+- (NSString *) outputSelectorMapping
+{
+  NSMutableString *output;
+// { "start", NULL, "", NO, NO },
+  output = [NSMutableString stringWithString: @"   { \""];
+  [output appendString: methodName];
+  [output appendString: @"\", "];
+  if (javaMethodName != nil)
+    {
+      [output appendFormat: @"\"%@\", ", javaMethodName];
+    }
+  else
+    {
+      [output appendString: @"NULL, "];
+    }
+  [output appendFormat: @"%@, ", [self outputJavaArgumentSignature]];
+  if (isClassMethod)
+    {
+      [output appendString: @"YES }"];
+    }
+  else
+    {
+      [output appendString: @"NO }"];
+    }
+
+  return output;
+}
 @end
