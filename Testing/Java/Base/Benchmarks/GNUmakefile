@@ -51,6 +51,7 @@ gnu.gnustep.base-benchmark_JAVA_FILES =       \
     NSArray7Benchmark.java                    \
     NSArray8Benchmark.java                    \
     NSArray9Benchmark.java                    \
+    NSArray10Benchmark.java                   \
     Vector0Benchmark.java                     \
     Vector1Benchmark.java                     \
     Vector2Benchmark.java                     \
