@@ -37,6 +37,7 @@
   NSArray *initializers;
   NSArray *instanceMethods;
   NSDictionary *methodNameMapping;
+  NSArray *prerequisiteLibraries;
 }
 + (id) newWithDictionary: (NSDictionary *)dict;
 
@@ -53,6 +54,8 @@
 - (NSString *) shortJavaName;
 
 - (NSString *)javaMethodForObjcMethod: (NSString *)methodName;
+
+- (NSArray *)prerequisiteLibraries;
 
 - (void) outputWrappers;
 
