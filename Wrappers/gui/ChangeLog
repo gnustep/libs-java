@@ -1,3 +1,8 @@
+Thu Nov  2 16:06:57 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* libgnustep-gui.jigs: Created an `enumerations' section, 
+	and moved enumerations from `types' section to it.
+
 Wed Nov  1 15:35:47 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* libgnustep-gui.jigs Added types; uncommented lots of methods
