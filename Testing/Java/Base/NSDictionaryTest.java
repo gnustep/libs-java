@@ -73,14 +73,51 @@ class NSDictionaryTest
       }
     System.out.println ("Yes - check passed");
     System.out.println ("");
-
+    
     System.out.println ("Now creating a dictionary from two java arrays");
     dictionaryTwo = new NSDictionary (new String [] { "value0", "value1" },
 				      new String [] { "key0", "key1" });
     System.out.println ("Got " + dictionaryTwo);
     
+    System.out.println ("Now testing removeObjectForKey ()");
+    dictionaryOne = new NSMutableDictionary ();    
+    
+    dictionaryOne.setObjectForKey ("value1", "key1");
+    if (!dictionaryOne.objectForKey ("key1").equals ("value1"))
+      {
+	System.out.println ("setObjectForKey didn't work");
+	System.out.println ("==> test failed");
+	System.exit (1);
+      }
+    dictionaryOne.removeObjectForKey ("key1");
+    if (dictionaryOne.objectForKey ("key1") != null)
+      {
+	System.out.println ("removeObjectForKey didn't work");
+	System.out.println ("==> test failed");
+	System.exit (1);
+      }
+    
+    System.out.println ("Now testing mutableClone ()");
+    NSDictionary tmpDict = new NSDictionary (new String [] { "value1" }, 
+					     new String [] { "key1" });
+    dictionaryOne = (NSMutableDictionary)(tmpDict.mutableClone ());
+    if (!dictionaryOne.objectForKey ("key1").equals ("value1"))
+      {
+	System.out.println ("setObjectForKey didn't work");
+	System.out.println ("==> test failed");
+	System.exit (1);
+      }
+    System.gc ();
+    dictionaryOne.removeObjectForKey ("key1");
+    if (dictionaryOne.objectForKey ("key1") != null)
+      {
+	System.out.println ("removeObjectForKey didn't work");
+	System.out.println ("==> test failed");
+	System.exit (1);
+      }
+    
     /* Happy end */
     System.out.println ("test passed");
   }
-
+  
 }
