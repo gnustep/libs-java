@@ -1,3 +1,21 @@
+Mon May 21 02:21:33 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	Simplified and updated building process to the new
+	java-wrapper.make.
+	* GNUmakefile: Rewritten for new java-wrapper.make.
+	* NSPropertyListSerialization.h: Protected from multiple
+	inclusions.
+	* NSPropList.m: Renamed to NSPropertyListSerialization.m.
+	* gnustep-base-wrapper.spec.in: Renamed to
+	gnustep-base-java-wrapper.spec.in.
+	* gnustep-base-wrapper-debug.spec.in: Renamed to
+	gnustep-base-java-wrapper.debug.spec.in.
+	* GNUmakefile.wrapper: Removed.
+	* GNUmakefile.wrapper.objc.postamble: Removed.
+	* libgnustep-base.jigs: Moved to gnustep-base.jigs; added
+	declarations for `next' and `prev' methods in GSXML classes to
+	prevent problems with conflicting types.
+	
 Mon May  7 03:38:24 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* NSDictionary.m.add: Fixed - variables declared of type NSArray *
