@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 
-<!--Converted with LaTeX2HTML 99.2beta8 (1.43)
+<!--Converted with LaTeX2HTML 2K.1beta (1.48)
 original version by:  Nikos Drakos, CBLU, University of Leeds
 * revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
 * with significant contributions from:
@@ -14,7 +14,7 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 <META NAME="distribution" CONTENT="global">
 
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META NAME="Generator" CONTENT="LaTeX2HTML v99.2beta8">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2K.1beta">
 <META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
 
 <LINK REL="STYLESHEET" HREF="Manual.css">
@@ -26,11 +26,11 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 </HEAD>
 
 <BODY BGCOLOR="#FFFFFF" text="#000000" link="#0000FF" vlink="#4444FF" alink="#3388FF">
-<B> Next: <A NAME="tex2html203"
+<B> Next: <A NAME="tex2html207"
   HREF="node10.html">3.4 Advanced Topics</A> </B>
-<B>Up: <A NAME="tex2html201"
+<B>Up: <A NAME="tex2html205"
   HREF="node6.html">3. Programming GNUstep in</A>  </B>
-<B> Previous: <A NAME="tex2html195"
+<B> Previous: <A NAME="tex2html199"
   HREF="node8.html">3.2 Accessing the GNUstep</A> </B>
 <BR> <P>
 
@@ -39,20 +39,27 @@ original version by:  Nikos Drakos, CBLU, University of Leeds
 <A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
 
 <UL>
-<LI><A NAME="tex2html204"
-  HREF="node9.html#SECTION00431000000000000000">3.3.1 Classes</A>
-<LI><A NAME="tex2html205"
-  HREF="node9.html#SECTION00432000000000000000">3.3.2 Methods</A>
-<LI><A NAME="tex2html206"
-  HREF="node9.html#SECTION00433000000000000000">3.3.3 Constructors</A>
-<LI><A NAME="tex2html207"
-  HREF="node9.html#SECTION00434000000000000000">3.3.4 Primitive Types</A>
 <LI><A NAME="tex2html208"
-  HREF="node9.html#SECTION00435000000000000000">3.3.5 Strings</A>
+  HREF="#SECTION00431000000000000000">3.3.1 Classes</A>
 <LI><A NAME="tex2html209"
-  HREF="node9.html#SECTION00436000000000000000">3.3.6 Exceptions</A>
+  HREF="#SECTION00432000000000000000">3.3.2 Methods</A>
 <LI><A NAME="tex2html210"
-  HREF="node9.html#SECTION00437000000000000000">3.3.7 Base Library Structs</A>
+  HREF="#SECTION00433000000000000000">3.3.3 Constructors</A>
+<LI><A NAME="tex2html211"
+  HREF="#SECTION00434000000000000000">3.3.4 Primitive Types</A>
+<LI><A NAME="tex2html212"
+  HREF="#SECTION00435000000000000000">3.3.5 Strings</A>
+<LI><A NAME="tex2html213"
+  HREF="#SECTION00436000000000000000">3.3.6 Numbers</A>
+<UL>
+<LI><A NAME="tex2html214"
+  HREF="#SECTION00436100000000000000">3.3.6.1 Details of Number Mapping</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html215"
+  HREF="#SECTION00437000000000000000">3.3.7 Exceptions</A>
+<LI><A NAME="tex2html216"
+  HREF="#SECTION00438000000000000000">3.3.8 Base Library Structs</A>
 </UL>
 <!--End of Table of Child-Links-->
 <HR>
@@ -284,7 +291,76 @@ it doesn't make any appreciable difference in terms of performance.
 <P>
 
 <H2><A NAME="SECTION00436000000000000000">
-3.3.6 Exceptions</A>
+3.3.6 Numbers</A>
+</H2>
+
+<P>
+Numbers (instances of <TT>java.lang.Number</TT> and subclasses) are
+transparently morphed through the interface, in the same way as
+strings are.  Again, this simply means that if an Objective-C method
+takes as argument (or returns) an Objective-C <TT>NSNumber</TT>
+object, the method in Java will take as argument (or return) a Java
+<TT>Number</TT> object; the interface will automatically take care of
+the conversion.
+
+<P>
+
+<H3><A NAME="SECTION00436100000000000000">
+3.3.6.1 Details of Number Mapping</A>
+</H3>
+
+<P>
+This section explains the internals of the number morphing; it's quite
+technical and for most people it's not really useful nor interesting,
+so you may safely skip it at a first reading.
+
+<P>
+Internally, the situation is more complicated than in the case of
+strings, because there are many public subclasses of
+<TT>java.lang.Number</TT>, which hold considerably different types of
+numbers each; and <TT>NSNumber</TT>, according to its Objective-C
+type, can hold very different types of numbers as well.  
+
+<P>
+When the interface has to convert a Java <TT>Number</TT> object to an
+Objective-C <TT>NSNumber</TT> object, it will check if the
+<TT>Number</TT> object belongs to one of the standard Java number
+classes (<TT>Byte</TT>, <TT>Short</TT>, <TT>Int</TT>, <TT>Long</TT>,
+<TT>Float</TT>, <TT>Double</TT>); in this case, it will extract the
+value of the number in the appropriate precision (for example, by
+using <TT>byteValue</TT> for a <TT>Byte</TT>, or by using
+<TT>longValue</TT> for a <TT>Long</TT>), and create a corresponding
+<TT>NSNumber</TT> object with an Objective-C type which is big enough
+to hold the value.  If the <TT>Number</TT> object instead is of a
+non-standard class (such as a class you implemented), the interface
+will extract the value of the number by using <TT>doubleValue</TT>,
+and create a <TT>NSNumber</TT> object big enough to hold this double
+value.  This can obviously result in loss of precision or conversion
+problems if the Java number object is holding a value which can't be
+represented with a double.
+
+<P>
+When, viceversa, the interface has to convert an Objective-C
+<TT>NSNumber</TT> object into a Java <TT>Number</TT> object, it will
+check the Objective-C type of the Objective-C object (only a finite,
+documented number of number types are possible); it will extract the
+value using the appropriate method (such as <TT>longValue</TT> is the
+number is of type <TT>long</TT>), and create a Java <TT>Number</TT>
+object of a standard class which can hold the value.
+
+<P>
+Please notice that an Objective-C <TT>NSNumber</TT> object can hold a
+<TT>BOOL</TT> (boolean) value; this type is morphed into a small Java
+<TT>Number</TT> object (usually a <TT>Short</TT>) holding <TT>0</TT>
+for <TT>NO</TT>, and <TT>1</TT> for <TT>YES</TT>.  It can't be morphed
+into a Java <TT>Boolean</TT> object, because in Java <TT>Boolean</TT>
+objects are not numbers, and the whole point of morphing is that a
+<TT>NSNumber</TT> is morphed exactly into a Java <TT>Number</TT>.
+
+<P>
+
+<H2><A NAME="SECTION00437000000000000000">
+3.3.7 Exceptions</A>
 </H2>
 
 <P>
@@ -335,8 +411,8 @@ even if your Java compiler does not force you to do so.
 
 <P>
 
-<H2><A NAME="SECTION00437000000000000000">
-3.3.7 Base Library Structs</A>
+<H2><A NAME="SECTION00438000000000000000">
+3.3.8 Base Library Structs</A>
 </H2>
 The fundamental structs defined in the base library
 <PRE>
@@ -369,7 +445,7 @@ is called, JIGS internally creates a struct (allocated on the stack so
 it's fast) and initializes it with the <TT>x</TT> and <TT>y</TT>
 coordinates stored in the Java <TT>NSPoint</TT> object; it passes this
 struct as argument to the method call<A NAME="tex2html1"
-  HREF="footnode.html#foot452"><SUP>3.1</SUP></A>.
+  HREF="footnode.html#foot493"><SUP>3.1</SUP></A>.
 
 <P>
 Whenever an Objective-C method returns a <TT>NSPoint</TT> (C struct),
@@ -423,17 +499,17 @@ the Java equivalent of these little functions, and they should be
 reasonably fast.
 
 <P>
-<HR><B> Next: <A NAME="tex2html203"
+<HR><B> Next: <A NAME="tex2html207"
   HREF="node10.html">3.4 Advanced Topics</A> </B>
-<B>Up: <A NAME="tex2html201"
+<B>Up: <A NAME="tex2html205"
   HREF="node6.html">3. Programming GNUstep in</A> </B>
-<B> Previous: <A NAME="tex2html195"
+<B> Previous: <A NAME="tex2html199"
   HREF="node8.html">3.2 Accessing the GNUstep</A> </B>
 
 <!--End of Navigation Panel-->
 <ADDRESS>
 Nicola Pero
-2001-04-27
+2001-05-06
 </ADDRESS>
 </BODY>
 </HTML>
