@@ -41,6 +41,7 @@ gnu.gnustep.java-test_JAVA_FILES =       \
     NSPropertyListSerializationTest.java \
     ThreadsTest.java                     \
     NSApplicationTest.java               \
+    NSButtonTest.java                    \
     NSWindowTest.java
 
 
