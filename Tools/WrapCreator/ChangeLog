@@ -1,3 +1,13 @@
+Wed Sep  6 02:37:35 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* WCLibrary.m ([+prerequisiteLibraries]): New method.
+	* WCLibrary.h: Declared the method.
+	* WCClass.m ([-prerequisiteLibraries]): New method.
+	* WCClass.h: Declared the new method.
+	* WCClass.m ([-outputWrappers]): Output commands to load 
+	in any prerequisite library native wrappers before the 
+	library native wrapper.
+
 Tue Sep  5 15:59:02 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* WCDoubleType.h, WCDoubleType.m, WCFloatType.h, WCFloatType.m:
