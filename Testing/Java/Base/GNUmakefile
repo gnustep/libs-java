@@ -25,16 +25,17 @@ include $(GNUSTEP_MAKEFILES)/common.make
 
 JAVA_PACKAGE_NAME = gnu.gnustep.base-test
 gnu.gnustep.base-test_JAVA_FILES =       \
-    NSObjectTest.java                    \
-    NSObjectSubclassTest.java            \
     NSArrayTest.java                     \
-    NSProcessInfoTest.java               \
+    NSDictionaryTest.java                \
     NSDataTest.java                      \
     NSDateTest.java                      \
-    NSTaskTest.java                      \
     NSNotificationCenterTest.java        \
+    NSObjectTest.java                    \
+    NSObjectSubclassTest.java            \
+    NSProcessInfoTest.java               \
     NSSelectorTest.java                  \
     NSPropertyListSerializationTest.java \
+    NSTaskTest.java                      \
     ThreadsTest.java
 
 include $(GNUSTEP_MAKEFILES)/java.make

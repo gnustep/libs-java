@@ -28,7 +28,7 @@
 # tests by hand and look at the output to make sure they make sense, 
 # but anyway it is a first check
 
-tests_to_run="NSArrayTest NSDataTest NSDateTest NSNotificationCenterTest NSObjectSubclassTest NSObjectTest NSProcessInfoTest NSPropertyListSerializationTest NSSelectorTest NSTaskTest ThreadsTest"
+tests_to_run="NSArrayTest NSDataTest NSDateTest NSDictionaryTest NSNotificationCenterTest NSObjectSubclassTest NSObjectTest NSProcessInfoTest NSPropertyListSerializationTest NSSelectorTest NSTaskTest ThreadsTest"
 
 failed=no
 
