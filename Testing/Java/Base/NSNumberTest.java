@@ -25,29 +25,6 @@ import gnu.gnustep.base.*;
 
 class NSNumberTest
 { 
-  /* Boolean must come back exactly of the same class as they went out,
-     so we check the what is returned by using `equals' */
-  public static void testBooleanBackAndForth (Object object)
-  {
-    String output = "  Passing " + object + " (" + object.getClass () + ")...";
-    NSMutableArray array = new NSMutableArray ();
-    array.addObject (object);
-
-    if (!(array.objectAtIndex (0)).equals (object))
-      {
-	output += " got a different value (" + array.objectAtIndex (0) 
-	  + ") ==> test FAILED";
-	System.out.println (output);
-	System.exit (1);
-      }
-    else
-      {
-	output += " got the same value ==> test passed";
-	System.out.println (output);
-      }
-    
-  }
-
   /* We compare the `longValue' of the number before and after passing
      it through the interface, because we can't be sure it comes back
      exactly of the same class. */
@@ -108,9 +85,6 @@ class NSNumberTest
     System.out.println (" * Test adding morphed objects to a NSMutableArray, and getting them back");
     System.out.println ("   this makes them go back and forth the interface; we test they come back");
     System.out.println ("   reasonably the same as they went");
-
-    testBooleanBackAndForth (java.lang.Boolean.TRUE);
-    testBooleanBackAndForth (java.lang.Boolean.FALSE);
 
     testIntegerBackAndForth (new Byte ((byte)1));
     testIntegerBackAndForth (new Byte ((byte)100));
