@@ -64,6 +64,8 @@
   dictionary = [dict objectForKey: @"method name mapping"];
   ASSIGN (methodNameMapping, dictionary);
 
+  array = [dict objectForKey: @"prerequisite libraries"];
+  ASSIGN (prerequisiteLibraries, array);
   // TODO: Class specific configurations read here
   return self;
 }
@@ -130,6 +132,37 @@
   return [WCLibrary javaMethodForObjcMethod: methodName];
 }
 
+- (NSArray *)prerequisiteLibraries
+{
+  NSMutableArray *arrayOne;
+  NSArray *arrayTwo;
+  NSObject *object;
+  int i, count;
+
+  arrayOne = [[WCLibrary prerequisiteLibraries] mutableCopy];
+  arrayTwo = prerequisiteLibraries;
+
+  if (arrayOne == nil)
+    {
+      arrayOne = [NSMutableArray new];
+    }
+
+  AUTORELEASE (arrayOne);
+
+  /* Now merge the two; WCLibrary ones come before and we don't 
+     want replicates. */
+  count = [arrayTwo count];
+  for (i = 0; i < count; i++)
+    {
+      object = [arrayTwo objectAtIndex: i];
+      if ([arrayOne containsObject: object] == NO)
+	{
+	  [arrayOne addObject: object];
+	}
+    }
+
+  return arrayOne;
+}
 
 - (void) outputWrappers
 {
@@ -140,7 +173,8 @@
   WCMethod *method;
   int i, count;
   WCHeaderParser *wc;
-  
+  NSArray *libraries;
+
   wc = [WCLibrary headerParser];
   
   javaOutput = [NSMutableString stringWithString: @"/* Wrapper for class "];
@@ -163,9 +197,21 @@
   [javaOutput appendString: @" extends "];
   [javaOutput appendString: [wc getSuperclassOfClass: objcName]];
   [javaOutput appendString: @"\n{\n"];
-  [javaOutput appendString: @"\n  static\n  {\n    System.loadLibrary (\""];
+  [javaOutput appendString: @"\n  static\n  {"];
+
+  libraries = [self prerequisiteLibraries];
+  count = [libraries count];
+  for (i = 0; i < count; i++)
+    {
+      [javaOutput appendString: @"\n    System.loadLibrary (\""];
+      [javaOutput appendString: (NSString *)[libraries objectAtIndex: i]];
+      [javaOutput appendString: @".A\");"];      
+    }
+
+  [javaOutput appendString: @"\n    System.loadLibrary (\""];
   [javaOutput appendString: [WCLibrary shortLibraryName]];
-  [javaOutput appendString: @".A\");\n  }\n\n  protected "];
+  [javaOutput appendString: @".A\");\n"];
+  [javaOutput appendString: @"  }\n\n  protected "];
   [javaOutput appendString: [self shortJavaName]];
   [javaOutput appendString: @" (GSInitializationType type)\n  {\n     "
 	      @"super (type);\n  }\n\n"];
