@@ -1,3 +1,8 @@
+Wed Nov  1 14:55:45 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Makefiles/java-wrapper.make: Run WrapCreator in silent mode if
+	make is run with arguments `verbose=no'.
+
 Wed Nov  1 11:32:49 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* WCMethod.m (convertToJNI): New function converting class names
