@@ -29,4 +29,8 @@
 
 + (NSString *) stringFromPropertyList: (id)anObject;
 
++ (NSData *) dataFromPropertyList: (id)anObject;
+
++ (id) propertyListFromData: (NSData *)aData;
+
 @end
