@@ -1,3 +1,9 @@
+Fri Oct  6 13:11:30 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Java/NSSelectorTest.java: New test.
+	* Java/GNUmakefile: Added the new test.
+	* Objc/main.m (main): Added test for loading in overloaded methods.
+	
 Fri Sep 29 18:39:04 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Objc/main.m (main): Improved message.
