@@ -1,5 +1,16 @@
 {
   "prerequisite libraries" = ("gnustep-base");
+  "types" = {
+    NSBackingStoreType = int;
+    NSBorderType = int;
+    NSCellAttribute = int;
+    NSCellType = int;
+    NSComparisonResult = int;
+    NSEventType = int;
+    NSTextAlignment = int;
+    NSTimeInterval = double;
+    NSTitlePosition = int;
+  };
   "classes" = (
                 {
                   "java name" = "gnu.gnustep.gui.NSActionCell";
@@ -7,8 +18,8 @@
                   "initializers" = ("init", "initImageCell:", "initTextCell:");
 		  "instance methods" = (
                      "controlView",
-		     //"setAction:", 
-		     //"action", 
+		     "setAction:", 
+		     "action", 
 		     "setTarget:", 
 		     "target",
 		     "setTag:", 
@@ -48,7 +59,7 @@
 		    "mainWindow", 
 		    "windowWithWindowNumber:", 
 		    "windows", 
-		    //"makeWindowsPerform:inOrder:", 
+		    "makeWindowsPerform:inOrder:", 
 		    "setWindowsNeedUpdate:", 
 		    "updateWindows", 
 		    "miniaturizeAll:", 
@@ -76,12 +87,10 @@
 		    "servicesProvider",
 		    "orderFrontColorPanel:", 
 		    "runPageLayout:",
-		    //"showHelp:",
-		    //"sendAction:to:from:", 
-		    //"tryToPerform:with:",
-		    //"targetForAction:",
+		    "sendAction:to:from:", 
+		    "tryToPerform:with:",
+		    "targetForAction:",
 		    "context",
-		    //"reportException:",
 		    "terminate:",
 		    "setDelegate:",
 		    "delegate");
@@ -95,15 +104,15 @@
                   "initializers" = ("init", "initWithFrame:");
 		  "instance methods" = (
 		    "borderRect", 
-		    //"borderType", 
-		    //"setBorderType:", 
+		    "borderType", 
+		    "setBorderType:", 
 		    "setTitle:", 
 		    "setTitleFont:", 
-		    //"setTitlePosition:", 
+		    "setTitlePosition:", 
 		    "title", 
 		    "titleCell", 
 		    "titleFont", 
-		    //"titlePosition", 
+		    "titlePosition", 
 		    "titleRect",
 		    "contentView", 
 		    "contentViewMargins", 
@@ -145,10 +154,10 @@
 		     "doubleValue", 
 		     "setFloatValue:", 
 		     "floatValue",
-		     //"setCellAttribute:to:", 
-		     //"cellAttribute:", 
-		     //"setType:", 
-		     //"type", 
+		     "setCellAttribute:to:", 
+		     "cellAttribute:", 
+		     "setType:", 
+		     "type", 
 		     "setEnabled:", 
 		     "isEnabled", 
 		     "setBezeled:", 
@@ -168,8 +177,8 @@
 		     "isSelectable", 
 		     "setScrollable:", 
 		     "isScrollable", 
-		     //"setAlignment:", 
-		     //"alignment", 
+		     "setAlignment:", 
+		     "alignment", 
 		     "setFont:", 
 		     "font", 
 		     "setWraps:", 
@@ -181,8 +190,8 @@
 		     "setImportsGraphics:", 
 		     "importsGraphics", 
 		     "setUpFieldEditorAttributes:",
-		     //"setAction:", 
-		     //"action", 
+		     "setAction:", 
+		     "action", 
 		     "setTarget:", 
 		     "target", 
 		     "setContinuous:", 
@@ -198,7 +207,7 @@
 		     "entryType", 
 		     "isEntryAcceptable:", 
 		     "setFloatingPointFormat:left:right:",
-		     //"compare:",
+		     "compare:",
 		     "acceptsFirstResponder",  
 		     "setShowsFirstResponder:", 
 		     "showsFirstResponder",  
@@ -237,6 +246,10 @@
 		     "sendsActionOnEndEditing", 
 		     "setSendsActionOnEndEditing:",  
 		     "endEditing:"); 
+		      /* As a special exception, we need to declare this stuff 
+		         because the declarations conflict with 
+                         NSPrinter's ones. */
+		  "method declarations" = ("- (NSCellType) type;");
                 },
 
                 {
@@ -275,8 +288,8 @@
 		    "takeIntValueFrom:", 
 		    "takeObjectValueFrom:", 
 		    "takeStringValueFrom:",
-		    //"alignment", 
-		    //"setAlignment:", 
+		    "alignment", 
+		    "setAlignment:", 
 		    "font", 
 		    "setFont:", 
 		    "setFloatingPointFormat:left:right:",
@@ -290,13 +303,13 @@
 		    "drawCellInside:", 
 		    "updateCell:", 
 		    "updateCellInside:",
-		    //"action", 
-		    //"setAction:", 
+		    "action", 
+		    "setAction:", 
 		    "target", 
 		    "setTarget:", 
 		    "isContinuous", 
 		    "setContinuous:", 
-		    //"sendAction:to:", 
+		    "sendAction:to:", 
 		    "sendActionOn:",
 		    //"attributedStringValue", 
 		    //"setAttributedStringValue:",
@@ -344,8 +357,8 @@
                     "context",
                     "locationInWindow", 
 		    "modifierFlags", 
-                    //"timestamp", 
-                    //"type", 
+                    "timestamp", 
+                    "type", 
                     "window", 
                     "windowNumber",
                     "characters", 
@@ -363,6 +376,10 @@
 		    // TODO: short
                     //"subtype"
 		    );
+		    /* As a special exception, we need to declare this stuff 
+		       because the declarations conflict with 
+                       NSPrinter's ones. */
+		  "method declarations" = ("- (NSEventType) type;");
                  },
 
                 {
@@ -447,10 +464,9 @@
                   "java name" = "gnu.gnustep.gui.NSPanel";
 		  
 		  "initializers" = (
-                    "init"
-		    // NSBackingStoreType TODO
-                    //"initWithContentRect:styleMask:backing:defer:",
-                    //"initWithContentRect:styleMask:backing:defer:screen:"
+                    "init",
+                    "initWithContentRect:styleMask:backing:defer:",
+                    "initWithContentRect:styleMask:backing:defer:screen:"
 		    );
 		  "instance methods" = (
 		    "setFloatingPanel:",  
@@ -492,9 +508,9 @@
 		    "helpRequested:",
 		    "interpretKeyEvents:", 
 		    "performKeyEquivalent:", 
-		    //"doCommandBySelector:", 
-		    //"tryToPerform:with:",
-		    //"noResponderFor:",
+		    "doCommandBySelector:", 
+		    "tryToPerform:with:",
+		    "noResponderFor:",
 		    "validRequestorForSendType:returnType:");
 		  
 		  "initializers"  = ("init");
@@ -698,10 +714,9 @@
                   "java name" = "gnu.gnustep.gui.NSWindow";
 
 		  "initializers" = (
-                    "init"
-		    // NSBackingStoreType TODO
-                    //"initWithContentRect:styleMask:backing:defer:",
-                    //"initWithContentRect:styleMask:backing:defer:screen:"
+                    "init",
+                    "initWithContentRect:styleMask:backing:defer:",
+                    "initWithContentRect:styleMask:backing:defer:screen:"
                     );
 
 		  "class methods" = (
@@ -786,8 +801,8 @@
 		    "windowNumber", 
 		    "gState", 
 		    "deviceDescription", 
-		    //"setBackingType:", 
-		    //"backingType", 
+		    "setBackingType:", 
+		    "backingType", 
 		    "setOneShot:", 
 		    "isOneShot", 
 		    //"setDepthLimit:", 
@@ -805,7 +820,7 @@
 		    "discardEventsMatchingMask:beforeEvent:", 
 		    "postEvent:atStart:", 
 		    "sendEvent:", 
-		    //"tryToPerform:with:", 
+		    "tryToPerform:with:", 
 		    "keyDown:", 
 		    "mouseLocationOutsideOfEventStream", 
 		    "setAcceptsMouseMovedEvents:", 
@@ -865,9 +880,5 @@
 		    "delegate");
 		  }
 
-		);		    
+		);
 }		    
-
-
-
-
