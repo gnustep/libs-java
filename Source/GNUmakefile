@@ -36,6 +36,7 @@ VERSION = 1.1.0
 libgnustep-java_HEADER_FILES = \
 ObjcRuntimeUtilities.h \
 GSJNI.h \
+GSJNIArray.h \
 GSJNICache.h \
 GSJNIClass.h \
 GSJNIDebug.h \
@@ -55,6 +56,7 @@ libgnustep-java_HEADER_FILES_INSTALL_DIR = /$(GNUSTEP_FND_DIR)/java
 
 libgnustep-java_OBJC_FILES = \
 ObjcRuntimeUtilities.m \
+GSJNIArray.m \
 GSJNICache.m \
 GSJNIClass.m \
 GSJNIDebug.m \
