@@ -78,7 +78,7 @@ int main (int argc, char **argv, char **env)
 #elif defined(LIB_FOUNDATION_LIBRARY)
   [NSProcessInfo initializeWithArguments: argv  count: argc  
 		 environment: env];
-  [NSAutoreleasePool enableDoubleReleaseCheck:YES];
+//  [NSAutoreleasePool enableDoubleReleaseCheck:YES];
 #endif
 
   pool = [NSAutoreleasePool new];
