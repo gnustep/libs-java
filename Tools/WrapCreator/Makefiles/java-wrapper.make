@@ -149,9 +149,11 @@ VERSION_LIBRARY_FILE = $(LIBRARY_FILE).$(VERSION)
 # We copy the RPM .spec.in and .script.in files 
 #
 ifeq ($(debug),yes)
+  JAVA_WRAPPER_TOP_TEMPLATE=java-wrapper.top.debug.template
   WRAPPER_SPEC_IN_FILE=$(PACKAGE_NAME)-wrapper-debug.spec.in
   WRAPPER_SCRIPT_IN_FILE=$(PACKAGE_NAME)-wrapper-debug.script.spec.in
 else
+  JAVA_WRAPPER_TOP_TEMPLATE=java-wrapper.top.template
   WRAPPER_SPEC_IN_FILE=$(PACKAGE_NAME)-wrapper.spec.in
   WRAPPER_SCRIPT_IN_FILE=$(PACKAGE_NAME)-wrapper.script.spec.in
 endif
@@ -161,7 +163,7 @@ java-wrapper:: $(WRAPPER_DIR)/stamp-file
 $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FILE)
 	@echo Creating the Wrapper Directories and GNUmakefiles...
 	@$(MKDIRS) $(WRAPPER_DIR)
-	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/java-wrapper.top.template          \
+	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/$(JAVA_WRAPPER_TOP_TEMPLATE)   \
 	      $(WRAPPER_DIR)/GNUmakefile.tmp
 	@sed -e 's/PACKAGEHERE/$(PACKAGE_NAME)/g' $(WRAPPER_DIR)/GNUmakefile.tmp   \
 	      > $(WRAPPER_DIR)/GNUmakefile 
