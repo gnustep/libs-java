@@ -3,7 +3,8 @@ Mon Jan  8 15:49:42 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 	* WrappingObjcLibraries.tex (Turning on Generation of Java
 	Wrappers): Added suggestion to use `-' when including
 	java.wrapper.
-
+	* Manual/: Updated.
+	
 Mon Nov 27 16:10:49 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* .latex2html-init: New file.
