@@ -1,3 +1,12 @@
+Sat May  5 21:34:33 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Objc/main.m (main): Added (#ifdefed out) code to test
+	boolean/number morphing.
+
+Sat May  5 18:30:50 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Objc/GNUmakefile (check): Added to speed testing.
+
 Sat May  5 16:19:45 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* Java/Base/GNUmakefile (after-distclean): Remove test-base.log.
