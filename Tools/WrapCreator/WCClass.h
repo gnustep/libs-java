@@ -40,6 +40,7 @@
   NSArray *prerequisiteLibraries;
   NSMutableDictionary *classMethodDeclarations;  
   NSMutableDictionary *instanceMethodDeclarations;
+  NSArray *hardcodedConstants;
 }
 + (id) newWithDictionary: (NSDictionary *)dict;
 
