@@ -23,6 +23,10 @@ package gnu.gnustep.base;
 
 import gnu.gnustep.java.JIGS;
 
+/**
+ * This class wraps the Objective-C root class <B>NSObject</B>.  All GNUstep 
+ * Objective-C classes exposed to Java inherit from this class.
+ */
 public class NSObject implements Cloneable
 {
   /*
@@ -123,6 +127,7 @@ public class NSObject implements Cloneable
    * Here we have the exposed NSObject methods 
    */
 
+
   public native boolean equals (Object anObject);
 
   public native int hashCode ();
@@ -147,39 +152,45 @@ public class NSObject implements Cloneable
     GNUstep specific extension 
   */
 
-  /* Use the following methods to deal transparently with weak
-     references passed to Objective-C methods.  For example, if you want to
-     set your java object 'javaDelegate' as delegate of the objective-C
-     object 'objcObject', do as follows:
-
-       NSObject.retainObject (javaDelegate);
-       objcObject.setDelegate (javaDelegate);
-
-     If you don't do this (or don't retain in some other way javaDelegate
-     on the objective-C side before passing it to setDelegate), your
-     program will segfault.  This is not a bug in the JIGS: it can't be
-     otherwise.
-
-     Warning: you need to 'retain' javaDelegate _before_ passing it through
-     the JIGS.  But you don't need to retain javaDelegate if it already
-     passed through the JIGS and some objective-C object is already keeping
-     a reference to it.
-
-     After you are done with the object (for example, when you set a
-     different delegate), you should `release' it, as in the following
-     example which changes the delegate of objcObject:
-      
-       NSObject.retainObject (newJavaDelegate);
-       objcObject.setDelegate (newJavaDelegate);
-       NSObject.releaseObject (javaDelegate);
-
-     The rule is: you 'retain' the object before setting it as delegate,
-     and 'release' it after having set another delegate.  
-   
-     Normally, you don't need these methods, they are needed only when
-     calling Objective-C methods which store a reference to the argument
-     without retaining it, such 'setDelegate:' and 'setTarget:'. */
+  /**
+   * retainObject and releaseObject are used to deal transparently with weak
+   * references passed to Objective-C methods.  For example, if you want to
+   * set your java object 'javaDelegate' as delegate of the objective-C
+   * object 'objcObject', do as follows:
+   * <PRE>
+   *   NSObject.retainObject (javaDelegate);
+   *   objcObject.setDelegate (javaDelegate);
+   * </PRE>
+   * If you don't do this (or don't retain in some other way javaDelegate
+   * on the objective-C side before passing it to setDelegate), your
+   * program will segfault.  This is not a bug in the JIGS: it can't be
+   * otherwise.
+   * <P>
+   * Warning: you need to 'retain' javaDelegate _before_ passing it through
+   * the JIGS.  But you don't need to retain javaDelegate if it already
+   * passed through the JIGS and some objective-C object is already keeping
+   * a reference to it.
+   * <P>
+   * After you are done with the object (for example, when you set a
+   * different delegate), you should `release' it, as in the following
+   * example which changes the delegate of objcObject:
+   * <PRE>
+   *   NSObject.retainObject (newJavaDelegate);
+   *   objcObject.setDelegate (newJavaDelegate);
+   *   NSObject.releaseObject (javaDelegate);
+   * </PRE>
+   * The rule is: you 'retain' the object before setting it as delegate,
+   * and 'release' it after having set another delegate.  
+   * <P>
+   * Normally, you don't need these methods, they are needed only when
+   * calling Objective-C methods which store a reference to the argument
+   * without retaining it, such 'setDelegate:' and 'setTarget:'. 
+   */
 
   static native public void retainObject (Object object);
+
+  /**
+   * See documentation on retainObject for more information.
+   */
   static native public void releaseObject (Object object);
 }

@@ -23,8 +23,9 @@ package gnu.gnustep.base;
 
 import java.lang.*;
 
-/*
- * Instances of this class contain two public variables: x, y.  
+/**
+ * This class wraps the Objective-C struct <B>NSPoint</B>.
+ * Instances of this class in Java contain two public fields: x, y.  
  * You are required to set and read these variables directly.
  */
 

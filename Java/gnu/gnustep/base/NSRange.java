@@ -23,9 +23,10 @@ package gnu.gnustep.base;
 
 import java.lang.*;
 
-/*
- * Instances of this class contain two public variables: location, length.  
- * You are required to set and read these variables directly.
+/**
+ * This class wraps the Objective-C struct <B>NSRange</B>.  Instances of this
+ * class in Java contain two public fields: location, length.  You are
+ * required to set and read these variables directly.  
  */
 
 public final class NSRange extends Object 
@@ -96,7 +97,10 @@ public final class NSRange extends Object
     else
       return false;
   }
-  
+
+  /**
+   * Returns true if aLocation is contained in this range 
+   */
   public boolean locationInRange (int aLocation)
   {
     if ((aLocation >= location) && (aLocation < (location + length)))

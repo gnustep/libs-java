@@ -23,6 +23,12 @@ package gnu.gnustep.base;
 
 import java.lang.*;
 
+/**
+ * Exceptions thrown while executing Objective-C code are reported to Java 
+ * in the form of instances of NSException.  Each NSException has a 
+ * name, a reason, and optionally a userInfo object containing additional 
+ * information about the exception.
+ */
 public class NSException extends RuntimeException
 {
   String name;
