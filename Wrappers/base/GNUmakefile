@@ -45,7 +45,11 @@ PACKAGE_NAME = gnustep-base
 
 # NB: VERSION should be the same as the gnustep-base library version
 # we are wrapping.  
-VERSION = $(GNUSTEP_BASE_VERSION)
+ifeq ($(GNUSTEP_BASE_VERSION),)
+  $(error ERROR: your gnustep base library is too old !)
+else
+  VERSION = $(GNUSTEP_BASE_VERSION)
+endif
 
 LIBRARY_NAME = libgnustep-base
 
