@@ -1,3 +1,7 @@
+Tue Sep 11 16:16:23 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Objc/main.m (main): Make sure we can manage nil results.
+
 Fri Jul 27 13:18:22 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Objc/main.m (main): Added test for calling a Java method 
