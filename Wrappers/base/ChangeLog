@@ -1,3 +1,12 @@
+Tue Feb  6 18:18:09 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* NSData.m.handmade: New file.
+	* NSData.java.handmade: Idem.
+	* NSMutableData.m.handmade: Idem.
+	* NSMutableData.java.handmade: Idem.
+	* libgnustep-base.jigs: Include the new files.
+	* GNUmakefile.wrapper.java.preamble: Idem.
+	
 Tue Jan 30 16:01:32 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GNUmakefile (after-distclean): Added to clean out .tar.gz 
