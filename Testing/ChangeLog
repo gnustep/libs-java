@@ -1,3 +1,10 @@
+Fri Feb  9 11:34:44 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Java/: Rearranged everything; updated most files.
+	* Java/Base/: New directory; all base tests moved there; 
+	added check target running all tests in sequence.
+	* Java/Gui/: New directory; all gui tests moved there.
+
 Tue Feb  6 18:24:12 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Java/NSDataTest.java: New test.
