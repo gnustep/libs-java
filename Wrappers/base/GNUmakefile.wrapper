@@ -1,0 +1,9 @@
+#
+# A little trick needed because GNUstep-base is a ghost library :)
+#
+
+java-wrapper:: $(WRAPPER_DIR)/stamp-file
+	@$(INSTALL_DATA) NSPropList.m \
+	                 $(WRAPPER_DIR)/Objc/NSPropList.m; \
+	$(INSTALL_DATA) NSPropertyListSerialization.h \
+	                 $(WRAPPER_DIR)/Objc/NSPropertyListSerialization.h
