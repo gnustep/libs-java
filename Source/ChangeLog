@@ -1,3 +1,19 @@
+Thu Sep 28 16:03:29 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* JIGSProxySetup.h (struct _JIGSSelectorIDTable): Added 
+	the method type.
+	* JIGSProxySetup.m (_JIGS_prepare_method_struct): Set the method
+	type in the table.  (_JIGS_register_java_class_simple): When
+	putting the real selectors in the table, use any selector
+	regardless of type.
+	* JIGSProxyIMP.m (_JIGS_id_IMP_JavaMethod),
+	(_JIGS_void_IMP_JavaMethod), (_JIGS_jdouble_IMP_JavaMethod),
+	(_JIGS_jfloat_IMP_JavaMethod), (_JIGS_jlong_IMP_JavaMethod),
+	(_JIGS_jint_IMP_JavaMethod), (_JIGS_jshort_IMP_JavaMethod),
+	(_JIGS_jchar_IMP_JavaMethod), (_JIGS_jboolean_IMP_JavaMethod),
+	(_JIGS_jbyte_IMP_JavaMethod): Use type saved in the table instead
+	of getting it from the selector.
+	
 Thu Sep 28 12:30:39 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGS.h: Updated version number to 0.6.
