@@ -1,3 +1,13 @@
+Fri Apr 27 12:33:40 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* ProgrammingInJava.tex Updated for the new support for java tools
+	in gnustep-make.  (Compiling a Single Class): Replaced the main
+	method of the Pisa class with a generic method.  Removed
+	explanation of how to run the program, as it is now a generic
+	class and not a program.  (Creating Java Tools): New section in
+	which we turn the Pisa class into a program, and explain how to 
+	use java-tool.make for this task.
+	
 Wed Apr 25 17:57:35 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* ProgrammingInJava.tex (Installing Java classes where you like):
