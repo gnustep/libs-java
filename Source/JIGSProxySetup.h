@@ -72,7 +72,8 @@ struct _JIGSSelectorIDTable
 	  // Beware: the following Objc selector will be initialized with 
 	  // the method name (char*).  This is replaced by the selector 
 	  // after the method is registered with the runtime.
-	  SEL selector;       // Objc Selector
+	  SEL selector;       // Objc Selector used to find the method later
+	  char *types;        // Objc info on return type and arguments
 	  jmethodID methodID; // Cache jmethodID
 	  BOOL isConstructor; // YES for constructors
 	  int numberOfArgs;   // Cached number of arguments
