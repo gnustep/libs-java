@@ -1,3 +1,11 @@
+Release Notes for JIGS version 1.2
+==================================
+
+Starting with this release, whenever generating java wrappers for a
+library, JIGS creates automatically a quick reference documentation
+for the wrappers by using javadoc.  Other minor features were
+implemented too.
+
 Release Notes for JIGS version 1.1
 ==================================
 
