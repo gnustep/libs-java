@@ -17,8 +17,8 @@ current plans to port JIGS to JNI 1.1.
 2. Can I use JIGS to access Objective-C libraries inside a Java servlet ? 
 =========================================================================
 
-Yes!  You're welcome to do it.  Beware about yet-to-resolve problems
-with threads though. Here are a few hints: you need to make sure that:
+Yes!  You're welcome to do it.  Here are a few hints: you need to make sure
+that:
 
  * your java servlet has the classpath set so that it can access the
    java classes you want to use.  In apache, this is controlled by the
