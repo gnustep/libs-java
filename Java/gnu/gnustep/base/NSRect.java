@@ -23,10 +23,10 @@ package gnu.gnustep.base;
 
 import java.lang.*;
 
-/*
- * Instances of this class contain four public variables: x, y, width, height. 
- * You are required to set and read these variables directly.
- */
+/**
+ * This class wraps the Objective-C struct <B>NSRect</B>.  Instances of this
+ * class in Java contain four public fields: x, y, width, height.  You
+ * are required to set and read these variables directly.  */
 
 public final class NSRect extends Object 
   implements Cloneable

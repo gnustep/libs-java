@@ -23,8 +23,9 @@ package gnu.gnustep.base;
 
 import java.lang.*;
 
-/*
- * Instances of this class contain two public variables: width, height.  
+/**
+ * This class wraps the Objective-C struct <B>NSSize</B>.
+ * Instances of this class in Java contain two public fields: width, height.  
  * You are required to set and read these variables directly.
  */
 
@@ -97,7 +98,10 @@ public final class NSSize extends Object
     else
       return false;
   }
-  
+
+  /**
+   * Returns true if and only if width or height is zero.
+   */
   public boolean isEmpty ()
   {
     if ((width == 0) || (height == 0))
@@ -111,3 +115,4 @@ public final class NSSize extends Object
     return "{width=" + width + "; height=" + height + "}";
   }
 }
+
