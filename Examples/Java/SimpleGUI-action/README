@@ -1,0 +1,7 @@
+This is an example of an objective-C library wrapped by hand.
+
+It is a variant of SimpleGUI, in which a action is set.  
+This is more complicated than in SimpleGUI, because we need to pass 
+selectors through the interface.
+
+For more info, see ../SimpleGUI/README
