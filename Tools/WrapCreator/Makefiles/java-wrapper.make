@@ -197,14 +197,10 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE) $(GNUSTEP_OBJ_DIR)/$(VERSION_LIBRARY_FI
 	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp        \
 	        > $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp.2
 	@rm $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
-	@sed -e 's/PACKAGEHERE/$(PACKAGE_NAME)/g'      \
-	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp.2   \
-	       > $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp 
-	@rm $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp.2
 	@sed -e 's/REPLACEME/$(LIBRARY_NAME)/g'           \
-	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp          \
+	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp.2          \
 	        > $(JAVA_WRAPPER_DIR)/GNUmakefile
-	@rm $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
+	@rm $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp.2
 	@$(MKDIRS) $(OBJC_WRAPPER_DIR)
 	@$(INSTALL_DATA) $(GNUSTEP_MAKEFILES)/java-wrapper.objc.template         \
 	      $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp 
