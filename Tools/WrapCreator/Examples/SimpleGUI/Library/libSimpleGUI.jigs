@@ -3,13 +3,9 @@
                 {
                   "java name" = "SimpleGUI";
                   "objective-c name" = "SimpleGUI";
-	          "class methods" = ("new");
                   "instance methods" = ("start", "addButtonWithTitle:tag:",
                                         "delegate", "setDelegate:");
                   "initializers" = ("init", "initWithTitle:");
                 }
               );
-  "method name mapping" = {
-                            "new" = "createNew";
-                          };
 }

@@ -43,7 +43,6 @@
   GSVbox *box;
   id delegate;
 }
-+ (id) new;
 - (id) initWithTitle: (NSString *)title;
 - (void) start;
 - (void) applicationDidFinishLaunching: (NSNotification *)aNotification;
