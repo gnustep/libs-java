@@ -72,7 +72,7 @@ classes = (
     "headersNamed:",
     "makeBoundary",
     "makeContentID",
-    "makeHeader:name:parameters:",
+    "makeHeader:value:parameters:",
     "makeMessageID",
     "rawMimeData",
     "rawMimeData:",
