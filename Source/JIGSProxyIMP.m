@@ -748,6 +748,7 @@ id _JIGS_id_IMP_JavaMethod (id rcv, SEL sel, ...)
 
   BOOL isConstructor;
   jobject ret;
+  id objc_ret;
 
   CHECK_THE_TABLE;
   LOCK_THE_TABLE;
@@ -810,10 +811,19 @@ id _JIGS_id_IMP_JavaMethod (id rcv, SEL sel, ...)
 
   // Else, it is not a constructor
   GET_RECEIVER; 
-  RUN_JAVA_METHOD(Object);
-  CHECK_JAVA_EXCEPTION_NO_POP(0);
 
-  return JIGSIdFromJObject (env, ret);
+  // We need a reference (the returned object)
+  if ((*env)->PushLocalFrame (env, 1) < 0)
+    {
+      JIGSRaiseNSExceptionFromJException (env);
+      return 0; 
+    }
+  RUN_JAVA_METHOD(Object);
+  CHECK_JAVA_EXCEPTION(0);
+
+  objc_ret = JIGSIdFromJObject (env, ret);
+  (*env)->PopLocalFrame (env, NULL);
+  return objc_ret;
 }
 
 /*
