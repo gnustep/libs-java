@@ -28,8 +28,8 @@
 JNIEXPORT void JNICALL 
 Java_gnu_gnustep_java_JIGS_initialize (JNIEnv *env, jclass this)
 {
-  /* NB: JIGSInit is already protected by an autorelease pool */
-  JIGSInit (env);
+  /* NB: JIGSInitFromJava is already protected by an autorelease pool */
+  JIGSInitFromJava (env);
 }
 
 /*
