@@ -27,6 +27,9 @@
 #include "JIGSException.h"
 #include "JIGSMapper.h"
 #include "JIGSSelectorMapping.h"
+#include <objc/objc.h>
+#include <objc/objc-api.h>
+#include <objc/encoding.h>
 
 // From JIGSProxySetup.m
 extern struct _JIGSSelectorIDTable *_JIGS_selIDTable;
