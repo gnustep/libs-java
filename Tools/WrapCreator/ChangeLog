@@ -1,3 +1,8 @@
+Sat May  5 23:56:50 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* WCTypeLoader.m (defaultMorphTypes): Added morphing of
+	Number<-->NSNumber.
+	
 Thu Apr 26 12:45:23 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Makefiles/java-wrapper.make ($(WRAPPER_DIR)/stamp-file): Clean
