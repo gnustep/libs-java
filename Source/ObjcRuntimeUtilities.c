@@ -34,6 +34,11 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA.
    */ 
 
+/* This file is a C file so that we can declare and use
+ * __objc_exec_class() without conflicting with the declaration and
+ * usage of the ObjC compiler.
+ */
+
 /*
  *	NOTE - OBJC_VERSION needs to be defined to be the version of the
  *	Objective-C runtime you are using.  You can find this in the file
@@ -67,7 +72,7 @@ BOOL ObjcUtilities_new_class (const char *name,
   //
   // Check that the name for the new class isn't already in use.
   //
-  if (objc_lookup_class (name) != nil) 
+  if (objc_lookup_class (name) != Nil) 
     {
       return NO;
     }
@@ -76,7 +81,7 @@ BOOL ObjcUtilities_new_class (const char *name,
   // Check that the superclass exists.
   //
   super_class = objc_lookup_class (superclassName);
-  if (super_class == nil)
+  if (super_class == Nil)
     {
       return NO;
     }
@@ -196,20 +201,6 @@ void ObjcUtilities_insert_method_in_list (MethodList *ml,
   method->method_name = (void *)strdup (name);
   method->method_types = strdup (types);
   method->method_imp = imp;
-}
-
-const char *ObjcUtilities_build_runtime_Objc_signature (const char 
-							       *types)
-{
-  NSMethodSignature *sig;
-  
-  sig = [NSMethodSignature signatureWithObjCTypes: types];
-  
-#if defined GNUSTEP_BASE_VERSION || defined(LIB_FOUNDATION_LIBRARY)
-  return [sig methodType];
-#else
-# error "Don't know how to get method signature on this platform!"
-#endif  
 }
 
 void ObjcUtilities_register_method_list (Class class, MethodList *ml)

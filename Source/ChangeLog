@@ -1,3 +1,11 @@
+Tue May 13 14:32:58 2003  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* ObjcRuntimeUtilities.m: Removed.
+	* ObjcRuntimeUtilities.c, ObjcRuntimeUtilities2.m: New files
+	contained the code previously in ObjcRuntimeUtilities.m
+	* ObjcRuntimeUtilities.h: Do not include Foundation/Foundation.h.
+	* GNUmakefile: Updated for change.
+
 Sun May 11 07:21:06 2003  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* JIGSInit.m (_jigs_lookup_class): Move creation of NSString from
