@@ -35,9 +35,6 @@ classes = (
 {
   "java name" = "gnu.gnustep.base.GSMimeDocument";
   
-  "class methods" = (
-    "mimeDocument"
-  );
   "instance methods" = (
     "addContent:",
     "addHeader:",
