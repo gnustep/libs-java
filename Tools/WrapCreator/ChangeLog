@@ -1,3 +1,9 @@
+Mon Jun 18 13:06:48 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* WCLibrary.m ([WCLibrary +javaClassNameForObjcClassName:]): Added
+	NSData and NSMutableData to the hard-coded automaticallly mapped
+	class names.
+
 Mon May 21 02:15:06 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	Building java wrappers made independent from building the library.
