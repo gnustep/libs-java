@@ -75,6 +75,20 @@ Java_SimpleGUI_initWithTitle (JNIEnv *env, jobject this, jstring title)
   JIGS_EXIT;
 }
 
+JNIEXPORT jobject JNICALL 
+Java_SimpleGUI_createNew (JNIEnv *env, jclass class)
+{
+  jobject ret;
+  Class objcClass;
+  JIGS_ENTER;
+  
+  objcClass = JIGSClassFromThisClass (env, class);
+  ret = JIGSJobjectFromId (env, [objcClass new]);
+
+  JIGS_EXIT_WITH_FAIL_VALUE (NULL);
+  return ret;
+}
+
 JNIEXPORT void JNICALL 
 Java_SimpleGUI_addButtonWithTitle (JNIEnv *env, jobject this, 
 				   jstring title, jint tag)
