@@ -1,0 +1,8 @@
+  /**
+    * Wraps <B>initWithObjects:forKeys:</B>
+    */
+  public NSMutableDictionary (Object[] objects, Object[] keys)
+  {
+    super (ALLOC_ONLY);
+    realObject = this.initWithObjectsForKeys (objects, keys);
+  }

@@ -1,0 +1,16 @@
+ native long initWithObjects (Object[] objects);
+
+  /**
+    * Creates a new array containing the objects in the Java array objects.
+    */
+  public NSArray (Object[] objects)
+  {
+    super (ALLOC_ONLY);
+    realObject = this.initWithObjects (objects);
+  }
+
+  /**
+    * Returns the objects in the array as a Java array.
+    */
+  public native Object[] objects ();
+

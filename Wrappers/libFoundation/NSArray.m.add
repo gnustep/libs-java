@@ -1,0 +1,31 @@
+/* -*-objc-*- */
+JNIEXPORT jobjectArray JNICALL
+Java_gnu_gnustep_base_NSArray_objects (JNIEnv *env, jobject this)
+{
+  NSArray *we;
+  jobjectArray result;
+
+  JIGS_ENTER;
+  we = JIGSIdFromThis (env, this);
+
+  result = JIGSJobjectArrayFromNSArray (env, we);
+
+  JIGS_EXIT_WITH_VALUE (result);
+}
+
+JNIEXPORT jlong JNICALL
+Java_gnu_gnustep_base_NSArray_initWithObjects (JNIEnv *env, jobject this, 
+					       jobjectArray objects)
+{
+  NSArray *we;
+  NSArray *objc_new;
+  jlong java;
+
+  JIGS_ENTER;
+  we = JIGSIdFromThis (env, this);
+  objc_new = JIGSInitNSArrayFromJobjectArray (env, we, objects);
+  _JIGSMapperAddJavaProxy (env, objc_new, this);
+  java = JIGS_ID_TO_JLONG (objc_new);  
+
+  JIGS_EXIT_WITH_VALUE (java);
+}

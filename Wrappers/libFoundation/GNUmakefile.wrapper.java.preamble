@@ -1,0 +1,3 @@
+Reference_JAVADOC_FILES = gnu.gnustep.base
+Reference_JAVADOC_SOURCEPATH = ../../../../Java/
+Reference_DOC_INSTALL_DIR = Developer/Base/Java/

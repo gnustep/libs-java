@@ -1,0 +1,10 @@
+  /**
+    * Creates a new set containing the objects in the Java array objects.
+    */
+  public NSMutableSet (Object[] objects)
+  {
+    super (ALLOC_ONLY);
+    realObject = this.initWithObjects (objects);
+  }
+
+
