@@ -1,0 +1,510 @@
+{ /* -*-c-*- */
+types = { 
+  NSTimeInterval = double;
+};
+enumerations = (RunLoopEventType);
+classes = (
+{
+  "java name" = "gnu.gnustep.base.NSArray";
+  
+  "file to include in java code" = "NSArray.java.add";
+  "file to include in objective-c code" = "NSArray.m.add";
+  
+  "instance methods" = ("containsObject:",
+			"count", 
+			"indexOfObject:", 
+			"indexOfObject:inRange:",
+			"indexOfObjectIdenticalTo:", 
+			"indexOfObjectIdenticalTo:inRange:",
+			"lastObject", 
+			"objectAtIndex:", 
+			"objectEnumerator", 
+			"reverseObjectEnumerator", 
+			"makeObjectsPerformSelector:",
+			"makeObjectsPerformSelector:withObject:",
+			"firstObjectCommonWithArray:",
+			"isEqualToArray:",
+			"arrayByAddingObject:",
+			"arrayByAddingObjectsFromArray:",
+			"sortedArrayUsingSelector:",
+			"subarrayWithRange:",
+			"componentsJoinedByString:",
+			"pathsMatchingExtensions:",
+			"writeToFile:atomically:");
+  "initializers" = ("init", "initWithArray:", 
+		    "initWithContentsOfFile:");
+  "hardcoded constants" = ("int NotFound = 0x7fffffff");
+},
+
+  {
+    "java name" = "gnu.gnustep.base.NSBundle";
+    
+    "class methods" = ("allBundles",
+		       "allFrameworks",
+		       "mainBundle",
+		       //"bundleForClass:",
+		       "bundleWithPath:",
+		       //"pathForResource:ofType:inDirectory:",
+		       //"pathForResource:ofType:inDirectory:withVersion:"
+		       );
+    
+    "instance methods" = ("bundlePath",
+			  //"classNamed:",
+			  //"principalClass",
+			  "pathsForResourcesOfType:inDirectory:",
+			  //"pathForResource:ofType:inDirectory:",
+			  "pathForResource:ofType:",
+			  "localizedStringForKey:value:table:",
+			  "resourcePath",
+			  "infoDictionary",
+			  "load");
+    
+    "initializers" = ("init", "initWithPath:");
+  },
+
+  {
+    "java name" = "gnu.gnustep.base.NSCountedSet";
+
+    "file to include in java code" = "NSCountedSet.java.add";
+    
+    "instance methods" = ("countForObject:");
+    
+    "initializers" = ("init", 
+		      "initWithCapacity:",
+		      "initWithArray:",
+		      "initWithSet:",
+		      "initWithSet:copyItems:");
+  },
+    
+  {
+    "java name" = "gnu.gnustep.base.NSData";
+    
+    "file to include in java code" = "NSData.java.add";
+    "file to include in objective-c code" = "NSData.m.add";
+    
+    "instance methods" = 
+    (
+     "subdataWithRange:",
+     "isEqualToData:",
+     "length",
+     "writeToFile:atomically:"
+     );
+    
+    "initializers" = 
+    (
+     "init", 
+     "initWithContentsOfFile:",
+     "initWithData:"
+     );
+  },
+    
+  {
+    "java name" = "gnu.gnustep.base.NSDate";
+    
+    "class methods" = ("date",  
+		       "dateWithTimeIntervalSinceNow:",  
+		       "dateWithString:",  
+		       "dateWithNaturalLanguageString:",  
+		       "dateWithNaturalLanguageString:locale:",  
+		       "dateWithTimeIntervalSinceReferenceDate:",  
+		       "dateWithTimeIntervalSince1970:",  
+		       "distantFuture", 
+		       "distantPast" 
+		       //"timeIntervalSinceReferenceDate"
+		       );
+    
+    "initializers" = ("initWithTimeIntervalSinceNow:", 
+		      "initWithString:",
+		      "initWithTimeInterval:sinceDate:",
+		      "init"
+		      //"initWithTimeIntervalSinceReferenceDate:"
+		      );
+    
+    "instance methods" = (
+			  "addTimeInterval:",
+			  "isEqualToDate:", 
+			  "earlierDate:", 
+			  "laterDate:", 
+			  //"compare:",
+			  "timeIntervalSinceDate:", 
+			  "timeIntervalSinceNow", 
+			  "timeIntervalSinceReferenceDate", 
+			  "timeIntervalSince1970",
+			  "description", 
+			  "descriptionWithLocale:" 
+			  //"descriptionWithCalendarFormat:timeZone:locale:",
+			  //"dateWithCalendarFormat:timeZone:"
+			  );
+  },
+    
+  {
+    "java name" = "gnu.gnustep.base.NSDictionary";
+
+    "file to include in java code" = "NSDictionary.java.add";
+    "file to include in objective-c code" = "NSDictionary.m.add";    
+    
+    "instance methods" = ("count",
+			  "allKeys",
+			  "allKeysForObject:",
+			  "allValues",
+			  "keyEnumerator",
+			  "objectEnumerator",
+			  "objectForKey:",
+			  "objectsForKeys:notFoundMarker:",
+			  "isEqualToDictionary:",
+			  "writeToFile:atomically:"
+			  );
+    "initializers" = ("init", 
+		      "initWithDictionary:",
+		      "initWithDictionary:copyItems:",
+		      "initWithObjects:forKeys:",
+		      "initWithContentsOfFile:");
+
+    /* The following conflicts with UserDefaults' one */
+    "method declarations" = ("- (id) objectForKey: (id)aKey");
+  },
+    
+  {
+    "java name" = "gnu.gnustep.base.NSEnumerator";
+    
+    "instance methods" = (//"allObjects",
+			  "nextObject");
+    "method name mapping" = { "nextObject" = "nextElement"; };
+  },
+    
+  {
+    "java name" = "gnu.gnustep.base.NSMutableArray";
+    
+    "file to include in java code" = "NSMutableArray.java.add";
+    
+    "instance methods" = ("addObject:",
+			  "addObjectsFromArray:",
+			  "insertObject:atIndex:",
+			  "replaceObjectAtIndex:withObject:",
+			  "replaceObjectsInRange:withObjectsFromArray:",
+			  "replaceObjectsInRange:withObjectsFromArray:range:",
+			  "setArray:",
+			  "removeAllObjects",
+			  "removeLastObject",
+			  "removeObject:",
+			  "removeObject:inRange:",
+			  "removeObjectAtIndex:",
+			  "removeObjectIdenticalTo:",
+			  "removeObjectIdenticalTo:inRange:",
+			  "removeObjectsInArray:",
+			  "removeObjectsInRange:",
+			  "sortUsingSelector:");
+    "initializers" = ("init", 
+		      "initWithCapacity:", 
+		      "initWithArray:", 
+		      "initWithContentsOfFile:");
+  },
+    
+  {
+    "java name" = "gnu.gnustep.base.NSMutableData";
+    "file to include in java code" = "NSMutableData.java.add";
+    
+    "instance methods" = ("increaseLengthBy:",
+			  "setLength:",
+			  "appendData:",
+			  "resetBytesInRange:",
+			  "setData:");
+    
+    "initializers" = ("init", 
+		      "initWithContentsOfFile:",
+		      "initWithData:",
+		      "initWithLength:");
+  },
+    
+  {
+    "java name" = "gnu.gnustep.base.NSMutableDictionary";
+
+    "file to include in java code" = "NSMutableDictionary.java.add";
+    
+    "instance methods" = ("addEntriesFromDictionary:",
+			  "removeAllObjects",
+			  "removeObjectForKey:",
+			  "removeObjectsForKeys:",
+			  "setDictionary:",
+			  "setObject:forKey:");
+    "initializers" = ("init", 
+		      "initWithCapacity:", 
+		      "initWithDictionary:",
+		      "initWithDictionary:copyItems:",
+		      "initWithObjects:forKeys:",
+		      "initWithContentsOfFile:");
+
+    "method declarations" = ("- (void) setObject: (id)anObject forKey: (id)aKey");
+  },
+    
+  {
+    "java name" = "gnu.gnustep.base.NSMutableSet";
+
+    "file to include in java code" = "NSMutableSet.java.add";
+    
+    "instance methods" = 
+    ("addObject:",
+     "removeObject:",
+     "removeAllObjects",
+     "addObjectsFromArray:",
+     "unionSet:",
+     "minusSet:",
+     "intersectSet:"
+		     );
+    "initializers" = ("init", 
+		      "initWithCapacity:",
+		      "initWithArray:",
+		      "initWithSet:",
+		      "initWithSet:copyItems:"
+		      );
+  },
+    
+  {
+    "java name" = "gnu.gnustep.base.NSNotification";
+    
+    "class methods" = (
+		       "notificationWithName:object:", 
+		       "notificationWithName:object:userInfo:");
+    
+    "instance methods" = ("name", "object", "userInfo");	   
+  },
+    
+  {
+    "java name" = "gnu.gnustep.base.NSNotificationCenter";
+    
+    "class methods" = ("defaultCenter");
+    
+    "instance methods" = (
+			  "addObserver:selector:name:object:",
+			  "removeObserver:",
+			  "removeObserver:name:object:",
+			  "postNotification:",
+			  "postNotificationName:object:",
+			  "postNotificationName:object:userInfo:");
+    /* As a special exception, we need to declare this stuff 
+       because the declarations conflict with 
+       NSDistributedNotificationCenter's ones. */
+    "method declarations" = (
+			     "- (void) addObserver: (id)anObserver  
+                                 selector: (SEL)aSelector  
+                                     name: (NSString *)notificationName  
+                                   object: (id)anObject",
+			     "- (void) postNotificationName: (NSString*)name  
+                                            object: (id)object;",
+			     "- (void) postNotificationName: (NSString*)name  
+		                            object: (id)object
+                                          userInfo: (NSDictionary*)info;"
+			     );
+  },
+    
+  {
+    "java name" = "gnu.gnustep.base.NSNull";
+    
+    "class methods" = ("null");
+  },
+    
+  {
+    "java name" = "gnu.gnustep.base.NSPort";
+    
+    "class methods" = ("port");
+    
+    "initializers" = ("init");
+    
+    "instance methods" =  (
+			   "invalidate",
+			   "isValid",
+			   "setDelegate:",
+			   "delegate",
+			   "reservedSpaceLength",
+			   "sendBeforeDate:msgid:components:from:reserved:");
+    
+    /* Just for safety, because NSUrl defines 
+       "- (NSNumber *) port" */
+    "method declarations" = ("+ (NSPort *) port");
+  },
+    
+    
+  {
+    "java name" = "gnu.gnustep.base.NSProcessInfo";
+    
+    "class methods" = ("processInfo");		  
+    "instance methods" = 
+    ("arguments",
+     "environment",
+     "hostName",
+     "processName",
+     "globallyUniqueString",
+     "setProcessName:"
+     );
+  },
+    
+  {
+    "java name" = "gnu.gnustep.base.NSPropertyListSerialization";
+    
+    "class methods" = ("propertyListFromString:",
+		       "stringFromPropertyList:",
+		       "dataFromPropertyList:",
+		       "propertyListFromData:");
+  },
+    
+  {
+    "java name" = "gnu.gnustep.base.NSRunLoop";
+    
+    "class methods" = ("currentRunLoop");
+    
+    "initializers" = ("init");
+    
+    "instance methods" = (
+			  "acceptInputForMode:beforeDate:",
+			  "addTimer:forMode:",
+			  "currentMode",
+			  "limitDateForMode:",
+			  "run",
+			  "runMode:beforeDate:",
+			  "runUntilDate:",
+			  "addPort:forMode:",
+			  "cancelPerformSelector:target:argument:",
+			  "configureAsServer",
+			  "performSelector:target:argument:order:modes:",
+			  "removePort:forMode:"
+			  // "removeTimerForMode" (APPLE) ??
+			  // "containsTimerForMode" (APPLE) ??
+			  // "timersForMode" (APPLE) ??
+			  // "containsPortForMode" (APPLE) ??
+			  // "portsForMode" (APPLE) ??
+			  );
+    "hardcoded constants" = 
+    ("String DefaultRunLoopMode = \"NSDefaultRunLoopMode\"");
+  },
+    
+  {
+    "java name" = "gnu.gnustep.base.NSSet";
+
+    "file to include in java code" = "NSSet.java.add";
+    "file to include in objective-c code" = "NSSet.m.add";
+
+    "instance methods" = ("count", 
+			  "allObjects",
+			  "anyObject",
+			  "containsObject:",
+			  "makeObjectsPerform:",
+			  "makeObjectsPerform:withObject:",
+			  "member:",
+			  "objectEnumerator",
+			  "isSubsetOfSet:",
+			  "intersectsSet:",
+			  "isEqualToSet:");
+    "initializers" = ("init", 
+		      "initWithArray:",
+		      "initWithSet:",
+		      "initWithSet:copyItems:");
+  },
+    
+  {
+    "java name" = "gnu.gnustep.base.NSTask";
+    "class methods" = ("launchedTaskWithLaunchPath:arguments:");
+    "instance methods" = ("arguments",
+			  "currentDirectoryPath",
+			  "environment",
+			  "launchPath",
+			  "standardError",
+			  "standardInput",
+			  "standardOutput",
+			  "setArguments:",
+			  "setCurrentDirectoryPath:",
+			  "setEnvironment:",
+			  "setLaunchPath:",
+			  "setStandardError:",
+			  "setStandardInput:",
+			  "setStandardOutput:",
+			  "isRunning",
+			  "terminationStatus",
+			  "interrupt",
+			  "launch",
+			  "terminate",
+			  "waitUntilExit");
+    "initializers" = ("init");
+  },
+    
+  {
+    "java name" = "gnu.gnustep.base.NSTimer";
+    
+    "class methods" = (
+		       "scheduledTimerWithTimeInterval:target:selector:userInfo:repeats:",
+		       "timerWithTimeInterval:target:selector:userInfo:repeats:"
+		       );
+    
+    "initializers" = ("init");
+    
+    "instance methods" = ("fire", 
+			  "invalidate", 
+			  "isValid", 
+			  "timeInterval",
+			  "fireDate",
+			  "userInfo");
+  },
+    
+  {
+    "java name" = "gnu.gnustep.base.NSUserDefaults";
+    
+    /* FIXME: NSUserDefaults will always use for the application
+       name "java", unless you do use NSProcessInfo 
+       -setProcessName: to change it, which you *should* 
+       usually do. */
+    
+    "class methods" = ("standardUserDefaults");		  
+    "instance methods" = ("arrayForKey:",
+			  "boolForKey:",
+			  "dataForKey:",
+			  "dictionaryForKey:",
+			  "floatForKey:",
+			  "integerForKey:",
+			  "objectForKey:",
+			  "stringArrayForKey:",
+			  "stringForKey:",
+			  "removeObjectForKey:",
+			  "setBool:forKey:",
+			  "setFloat:forKey:",
+			  "setInteger:forKey:",
+			  "setObject:forKey:",
+			  "setSearchList:",
+			  "searchList",
+			  "dictionaryRepresentation",
+			  "persistentDomainForName:",
+			  "persistentDomainNames",
+			  "removePersistentDomainForName:",
+			  "setPersistentDomain:forName:", 
+			  "synchronize",
+			  "removeVolatileDomainForName:",
+			  "setVolatileDomain:forName:", 
+			  "volatileDomainForName:",
+			  "volatileDomainNames",
+			  "registerDefaults:");
+    "initializers" = ("init", "initWithUser:"); 
+
+    /* WARNING: We are forced to expose these methods in this way not
+       to get conflicting selectors with NSDictionary and
+       NSMutableDictionary, but the truth is - these methods want
+       strings as keys - even if the Java declaration we are force to
+       use is more generic. */
+    "method declarations" = ("- (id) objectForKey: (id)aKey", 
+			     "- (void) setObject: (id)anObject forKey: (id)aKey");
+  }
+);
+"method name mapping" = {
+  "description" = "toString";
+  "null" = "nullValue";
+  "addTimer:forMode:" = "addTimerForMode";
+  "runMode:beforeDate:" = "runModeBeforeDate";
+  "addPort:forMode:" = "addPortForMode";
+  "removePort:forMode:" = "removePortForMode";
+  "setObject:forKey:" = "setObjectForKey";
+};
+}
+
+
+
+
+
+
+

@@ -1,0 +1,11 @@
+#
+# A little trick needed because Foundation is a ghost library :)
+#
+
+java-wrapper:: $(WRAPPER_DIR)/stamp-file
+	@$(INSTALL_DATA) NSPropList.m \
+	                 $(WRAPPER_DIR)/Objc/NSPropList.m; \
+	$(INSTALL_DATA) NSPropertyListSerialization.h \
+	                 $(WRAPPER_DIR)/Objc/NSPropertyListSerialization.h; \
+	$(INSTALL_DATA) Foundation.h \
+	                 $(WRAPPER_DIR)/Objc/Foundation.h
