@@ -1,3 +1,13 @@
+Mon Sep 10 18:15:52 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Makefiles/java-wrapper.make (install-java_wrapper): Removed.
+	(uninstall-java_wrapper): Removed.
+	(internal-install-java-dirs): Removed.
+	(internal-java_wrapper-install, internal-java_wrapper-uninstall):
+	Modified to run the install code immediately if needed, without
+	using auxiliary targets, or do nothing; and do not run `make all'
+	as that is now already done by rules.make.
+
 Wed Aug 29 13:36:47 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* WCMethod.m ([-outputJniMethodName]): In the warning for the
