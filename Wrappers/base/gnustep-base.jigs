@@ -28,7 +28,12 @@ classes = (
     "value"
   );
   "initializers" = (
+    "init",
     "initWithName:value:parameters:"
+  );
+  "method declarations" = (
+    "- (id) objectForKey: (id)aKey",
+    "- (void) setObject: (id)anObject forKey: (id)aKey"
   );
 },
 
@@ -47,6 +52,8 @@ classes = (
     "contentName",
     "contentSubType",
     "contentType",
+    "convertToData",
+    "convertToText",
     "deleteHeader:",
     "deleteHeaderNamed:",
     "headerNamed:",
@@ -55,6 +62,9 @@ classes = (
     "setContent:",
     "setContent:type:subType:name:",
     "setHeader:"
+  );
+  "initializers" = (
+    "init"
   );
   "method declarations" = (
     "- (id) content"
@@ -79,6 +89,9 @@ classes = (
     "parse:",
     "parseHeader:",
     "setIsHttp"
+  );
+  "initializers" = (
+    "init"
   );
 },
 
@@ -145,7 +158,6 @@ classes = (
     "namespace",
     "namespaceDefinitions",
     "next",
-    "nextElement",
     "objectForKey:",
     "parent",
     "previous",
@@ -157,7 +169,9 @@ classes = (
   "method declarations" = (
     "- (id) content",
     "- (GSXMLNode *)next",
-    "- (GSXMLNode *)previous"
+    "- (id) objectForKey: (id)aKey",
+    "- (GSXMLNode *)previous",
+    "- (void) setObject: (id)anObject forKey: (id)aKey"
   );
 },
 
@@ -783,10 +797,12 @@ classes = (
     "class methods" = ("processInfo");		  
     "instance methods" = 
     ("arguments",
+     "debugSet",
      "environment",
      "hostName",
      "processName",
      "globallyUniqueString",
+     "setLogFile:",
      "setProcessName:"
      );
   },
