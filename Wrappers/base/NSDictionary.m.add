@@ -1,0 +1,18 @@
+/* -*-objc-*- */
+JNIEXPORT jlong JNICALL
+Java_gnu_gnustep_base_NSDictionary_initWithObjectsForKeys 
+(JNIEnv *env, jobject this, jobjectArray objects, jobjectArray keys)
+{
+  NSArray *we;
+  NSArray *objc_new;
+  jlong java;
+  
+  JIGS_ENTER;
+  we = JIGSIdFromThis (env, this);
+  objc_new = [we initWithObjects: JIGSNSArrayFromJobjectArray (env, objects)
+		 forKeys: JIGSNSArrayFromJobjectArray (env, keys)];
+  _JIGSMapperAddJavaProxy (env, objc_new, this);
+  java = JIGS_ID_TO_JLONG (objc_new);  
+
+  JIGS_EXIT_WITH_VALUE (java);
+}
