@@ -25,7 +25,7 @@ include $(GNUSTEP_MAKEFILES)/common.make
 APP_NAME = SimpleApp
 SimpleApp_OBJC_FILES = SimpleApp.m
 
-ADDITIONAL_LDFLAGS = -lSimpleGUI
+ADDITIONAL_GUI_LIBS = -lSimpleGUI
 
 # The following to allow the user to compile before having installed 
 # the library
