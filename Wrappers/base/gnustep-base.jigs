@@ -1,6 +1,7 @@
 { /* -*-c-*- */
 types = { 
   NSTimeInterval = double;
+  NSStringEncoding = int;
   unichar = short;
 };
 
