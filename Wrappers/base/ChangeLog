@@ -1,3 +1,7 @@
+Tue Sep 26 15:30:27 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* libgnustep-base.jigs (NSBundle), (NSTask): New wrappers.
+
 Tue Sep 26 13:09:55 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* libgnustep-base.jigs (types): New section, mapping
