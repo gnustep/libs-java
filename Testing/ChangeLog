@@ -1,3 +1,7 @@
+Wed Nov  1 11:20:32 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Java/NSArrayTest.java: Added test for overloaded indexOf ().
+
 Tue Oct 31 13:32:59 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* Java/NSPropertyListSerializationTest.java: Added demo of 
