@@ -192,9 +192,6 @@ ifeq ($(javadoc), no)
   SILENT_FLAGS = --no-javadoc
 endif
 
-#
-# We copy the RPM .spec.in and .script.in files 
-#
 ifeq ($(debug),yes)
   JAVA_WRAPPER_TOP_TEMPLATE=java-wrapper.top.debug.template
 else
