@@ -1,0 +1,7 @@
+Mon Jul 24 11:19:34 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* GSJNIClass.m (GSJNI_NSStringFromClassOfObject): Simplified; removed 
+	unused global reference cache.
+	* GSJNIClass.m (GSJNI_NStringFromJClass): New function.
+	* GSJNIClass.m (GSJNI_SuperclassNameFromClassName): New function.
+	* GSJNIClass.h: Added declarations of new functions.
