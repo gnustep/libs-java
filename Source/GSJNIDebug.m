@@ -31,13 +31,13 @@ NSString *GSJNI_DescriptionOfJObject (JNIEnv *env, jobject object)
   jstring j;
   jthrowable exception;
   NSString *className;
-  NSString *string;
+  NSString *string = nil;
 
   if (object == NULL)
     {
       return @"null";
     }
-  
+
   // Expired Global Weak Reference
   if ((*env)->IsSameObject (env, object, NULL))
     {
@@ -45,7 +45,7 @@ NSString *GSJNI_DescriptionOfJObject (JNIEnv *env, jobject object)
 	     @"to GSJNI_DescriptionOfJObject");
       return @"Expired Weak global Reference (to a Object)";
     }  
-  
+
   // OK - we assume it is a java/lang/Object
 
   if ((*env)->PushLocalFrame (env, 2) < 0)
@@ -94,8 +94,11 @@ NSString *GSJNI_DescriptionOfJObject (JNIEnv *env, jobject object)
       (*env)->PopLocalFrame (env, NULL);
       return [NSString stringWithFormat: @"%@ toString failed", className];
     }
-  
-  string = GSJNI_NSStringFromASCIIJString (env, j);
+
+  if (j != NULL)
+    {
+      string = GSJNI_NSStringFromJString (env, j);
+    }
   
   if (string != nil)
     {
@@ -188,8 +191,15 @@ NSString *GSJNI_DescriptionOfJClass (JNIEnv *env, jclass class)
       // Exception Thrown
       return nil;
     }
-  
-  returnString = GSJNI_NSStringFromASCIIJString (env, j);
+
+  if (j == NULL)
+    {
+      returnString = @"class toString failed";
+    }
+  else
+    {
+      returnString = GSJNI_NSStringFromJString (env, j);
+    }
   (*env)->PopLocalFrame (env, NULL);
   return returnString;
 }
