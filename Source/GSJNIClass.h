@@ -58,4 +58,16 @@ NSString *GSJNI_NSStringFromClassOfObject (JNIEnv *env, jobject object);
 inline NSString *GSJNI_ShortClassNameFromLongClassName (NSString *className);
 
 
+/*
+ * Get the name of a Java class in the form of an NSString.
+ */
+NSString *GSJNI_NSStringFromJClass (JNIEnv *env, jclass class);
+
+/*
+ * Get the name of the superclass from the name of the class
+ * Eg, return @"java.lang.Object" for className = @"java.lang.String"
+ * Use this only for Java classes.
+ */
+NSString *GSJNI_SuperclassNameFromClassName (JNIEnv *env, NSString *className);
+
 #endif /*__GSJNIClass_h_GNUSTEP_JAVA_INCLUDE*/
