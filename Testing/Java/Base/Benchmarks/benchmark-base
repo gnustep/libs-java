@@ -1,0 +1,45 @@
+#!/bin/sh
+#  benchmark-base: Script to run all benchmarks
+#
+#  Copyright (C) 2001 Free Software Foundation, Inc.
+#
+#  Author:  Nicola Pero <n.pero@mi.flashnet.it>
+#  Date: February, November 2001
+#  
+#  This file is part of GNUstep.
+#  
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#  
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#  
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA. */
+
+# Java benchmarks are only used to get the feeling of the orders
+# of magnitudes
+java_benchmarks_to_run="ArrayBenchmark StringComparisonBenchmark StringConcatenationBenchmark JavaMethodBenchmark JavaNewObjectBenchmark JavaToStringBenchmark Vector0Benchmark Vector1Benchmark Vector3Benchmark Vector4Benchmark Vector5Benchmark Vector6Benchmark Vector7Benchmark"
+
+# ObjC benchmarks are the real JIGS benchmarks
+benchmarks_to_run="ObjCMethodBenchmark ObjCMethodSecondThreadBenchmark ObjCNewObjectBenchmark ObjCNewObjectSecondThreadBenchmark ObjCToStringBenchmark ObjCToStringSecondThreadBenchmark NSArray0Benchmark NSArray1Benchmark NSArray2Benchmark NSArray3Benchmark NSArray4Benchmark NSArray5Benchmark NSArray6Benchmark NSArray7Benchmark"
+
+echo "These benchmarks display the required time to perform 100000"
+echo "of the specified operations in arbitrary units of time."
+echo " "
+
+echo "Running some preliminary benchmarks of standard Java operations..."
+
+for file in $java_benchmarks_to_run; do 
+  CLASSPATH=./:$CLASSPATH java Driver $file;
+done
+
+echo "Now benchmarking JIGS..."
+for file in $benchmarks_to_run; do 
+  CLASSPATH=./:$CLASSPATH java Driver $file;
+done
