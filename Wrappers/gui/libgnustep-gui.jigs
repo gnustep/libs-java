@@ -6,7 +6,9 @@
   enumerations = (
     NSBackingStoreType,
     NSBorderType,
+    NSButtonType,
     NSCellAttribute,
+    NSCellImagePosition,
     NSCellType,
     NSComparisonResult,
     NSEventType,
@@ -127,6 +129,10 @@
 		    "setContentViewMargins:",
 		    "setFrameFromContentFrame:",
 		    "sizeToFit");
+
+ 		  "method declarations" = (
+		    "- (void) setContentView: (NSView*)aView");
+
 		  "hardcoded constants" = (
 		    "int NoTitle = 0",
 		    "int AboveTop = 1",
@@ -140,8 +146,48 @@
                 {
                   "java name" = "gnu.gnustep.gui.NSButton";
 		  
-		  // TODO
-                  "initializers" = ("init");
+                  "initializers" = ("init", "initWithFrame:");
+		  // "class methods" = ("cellClass", "setCellClass:");
+		  "instance methods" = (
+		    "setButtonType:",
+		    "setState:",
+		    "state",
+		    "allowsMixedState",
+		    "setAllowsMixedState:",
+		    "setNextState",
+		    "setPeriodicDelay:interval:",
+		    "alternateTitle",
+		    "setAlternateTitle:",
+		    "setTitle:",
+		    "title",
+		    "alternateImage",
+		    "image",
+		    "imagePosition",
+		    "setAlternateImage:",
+		    "setImage:",
+		    "setImagePosition:",
+		    "isBordered",
+		    "isTransparent",
+		    "setBordered:",
+		    "setTransparent:",
+		    "highlight:",
+		    "keyEquivalent",
+		    "keyEquivalentModifierMask",
+		    "setKeyEquivalent:",
+		    "setKeyEquivalentModifierMask:",
+		    "performClick:",
+		    "performKeyEquivalent:"
+        	    );
+
+		  "hardcoded constants" = (
+		    "int NSMomentaryPushButton = 0",
+		    "int NSPushOnPushOffButton = 1",
+		    "int NSToggleButton = 2",
+		    "int NSSwitchButton = 3",
+                    "int NSRadioButton = 4",
+                    "int NSMomentaryChangeButton = 5",
+                    "int NSOnOffButton = 6",
+                    "int NSMomentaryLight = 7");
                 },
 
                 {
@@ -265,6 +311,15 @@
 		         because the declarations conflict with 
                          NSPrinter's ones. */
 		  "method declarations" = ("- (NSCellType) type;");
+		  
+		  "hardcoded constants" = (
+		    "int NSNoImage = 0",
+		    "int NSImageOnly = 1",
+		    "int NSImageLeft = 2",
+		    "int NSImageRight = 3",
+		    "int NSImageBelow = 4",
+		    "int NSImageAbove = 5",
+		    "int NSImageOverlaps = 6");
                 },
 
                 {
@@ -572,6 +627,9 @@
 		  
 		  // TODO
                   "initializers" = ("init");
+
+		  "method declarations" = (
+		    "- (void) setContentView: (NSClipView*)aView");
                 },
 
                 {
@@ -899,6 +957,9 @@
 		    "fax:",
 		    "setDelegate:", 
 		    "delegate");
+
+		    "method declarations" = (
+		      "- (void) setContentView: (NSView*)aView");
 		  
 		  "hardcoded constants" = (
 		  /* Window Masks */
