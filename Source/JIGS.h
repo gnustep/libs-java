@@ -24,7 +24,7 @@
 #ifndef __JIGS_h_GNUSTEP_JAVA_INCLUDE
 #define __JIGS_h_GNUSTEP_JAVA_INCLUDE
 
-#define GNUSTEP_JAVA_VERSION 0.2.0
+#define GNUSTEP_JAVA_VERSION 0.3.0
 
 #include <jni.h>
 #include <Foundation/Foundation.h>
