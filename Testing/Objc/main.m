@@ -24,9 +24,9 @@
 #include <Foundation/Foundation.h>
 #include <java/JIGS.h>
 
-int main (void)
+int main (int argc, char **argv, char **penv)
 {
-  NSAutoreleasePool *pool = [NSAutoreleasePool new];
+  NSAutoreleasePool *pool;
   JNIEnv *env;
   Class javaLangSystem;
   SEL selector;
@@ -34,6 +34,13 @@ int main (void)
   getPropIMP imp;
   NSString *result;
 
+#if LIB_FOUNDATION_LIBRARY
+  [NSProcessInfo initializeWithArguments: argv  count: argc  
+		 environment: penv];
+#endif
+
+  pool = [NSAutoreleasePool new];
+  
   printf ("Compiled to test JIGS version %d.%d.%d\n", 
 	  GNUSTEP_JAVA_MAJOR_VERSION,
 	  GNUSTEP_JAVA_MINOR_VERSION, 
