@@ -131,6 +131,20 @@
                 },
 
                 {
+                  "java name" = "gnu.gnustep.base.NSProcessInfo";
+
+		  "class methods" = ("processInfo");		  
+                  "instance methods" = 
+                    ("arguments",
+		     "environment",
+		     "hostName",
+		     "processName",
+		     "globallyUniqueString"
+		     //"setProcessName:"
+		     );
+                },
+
+                {
                   "java name" = "gnu.gnustep.base.NSSet";
 
                   "instance methods" = 
@@ -151,6 +165,45 @@
 				    "initWithSet:"
 				    //"initWithSet:copyItems:"
 				    );
+                },
+
+                {
+                  "java name" = "gnu.gnustep.base.NSUserDefaults";
+
+		  /* FIXME: NSUserDefaults will always use for the application
+		     name "java", this creates problem, doesn't it ? */
+
+		  "class methods" = ("standardUserDefaults");		  
+                  "instance methods" = 
+                    ("arrayForKey:",
+		     "boolForKey:",
+		     //"dataForKey:",
+		     "dictionaryForKey:",
+		     "floatForKey:",
+		     "integerForKey:",
+		     "objectForKey:",
+		     "stringArrayForKey:",
+		     "stringForKey:",
+		     "removeObjectForKey:",
+		     "setBool:forKey:",
+		     "setFloat:forKey:",
+		     "setInteger:forKey:",
+		     "setObject:forKey:",
+		     "setSearchList:",
+		     "searchList",
+		     "dictionaryRepresentation",
+		     "persistentDomainForName:",
+		     "persistentDomainNames",
+		     "removePersistentDomainForName:",
+		     "setPersistentDomain:forName:", 
+		     "synchronize",
+		     "removeVolatileDomainForName:",			     
+		     "setVolatileDomain:forName:", 
+		     "volatileDomainForName:",
+		     "volatileDomainNames",
+		     "registerDefaults:"
+		     );
+                  "initializers" = ("init", "initWithUser:"); 
                 }
               );
 }
