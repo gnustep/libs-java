@@ -1,3 +1,11 @@
+Thu Sep 28 12:30:39 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* JIGS.h: Updated version number to 0.6.
+	* loader: New directory.
+	* loader/GNUmakefile: New file.
+	* loader/JIGSLibraryLoader.c: New file.
+	* GNUmakefile: Added loader subproject.
+
 Wed Sep  6 01:36:59 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGS.h: Updated version number to 0.5.
