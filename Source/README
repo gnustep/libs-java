@@ -30,6 +30,19 @@ GSJNIString : utilities to convert ASCII and UNICODE strings between
 [Java:]
 gnu.gnustep.java.GSJNIUtilites : Some utilities to get info on a class methods.
 
+NSJavaVirtualMachine
+====================
+
+The basic implementation of this class mainly wraps the JNI calls to
+create a Java Virtual Machine.  It also caches the JavaVM pointer, so
+that you can get the JNIEnv pointer for your thread by simply calling
+the function JIGSJniEnv ().  This basic implementation
+[NSJavaVirtualMachine.m] is independent of both GSJNI and
+ObjcRuntimeUtilities.
+The JIGS provides an additional category for NSJavaVirtualMachine,
+containing methods which allows the programmer to control the JIGS
+facilities through NSJavaVirtualMachine.
+
 JIGS
 ====
 
