@@ -1,3 +1,9 @@
+Wed Nov  1 15:35:47 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* libgnustep-gui.jigs Added types; uncommented lots of methods
+	which can be now safely wrapped thanks to fixes and improvements
+	in JIGS engine and wrapper tool.
+
 Tue Sep  5 19:46:47 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* libgnustep-gui.jigs: New file.
