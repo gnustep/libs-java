@@ -55,8 +55,11 @@ java.lang.Object.h
 
 libgnustep-java_HEADER_FILES_INSTALL_DIR = /$(GNUSTEP_FND_DIR)/java
 
+libgnustep-java_C_FILES = \
+ObjcRuntimeUtilities.c \
+
 libgnustep-java_OBJC_FILES = \
-ObjcRuntimeUtilities.m \
+ObjcRuntimeUtilities2.m \
 GSJNIArray.m \
 GSJNICache.m \
 GSJNIClass.m \

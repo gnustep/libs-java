@@ -29,7 +29,6 @@
 #include <objc/objc-api.h>
 #include <objc/thr.h>
 #include <objc/encoding.h>
-#include <Foundation/Foundation.h>
 
 /* 
  * This code is by no means tidied to Java.  
