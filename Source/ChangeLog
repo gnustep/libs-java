@@ -1,3 +1,9 @@
+Sun May 11 07:21:06 2003  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* JIGSInit.m (_jigs_lookup_class): Check to see if class exists
+	before trying to register it... just a bit nicer than relying on
+	catching an exception when trying to register a non-existent class.
+
 Tue May 13 14:32:58 2003  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* ObjcRuntimeUtilities.m: Removed.
