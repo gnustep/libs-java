@@ -1,3 +1,11 @@
+Tue Sep 26 12:27:43 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* WCLibrary.m ([+outputWrappers]): Read the custom type mapping
+	and create the appropriate WCCustomType objects.
+	* WCCustomType.m: New file.
+	* WCCustomType.h: New file.
+	* GNUmakefile (WrapCreator_OBJC_FILES): Added WCCustomType.m
+
 Wed Sep  6 02:37:35 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* WCLibrary.m ([+prerequisiteLibraries]): New method.
