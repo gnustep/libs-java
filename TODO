@@ -1,0 +1,37 @@
+
+ O Support for protocols (allows `First working GUI library wrapping'):
+
+   * exposing a protocol as a java interface;
+
+   * exposing [objc class implements a protocol] as [java class 
+     implements an interface]
+
+   * automatically wrapping all the methods in the protocol for each
+     class which implements it
+
+ O Support for inserting arbitrary java code in wrapped class
+
+ O Morphing NSNumber
+
+ O Complete BASE library wrapping (depends on everything which comes
+   before this in this list)
+
+ O First working GUI library wrapping (depends on `Support for protocols')
+
+ O Support in the GNUstep make package for java-based gnustep
+   applications (both building and running them)
+
+ O Write a demo GNUstep application in Java (depends on `First working 
+   GUI library wrapping' and `Support in the GNUstep make package for 
+   java-based gnustep applications')
+
+ O Complete GUI library wrapping (depends on everything which comes
+   before this in this list)
+
+ O Better support for running a Java VM inside a GNUstep objective-C tool
+
+ O Support for automatically wrapping functions and methods of other classes
+
+ O Support for automatically get the value of constants from source code
+
+
