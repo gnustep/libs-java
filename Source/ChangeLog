@@ -1,3 +1,10 @@
+Thu Dec  6 16:05:46 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* GSJNIString.m (GSJNI_JStringFromNSString): Allocate temporary
+	unichar buffer on the heap rather than on the stack if it is
+	bigger than 10k.  Fixes crash for ObjC methods returning huge
+	strings.
+
 Sun Nov 25 12:13:00 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* NSObject.m (Java_gnu_gnustep_base_NSObject_finalize_1native): 
