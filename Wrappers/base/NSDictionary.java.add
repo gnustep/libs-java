@@ -1,0 +1,10 @@
+ native long initWithObjectsForKeys (Object[] objects, Object[] keys);
+
+  /**
+    * Wraps <B>initWithObjects:forKeys:</B>
+    */
+  public NSDictionary (Object[] objects, Object[] keys)
+  {
+    super (ALLOC_ONLY);
+    realObject = this.initWithObjectsForKeys (objects, keys);
+  }
