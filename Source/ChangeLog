@@ -1,3 +1,17 @@
+Wed Sep  6 01:36:59 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* JIGS.h: Updated version number to 0.5.
+	* JIGSProxyIMP.m (_JIGS_jboolean_IMP_JavaMethod),
+	(_JIGS_jbyte_IMP_JavaMethod), (_JIGS_jchar_IMP_JavaMethod),
+	(_JIGS_jshort_IMP_JavaMethod), (_JIGS_jint_IMP_JavaMethod),
+	(_JIGS_jlong_IMP_JavaMethod), (_JIGS_jfloat_IMP_JavaMethod),
+	(_JIGS_jdouble_IMP_JavaMethod), (_JIGS_void_IMP_JavaMethod),
+	(_JIGS_id_IMP_JavaMethod): Use the type of the selector in our
+	internal class cache table rather than the type of the selector
+	passed in the invocation, which could be NULL.
+	* JIGSProxySetup.m (mapJavaMethodName): Ignore selectors 
+	found in use but with NULL type.
+
 Sat Aug 19 20:26:15 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* JIGSMapper.m (JIGSCreateNewJavaProxy): Retain the object 
