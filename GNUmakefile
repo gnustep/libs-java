@@ -31,6 +31,10 @@ VERSION = 1.5.2
 GNUSTEP_INSTALLATION_DIR=$(GNUSTEP_SYSTEM_ROOT)
 RPM_DISABLE_RELOCATABLE=YES
 
+CVS_MODULE_NAME = java
+CVS_FLAGS = -d :pserver:anoncvs@subversions.gnu.org:/cvsroot/gnustep -z3
+RELEASE_DIR = releases
+
 # NB: "Java" must come before "Source"
 # let Documentation be the last one, so even if it doesn't work,
 # the software is built/installed anyway

@@ -23,6 +23,13 @@
 #   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 #
+# The following file is obsolete ... gnustep-make now provides
+# built-in support for exporting .tar.gz from CVS ...
+#
+make cvs-snapshot
+exit 0
+
+#
 # Usage: make-release
 # It creates a release.
 # The release number is obtained by looking for the line:
