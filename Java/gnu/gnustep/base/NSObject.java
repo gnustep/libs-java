@@ -40,11 +40,11 @@ public class NSObject implements Cloneable
    * This integer is, in practice, a C pointer to the real object that 
    * this objects proxies.
    * We need to access it directly from native code; but native code 
-   * does not care about the private modifier.
+   * does not care about the protected modifier.
    * It should never be accessed from java (except from constructors), 
-   * and that is why it is private.
+   * and that is why it is protected.
    */
-  private long realObject;
+  protected long realObject;
   
   static 
   {
@@ -74,16 +74,19 @@ public class NSObject implements Cloneable
    public NSButton (String title)
    {
      super (ALLOC_ONLY);
-     this.initWithTitle (title);
+     realObject = this.initWithTitle (title);
    }
 
-   native void initWithTitle (String title);
+   native long initWithTitle (String title);
 
    * you then only need to implement initWithTitle () to call 
-   * initWithTitle: on your object.
+   * initWithTitle: on your object, and register the result of the call 
+   * in the JIGS Mapper tables - by using 
+   * _JIGSMapperAddJavaProxy (env, objc, this);
+   * and then to return JIGS_ID_TO_JLONG (objc);
 
    * Important: to make this work, each subclass should contain 
-   * a constructor as in
+   * a constructor as in 
    
    protected NSButton (GSInitializationType type)
    {
