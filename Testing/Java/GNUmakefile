@@ -29,7 +29,8 @@ gnu.gnustep.java-test_JAVA_FILES = \
     NSObjectTest.java              \
     NSObjectSubclassTest.java      \
     NSArrayTest.java               \
-    NSProcessInfoTest.java              
+    NSProcessInfoTest.java         \
+    NSApplicationTest.java              
 
 
 
