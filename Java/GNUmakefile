@@ -38,6 +38,7 @@ gnu.gnustep.java_JAVA_FILES =                 \
    gnu/gnustep/base/NSPoint.java              \
    gnu/gnustep/base/NSRange.java              \
    gnu/gnustep/base/NSRect.java               \
+   gnu/gnustep/base/NSSelector.java           \
    gnu/gnustep/base/NSSize.java        
 
 gnu.gnustep.java_JAVA_JNI_FILES =          \
