@@ -63,16 +63,19 @@ JNI_OnLoad (JavaVM *jvm, void *reserved)
  * to JIGSMapper.h for more info.
  */
 
-JNIEXPORT void JNICALL 
+JNIEXPORT jlong JNICALL 
 Java_SimpleGUI_initWithTitle (JNIEnv *env, jobject this, jstring title)
 {
   SimpleGUI *we;
+  id objc_new;
+  jlong java;
   JIGS_ENTER;
 
   we = JIGSIdFromThis (env, this);
-  [we initWithTitle: JIGSNSStringFromJstring (env, title)];
-
-  JIGS_EXIT;
+  objc_new = [we initWithTitle: JIGSNSStringFromJstring (env, title)];
+  _JIGSMapperAddJavaProxy (env, objc_new, this);
+  java = JIGS_ID_TO_JLONG (objc_new);  
+  JIGS_EXIT_WITH_VALUE (java);
 }
 
 JNIEXPORT void JNICALL 

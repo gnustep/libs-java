@@ -1,3 +1,9 @@
+Fri Feb  9 10:55:30 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* WrappingLibrary/Objc/SimpleGUI.m (Java_SimpleGUI_initWithTitle):
+	Updated for new way of wrapping initializers.
+	* WrappingLibrary/Java: Idem.
+
 Tue Nov 21 12:38:27 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* WrappingLibrary/Objc/SimpleGUI.m (JNI_OnLoad): Use the 

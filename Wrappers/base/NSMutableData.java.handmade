@@ -1,4 +1,4 @@
-  native void initWithBytes (byte[] bytes);
+  native long initWithBytes (byte[] bytes);
 
   /**
     * Wraps the Objective-C method <B>initWithBytes:</B>.
@@ -6,5 +6,5 @@
   public NSMutableData (byte[] bytes)
   {
     super (ALLOC_ONLY);
-    this.initWithBytes (bytes);
+    realObject = this.initWithBytes (bytes);
   }
