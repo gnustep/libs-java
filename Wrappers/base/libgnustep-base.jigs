@@ -420,6 +420,7 @@
 		     "interrupt",
 		     "launch",
 		     "terminate",
+		     "usePseudoTerminal",
 		     "waitUntilExit"
 		    );
 		  "initializers" = ("init");
