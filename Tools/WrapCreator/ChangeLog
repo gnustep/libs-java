@@ -1,3 +1,8 @@
+2001-12-05 Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Makefiles/java-wrapper.make:a filter out -MMD and -MP flags
+	directly rather than trying to turn off AUTO_DEPENDENCIES
+
 2001-12-04 Richard frith-Macdonald <rfm@gnu.org>
 
 	* Makefiles/java-wrapper.make (AUTO_DEPENDENCIES): Force to 'no'

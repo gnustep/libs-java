@@ -23,8 +23,6 @@
 ifeq ($(JAVA_WRAPPER_MAKE_LOADED),)
 JAVA_WRAPPER_MAKE_LOADED=yes
 
-AUTO_DEPENDENCIES=no
-
 #
 # Include in the common makefile rules
 #
@@ -286,7 +284,8 @@ endif
 	                  $(OBJC_WRAPPER_DIR)/GNUmakefile.postamble; \
         fi;
 	@echo Running the preprocessor on the header file...
-	$(CC) $(WRAPPER_HEADER) -E -P $(ALL_CPPFLAGS) $(ALL_OBJCFLAGS) \
+	$(CC) $(WRAPPER_HEADER) -E -P $(filter-out -MMD -MP, \
+	   $(ALL_CPPFLAGS) $(ALL_OBJCFLAGS)) \
 	      -o $(WRAPPER_DIR)/preprocessedHeader
 	@echo Generating the code with Wrap Creator...
 	$(WRAP_CREATOR) --jigs-file $(JIGS_FILE) \
