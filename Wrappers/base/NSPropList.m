@@ -35,4 +35,24 @@
   return [anObject description];
 }
 
++ (NSData *) dataFromPropertyList: (id)anObject
+{
+  if (anObject == nil)
+    {
+      return nil;
+    }
+
+  return [NSSerializer serializePropertyList: anObject];
+}
+
++ (id) propertyListFromData: (NSData *)aData
+{
+  if (aData == nil)
+    {
+      return nil;
+    }
+
+  return [NSDeserializer deserializePropertyListFromData: aData
+			 mutableContainers: NO];
+}
 @end
