@@ -4,7 +4,7 @@
 #   Copyright (C) 2000 Free Software Foundation, Inc.
 #
 #   Author:  Nicola Pero <n.pero@mi.flashnet.it>
-#   Date: July 2000
+#   Date: July 2000, September 2000
 #   
 #   This file is part of GNUstep.
 #   
@@ -22,37 +22,59 @@
 #   along with this program; if not, write to the Free Software
 #   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA. */
 
-# Path to the wrapping library classes
-export CLASSPATH=./:../Library/JavaWrapper/Java/:$CLASSPATH
+#
+# WARNING: If you want to use the debug version, wipe out the not-debug
+# version first.  This is peculiar to this little hack.
+#
 
 # Load the LD_LIBRARY_PATH for GNUstep stuff
 . $GNUSTEP_MAKEFILES/ld_lib_path.sh
 
 # Quick hack at a suffix
-suffix=shared_obj/$GNUSTEP_HOST_CPU/$GNUSTEP_HOST_OS/gnu-gnu-gnu-xgps/
+nodebug_suffix=shared_obj/$GNUSTEP_HOST_CPU/$GNUSTEP_HOST_OS/gnu-gnu-gnu-xgps/
+debug_suffix=shared_debug_obj/$GNUSTEP_HOST_CPU/$GNUSTEP_HOST_OS/gnu-gnu-gnu-xgps/
+debug_wrapper_dir=JavaWrapper_debug/
+nodebug_wrapper_dir=JavaWrapper/
+
+suffix=
+wrapper_dir=
 
 # If it doesn't work, try with xdps
-if [ -d ../Library/$suffix ]; then
-  : # OK
+if [ -d ../Library/$nodebug_suffix ]; then
+  suffix=$nodebug_suffix # OK
+  wrapper_dir=$nodebug_wrapper_dir
 else
-  suffix=shared_obj/$GNUSTEP_HOST_CPU/$GNUSTEP_HOST_OS/gnu-gnu-gnu-xdps/
-  if [ -d ../Library/$suffix ]; then
-    : # OK
+  if [ -d ../Library/$debug_suffix ]; then
+    suffix=$debug_suffix # OK
+    wrapper_dir=$debug_wrapper_dir
   else
-    echo "Sorry, I am confused."
-    echo "Make sure you have run \"make\" in the top level directory."
-    echo "Otherwise it could be my fault - I am just a quick hack:"
-    echo "would you please try the full installation then ?"
-    echo "(see the top level README)"
-    echo "Thanks."
-    exit
+    nodebug_suffix=shared_obj/$GNUSTEP_HOST_CPU/$GNUSTEP_HOST_OS/gnu-gnu-gnu-xdps/
+    debug_suffix=shared_debug_obj/$GNUSTEP_HOST_CPU/$GNUSTEP_HOST_OS/gnu-gnu-gnu-xdps/
+    if [ -d ../Library/$nodebug_suffix ]; then
+      suffix=$nodebug_suffix # OK
+      wrapper_dir=$nodebug_wrapper_dir
+    else
+      if [ -d ../Library/$debug_suffix ]; then
+        suffix=$debug_suffix # OK
+        wrapper_dir=$debug_wrapper_dir
+      else
+        echo "Sorry, I am confused."
+	echo "Make sure you have run \"make\" in the top level directory."
+	echo "Otherwise it could be my fault - I am just a quick hack:"
+	echo "would you please try the full installation then ?"
+	echo "(see the top level README)"
+	echo "Thanks."
+	exit
+      fi
+    fi
   fi
 fi
 
-
-# Path to SimpleGUI.A.so, the wrapping library
-LD_LIBRARY_PATH=../Library/JavaWrapper/Objc/$suffix:$LD_LIBRARY_PATH
-# Path to SimpleGUI.so, the real library
+# Path to the wrapping library classes
+export CLASSPATH=./:../Library/$wrapper_dir/Java/:$CLASSPATH
+# Path to SimpleGUI.A.so (or SimpleGUI.A_d.so), the wrapping library
+LD_LIBRARY_PATH=../Library/$wrapper_dir/Objc/$suffix:$LD_LIBRARY_PATH
+# Path to SimpleGUI.so (or SimpleGUI_d.so), the real library
 LD_LIBRARY_PATH=../Library/$suffix:$LD_LIBRARY_PATH
 
 export LD_LIBRARY_PATH
