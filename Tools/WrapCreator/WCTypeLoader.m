@@ -74,81 +74,85 @@ static const struct morphType
 /* name should already be normalized */
 + (id) typeWithObjcType: (NSString *)name
 {
-  int i;
+  id	t = nil;
+  int	i;
 
   if ([name isEqualToString: @"void"] == YES)
     {
-      return [[WCVoidType alloc] initWithObjcType: @"void"];
+      t = [[WCVoidType alloc] initWithObjcType: @"void"];
     }
-
-  if ([name isEqualToString: @"id"] == YES)
+  else if ([name isEqualToString: @"id"] == YES)
     {
-      return [[WCIdType alloc] initWithObjcType: @"id"];
+      t = [[WCIdType alloc] initWithObjcType: @"id"];
     }
-
-  if ([name isEqualToString: @"BOOL"] == YES)
+  else if ([name isEqualToString: @"BOOL"] == YES)
     {
-      return [[WCBOOLType alloc] initWithObjcType: @"BOOL"];
+      t = [[WCBOOLType alloc] initWithObjcType: @"BOOL"];
     }
-
-  if (([name isEqualToString: @"int"] == YES) 
+  else if (([name isEqualToString: @"int"] == YES) 
       || ([name isEqualToString: @"signed"] == YES) 
       || ([name isEqualToString: @"signed int"] == YES))
     {
-      return [[WCIntType alloc] initWithObjcType: name];
+      t = [[WCIntType alloc] initWithObjcType: name];
     }
-
-  if (([name isEqualToString: @"unsigned int"] == YES) 
+  else if (([name isEqualToString: @"unsigned int"] == YES) 
       || ([name isEqualToString: @"unsigned"] == YES))
     {
-      return [[WCUnsignedIntType alloc] initWithObjcType: name];
+      t = [[WCUnsignedIntType alloc] initWithObjcType: name];
     }
-
-  if ([name isEqualToString: @"unsigned char"] == YES)
-    return [[WCCharType alloc] initWithObjcType: name  signed: NO];
-
-  if ([name isEqualToString: @"signed char"] == YES)
-    return [[WCCharType alloc] initWithObjcType: name  signed: YES];
-
-  if ([name isEqualToString: @"char"] == YES)
+  else if ([name isEqualToString: @"unsigned char"] == YES)
+    {
+     t = [[WCCharType alloc] initWithObjcType: name  signed: NO];
+    }
+  else if ([name isEqualToString: @"signed char"] == YES)
+    {
+      t = [[WCCharType alloc] initWithObjcType: name  signed: YES];
+    }
+  else if ([name isEqualToString: @"char"] == YES)
     {
 #if CHAR_MIN == 0
-      return [[WCCharType alloc] initWithObjcType: name  signed: NO];
+      t = [[WCCharType alloc] initWithObjcType: name  signed: NO];
 #else
-      return [[WCCharType alloc] initWithObjcType: name  signed: YES];
+      t = [[WCCharType alloc] initWithObjcType: name  signed: YES];
 #endif
     }
-
-  if ([name isEqualToString: @"float"] == YES)
-    return [[WCFloatType alloc] initWithObjcType: name];
-
-  if ([name isEqualToString: @"double"] == YES)
-    return [[WCDoubleType alloc] initWithObjcType: name];
-
-  for (i = 0; i < DEFAULT_MORPHTYPES_NUMBER; i++)
+  else if ([name isEqualToString: @"float"] == YES)
     {
-      struct morphType morph = defaultMorphTypes[i];
-
-      if ([name isEqualToString: morph.objcName])
-	{
-	  return [[WCMorphType alloc] initWithObjcType: name
-				      javaType: morph.javaName
-				      jniType: morph.jniName
-				      javaArgumentType: morph.javaArgumentType
-				      javaToObjcFunction: morph.java2objc
-				      objcToJavaFunction: morph.objc2java];
-	}
+       t = [[WCFloatType alloc] initWithObjcType: name];
     }
-  
-  if ([name hasSuffix: @"*"] == YES)
+  else if ([name isEqualToString: @"double"] == YES)
+    {
+      t = [[WCDoubleType alloc] initWithObjcType: name];
+    }
+  else
+    {
+      for (i = 0; i < DEFAULT_MORPHTYPES_NUMBER; i++)
+	{
+	  struct morphType morph = defaultMorphTypes[i];
+
+	  if ([name isEqualToString: morph.objcName])
+	    {
+	      t = [[WCMorphType alloc] initWithObjcType: name
+		javaType: morph.javaName
+		jniType: morph.jniName
+		javaArgumentType: morph.javaArgumentType
+		javaToObjcFunction: morph.java2objc
+		objcToJavaFunction: morph.objc2java];
+	      break;
+	    }
+	}
+    }  
+  if (t == nil && [name hasSuffix: @"*"] == YES)
     {
       /* name is a wrapped objective-C class */ 
-      return [[WCObjectType alloc] initWithObjcType: name];
+      t = [[WCObjectType alloc] initWithObjcType: name];
     }
-  
-  [NSException raise: NSGenericException
-	       format: @"Unknown objective-C type %@", name];
-  return nil;
+  if (t == nil)
+    {  
+      [NSException raise: NSGenericException
+		  format: @"Unknown objective-C type %@", name];
+    }
+  return t;
 }
 
 @end

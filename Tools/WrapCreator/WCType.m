@@ -78,14 +78,11 @@ NSString *normalizeObjcType (NSString *objcType)
   name = normalizeObjcType (name);
 
   t = [self existingSharedTypeWithObjcType: name];
-  if (t != nil)
+  if (t == nil)
     {
-      return t;
+      t = [WCTypeLoader typeWithObjcType: name];
     }
-  else
-    {
-      return [WCTypeLoader typeWithObjcType: name];
-    }
+  return t;
 }
 
 + (WCType *) existingSharedTypeWithObjcType: (NSString *)name
