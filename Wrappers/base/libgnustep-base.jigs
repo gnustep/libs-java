@@ -1,11 +1,11 @@
 {
-  "types" = { 
-              NSTimeInterval = double;
-              RunLoopEventType = int;
-            };
-  "classes" = (
-                {
-                  "java name" = "gnu.gnustep.base.NSArray";
+  types = { 
+             NSTimeInterval = double;
+          };
+  enumerations = (RunLoopEvenType);
+  classes = (
+               {
+                 "java name" = "gnu.gnustep.base.NSArray";
 
                   "instance methods" = ("containsObject:",
                                         "count", 

@@ -1,3 +1,8 @@
+Thu Nov  2 16:05:35 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* libgnustep-base.jigs: Moved RunLoopEventType from types 
+	section to enumerations section.
+
 Thu Nov  2 14:20:42 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* libgnustep-base.jigs (NSNull), (NSPort), (NSRunLoop), 
