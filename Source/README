@@ -23,8 +23,6 @@ The library contains:
 GSJNICache : utilities to cache JNI references.
 GSJNIClass : utilities to manage class names.
 GSJNIDebug : utilities to make debugging easier.
-GSJNIException : utilties to manage JNI/GNUstep exception and convert
-                 one into the other and viceversa.
 GSJNIString : utilities to convert ASCII and UNICODE strings between
                 GNUstep and Java.
 [Java:]
@@ -49,4 +47,8 @@ JIGS
 The real GNUstep Java Interface engine, built on top of
 ObjcRuntimeUtilities and GSJNI.  Most of it is written in Objective-C,
 but parts are in Java.  The Java parts are in ../Java/. 
+
+JIGSException : utilties to manage JNI/GNUstep exceptions and convert
+                one into the other and viceversa.  Relies on the java 
+                class gnu.gnustep.base.NSException.
 
