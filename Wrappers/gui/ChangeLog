@@ -1,3 +1,9 @@
+Fri Nov  3 16:00:55 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* libgnustep-gui.jigs (enumerations): Added NSSelectionDirection.
+	(NSApplication), (NSView), (NSWindow): Added hardcoded constants.
+	(NSWindow): Uncommented keyViewSelectionDirection.
+
 Thu Nov  2 16:06:57 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* libgnustep-gui.jigs: Created an `enumerations' section, 
