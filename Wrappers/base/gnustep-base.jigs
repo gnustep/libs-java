@@ -69,13 +69,14 @@ classes = (
     "deleteHeaderNamed:",
     "headerNamed:",
     "headersNamed:",
+    "makeBoundary",
     "makeContentID",
     "makeMessageID",
     "rawMimeData",
     "rawMimeData:",
     "setContent:",
     "setContent:type:name:",
-    "setContent:type:subType:name:",
+    "setContent:type:subtype:name:",
     "setHeader:"
   );
   "initializers" = (
