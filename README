@@ -12,15 +12,21 @@ friendly and fast to use.
 Authors
 =======
 
-JIGS version 0.1 was brought to you by Nicola Pero <nicola@brainstorm.co.uk>. 
+JIGS was brought to you by Nicola Pero <nicola@brainstorm.co.uk>. 
 
 Brainstorm Computer Solutions (http://www.brainstorm.co.uk) funded the
-development of JIGS version 0.1.
+development of JIGS.
 
 Maintainers
 ===========
 
 JIGS is currently maintained by Nicola Pero <nicola@brainstorm.co.uk>.
+
+Release Notes for JIGS version 0.2
+==================================
+
+Alpha support for subclassing an Objective-C class in Java. 
+Better support for exposing Objective-C class methods  to Java.
 
 Release Notes for JIGS version 0.1 
 ==================================
@@ -65,7 +71,7 @@ To use the JIGS, you need:
   needed only to load objective-C libraries into a running java
   virtual machine, while you don't need it to start a java virtual
   machine inside an already running objective-C app or tool.  Please
-  note that there are no examples of doing the latter in JIGS 0.1
+  note that there are no examples yet of doing the latter in JIGS 
   though, so if you want to play comfortably, getting a shared
   Objective-C runtime library is recommended.
 
@@ -82,7 +88,7 @@ discussions and help during development of JIGS 0.1.
 Obtaining JIGS
 ==============
 
-JIGS 0.1 is available at http://www.gnustep.it/jigs/Download/
+JIGS is available at http://www.gnustep.it/jigs/Download/
 New releases and snapshots can usually be found on the JIGS homepage, 
 http://www.gnustep.it/jigs/.
 You may always get the latest version of JIGS from the GNUstep CVS -
