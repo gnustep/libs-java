@@ -1,3 +1,9 @@
+Tue Feb  6 18:24:12 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Java/NSDataTest.java: New test.
+	* Java/GNUmakefile (gnu.gnustep.java-test_JAVA_FILES): Added the
+	new test.
+	
 Thu Nov 30 12:12:47 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* Objc/main.m (main): Initialize NSProcessInfo if building 
