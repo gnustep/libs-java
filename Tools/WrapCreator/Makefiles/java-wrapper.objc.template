@@ -31,10 +31,7 @@ LIBRARIES_DEPEND_UPON += -lREPLACEWITHSHORTNAME
 # to your GNUmakefile.wrapper.objc.preamble:
 #LIBRARIES_DEPEND_UPON += $(GUI_LIBS) $(BACKEND_LIBS)
 
-# The following is only to allow the user to compile before having installed 
-# the library
-ADDITIONAL_LIB_DIRS += -L../../$(GNUSTEP_OBJ_DIR)
-ADDITIONAL_INCLUDE_DIRS += -I../../REPLACEWITHLIBRARYHEADERDIRS
+ADDITIONAL_INCLUDE_DIRS += REPLACEWITHLIBRARYHEADERFLAGS
 
 -include GNUmakefile.preamble
 include $(GNUSTEP_MAKEFILES)/library.make
