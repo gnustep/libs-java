@@ -191,6 +191,10 @@ int main (int argc, char **argv, char **penv)
 #if 0
   /* Testing morphing of numbers - used to debug JIGS internals */
   printf ("Internal hackish JIGS testing - testing morphing of numbers\n");
+
+#if defined(LIB_FOUNDATION_LIBRARY)
+# define lossyCString cString
+#endif
   
 #define TEST_NUMBER_MORPH(CREATION,TYPE) \
 ({ NSNumber *number; jobject jnumber; \
@@ -224,7 +228,7 @@ int main (int argc, char **argv, char **penv)
   TEST_NUMBER_MORPH(numberWithDouble: -4.2e-1, Double);
   TEST_NUMBER_MORPH(numberWithDouble: 0, Double);
   printf ("ok (possibly)\n");
-#endif 0
+#endif /* 0 */
 
 #if 0
   /* Testing key/value coding for Java objects - ahm - well - we want
@@ -290,15 +294,13 @@ int main (int argc, char **argv, char **penv)
 	abort ();
       }
   }
-#endif   
+#endif
 
   printf ("And that's enough for today: test passed.\n");
 
   
-  /*
-   * The following crashes Sun's JVM because they have not implemented 
-   * destroying a virtual machine.
-   */
+  /* Sun has not implemented destroying a virtual machine, so the
+     following raises an exception.  */
 
   /*
     NSLog (@"Now destroying the Java Virtual Machine...");
