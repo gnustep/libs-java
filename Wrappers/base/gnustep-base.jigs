@@ -3,38 +3,85 @@ types = {
   NSTimeInterval = double;
   unichar = short;
 };
+
 classes = (
+
+{
+  "java name" = "gnu.gnustep.base.GSMimeHeader";
+  
+  "class methods" = (
+    "makeQuoted:",
+    "makeToken:"
+  );
+  "instance methods" = (
+    "name",
+    "objectForKey:",
+    "parameterForKey:",
+    "parameters",
+    "setName:",
+    "setObject:forKey:",
+    "setParameter:forKey:",
+    "setParameters:",
+    "setValue:",
+    "text",
+    "value"
+  );
+  "initializers" = (
+    "initWithName:value:parameters:"
+  );
+},
+
+{
+  "java name" = "gnu.gnustep.base.GSMimeDocument";
+  
+  "class methods" = (
+    "mimeDocument"
+  );
+  "instance methods" = (
+    "addContent:",
+    "addHeader:",
+    "allHeaders",
+    "content",
+    "deleteHeader:",
+    "deleteHeaderNamed:",
+    "headerNamed:",
+    "headersNamed:",
+    "setContent:",
+    "setHeader:"
+  );
+},
+
+{
+  "java name" = "gnu.gnustep.base.GSMimeParser";
+  
+  "class methods" = (
+    "mimeParser"
+  );
+  "instance methods" = (
+    "data",
+    "document",
+    "isComplete",
+    "isInBody",
+    "isInHeaders",
+    "parse:",
+    "parseHeader:",
+    "setNoHeaders"
+  );
+},
+
 {
   "java name" = "gnu.gnustep.base.GSXMLAttribute";
   
-  "class methods" = ("descriptionFromType:",
-			"typeFromDescription:" );
-  "instance methods" = ("children",
-			"content",
-			"doc",
-			"makeChildWithNamespace:name:content:",
-			"makeComment:",
-			"makePI:content:",
-			"name",
-			"next",
-			"ns",
-			"nsDef",
-			"parent",
-			"prev",
-			"properties",
-			"propertiesAsDictionary",
-			"setProp:value:",
-			"type",
-			"typeDescription",
-			"value");
-  "initializers" = ("initWithNamespace:name:",
-    "initWithNode:name:value:" );
-
+  "instance methods" = (
+    "next",
+    "previous",
+    "value"
+  );
   /* Can't return GSXMLAttribute here because in Java you can't change
      the return type when you override in a subclass a method of the
      superclass ! */
   "method declarations" = ("- (GSXMLNode *)next",
-			   "- (GSXMLNode *)prev");
+			   "- (GSXMLNode *)previous");
 },
 
 {
@@ -46,7 +93,7 @@ classes = (
 			"setRoot:",
 			"writeToFile:atomically:",
 			"version");
-  "initializers" = ("initWithVersion:" );
+  "class methods" = ("documentWithVersion:" );
 },
 
 {
@@ -59,7 +106,6 @@ classes = (
 			"prefix",
 			"type",
 			"typeDescription");
-  "initializers" = ("initWithNode:href:prefix:" );
   /* The following conflicts with other GSXML* classes */
   "method declarations" = ("- (GSXMLNamespace *)next");
 },
@@ -69,34 +115,41 @@ classes = (
   
   "class methods" = ("descriptionFromType:",
 			"typeFromDescription:" );
-  "instance methods" = ("children",
-			"content",
-			"doc",
-			"makeChildWithNamespace:name:content:",
-			"makeComment:",
-			"makePI:content:",
-			"name",
-			"next",
-			"ns",
-			"nsDef",
-			"parent",
-			"prev",
-			"properties",
-			"propertiesAsDictionary",
-			"setProp:value:",
-			"type",
-			"typeDescription");
-  "initializers" = ("initWithNamespace:name:" );
+  "instance methods" = (
+    "attributes",
+    "content",
+    "document",
+    "firstAttribute",
+    "firstChild",
+    "firstChildElement",
+    "makeAttributeWithName:value:",
+    "makeChildWithNamespace:name:content:",
+    "makeComment:",
+    "makeNamespaceHref:prefix:",
+    "makePI:content:",
+    "makeText:",
+    "name",
+    "namespace",
+    "namespaceDefinitions",
+    "next",
+    "nextElement",
+    "objectForKey:",
+    "parent",
+    "previous",
+    "setObject:forKey:",
+    "type",
+    "typeDescription"
+  );
   /* The following conflicts with other GSXML* classes */
   "method declarations" = ("- (GSXMLNode *)next",
-			   "- (GSXMLNode *)prev");
+			   "- (GSXMLNode *)previous");
 },
 
 {
   "java name" = "gnu.gnustep.base.GSXMLParser";
   
   "class methods" = ("loadEntity:at:" );
-  "instance methods" = ("doc",
+  "instance methods" = ("document",
 			"doValidityChecking:",
 			"errNo",
 			"getWarnings:",
