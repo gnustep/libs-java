@@ -28,8 +28,12 @@ Authors
 
 JIGS was brought to you by Nicola Pero <n.pero@mi.flashnet.it>
 
-Brainstorm Computer Solutions (http://www.brainstorm.co.uk) funded the 
-development of JIGS.
+Brainstorm Computer Solutions (http://www.brainstorm.co.uk) funded
+most of the development of JIGS.
+
+SKYRiX Software AG (http://www.skyrix.de) funded most of the
+developments of JIGS 1.3.x and 1.4.x, including number object
+morphing, libFoundation support, and other improvements.
 
 Maintainers
 ===========
