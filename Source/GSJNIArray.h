@@ -40,4 +40,13 @@ inline NSData *GSJNI_NSDataFromJbyteArray (JNIEnv *env, jbyteArray array);
  */
 inline jbyteArray GSJNI_jbyteArrayFromNSData (JNIEnv *env, NSData *data);
 
+/*
+ * You should call this function with a NSData object argument
+ * (NSMutableData is Ok) in `data', which you have allocated but not
+ * yet initialized.  The method will initialize the NSData object
+ * passed as argument to contain the bytes in array; and return the
+ * result of the init method.  array should not be NULL.  */
+inline NSData *GSJNI_initNSDataFromJbyteArray (JNIEnv *env, NSData *data,
+					       jbyteArray array);
+
 #endif /*__GSJNIArray_h_GNUSTEP_JAVA_INCLUDE*/

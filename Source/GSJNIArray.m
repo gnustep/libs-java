@@ -23,9 +23,10 @@
 
 #include "GSJNIArray.h"
 
-inline NSData *GSJNI_NSDataFromJbyteArray (JNIEnv *env, jbyteArray array)
+inline NSData *GSJNI_initNSDataFromJbyteArray (JNIEnv *env, NSData *data, 
+					       jbyteArray array)
 {
-  NSData *gnustepData;
+  NSData *returnData;
   jbyte *bytes;
   unsigned length;
 
@@ -38,11 +39,17 @@ inline NSData *GSJNI_NSDataFromJbyteArray (JNIEnv *env, jbyteArray array)
       return nil;
     }
 
-  gnustepData = [NSData dataWithBytes: bytes  length: length];
+  returnData = [data initWithBytes: bytes  length: length];
   
   (*env)->ReleaseByteArrayElements (env, array, bytes, 0);
 
-  return gnustepData;
+  return returnData;
+}
+
+inline NSData *GSJNI_NSDataFromJbyteArray (JNIEnv *env, jbyteArray array)
+{
+  return AUTORELEASE (GSJNI_initNSDataFromJbyteArray (env, [NSData alloc], 
+						      array));
 }
 
 inline jbyteArray GSJNI_jbyteArrayFromNSData (JNIEnv *env, NSData *data)
