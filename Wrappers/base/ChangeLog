@@ -1,3 +1,10 @@
+Tue Sep 26 13:09:55 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* libgnustep-base.jigs (types): New section, mapping
+	NSTimeInterval to double.  (NSDate): Uncommented most methods, as
+	now permitted by the mapping of NSTimeInterval.  (NSProcessInfo):
+	Expose setProcessName:.
+
 Tue Sep  5 23:37:07 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* libgnustep-base.jigs (NSNotification): New wrapper.
