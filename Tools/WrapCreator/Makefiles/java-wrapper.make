@@ -281,7 +281,7 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE)
 	                  $(OBJC_WRAPPER_DIR)/GNUmakefile.postamble; \
         fi;
 	@echo Running the preprocessor on the header file...
-	$(CC) -x objective-c-header $(WRAPPER_HEADER) -E -P \
+	$(CC) -x objective-c $(WRAPPER_HEADER) -E -P \
 	  $(filter-out -MMD -MP, \
 	  $(ALL_CPPFLAGS) $(ALL_OBJCFLAGS)) \
 	  -o $(WRAPPER_DIR)/preprocessedHeader
