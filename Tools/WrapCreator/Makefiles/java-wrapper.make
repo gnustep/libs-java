@@ -281,9 +281,10 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE)
 	                  $(OBJC_WRAPPER_DIR)/GNUmakefile.postamble; \
         fi;
 	@echo Running the preprocessor on the header file...
-	$(CC) $(WRAPPER_HEADER) -E -P $(filter-out -MMD -MP, \
-	   $(ALL_CPPFLAGS) $(ALL_OBJCFLAGS)) \
-	      -o $(WRAPPER_DIR)/preprocessedHeader
+	$(CC) -x objective-c-header $(WRAPPER_HEADER) -E -P \
+	  $(filter-out -MMD -MP, \
+	  $(ALL_CPPFLAGS) $(ALL_OBJCFLAGS)) \
+	  -o $(WRAPPER_DIR)/preprocessedHeader
 	@echo Generating the code with Wrap Creator...
 	$(WRAP_CREATOR) --jigs-file $(JIGS_FILE) \
 	                --wrapper-dir $(WRAPPER_DIR) \

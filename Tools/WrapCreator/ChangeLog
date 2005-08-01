@@ -1,3 +1,9 @@
+Mon Aug 01 14:45:00 2003  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Makefiles/java-wrapper.make: Rell the compiler that the header we
+	are preprocessing is an objective-c header, so it can deal with it
+	properly on MacOS-X systems with -fgnu-runtime specified.
+
 Tue Jul 29 15:13:05 2003  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* WCClass.m ([WCClass -outputWrappers]): Update generated
