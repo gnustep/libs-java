@@ -254,7 +254,7 @@ classes = (
     "buildMethodCall:params:",
     "buildResponseWithFaultCode:andString:",
     "buildResponseWithParams:",
-    "delegate:",
+    "delegate",
     "makeMethodCall:params:timeout:",
     "parseMethod:params:",
     "parseResponse:params:",
