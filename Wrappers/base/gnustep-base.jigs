@@ -83,8 +83,11 @@ classes = (
     "contentSubtype",
     "contentType",
     "contentsByName:",
+    "convertToBase64",
+    "convertToBinary",
     "convertToData",
     "convertToText",
+    "deleteContent:",
     "deleteHeader:",
     "deleteHeaderNamed:",
     "headerNamed:",
@@ -239,6 +242,32 @@ classes = (
     "initWithSAXHandler:",
     "initWithSAXHandler:withData:",
     "initWithSAXHandler:withContentsOfFile:"
+  );
+},
+
+{
+  "java name" = "gnu.gnustep.base.GSXMLRPC";
+  
+  "class methods" = (
+   );
+  "instance methods" = (
+    "buildMethodCall:params:",
+    "buildResponseWithFaultCode:andString:",
+    "buildResponseWithParams:",
+    "delegate:",
+    "makeMethodCall:params:timeout:",
+    "parseMethod:params:",
+    "parseResponse:params:",
+    "result",
+    "sendMethodCall:params:timeout:",
+    "setDebug:",
+    "setDelegate:",
+    "timeout:",
+  );
+  "initializers" = (
+    "init",
+    "initWithURL:",
+    "initWithURL:certificate:privateKey:password:",
   );
 },
 
