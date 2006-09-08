@@ -14,14 +14,6 @@ The \texttt{libgnustep-java} library is an Objective-C library
 providing a set of functions and classes which allow to start and
 manage the interface between Java and Objective-C.
 
-For technical reasons, a little auxiliary C library,
-\texttt{libgnustep-java-loader}, is also used when \texttt{libgnustep-java} 
-is loaded from Java.  This tiny C library is always compiled with
-debugging disabled, and is used by JIGS, when started from Java, to
-decide whether to load the debugging or the non-debugging version of 
-\texttt{libgnustep-java}.  You can safely ignore this when using JIGS 
-from Objective-C.
-
 \texttt{libgnustep-java} makes use of the Java Native Interface (JNI) 
 to interact with the Java Virtual Machine from native code.
 
