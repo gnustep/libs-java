@@ -156,8 +156,6 @@ class NSArrayTest
     arrayOne = new NSArray (longArray);
 
     compareJavaArrays (longArray, arrayOne.objects (), true);
-    
-    
 
     /* Happy end */
     System.out.println ("test passed");
