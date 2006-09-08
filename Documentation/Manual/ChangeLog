@@ -1,3 +1,9 @@
+Fri Sep  8 12:37:41 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* WrappingObjcLibraries.tex (subsection{Debugging or
+	Non-Debugging}): Section removed.
+	* Manual/: Regenerated.
+	
 Tue Jul 24 13:01:59 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* WrappingObjcLibraries.tex: Updated for new enumeration support.
