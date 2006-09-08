@@ -1,6 +1,19 @@
+Fri Sep  8 18:33:52 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	Use JavaWrapper as the name of the JavaWrapper directory no matter
+	if we're building with debug enabled or not.
+	* Makefiles/java-wrapper.make (internal-distclean): Do not remove
+	the JavaWrapper_debug directories and similar ones.
+	(JIGS_LONG_SUFFIX): Variable removed.
+	(WRAPPER_DIR_NAME): Do not append JIGS_LONG_SUFFIX.
+
+	* Makefiles/java-wrapper.make (JAVA_WRAPPER_TOP_TEMPLATE): Always
+	use the same template no matter if debug is enabled or not.
+	* Makefiles/java-wrapper.top.debug.template: File removed.
+	
 Mon Aug 01 14:45:00 2003  Richard Frith-Macdonald <rfm@gnu.org>
 
-	* Makefiles/java-wrapper.make: Rell the compiler that the header we
+	* Makefiles/java-wrapper.make: Tell the compiler that the header we
 	are preprocessing is an objective-c header, so it can deal with it
 	properly on MacOS-X systems with -fgnu-runtime specified.
 
