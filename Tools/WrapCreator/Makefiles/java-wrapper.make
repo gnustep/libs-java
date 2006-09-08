@@ -62,9 +62,8 @@ include $(GNUSTEP_MAKEFILES)/rules.make
 # ADDITIONAL_LIB_DIRS = -L../../$(GNUSTEP_OBJ_DIR)
 # in GNUmakefile.wrapper.objc.postamble.
 
-# The name of the wrapper dir is JavaWrapper or JavaWrapper_debug if
-# you use debugging; you can modify it by setting the WRAPPER_DIR_NAME
-# variable.
+# The name of the wrapper dir is JavaWrapper; you can modify it by
+# setting the WRAPPER_DIR_NAME variable.
 
 JAVA_WRAPPER_NAME:=$(strip $(JAVA_WRAPPER_NAME))
 
@@ -81,9 +80,6 @@ internal-clean:: $(JAVA_WRAPPER_NAME:=.clean.java-wrapper.variables)
 
 internal-distclean:: $(JAVA_WRAPPER_NAME:=.distclean.java-wrapper.subprojects)
 	-rm -Rf JavaWrapper
-	-rm -Rf JavaWrapper_debug
-	-rm -Rf JavaWrapper_profile
-	-rm -Rf JavaWrapper_debug_profile
 
 java-wrapper-make::
 	@$(MAKE) -f $(MAKEFILE_NAME) --no-print-directory \
@@ -131,30 +127,12 @@ endif # BUILD_JAVA_WRAPPER_AUTOMATICALLY
 #
 JIGS_FILE = $(JAVA_WRAPPER_NAME).jigs
 
-# The suffix to use for the wrapper library directory.  NB: you are
-# warned to use the same flags (debug/profile) you used for the
-# library you are wrapping 
-TMP_LONG_SUFFIX =
-
-ifeq ($(debug), yes)
-  TMP_LONG_SUFFIX =_debug
-endif
-
-ifeq ($(profile), yes)
-  TMP_LONG_SUFFIX +=_profile
-endif
-
-# Replace space with nothing
-empty_j:=
-space_j:= $(empty_j) $(empty_j)
-JIGS_LONG_SUFFIX = $(subst $(space_j),,$(TMP_LONG_SUFFIX))
-
 # The directory to create and where to put the automatically generated 
 # wrapper library
 ifeq ($(WRAPPER_DIR_NAME),)
-WRAPPER_DIR_NAME = JavaWrapper$(JIGS_LONG_SUFFIX)
+  WRAPPER_DIR_NAME = JavaWrapper
 endif
-WRAPPER_DIR = $(shell pwd)/$(WRAPPER_DIR_NAME)
+  WRAPPER_DIR = $(shell pwd)/$(WRAPPER_DIR_NAME)
 # The subdirs containing the java and the objc code
 JAVA_WRAPPER_DIR = $(WRAPPER_DIR)/Java
 OBJC_WRAPPER_DIR = $(WRAPPER_DIR)/Objc
@@ -194,11 +172,7 @@ ifeq ($(javadoc), no)
   SILENT_FLAGS += --no-javadoc
 endif
 
-ifeq ($(debug),yes)
-  JAVA_WRAPPER_TOP_TEMPLATE=java-wrapper.top.debug.template
-else
-  JAVA_WRAPPER_TOP_TEMPLATE=java-wrapper.top.template
-endif
+JAVA_WRAPPER_TOP_TEMPLATE=java-wrapper.top.template
 
 internal-java_wrapper-all_:: $(WRAPPER_DIR)/stamp-file
 
