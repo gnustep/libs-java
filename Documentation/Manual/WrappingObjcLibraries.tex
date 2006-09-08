@@ -689,60 +689,6 @@ is compiled.  The wrapping code itself will be generated in the
 \texttt{JavaWrapper\_debug} directory rather than in the \texttt{JavaWrapper}, 
 to allow you to keep the two versions.
 
-\subsection{Debugging or Non-Debugging}
-
-When Objective-C GNUstep libraries are loaded from Java using JIGS,
-all the libraries must be of the same type -- or debugging libraries
-or non-debugging libraries.  
-
-In general, the simplest way you can manage this issue is by
-consistently using only libraries of one of the two kind on your
-system; ie, compile everything (from the GNUstep Base Library up) with
-`\texttt{make}', or compile everything with `\texttt{make debug=yes}'.
-
-If you don't, then you need to read carefully the following part.
-
-\subsubsection{The Fine Prints About Debugging}
-
-JIGS will decide whether to use debugging or non-debugging libraries
-at run-time, when it is first initialized from Java.  Debugging
-libraries are easy to tell because the name ends with \texttt{\_d}.
-For example, the core JIGS library is
-\texttt{libgnustep-java}; if you compile it without debugging, it will 
-be in the file 
-\begin{verbatim}
-libgnustep-java.so
-\end{verbatim}
-but if you compile it with debugging, it will be in the file 
-\begin{verbatim}
-libgnustep-java_d.so
-\end{verbatim}
-Because the name is different, you can have both versions on your
-system.  JIGS will choose to load debugging or non-debugging libraries
-in the following way:
-\begin{enumerate}
-\item If you have only one version of JIGS installed (ie, only the debugging 
-or the non-debugging, but not both), there is no choice -- JIGS will
-load libraries of the same kind as itself.  This means if you have a
-debugging version of JIGS installed, you will need to have a version
-of all libraries you need with debugging enabled.  If you only have a
-non-debugging version of JIGS installed, you will need to have a
-version of all libraries you need without debugging.
-\item If you have both version of JIGS (the debugging and the non-debugging), 
-JIGS will decide at run-time which version of itself to use (and
-consequently, which version of all other libraries to use).  By
-default, it will load the non-debugging version.  This is the default
-because the idea is that using a debugger to debug libraries when
-accessed from Java in this way is so difficult that most people will
-not want to do it (I actually don't know how to do it myself).  But
-you can override the default by setting the \texttt{JIGS\_DEBUG}
-environment variable.  Setting it to \texttt{YES} or \texttt{yes} will
-give priority to the debugging libraries.
-\end{enumerate}
-Once JIGS has chosen an option, it will follow it consistently.  For
-example, if it decided to load debugging libraries, it will ignore all
-non-debugging libraries.
-
 \subsection{Turning off the Generation of Quick Reference Doc}
 
 To stop JIGS from automatically generating minimal javadoc comments
