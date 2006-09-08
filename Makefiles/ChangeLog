@@ -1,3 +1,8 @@
+Fri Sep  8 13:55:09 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* GNUstep-Java.sh (jre_lib): Updated from 'classic' to 'server'
+	to work with JDK 1.5.0.
+
 Thu Dec 13 11:16:30 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* GNUmakefile ($(JIGS_MAKE_DIR)): Use MKINSTALLDIRS not MKDIRS 

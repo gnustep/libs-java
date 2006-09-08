@@ -53,8 +53,11 @@ jre_lib="$JAVA_HOME/jre/lib"
 ###
 
 # We should really examine the output of `java -version' to determine
-# which flags to use exactly; the following works on SUN JDK 1.2.2 
-# and SUN JDK 1.3.0 but what about other platforms.
+# which flags to use exactly; the following works on SUN JDK 1.5.0
+# but what about other platforms.
+
+# PS: For older Sun's JDK, try using 'export JIGS_VM_TYPE=classic'
+# before sourcing this script
 
 # If no JIGS_THREAD_TYPE was set, use native_threads as a guess
 if [ -z "$JIGS_THREAD_TYPE" ]; then
@@ -63,7 +66,7 @@ fi
 
 # If no JIGS_VM_TYPE was set, use classic as a guess
 if [ -z "$JIGS_VM_TYPE" ]; then
-  JIGS_VM_TYPE=classic;
+  JIGS_VM_TYPE=server;
 fi
 
 # Convert the GNUSTEP_HOST_CPU into JAVA_CPU
