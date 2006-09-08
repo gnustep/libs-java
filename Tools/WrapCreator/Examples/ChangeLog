@@ -1,3 +1,11 @@
+Fri Sep  8 18:23:25 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* SimpleGUI/JavaApp/run: Updated library paths to use gnu-gnu-gnu
+	as library combo, ./obj as the obj dir name, and JavaWrapper as
+	the java wrapper name.
+	* SimpleGUI-action/JavaApp/run: Same change.
+	* NameTest/JavaApp/run: Same change.
+
 Mon May 21 02:12:26 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* SimpleGUI/Library/GNUmakefile: Use old-java-wrapper.make.
@@ -17,4 +25,25 @@ Mon May  7 03:26:30 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 Fri Oct  6 12:58:06 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* SimpleGUI-action: New directory.
+
+Mon Oct  2 10:35:20 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* SimpleGUI/JavaApp/run: Added support for compiling and running
+	the debug version of the example.
+	* SimpleGUI/JavaApp/GNUmakefile (CLASSPATH): Added path to debug
+	version of SimpleGUI.
+	
+Sat Aug 19 20:29:04 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* SimpleGUI/Library/SimpleGUI.m ([+new]): Removed.
+	* SimpleGUI/Library/SimpleGUI.h: Idem.
+	* SImpleGUI/Library/libSimpleGUI.jigs: Removed wrapping of method
+	new.
+
+Sat Aug  5 15:47:55 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* SimpleGUI/JavaApp/run: Use ld_library_path.sh to set the
+	LD_LIBRARY_PATH before going on.
+
+
 

@@ -31,39 +31,17 @@
 . $GNUSTEP_MAKEFILES/ld_lib_path.sh
 
 # Quick hack at a suffix
-nodebug_suffix=shared_obj/$GNUSTEP_HOST_CPU/$GNUSTEP_HOST_OS/$LIBRARY_COMBO
-debug_suffix=shared_debug_obj/$GNUSTEP_HOST_CPU/$GNUSTEP_HOST_OS/$LIBRARY_COMBO
-debug_wrapper_dir=JavaWrapper_debug/
-nodebug_wrapper_dir=JavaWrapper/
-
-suffix=
-wrapper_dir=
-
-if [ -d ../Library/$nodebug_suffix ]; then
-  suffix=$nodebug_suffix 
-  wrapper_dir=$nodebug_wrapper_dir
-else
-  if [ -d ../Library/$debug_suffix ]; then
-    suffix=$debug_suffix 
-    wrapper_dir=$debug_wrapper_dir
-  else
-    echo "Sorry, I am confused.  Have you compiled the library ?"
-    echo "It could be my fault - I am just a quick hack:"
-    echo "would you please try installing the Library then ?"
-    echo "That should always work.  Thanks."
-    exit
-  fi
-fi
+suffix=obj/$GNUSTEP_HOST_CPU/$GNUSTEP_HOST_OS/gnu-gnu-gnu/
+wrapper_dir=JavaWrapper/
 
 # Path to the wrapping library classes
 export CLASSPATH=./:../Library/$wrapper_dir/Java/:$CLASSPATH
-# Path to libName.A.so (or libName.A_d.so), the wrapping library
+# Path to NameTest.A.so, the wrapping library
 LD_LIBRARY_PATH=../Library/$wrapper_dir/Objc/$suffix:$LD_LIBRARY_PATH
-# Path to libName.so (or libName_d.so), the real library
+# Path to NameTest.so, the real library
 LD_LIBRARY_PATH=../Library/$suffix:$LD_LIBRARY_PATH
 
 export LD_LIBRARY_PATH
 
-java NameTest
-
+java NameTestApp
 
