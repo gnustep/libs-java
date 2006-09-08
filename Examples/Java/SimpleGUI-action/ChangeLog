@@ -1,3 +1,8 @@
+Fri Sep  8 18:23:25 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* JavaApp/run: Updated library paths to use gnu-gnu-gnu
+	as library combo and ./obj as the obj dir name.
+
 Tue Jul 29 15:15:05 2003  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* WrappingLibrary/Objc/SimpleGUI.m: Updated #include.
