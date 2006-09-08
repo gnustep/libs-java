@@ -1,3 +1,7 @@
+Fri Sep  8 13:30:01 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Java/Base/NSArrayTest.java: Added more info on failure.
+
 Tue Jul 29 15:10:06 2003  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* Objc/main.m: Updated #include to use GNUstepJava as 

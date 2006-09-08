@@ -179,12 +179,14 @@ class NSArrayTest
       }
     else if (one == null || two == null)
       {
+	output += "One array is null and the other one is not";
 	result = false;
       }
     else
       {
 	if (one.length != two.length)
 	  {
+	    output += "Arrays have different lengths";  
 	    result = false;
 	  }
 	else
