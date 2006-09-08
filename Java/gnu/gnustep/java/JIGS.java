@@ -29,13 +29,12 @@ public class JIGS
 {
   static
     {
-      /* The following loads libgnustep-java.so or libgnustep-java_d.so 
-	 according to the environment variable JIGS_DEBUG and to which 
-	 of the two libraries is actually available. */
+      /* The following loads libgnustep-java.so.  */
       JIGSLibraryLoader.initialize ();
-      /* Don't call JIGS.initialize () here to avoid a recursive 
-	 initialization when JIGS is initialized from Objective-C. 
-	 JIGS.initialize () [which is exactly the same as JIGSInit () 
+
+      /* Don't call JIGS.initialize () here to avoid a recursive
+	 initialization when JIGS is initialized from Objective-C.
+	 JIGS.initialize () [which is exactly the same as JIGSInit ()
 	 in objective-C] is called from gnu.gnustep.base.NSObject
       */
     }

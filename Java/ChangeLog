@@ -1,3 +1,10 @@
+Fri Sep  8 14:33:12 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* gnu/gnustep/java/JIGSLibraryLoader.java: Massive simplification:
+	do not load the gnustep-java-loader library; removed all the
+	debug/non-debug checks and code.
+	* gnu/gnustep/java/JIGS.java: Updated comments.
+	
 Mon Jun  4 20:26:52 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* gnu/gnustep/java/JIGSLibraryLoader.java (loadingError): New
