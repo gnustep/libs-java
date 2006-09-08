@@ -161,27 +161,6 @@ void JIGSInit (JNIEnv *env)
     {
       NSAutoreleasePool *pool = [NSAutoreleasePool new]; 
       JavaVM *jvm;
-      /* Now, we know if we are the debugging or the non-debugging
-	 version of gnustep-java, so in case we are being called from
-	 Objc, we force JIGS_DEBUG to respect our debugging or
-	 non-debugging status.
-	 
-	 If this code is being called from Java, this makes no
-	 difference because JIGS_DEBUG has already been used to decide
-	 which library to load, and it's not going to be used again.
-
-	 If this code is being called from ObjC instead, and the user
-	 has not correctly setup JIGS_DEBUG, then the Java
-	 initialization code [which we run when we access
-	 gnu/gnustep/java/JIGS] might be trying for example to load
-	 the non-debugging gnustep-java while we - the debugging
-	 version - are already loaded - crashing the whole thing! */
-#ifdef DEBUG
-      putenv ("JIGS_DEBUG=YES");
-#else
-      putenv ("JIGS_DEBUG=NO");
-#endif
-
       JIGSAutoreleasePoolClass = [NSAutoreleasePool class];
 
       JIGS = GSJNI_NewClassCache (env, "gnu/gnustep/java/JIGS");

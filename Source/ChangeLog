@@ -1,3 +1,29 @@
+Fri Sep  8 14:24:00 2006  Nicola Pero <nicola.pero@meta-innovation.com>
+	
+	* JIGS.h (GNUSTEP_JAVA_VERSION): Updated to 1.5.6
+
+Fri Sep  8 14:23:36 2006  Nicola Pero <nicola.pero@meta-innovation.com>
+
+	* JIGSMapper.m (JIGSJobjectArrayFromNSArray): Fixed creating a
+	Java array from a large NSArray (> 16 elements).  We now delete
+	the local references to each Java element as we go, rather than
+	hoping that the JVM has space for enough local references.
+	(JIGSInitNSArrayFromJobjectArray): Same change.
+
+Fri Sep  8 12:46:13 2006  Nicola Pero <nicola.pero@meta-innovation.com>
+
+	Updates for the simplification in gnustep-make whereby debug
+	and non-debug libs are now the same library.
+	* Source/JIGSInit.m (JIGSInit): Do not set the JIGS_DEBUG
+	environment variable.
+
+	* Source/GNUmakefile (SUBPROJECTS): Removed the 'loader'
+	subproject (used to read the JIGS_DEBUG env variable).
+
+	* loader/: Directory removed.
+	* loader/JIGSLibraryLoader.c: File removed.
+	* loader/GNUmakefile: File removed.
+
 Wed May 16 11:55:00 2004  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* JIGSMapper.m: JIGSIdFromJobject() retain and autorelease where

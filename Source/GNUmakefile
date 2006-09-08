@@ -27,11 +27,9 @@ GNUSTEP_INSTALLATION_DIR=$(GNUSTEP_SYSTEM_ROOT)
 include $(GNUSTEP_MAKEFILES)/common.make
 include $(GNUSTEP_MAKEFILES)/jni.make
 
-SUBPROJECTS = loader
-
 LIBRARY_NAME = libgnustep-java
 
-VERSION = 1.5.5
+VERSION = 1.5.6
 
 libgnustep-java_HEADER_FILES = \
 ObjcRuntimeUtilities.h \
