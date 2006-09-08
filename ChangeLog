@@ -1,3 +1,7 @@
+Fri Sep  8 12:45:03 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+	
+	* GNUmakefile (VERSION): Version 1.5.6.
+
 Mon Aug 25 18:00:00 2003  David Ayers  <d.ayers@inode.at>
 
 	* Examples/Java/SimpleGUI/Library/SimpleGUI.h,
