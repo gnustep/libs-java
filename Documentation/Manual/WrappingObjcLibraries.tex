@@ -44,12 +44,11 @@ directory called
 \begin{verbatim}
 JavaWrapper
 \end{verbatim}
-(or \texttt{JavaWrapper\_debug} if you are compiling with debug
-enabled), and generate inside this directory source code for the
-wrappers.  It will then enter into this directory, and compile the
-wrapper source code (which has just been generated).  If you want more
-details about the wrapping process (which classes and which methods
-are being wrapped), you can use
+and generate inside this directory source code for the wrappers.  It
+will then enter into this directory, and compile the wrapper source
+code (which has just been generated).  If you want more details about
+the wrapping process (which classes and which methods are being
+wrapped), you can use
 \begin{verbatim}
 make verbose=yes
 \end{verbatim}
@@ -276,11 +275,9 @@ library you want to wrap.
 \section{The wrapper directory}
 JIGS generates full code for the java wrappers into a specific
 directory, which we call the wrapper directory.  By default, this
-directory is called \texttt{JavaWrapper} (or
-\texttt{JavaWrapper\_debug} if you are compiling with debugging
-enabled), but you can change the name of the directory by simply
-setting the \texttt{WRAPPER\_DIR\_NAME} variable in your
-\texttt{GNUmakefile}.  This is not very common.
+directory is called \texttt{JavaWrapper} but you can change the name
+of the directory by simply setting the \texttt{WRAPPER\_DIR\_NAME}
+variable in your \texttt{GNUmakefile}.  This is not very common.
 
 To determine if the wrappers are to be rebuilt or not, JIGS keeps a
 stamp file in the wrapper directory.
@@ -633,8 +630,7 @@ For example, in \texttt{gnustep-gui.jigs} there is
 You will probably usually need at least this line.  Please note that
 the library is specified using the simplest possible name; JIGS at
 run-time will add the correct prefixes (\texttt{lib}) and suffixes
-(things like \texttt{\_d} for debug version -- if needed -- and
-\texttt{.A} for the wrappers) to load in the library.
+(\texttt{.A} for the wrappers) to load in the library.
 
 \subsection{Types}
 The wrapper tool can parse and manage a certain set of C types.  For
@@ -685,9 +681,7 @@ make debug=yes
 the wrapper library will also be generated with debugging enabled.
 This means that the GNUmakefiles for the wrapping library will
 always automatically use \texttt{debug=yes} when the wrapping library
-is compiled.  The wrapping code itself will be generated in the
-\texttt{JavaWrapper\_debug} directory rather than in the \texttt{JavaWrapper}, 
-to allow you to keep the two versions.
+is compiled.
 
 \subsection{Turning off the Generation of Quick Reference Doc}
 
