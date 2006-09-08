@@ -6,6 +6,11 @@ Fri Sep  8 18:23:25 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
 	* SimpleGUI-action/JavaApp/run: Same change.
 	* NameTest/JavaApp/run: Same change.
 
+	* NameTest/JavaApp/GNUmakefile (CLASSPATH): Do not add the path
+	with JavaWrapper_debug.
+	* SimpleGUI/JavaApp/GNUmakefile (CLASSPATH): Same change.
+	* SimpleGUI-action/JavaApp/GNUmakefile (CLASSPATH): Same change.
+	
 Mon May 21 02:12:26 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* SimpleGUI/Library/GNUmakefile: Use old-java-wrapper.make.

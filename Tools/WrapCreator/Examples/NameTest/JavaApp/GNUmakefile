@@ -31,6 +31,6 @@ NameTest_JAVA_FILES =  NameTest.java
 
 # The following only to allow to compile before the library classes have been
 # installed
-CLASSPATH:=../Library/JavaWrapper/Java:../Library/JavaWrapper_debug/Java:$(CLASSPATH)
+CLASSPATH:=../Library/JavaWrapper/Java:$(CLASSPATH)
 
 include $(GNUSTEP_MAKEFILES)/java.make
