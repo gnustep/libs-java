@@ -744,7 +744,7 @@ jobjectArray JIGSJobjectArrayFromNSArray (JNIEnv *env, NSArray *array)
 	}
       [array getObjects: gnustepObjects];
 
-      if ((*env)->EnsureLocalCapacity (env, length + 1) < 0)
+      if ((*env)->EnsureLocalCapacity (env, 2) < 0)
 	{
 	  /* Exception thrown */
 	  free (gnustepObjects);
@@ -765,6 +765,7 @@ jobjectArray JIGSJobjectArrayFromNSArray (JNIEnv *env, NSArray *array)
 
 	  object = JIGSJobjectFromId (env, gnustepObjects[i]);
 	  (*env)->SetObjectArrayElement (env, javaArray, i, object);
+	  (*env)->DeleteLocalRef (env, object);
 	}
 
       free (gnustepObjects);
@@ -794,7 +795,7 @@ NSArray *JIGSInitNSArrayFromJobjectArray (JNIEnv *env, NSArray *array,
 	  return nil;
 	}
 
-      if ((*env)->EnsureLocalCapacity (env, length + 1) < 0)
+      if ((*env)->EnsureLocalCapacity (env, 1) < 0)
 	{
 	  /* Exception thrown */
 	  free (gnustepObjects);
@@ -808,6 +809,7 @@ NSArray *JIGSInitNSArrayFromJobjectArray (JNIEnv *env, NSArray *array,
 	  
 	  object = (*env)->GetObjectArrayElement (env, objects, i);
 	  gnustepObjects[i] = JIGSIdFromJobject (env, object);
+	  (*env)->DeleteLocalRef (env, object);
 	}
 
       returnArray = [array initWithObjects: gnustepObjects  count: length];
