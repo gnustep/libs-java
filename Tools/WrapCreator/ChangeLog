@@ -1,3 +1,9 @@
+Sat Sep  9 12:13:42 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* GNUmakefile (after-install): Do not install
+	java-wrapper.top.debug.template (Problem reported by YunSong Hwang
+	<hys545@dreamwiz.com>).
+
 Fri Sep  8 18:33:52 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
 
 	Use JavaWrapper as the name of the JavaWrapper directory no matter
