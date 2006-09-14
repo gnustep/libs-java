@@ -552,9 +552,11 @@ jobject JIGSCreateNewJavaProxy (JNIEnv *env, id object)
 }
 
 // NB: This method could return a global (for objects which are in map
-// tables) or a local (eg for strings) reference; in any case, you are
-// not responsible for freeing the reference so you should not worry.
-jobject JIGSJobjectFromId (JNIEnv *env, id object)
+// tables) or a local (eg for strings) reference; it indicates which sort
+// if reference is being returned in the isLocal flags, so that your code
+// is able to know whether it can safely call DeleteLocalRef() on the
+// returned value.
+jobject JIGSJobjectFromIdIsLocal (JNIEnv *env, id object, BOOL *isLocal)
 {
   // Return object
   jobject ret;
@@ -562,24 +564,28 @@ jobject JIGSJobjectFromId (JNIEnv *env, id object)
   // nil
   if (object == nil)
     {
+      if (isLocal) *isLocal = NO;
       return NULL;
     }
 
   // java.lang.Object
   if ([object isKindOfClass: java_lang_Object])
     {
+      if (isLocal) *isLocal = NO;
       return ((_java_lang_Object *)object)->realObject;
     }
   
   // NSString 
   if ([object isKindOfClass: nsstring])
     {
+      if (isLocal) *isLocal = YES;
       return GSJNI_JStringFromNSString (env, object);
     }
 
   // NSNumber
   if ([object isKindOfClass: nsnumber])
     {
+      if (isLocal) *isLocal = YES;
       return GSJNI_JNumberFromNSNumber (env, object);
     }
   
@@ -587,12 +593,21 @@ jobject JIGSJobjectFromId (JNIEnv *env, id object)
   
   // Something else - check if it already proxied
   ret = _JIGSMapperGetProxyFromProxiedObjc (env, object);
-  if (ret != NULL)
+  if (ret == NULL)
     {
-      return ret;
+      ret = JIGSCreateNewJavaProxy (env, object);
     }
 
-  return JIGSCreateNewJavaProxy (env, object);
+  if (isLocal) *isLocal = NO;	// Proxies are globals references
+  return ret;
+}
+
+// NB: This method could return a global (for objects which are in map
+// tables) or a local (eg for strings) reference; in any case, you are
+// not responsible for freeing the reference so you should not worry.
+jobject JIGSJobjectFromId (JNIEnv *env, id object)
+{
+  return JIGSJobjectFromIdIsLocal (env, object, (BOOL*)0);
 }
 
 id JIGSIdFromJobject (JNIEnv *env, jobject object)
@@ -762,10 +777,14 @@ jobjectArray JIGSJobjectArrayFromNSArray (JNIEnv *env, NSArray *array)
       for (i = 0; i < length; i++)
 	{
 	  jobject object;
+	  BOOL isLocal;
 
-	  object = JIGSJobjectFromId (env, gnustepObjects[i]);
+	  object = JIGSJobjectFromIdIsLocal (env, gnustepObjects[i], &isLocal);
 	  (*env)->SetObjectArrayElement (env, javaArray, i, object);
-	  (*env)->DeleteLocalRef (env, object);
+	  if (isLocal == YES)
+	    {
+	      (*env)->DeleteLocalRef (env, object);
+	    }
 	}
 
       free (gnustepObjects);
