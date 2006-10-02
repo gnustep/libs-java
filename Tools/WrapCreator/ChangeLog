@@ -1,3 +1,8 @@
+Mon Oct  2 15:37:53 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Makefiles/java-wrapper.make (WRAP_CREATOR): Do not use opentool,
+	which is now obsolete.
+
 Sat Sep  9 12:13:42 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
 
 	* GNUmakefile (after-install): Do not install
