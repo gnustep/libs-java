@@ -158,7 +158,7 @@ WRAPPER_HEADER = $(shell $(GNUSTEP_MAKEFILES)/search_header.sh \
                           $(HEADER_FILE) $($(GNUSTEP_INSTANCE)_HEADER_FILES_DIR))
 LIBRARY_HEADER_FLAGS = -I$(dir $(WRAPPER_HEADER))
 
-WRAP_CREATOR = opentool WrapCreator
+WRAP_CREATOR = WrapCreator
 
 # Run WrapCreator in silent mode unless `verbose=yes' was passed on the
 # make command line
