@@ -93,14 +93,14 @@ ifeq ($(GNUSTEP_TYPE),java_wrapper)
 # Targets
 #
 
-before-$(TARGET)-all::
+before-$(GNUSTEP_INSTANCE)-all::
 	@if [ "$(shared)" = "no" ]; then \
 	 echo "* WARNING *: static Java Wrappers are meaningless!";\
 	fi
 
 ifneq ($(BUILD_JAVA_WRAPPER_AUTOMATICALLY),no)
 
-after-$(TARGET)-all::
+after-$(GNUSTEP_INSTANCE)-all::
 	cd $(WRAPPER_DIR); unset MAKEFLAGS; $(MAKE) 
 
 internal-java_wrapper-install_::
@@ -113,7 +113,7 @@ internal-java_wrapper-uninstall_::
 
 else 
 
-after-$(TARGET)-all::
+after-$(GNUSTEP_INSTANCE)-all::
 
 internal-java_wrapper-install_::
 

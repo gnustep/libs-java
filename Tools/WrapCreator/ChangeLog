@@ -1,3 +1,8 @@
+Fri Oct  6 08:36:58 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Makefiles/java-wrapper.make: Use GNUSTEP_INSTANCE, not
+	(obsolete) variable TARGET.
+
 Mon Oct  2 15:37:53 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
 
 	* Makefiles/java-wrapper.make (WRAP_CREATOR): Do not use opentool,
