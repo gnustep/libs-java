@@ -20,8 +20,6 @@
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA. */
 
-GNUSTEP_INSTALLATION_DIR = $(GNUSTEP_SYSTEM_ROOT)
-
 include $(GNUSTEP_MAKEFILES)/common.make
 
 TOOL_NAME = WrapCreator
