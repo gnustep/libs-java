@@ -1,4 +1,8 @@
-Thu Sep 14 14:30:00 2004  Richard Frith-Macdonald  <rfm@gnu.org>
+Mon Oct  9 23:28:18 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* GNUmakefile: Do not set GNUSTEP_INSTALLATION_DIR.
+	
+Thu Sep 14 14:30:00 2006  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* JIGSMapper.m (JIGSJobjectArrayFromNSArray): Fixed problem
 	deallocating something that wasn't a local reference.
