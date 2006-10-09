@@ -24,8 +24,6 @@
 
 include $(GNUSTEP_MAKEFILES)/common.make
 
-GNUSTEP_INSTALLATION_DIR = $(GNUSTEP_USER_ROOT)
-
 JAVA_PACKAGE_NAME = NameTest
 NameTest_JAVA_FILES =  NameTest.java
 
