@@ -1,3 +1,7 @@
+Mon Oct  9 23:28:18 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* GNUmakefile: Do not set GNUSTEP_INSTALLATION_DIR.
+
 Fri Sep  8 14:33:12 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
 
 	* gnu/gnustep/java/JIGSLibraryLoader.java: Massive simplification:
