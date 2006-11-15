@@ -103,6 +103,8 @@ ifneq ($(BUILD_JAVA_WRAPPER_AUTOMATICALLY),no)
 after-$(GNUSTEP_INSTANCE)-all::
 	cd $(WRAPPER_DIR); unset MAKEFLAGS; $(MAKE) 
 
+# FIXME - here we should try to pass around GNUSTEP_INSTALLATION_DOMAIN
+# rather than GNUSTEP_INSTALLATION_DIR !!
 internal-java_wrapper-install_::
 	cd $(WRAPPER_DIR); unset MAKEFLAGS; \
 	$(MAKE) install GNUSTEP_INSTALLATION_DIR=$(GNUSTEP_INSTALLATION_DIR)
