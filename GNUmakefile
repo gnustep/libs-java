@@ -27,6 +27,10 @@ include $(GNUSTEP_MAKEFILES)/common.make
 PACKAGE_NAME = jigs
 # Keep it in sync manually with Source/JIGS.h and Source/GNUmakefile
 VERSION = 1.5.6
+PACKAGE_VERSION = 1.5.6
+SVN_BASE_URL = svn+ssh://svn.gna.org/svn/gnustep/libs
+SVN_MODULE_NAME = java
+
 
 RPM_DISABLE_RELOCATABLE=YES
 
