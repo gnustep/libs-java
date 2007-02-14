@@ -103,8 +103,9 @@ ifneq ($(BUILD_JAVA_WRAPPER_AUTOMATICALLY),no)
 after-$(GNUSTEP_INSTANCE)-all::
 	cd $(WRAPPER_DIR); unset MAKEFLAGS; $(MAKE) 
 
-# FIXME - here we should try to pass around GNUSTEP_INSTALLATION_DOMAIN
-# rather than GNUSTEP_INSTALLATION_DIR !!
+# Depending if GNUSTEP_INSTALLATION_DIR or GNUSTEP_INSTALLATION_DOMAIN
+# is used, pass down the appropriate one to submakes.
+ifneq ($(GNUSTEP_INSTALLATION_DIR),)
 internal-java_wrapper-install_::
 	cd $(WRAPPER_DIR); unset MAKEFLAGS; \
 	$(MAKE) install GNUSTEP_INSTALLATION_DIR=$(GNUSTEP_INSTALLATION_DIR)
@@ -112,6 +113,15 @@ internal-java_wrapper-install_::
 internal-java_wrapper-uninstall_::
 	cd $(WRAPPER_DIR); unset MAKEFLAGS; \
 	$(MAKE) uninstall GNUSTEP_INSTALLATION_DIR=$(GNUSTEP_INSTALLATION_DIR)
+else
+internal-java_wrapper-install_::
+	cd $(WRAPPER_DIR); unset MAKEFLAGS; \
+	$(MAKE) install GNUSTEP_INSTALLATION_DOMAIN=$(GNUSTEP_INSTALLATION_DOMAIN)
+
+internal-java_wrapper-uninstall_::
+	cd $(WRAPPER_DIR); unset MAKEFLAGS; \
+	$(MAKE) uninstall GNUSTEP_INSTALLATION_DOMAIN=$(GNUSTEP_INSTALLATION_DOMAIN)
+endif
 
 else 
 

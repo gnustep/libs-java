@@ -1,3 +1,10 @@
+Web Feb 14 12:36:33 2007  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Makefiles/java-wrapper.make (internal-java_wrapper-install_),
+	(internal-java_wrapper-uninstall_): Pass down
+	GNUSTEP_INSTALLATION_DIR or GNUSTEP_INSTALLATION_DOMAIN depending
+	on which is defined in the current run.
+	
 Mon Oct  9 23:28:18 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
 
 	* GNUmakefile: Do not set GNUSTEP_INSTALLATION_DIR.
