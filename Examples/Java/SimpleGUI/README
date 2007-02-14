@@ -53,7 +53,7 @@ of quick tutorial on how the JIGS works.
 which is a good idea with these test libraries, whenever you need to do a
 make install, do it as follows: 
 
-GNUSTEP_INSTALLATION_DIR=$GNUSTEP_USER_ROOT make install
+GNUSTEP_INSTALLATION_DOMAIN=USER make install
 
 and without becoming root.]
 

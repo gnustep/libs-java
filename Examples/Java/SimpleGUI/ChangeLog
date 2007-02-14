@@ -1,3 +1,8 @@
+Web Feb 14 12:35:32 2007  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* README (GNUSTEP_INSTALLATION_DOMAIN): Mention this instead
+	of GNUSTEP_INSTALLATION_DIR.
+
 Mon Oct  9 23:28:18 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
 
 	* JavaApp/GNUmakefile: Do not set GNUSTEP_INSTALLATION_DIR.
