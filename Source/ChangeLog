@@ -1,3 +1,8 @@
+Fri Nov 30 03:04:27 2007  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* JIGS.h (GNUSTEP_JAVA_VERSION): Updated to 1.5.7
+	* GNUmakefile (VERSION): Updated to 1.5.7
+	
 Mon Oct  9 23:28:18 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
 
 	* GNUmakefile: Do not set GNUSTEP_INSTALLATION_DIR.
