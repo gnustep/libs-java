@@ -1,3 +1,8 @@
+Fri Nov 30 03:04:27 2007  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Manual.dvi, Manual.ps, Manual.ps.gz: New files, added
+	pregenerated so that there is no need to have LaTeX installed.
+
 Fri Sep  8 18:53:50 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
 
 	* WrappingObjcLibraries.tex: Removed all references to
