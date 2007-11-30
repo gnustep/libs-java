@@ -40,7 +40,7 @@ RELEASE_DIR = releases
 
 # NB: "Java" must come before "Source"
 # let Documentation be the last one, so even if it doesn't work,
-# the software is built/installed anyway
+# the software is built/installed all the same
 SUBPROJECTS = Java Source Tools Makefiles Documentation
 
 include $(GNUSTEP_MAKEFILES)/aggregate.make
