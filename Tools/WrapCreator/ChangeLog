@@ -1,3 +1,8 @@
+Fri Nov 30 03:04:27 2007  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* GNUmakefile (JIGS_MAKE_DIR): Replaced deprecated INSTALL_ROOT_DIR with
+	DESTDIR.	
+
 Web Feb 14 12:36:33 2007  Nicola Pero  <nicola.pero@meta-innovation.com>
 
 	* Makefiles/java-wrapper.make (internal-java_wrapper-install_),
