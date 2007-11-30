@@ -36,7 +36,7 @@ check:
 	@echo "Nothing to be done for check"
 
 # Install the Makefiles
-JIGS_MAKE_DIR = $(INSTALL_ROOT_DIR)$(GNUSTEP_MAKEFILES)
+JIGS_MAKE_DIR = $(DESTDIR)$(GNUSTEP_MAKEFILES)
 
 $(JIGS_MAKE_DIR):
 	$(MKINSTALLDIRS) $(JIGS_MAKE_DIR)
