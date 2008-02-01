@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/sh
 #
 # GNUstepJava.sh
 #
@@ -68,6 +68,14 @@ fi
 if [ -z "$JIGS_VM_TYPE" ]; then
   JIGS_VM_TYPE=server;
 fi
+
+# For gnustep-make v2, we need to get the values of all the
+# GNUSTEP_HOST_CPU variable.  This seems to be the most
+# backwards-compatible way of doing it.  In gnustep-make v1, it will
+# just source GNUstep.sh again with no changes.
+GNUSTEP_SH_EXPORT_ALL_VARIABLES=yes
+. $GNUSTEP_MAKEFILES/GNUstep.sh
+unset GNUSTEP_SH_EXPORT_ALL_VARIABLES
 
 # Convert the GNUSTEP_HOST_CPU into JAVA_CPU
 case "$GNUSTEP_HOST_CPU" in
