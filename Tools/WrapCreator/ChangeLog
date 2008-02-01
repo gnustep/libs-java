@@ -1,3 +1,10 @@
+Fri Feb  1 14:26:07 2008  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Makefiles/search_header.sh: Use /bin/sh instead of /bin/bash
+	which might not be available (suggestion from Yury Mishchenko
+	<Yury.Mishchenko@infor.com>).  Updated script for gnustep-make v2.
+	Added missing quoting.
+	
 Fri Nov 30 03:04:27 2007  Nicola Pero  <nicola.pero@meta-innovation.com>
 
 	* GNUmakefile (JIGS_MAKE_DIR): Replaced deprecated INSTALL_ROOT_DIR with
