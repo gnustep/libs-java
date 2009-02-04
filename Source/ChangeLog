@@ -1,3 +1,7 @@
+Wed Feb  4 13:37:34 2009  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* GNUmakefile (NEEDS_GUI): Set to NO.
+
 Fri Nov 30 03:04:27 2007  Nicola Pero  <nicola.pero@meta-innovation.com>
 
 	* JIGS.h (GNUSTEP_JAVA_VERSION): Updated to 1.5.7
