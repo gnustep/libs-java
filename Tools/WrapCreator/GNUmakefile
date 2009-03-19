@@ -30,6 +30,9 @@ WCHeaderParser.m \
 WCClass.m \
 WCMethod.m \
 WCBOOLType.m \
+WCNSIntegerType.m \
+WCNSUIntegerType.m \
+WCCGFloatType.m \
 WCCharType.m \
 WCCustomType.m \
 WCDoubleType.m \

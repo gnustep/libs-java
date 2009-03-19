@@ -32,6 +32,9 @@
 #include "WCIntType.h"
 #include "WCLongType.h"
 #include "WCLongLongType.h"
+#include "WCNSIntegerType.h"
+#include "WCNSUIntegerType.h"
+#include "WCCGFloatType.h"
 #include "WCShortType.h"
 #include "WCMorphType.h"
 #include "WCObjectType.h"
@@ -93,6 +96,18 @@ static const struct morphType
   else if ([name isEqualToString: @"id"] == YES)
     {
       t = [[WCIdType alloc] initWithObjcType: @"id"];
+    }
+  else if ([name isEqualToString: @"NSInteger"] == YES)
+    {
+      t = [[WCNSIntegerType alloc] initWithObjcType: @"NSInteger"];
+    }
+  else if ([name isEqualToString: @"NSUInteger"] == YES)
+    {
+      t = [[WCNSUIntegerType alloc] initWithObjcType: @"NSUInteger"];
+    }
+  else if ([name isEqualToString: @"CGFloat"] == YES)
+    {
+      t = [[WCCGFloatType alloc] initWithObjcType: @"CGFloat"];
     }
   else if ([name isEqualToString: @"BOOL"] == YES)
     {
