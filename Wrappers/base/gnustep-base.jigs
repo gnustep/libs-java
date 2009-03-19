@@ -6,6 +6,8 @@ types = {
   uint32_t = "unsigned long";
   unichar = short;
   UTF32Char = "unsigned long";
+  NSNotificationSuspensionBehavior = int;
+  NSPostingStyle = int;
 };
 
 classes = (

@@ -1,3 +1,17 @@
+Thu Mar 19 11:00:00 2009  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Tools/WrapCreator/WCNSIntegerType.h:
+	* Tools/WrapCreator/WCNSIntegerType.m:
+	* Tools/WrapCreator/WCNSUIntegerType.h:
+	* Tools/WrapCreator/WCNSUIntegerType.m:
+	* Tools/WrapCreator/WCCGFloatType.h:
+	* Tools/WrapCreator/WCCGFloatType.m:
+	* Tools/WrapCreator/GNUmakefile:
+	* Tools/WrapCreator/WCTypeLoader.m:
+	* Wrappers/base/gnustep-base.jigs:
+	Add new types for the MacOS 10.5 API.  The sizes of these types
+	vary depending on the address size of the processor.
+
 Fri Nov 30 03:04:27 2007  Nicola Pero  <nicola.pero@meta-innovation.com>
 
 	* GNUmakefile (VERSION): Version 1.5.7.
