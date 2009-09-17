@@ -1,3 +1,9 @@
+Thu Sep 17 10:00:00 2009  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Tools/WrapCreator/WCHeaderParswer.m:
+	Allow multiple semicolons terminating statement.
+	* GNUmakefile (VERSION): Version 1.5.8.
+
 Thu Mar 19 11:00:00 2009  Richard Frith-Macdonald <rfm@gnu.org>
 
 	* Tools/WrapCreator/WCNSIntegerType.h:
