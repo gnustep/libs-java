@@ -398,7 +398,7 @@ static NSString *trimString (NSString *string)
 	      if ([scanner scanCharactersFromSet: endMethod 
 			   intoString: &string] == YES)
 		{
-		  if ([string isEqualToString: @";"])
+		  if ([string length] > 0)
 		    {
 		      break;
 		    }
@@ -406,7 +406,7 @@ static NSString *trimString (NSString *string)
 		    {
 
 		      [NSException raise: @"WCHeaderParserException"
-				   format: @"Error while parsing the header file"];
+			format: @"Error while parsing the header file"];
 		    }
 		}
 	      argument++;

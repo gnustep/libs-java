@@ -27,7 +27,7 @@ include $(GNUSTEP_MAKEFILES)/jni.make
 
 LIBRARY_NAME = libgnustep-java
 
-VERSION = 1.5.7
+VERSION = 1.5.8
 
 libgnustep-java_HEADER_FILES = \
 ObjcRuntimeUtilities.h \
