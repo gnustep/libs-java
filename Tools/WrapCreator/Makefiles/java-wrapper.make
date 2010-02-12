@@ -171,8 +171,7 @@ endif
 # would be done always - which is more inefficient and would also
 # prevent other targets (eg, make distclean) from working just because
 # the header is not found.
-WRAPPER_HEADER = $(shell $(GNUSTEP_MAKEFILES)/search_header.sh \
-                          $(HEADER_FILE) $($(GNUSTEP_INSTANCE)_HEADER_FILES_DIR))
+WRAPPER_HEADER := $(shell $(GNUSTEP_MAKEFILES)/search_header.sh $(HEADER_FILE) $($(GNUSTEP_INSTANCE)_HEADER_FILES_DIR))
 LIBRARY_HEADER_FLAGS = -I$(dir $(WRAPPER_HEADER))
 
 WRAP_CREATOR = WrapCreator
@@ -191,111 +190,71 @@ endif
 
 JAVA_WRAPPER_TOP_TEMPLATE = java-wrapper.top.template
 
+# These are the messages we want to display.
+
+ifneq ($(messages),yes)
+  ECHO_JIGS_CREATING_WRAPPER_DIRS = @(echo " Creating the wrapper directories and GNUmakefiles...";
+  ECHO_JIGS_COPYING_CUSTOM_GNUMAKEFILES = @(echo " Copying custom GNUmakefiles...";
+  ECHO_JIGS_PREPROCESSING_HEADER_FILE = @(echo " Preprocessing the library header file...";
+  ECHO_JIGS_GENERATING_WRAPPERS = @(echo " Generating wrapper code...";
+else
+  ECHO_JIGS_CREATING_WRAPPER_DIRS = 
+  ECHO_JIGS_COPYING_CUSTOM_GNUMAKEFILES =
+  ECHO_JIGS_PREPROCESSING_HEADER_FILE =
+  ECHO_JIGS_GENERATING_WRAPPERS = 
+endif
+
 internal-java_wrapper-all_:: $(WRAPPER_DIR)/stamp-file
 
 $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE)
-	@if [ -z "$(WRAPPER_HEADER)" ]; then \
+	$(ECHO_JIGS_CREATING_WRAPPER_DIRS)if [ -z "$(WRAPPER_HEADER)" ]; then \
 	  echo "Could not find wrapper header $(HEADER_FILE)"; \
 	  exit 1; \
-	 fi;
-	@echo Creating the Wrapper Directories and GNUmakefiles...
-	@$(MKDIRS) $(WRAPPER_DIR)
-	@cp $(GNUSTEP_MAKEFILES)/$(JAVA_WRAPPER_TOP_TEMPLATE) \
-	                 $(WRAPPER_DIR)/GNUmakefile
-	@cp $(GNUSTEP_MAKEFILES)/java-wrapper.readme.template \
-	                 $(WRAPPER_DIR)/README
-	@$(MKDIRS) $(JAVA_WRAPPER_DIR)
-	@cp $(GNUSTEP_MAKEFILES)/java-wrapper.java.template \
-	                 $(JAVA_WRAPPER_DIR)/GNUmakefile
-	@mv $(JAVA_WRAPPER_DIR)/GNUmakefile $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
-	@sed -e 's/DEBUGHERE/$(debug)/g'           \
-	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp \
-	       > $(JAVA_WRAPPER_DIR)/GNUmakefile
-	@rm $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
-	@mv $(JAVA_WRAPPER_DIR)/GNUmakefile $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
-	@sed -e 's/PROFILEHERE/$(profile)/g'           \
-	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp \
-	        > $(JAVA_WRAPPER_DIR)/GNUmakefile
-	@rm $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
-	@mv $(JAVA_WRAPPER_DIR)/GNUmakefile $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
-	@sed -e 's/JAVADOCHERE/$(javadoc)/g'           \
-	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp \
-	        > $(JAVA_WRAPPER_DIR)/GNUmakefile
-	@rm $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
-	@mv $(JAVA_WRAPPER_DIR)/GNUmakefile $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
-	@sed -e 's/REPLACEME/$(LIBRARY_NAME)/g'           \
-	       $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp \
-	        > $(JAVA_WRAPPER_DIR)/GNUmakefile
-	@rm $(JAVA_WRAPPER_DIR)/GNUmakefile.tmp
-	@$(MKDIRS) $(OBJC_WRAPPER_DIR)
-	@cp $(GNUSTEP_MAKEFILES)/java-wrapper.objc.template \
-	      $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp 
-	@sed -e 's/DEBUGHERE/$(debug)/g'           \
-	       $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp        \
-	        > $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2
-	@rm $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp
-	@sed -e 's/PROFILEHERE/$(profile)/g'           \
-	       $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2        \
-	        > $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp
-	@rm $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2
-	@sed -e 's/VERSIONHERE/$(VERSION)/g'           \
-	       $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp        \
-	        > $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2
-	@rm $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp
-	@sed -e 's/REPLACEME/$(LIBRARY_NAME)/g' \
-	      $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2 \
-	      > $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp
-	@rm $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2
-	@sed -e 's/REPLACEWITHSHORTNAME/$(JAVA_WRAPPER_NAME)/g'  \
-	      $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp   \
-	      > $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2
-	@rm $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp
-	@sed -e 's/REPLACEWITHLIBRARYHEADERFLAGS/$(subst /,\/,$(LIBRARY_HEADER_FLAGS))/g'   \
-	      $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2        \
-	      > $(OBJC_WRAPPER_DIR)/GNUmakefile
-	@rm $(OBJC_WRAPPER_DIR)/GNUmakefile.tmp.2
-	@echo Copying Custom GNUmakefiles...
-	@if [ -f GNUmakefile.wrapper.java.preamble ]; then           \
-	  cp GNUmakefile.wrapper.java.preamble         \
-	                  $(JAVA_WRAPPER_DIR)/GNUmakefile.preamble; \
-        fi;
-	@if [ -f GNUmakefile.wrapper.java.postamble ]; then           \
-	  cp GNUmakefile.wrapper.java.postamble         \
-	                  $(JAVA_WRAPPER_DIR)/GNUmakefile.postamble; \
-        fi;
-	@if [ -f GNUmakefile.wrapper.objc.preamble ]; then           \
-	  cp GNUmakefile.wrapper.objc.preamble         \
-	                  $(OBJC_WRAPPER_DIR)/GNUmakefile.preamble; \
-        fi;
-	@if [ -f GNUmakefile.wrapper.objc.postamble ]; then           \
-	  cp GNUmakefile.wrapper.objc.postamble         \
-	                  $(OBJC_WRAPPER_DIR)/GNUmakefile.postamble; \
-        fi;
-	@echo Running the preprocessor on the header file...
-	$(CC) -x objective-c $(WRAPPER_HEADER) -E -P \
+	 fi; \
+	$(MKDIRS) $(WRAPPER_DIR) $(JAVA_WRAPPER_DIR) $(OBJC_WRAPPER_DIR); \
+	cp $(GNUSTEP_MAKEFILES)/$(JAVA_WRAPPER_TOP_TEMPLATE) $(WRAPPER_DIR)/GNUmakefile; \
+	cp $(GNUSTEP_MAKEFILES)/java-wrapper.readme.template $(WRAPPER_DIR)/README; \
+	cp $(GNUSTEP_MAKEFILES)/java-wrapper.java.template   $(JAVA_WRAPPER_DIR)/GNUmakefile; \
+	sed -i -e 's/DEBUGHERE/$(debug)/g'     -e 's/PROFILEHERE/$(profile)/g' \
+	        -e 's/JAVADOCHERE/$(javadoc)/g' -e 's/REPLACEME/$(LIBRARY_NAME)/g' \
+	        $(JAVA_WRAPPER_DIR)/GNUmakefile; \
+	cp $(GNUSTEP_MAKEFILES)/java-wrapper.objc.template $(OBJC_WRAPPER_DIR)/GNUmakefile; \
+	sed -i -e 's/DEBUGHERE/$(debug)/g'     -e 's/PROFILEHERE/$(profile)/g'    \
+                -e 's/VERSIONHERE/$(VERSION)/g' -e 's/REPLACEME/$(LIBRARY_NAME)/g' \
+                -e 's/REPLACEWITHSHORTNAME/$(JAVA_WRAPPER_NAME)/g'                 \
+                -e 's/REPLACEWITHLIBRARYHEADERFLAGS/$(subst /,\/,$(LIBRARY_HEADER_FLAGS))/g' \
+	     $(OBJC_WRAPPER_DIR)/GNUmakefile$(END_ECHO)
+	$(ECHO_JIGS_COPYING_CUSTOM_GNUMAKEFILES)if [ -f GNUmakefile.wrapper.java.preamble ]; then \
+	  cp GNUmakefile.wrapper.java.preamble $(JAVA_WRAPPER_DIR)/GNUmakefile.preamble; \
+        fi; \
+	if [ -f GNUmakefile.wrapper.java.postamble ]; then           \
+	  cp GNUmakefile.wrapper.java.postamble $(JAVA_WRAPPER_DIR)/GNUmakefile.postamble; \
+        fi; \
+	if [ -f GNUmakefile.wrapper.objc.preamble ]; then           \
+	  cp GNUmakefile.wrapper.objc.preamble  $(OBJC_WRAPPER_DIR)/GNUmakefile.preamble; \
+        fi; \
+	if [ -f GNUmakefile.wrapper.objc.postamble ]; then           \
+	  cp GNUmakefile.wrapper.objc.postamble $(OBJC_WRAPPER_DIR)/GNUmakefile.postamble; \
+        fi;$(END_ECHO)
+	$(ECHO_JIGS_PREPROCESSING_HEADER_FILE)$(CC) -x objective-c $(WRAPPER_HEADER) -E -P \
 	  $(filter-out -MMD -MP, \
 	  $(ALL_CPPFLAGS) $(ALL_OBJCFLAGS)) \
-	  -o $(WRAPPER_DIR)/preprocessedHeader
-	@echo Generating the code with Wrap Creator...
-	$(WRAP_CREATOR) --jigs-file $(JIGS_FILE) \
+	  -o $(WRAPPER_DIR)/preprocessedHeader$(END_ECHO)
+	$(ECHO_JIGS_GENERATING_WRAPPERS)$(WRAP_CREATOR) --jigs-file $(JIGS_FILE) \
 	                --wrapper-dir $(WRAPPER_DIR) \
 	                --preprocessed-header $(WRAPPER_DIR)/preprocessedHeader \
 	                --library-name $(LIBRARY_NAME) \
 	                --library-header $(HEADER_FILE) \
-	                $(SILENT_FLAGS)
-	@echo Removing the temporary preprocessor header...
-	@rm $(WRAPPER_DIR)/preprocessedHeader
-	@echo Creating the stamp file...
-	@touch $(WRAPPER_DIR)/stamp-file
-	@echo 
-	@if [ "$(BUILD_JAVA_WRAPPER_AUTOMATICALLY)" = "no" ]; then           \
+	                $(SILENT_FLAGS)$(END_ECHO)
+	$(ECHO_NOTHING)rm $(WRAPPER_DIR)/preprocessedHeader; \
+	touch $(WRAPPER_DIR)/stamp-file; \
+	if [ "$(BUILD_JAVA_WRAPPER_AUTOMATICALLY)" = "no" ]; then           \
 	  echo "To compile and install the wrapper library, please go into"; \
 	  echo "the $(WRAPPER_DIR) directory,";                              \
 	  echo "and make, make install there.";                              \
 	else                                                                 \
 	  echo "Now automatically compiling the wrapper library for you..."; \
-	fi
-	@echo
+	fi$(END_ECHO)
 
 #
 # Cleaning targets
