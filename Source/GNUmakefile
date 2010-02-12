@@ -27,7 +27,7 @@ include $(GNUSTEP_MAKEFILES)/jni.make
 
 LIBRARY_NAME = libgnustep-java
 
-VERSION = 1.5.8
+VERSION = 1.5.9
 
 libgnustep-java_HEADER_FILES = \
 ObjcRuntimeUtilities.h \
@@ -82,4 +82,3 @@ NEEDS_GUI = NO
 
 include $(GNUSTEP_MAKEFILES)/library.make
 include $(GNUSTEP_MAKEFILES)/aggregate.make
-
