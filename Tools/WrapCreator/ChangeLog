@@ -1,3 +1,14 @@
+2010-02-12  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	Implemented parallelized builds of java wrappers.
+	* Makefiles/java-wrapper.make: Use ECHO_NOTHING and END_ECHO
+	instead of @ in most rules.
+	(after-$(GNUSTEP_INSTANCE)-all, internal-java-wrapper-install_,
+	internal-java-wrapper-uninstall_): Do not unset MAKEFLAGS before
+	running a submake as that prevents a parallel build from staying
+	parallel when compiling the wrappers.  Instead, rewritten the code
+	to manually fire off a Master invocation.
+	
 Fri Feb  1 14:26:07 2008  Nicola Pero  <nicola.pero@meta-innovation.com>
 
 	* Makefiles/search_header.sh: Use /bin/sh instead of /bin/bash

@@ -3,9 +3,9 @@
 #
 #   Makefile rules to build a java wrapper for a GNUstep base library.
 #
-#   Copyright (C) 2000, 2001 Free Software Foundation, Inc.
+#   Copyright (C) 2000 - 2010 Free Software Foundation, Inc.
 #
-#   Author:  Nicola Pero <n.pero@mi.flashnet.it>
+#   Author:  Nicola Pero <nicola.pero@meta-innovation.com>
 #
 #   This file is part of JIGS, the GNUstep Java Interface
 #
@@ -20,7 +20,7 @@
 #   59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 #
-# You need gnustep-make > 1.3.0 to run this file!
+# You need gnustep-make > 2.2.0 to run this file!
 #
 
 #
@@ -79,11 +79,11 @@ internal-uninstall:: $(JAVA_WRAPPER_NAME:=.uninstall.java-wrapper.variables)
 internal-clean:: $(JAVA_WRAPPER_NAME:=.clean.java-wrapper.variables)
 
 internal-distclean:: $(JAVA_WRAPPER_NAME:=.distclean.java-wrapper.subprojects)
-	-rm -Rf JavaWrapper
+	-$(ECHO_NOTHING)rm -Rf JavaWrapper$(END_ECHO)
 
 java-wrapper-make::
-	@$(MAKE) -f $(MAKEFILE_NAME) --no-print-directory \
-		$@.all.java-wrapper.variables
+	$(ECHO_NOTHING)$(MAKE) -f $(MAKEFILE_NAME) --no-print-directory \
+		$@.all.java-wrapper.variables$(END_ECHO)
 
 else
 
@@ -94,34 +94,39 @@ ifeq ($(GNUSTEP_TYPE),java_wrapper)
 #
 
 before-$(GNUSTEP_INSTANCE)-all::
-	@if [ "$(shared)" = "no" ]; then \
+	$(ECHO_NOTHING)if [ "$(shared)" = "no" ]; then \
 	 echo "* WARNING *: static Java Wrappers are meaningless!";\
-	fi
+	fi$(END_ECHO)
 
 ifneq ($(BUILD_JAVA_WRAPPER_AUTOMATICALLY),no)
 
+# The following is tricky.  We are in an Instance invocation, and
+# we're trying to fire a new Master invocation.  We remove all the
+# Instance invocation flags.  Maybe gnustep-make could provide an API
+# for this ?
 after-$(GNUSTEP_INSTANCE)-all::
-	cd $(WRAPPER_DIR); unset MAKEFLAGS; $(MAKE) 
+	$(ECHO_NOTHING)$(MAKE) -C $(WRAPPER_DIR) -f $(MAKEFILE_NAME) --no-keep-going all \
+	  GNUSTEP_TYPE= \
+	  GNUSTEP_INSTANCE= \
+	  GNUSTEP_OPERATION= \
+	  GNUSTEP_BUILD_DIR="$(GNUSTEP_BUILD_DIR)" \
+	  _GNUSTEP_MAKE_PARALLEL=no$(END_ECHO)
 
-# Depending if GNUSTEP_INSTALLATION_DIR or GNUSTEP_INSTALLATION_DOMAIN
-# is used, pass down the appropriate one to submakes.
-ifneq ($(GNUSTEP_INSTALLATION_DIR),)
 internal-java_wrapper-install_::
-	cd $(WRAPPER_DIR); unset MAKEFLAGS; \
-	$(MAKE) install GNUSTEP_INSTALLATION_DIR=$(GNUSTEP_INSTALLATION_DIR)
+	$(ECHO_NOTHING)$(MAKE) -C $(WRAPPER_DIR) -f $(MAKEFILE_NAME) --no-keep-going install \
+	  GNUSTEP_TYPE= \
+	  GNUSTEP_INSTANCE= \
+	  GNUSTEP_OPERATION= \
+	  GNUSTEP_BUILD_DIR="$(GNUSTEP_BUILD_DIR)" \
+	  _GNUSTEP_MAKE_PARALLEL=no$(END_ECHO)
 
 internal-java_wrapper-uninstall_::
-	cd $(WRAPPER_DIR); unset MAKEFLAGS; \
-	$(MAKE) uninstall GNUSTEP_INSTALLATION_DIR=$(GNUSTEP_INSTALLATION_DIR)
-else
-internal-java_wrapper-install_::
-	cd $(WRAPPER_DIR); unset MAKEFLAGS; \
-	$(MAKE) install GNUSTEP_INSTALLATION_DOMAIN=$(GNUSTEP_INSTALLATION_DOMAIN)
-
-internal-java_wrapper-uninstall_::
-	cd $(WRAPPER_DIR); unset MAKEFLAGS; \
-	$(MAKE) uninstall GNUSTEP_INSTALLATION_DOMAIN=$(GNUSTEP_INSTALLATION_DOMAIN)
-endif
+	$(ECHO_NOTHING)$(MAKE) -C $(WRAPPER_DIR) -f $(MAKEFILE_NAME) --no-keep-going uninstall \
+	  GNUSTEP_TYPE= \
+	  GNUSTEP_INSTANCE= \
+	  GNUSTEP_OPERATION= \
+	  GNUSTEP_BUILD_DIR="$(GNUSTEP_BUILD_DIR)" \
+	  _GNUSTEP_MAKE_PARALLEL=no$(END_ECHO)
 
 else 
 
@@ -154,9 +159,9 @@ LIBRARY_NAME = lib$(JAVA_WRAPPER_NAME)
 
 # The header file - please note that you can only use a single one
 ifeq ($($(GNUSTEP_INSTANCE)_HEADER_FILES),)
-HEADER_FILE = $(JAVA_WRAPPER_NAME).h
+  HEADER_FILE = $(JAVA_WRAPPER_NAME).h
 else
-HEADER_FILE = $($(GNUSTEP_INSTANCE)_HEADER_FILES)
+  HEADER_FILE = $($(GNUSTEP_INSTANCE)_HEADER_FILES)
 endif
 
 # Try to find the header file - WRAPPER_HEADER is the full absolute
@@ -184,7 +189,7 @@ ifeq ($(javadoc), no)
   SILENT_FLAGS += --no-javadoc
 endif
 
-JAVA_WRAPPER_TOP_TEMPLATE=java-wrapper.top.template
+JAVA_WRAPPER_TOP_TEMPLATE = java-wrapper.top.template
 
 internal-java_wrapper-all_:: $(WRAPPER_DIR)/stamp-file
 
@@ -296,7 +301,7 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE)
 # Cleaning targets
 #
 internal-java_wrapper-clean::
-	rm -Rf $(WRAPPER_DIR)
+	$(ECHO_NOTHING)rm -Rf $(WRAPPER_DIR)$(END_ECHO)
 
 endif # Instance java_wrapper code
 
@@ -305,5 +310,3 @@ endif # Instance invocation
 ## Local variables:
 ## mode: makefile
 ## End:
-
-
