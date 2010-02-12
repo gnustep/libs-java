@@ -1,3 +1,12 @@
+2010-02-12  Nicola Pero  <nicola@nicola.brainstorm.co.uk>
+
+	* Makefiles/java-wrapper.make ($(WRAPPER_DIR)/stamp-file):
+	Rewritten the rule to reduce the number of subprocesses and steps
+	required and print friendly messages.  New variables implementing
+	messages to print.  Display detailed information only if
+	messages=yes is being used.
+	(WRAPPER_HEADER): Use := to avoid spawning multiple subprocesses.
+	
 2010-02-12  Nicola Pero  <nicola.pero@meta-innovation.com>
 
 	Implemented parallelized builds of java wrappers.
