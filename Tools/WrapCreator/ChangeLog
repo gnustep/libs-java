@@ -1,5 +1,17 @@
 2010-02-13  Nicola Pero  <nicola.pero@meta-innovation.com>
 
+	* Makefiles/java-wrapper.make ($(WRAPPER_DIR)/stamp-file): Do not
+	substitute debug and profile when creating the GNUmakefiles for
+	Java and ObjC.
+	* Makefiles/java-wrapper.objc.template (debug, profile): Do not
+	set.
+	* Makefiles/java-wrapper.java.template (debug, profile): Do not
+	set.  (Reference_JAVADOC_FILES): Set from JW_FILE_LIST instead of
+	using a subshell. (Reference_JAVADOC_FILES,
+	Reference_DOC_INSTALL_DIR): Only set if javadoc is not no.
+
+2010-02-13  Nicola Pero  <nicola.pero@meta-innovation.com>
+
 	* Makefiles/java-wrapper.top.template: Set
 	GNUSTEP_USE_PARALLEL_AGGREGATE = yes.
 
