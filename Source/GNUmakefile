@@ -81,4 +81,4 @@ ADDITIONAL_OBJCFLAGS += -Wall
 NEEDS_GUI = NO
 
 include $(GNUSTEP_MAKEFILES)/library.make
-include $(GNUSTEP_MAKEFILES)/aggregate.make
+

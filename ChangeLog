@@ -1,6 +1,7 @@
 2010-02-13  Nicola Pero  <nicola.pero@meta-innovation.com>
 
 	* Makefiles/GNUmakefile: Rewritten.
+	* Source/GNUmakefile: Do not include aggregate.make.
 	
 2010-02-13  Nicola Pero  <nicola.pero@meta-innovation.com>
 
