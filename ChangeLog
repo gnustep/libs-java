@@ -79,7 +79,7 @@
 	
 Thu Sep 17 10:00:00 2009  Richard Frith-Macdonald <rfm@gnu.org>
 
-	* Tools/WrapCreator/WCHeaderParwer.m: Allow multiple semicolons
+	* Tools/WrapCreator/WCHeaderParser.m: Allow multiple semicolons
 	terminating statement.
 	* GNUmakefile (VERSION): Version 1.5.8.
 
