@@ -29,4 +29,3 @@ JAVA_WRAPPER_NAME = gnustep-base
 gnustep-base_HEADER_FILES = gnustep-base.h
 
 include $(GNUSTEP_MAKEFILES)/java-wrapper.make
-
