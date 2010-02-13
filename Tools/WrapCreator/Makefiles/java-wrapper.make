@@ -215,12 +215,10 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE)
 	cp $(GNUSTEP_MAKEFILES)/$(JAVA_WRAPPER_TOP_TEMPLATE) $(WRAPPER_DIR)/GNUmakefile; \
 	cp $(GNUSTEP_MAKEFILES)/java-wrapper.readme.template $(WRAPPER_DIR)/README; \
 	cp $(GNUSTEP_MAKEFILES)/java-wrapper.java.template   $(JAVA_WRAPPER_DIR)/GNUmakefile; \
-	sed -i -e 's/DEBUGHERE/$(debug)/g'     -e 's/PROFILEHERE/$(profile)/g' \
-	        -e 's/JAVADOCHERE/$(javadoc)/g' -e 's/REPLACEME/$(LIBRARY_NAME)/g' \
+	sed -i -e 's/JAVADOCHERE/$(javadoc)/g' -e 's/REPLACEME/$(LIBRARY_NAME)/g' \
 	        $(JAVA_WRAPPER_DIR)/GNUmakefile; \
 	cp $(GNUSTEP_MAKEFILES)/java-wrapper.objc.template $(OBJC_WRAPPER_DIR)/GNUmakefile; \
-	sed -i -e 's/DEBUGHERE/$(debug)/g'     -e 's/PROFILEHERE/$(profile)/g'    \
-                -e 's/VERSIONHERE/$(VERSION)/g' -e 's/REPLACEME/$(LIBRARY_NAME)/g' \
+	sed -i  -e 's/VERSIONHERE/$(VERSION)/g' -e 's/REPLACEME/$(LIBRARY_NAME)/g' \
                 -e 's/REPLACEWITHSHORTNAME/$(JAVA_WRAPPER_NAME)/g'                 \
                 -e 's/REPLACEWITHLIBRARYHEADERFLAGS/$(subst /,\/,$(LIBRARY_HEADER_FLAGS))/g' \
 	     $(OBJC_WRAPPER_DIR)/GNUmakefile$(END_ECHO)
