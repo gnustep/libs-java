@@ -1,5 +1,9 @@
 2010-02-13  Nicola Pero  <nicola.pero@meta-innovation.com>
 
+	* GNUmakefile (after-install): Rewritten to be standard and efficient.
+	
+2010-02-13  Nicola Pero  <nicola.pero@meta-innovation.com>
+
 	* Makefiles/java-wrapper.make ($(WRAPPER_DIR)/stamp-file): Do not
 	substitute debug and profile when creating the GNUmakefiles for
 	Java and ObjC.

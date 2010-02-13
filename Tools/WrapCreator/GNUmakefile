@@ -61,11 +61,10 @@ include $(GNUSTEP_MAKEFILES)/tool.make
 # Install the Makefiles
 JIGS_MAKE_DIR = $(DESTDIR)$(GNUSTEP_MAKEFILES)
 after-install::
-	$(MKINSTALLDIRS) $(JIGS_MAKE_DIR)
-	$(INSTALL_DATA) Makefiles/java-wrapper.make $(JIGS_MAKE_DIR)
-	$(INSTALL_DATA) Makefiles/java-wrapper.top.template $(JIGS_MAKE_DIR)
-	$(INSTALL_DATA) Makefiles/java-wrapper.readme.template $(JIGS_MAKE_DIR)
-	$(INSTALL_DATA) Makefiles/java-wrapper.objc.template $(JIGS_MAKE_DIR)
-	$(INSTALL_DATA) Makefiles/java-wrapper.java.template $(JIGS_MAKE_DIR)
-	$(INSTALL_DATA) Makefiles/search_header.sh $(JIGS_MAKE_DIR)
-	chmod a+x $(JIGS_MAKE_DIR)/search_header.sh
+	$(ECHO_NOTHING)$(MKINSTALLDIRS) $(JIGS_MAKE_DIR); \
+	$(INSTALL_DATA) Makefiles/java-wrapper.make \
+	                Makefiles/java-wrapper.top.template \
+	                Makefiles/java-wrapper.readme.template \
+	                Makefiles/java-wrapper.objc.template \
+	                Makefiles/java-wrapper.java.template $(JIGS_MAKE_DIR); \
+	$(INSTALL_PROGRAM) -m 755 Makefiles/search_header.sh $(JIGS_MAKE_DIR)$(END_ECHO)
