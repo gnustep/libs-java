@@ -1,8 +1,8 @@
 #
-#  Copyright (C) 2001 Free Software Foundation, Inc.
+#  Copyright (C) 2001 - 2010 Free Software Foundation, Inc.
 #
-#  Author:  Nicola Pero <nicola@brainstorm.co.uk>
-#  Date: June 2001
+#  Author:  Nicola Pero <nicola.pero@meta-innovation.com>
+#  Date: June 2001 - February 2010
 #   
 #  This file is part of GNUstep.
 #   
@@ -22,34 +22,27 @@
 
 include $(GNUSTEP_MAKEFILES)/common.make
 
-all:
-	@echo "Nothing to be done for all"
+all::
 
-clean:
-	@echo "Nothing to be done for clean"
+clean::
 
-distclean:
-	@echo "Making distclean..."
-	-rm -f *~
+distclean::
+	-$(ECHO_NOTHING)rm -f *~$(END_ECHO)
 
-check:
-	@echo "Nothing to be done for check"
+check::
 
 # Install the Makefiles
 JIGS_MAKE_DIR = $(DESTDIR)$(GNUSTEP_MAKEFILES)
 
 $(JIGS_MAKE_DIR):
-	$(MKINSTALLDIRS) $(JIGS_MAKE_DIR)
+	$(ECHO_CREATING)$(MKINSTALLDIRS) $@$(END_ECHO)
 
-install: $(JIGS_MAKE_DIR)
-	@echo "Installing GNUstep-Java.sh and jigs.make..."
-	$(INSTALL_DATA) GNUstep-Java.sh $(JIGS_MAKE_DIR)
-	chmod a+x $(JIGS_MAKE_DIR)/GNUstep-Java.sh
-	$(INSTALL_DATA) jigs.make       $(JIGS_MAKE_DIR)
-
-uninstall:
-	@echo "Uninstalling GNUstep-Java.sh and jigs.make..."
-	rm $(JIGS_MAKE_DIR)/GNUstep-Java.sh
-	rm $(JIGS_MAKE_DIR)/jigs.make
+install:: $(JIGS_MAKE_DIR)
+	$(ECHO_NOTHING)$(INSTALL_DATA) jigs.make $(JIGS_MAKE_DIR); \
+	$(INSTALL_PROGRAM) -m 755 GNUstep-Java.sh $(JIGS_MAKE_DIR)$(END_ECHO)
 
 
+uninstall::
+	$(ECHO_NOTHING)rm -f $(JIGS_MAKE_DIR)/GNUstep-Java.sh $(JIGS_MAKE_DIR)/jigs.make$(END_ECHO)
+
+include $(GNUSTEP_MAKEFILES)/rules.make
