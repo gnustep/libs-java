@@ -1,4 +1,9 @@
-2010-02-12  Nicola Pero  <nicola@nicola.brainstorm.co.uk>
+2010-02-13  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Makefiles/java-wrapper.top.template: Set
+	GNUSTEP_USE_PARALLEL_AGGREGATE = yes.
+
+2010-02-12  Nicola Pero  <nicola.pero@meta-innovation.com>
 
 	* Makefiles/java-wrapper.make ($(WRAPPER_DIR)/stamp-file):
 	Rewritten the rule to reduce the number of subprocesses and steps
