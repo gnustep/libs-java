@@ -1,3 +1,47 @@
+2010-02-13  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	Use a single ChangeLog for the entire project.
+	* ChangeLog: Added all old entries from all other ChangeLogs.
+	* Java/ChangeLog: Removed.
+	* Source/ChangeLog: Removed.
+	* Makefiles/ChangeLog: Removed.
+	* Tools/ChangeLog: Removed.
+	* Tools/WrapCreator/ChangeLog: Removed.
+	* Tools/WrapCreator/Examples/ChangeLog: Removed.
+	* Wrappers/ChangeLog: Removed.
+	* Wrappers/base/ChangeLog: Removed.
+	* Wrappers/gui/ChangeLog: Removed.
+	* Wrappers/libFoundation/ChangeLog: Removed.
+	* Documentation/ChangeLog: Removed.
+	* Documentation/Manual/ChangeLog: Removed.
+	* Testing/ChangeLog: Removed.
+	* Examples/Java/SimpleGUI/ChangeLog: Removed.	
+	* Examples/Java/SimpleGUI-action/ChangeLog: Removed.
+	
+2010-02-13  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Tools/WrapCreator/GNUmakefile (after-install): Rewritten to be
+	standard and efficient.
+	
+2010-02-13  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make
+	($(WRAPPER_DIR)/stamp-file): Do not substitute debug and profile
+	when creating the GNUmakefiles for Java and ObjC.
+	* Tools/WrapCreator/Makefiles/java-wrapper.objc.template (debug,
+	profile): Do not set.
+	* Tools/WrapCreator/Makefiles/java-wrapper.java.template (debug,
+	profile): Do not set.  (Reference_JAVADOC_FILES): Set from
+	JW_FILE_LIST instead of using a
+	subshell. (Reference_JAVADOC_FILES, Reference_DOC_INSTALL_DIR):
+	Only set if javadoc is not no.
+
+2010-02-13  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.top.template: Set
+	GNUSTEP_USE_PARALLEL_AGGREGATE = yes to build the Java and ObjC
+	parts of the wrappers in parallel.
+	
 2010-02-12  Nicola Pero  <nicola.pero@meta-innovation.com>
 
 	Version 1.5.9 includes new wrapper makefiles that support parallel
@@ -6,7 +50,33 @@
 	* GNUmakefile (VERSION): Version 1.5.9
 	* Source/GNUmakefile: Version 1.5.9.
 	* Source/JIGS.h: Version 1.5.9.
+	
+2010-02-12  Nicola Pero  <nicola.pero@meta-innovation.com>
 
+	* Tools/WrapCreator/Makefiles/java-wrapper.make
+	($(WRAPPER_DIR)/stamp-file): Rewritten the rule to reduce the
+	number of subprocesses and steps required and print friendly
+	messages.  New variables implementing messages to print.  Display
+	detailed information only if messages=yes is being used.
+	(WRAPPER_HEADER): Use := to avoid spawning multiple subprocesses.
+	
+2010-02-12  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	Implemented parallelized builds of java wrappers.
+	* Tools/WrapCreator/Makefiles/java-wrapper.make: Use ECHO_NOTHING
+	and END_ECHO instead of @ in most rules.
+	(after-$(GNUSTEP_INSTANCE)-all, internal-java-wrapper-install_,
+	internal-java-wrapper-uninstall_): Do not unset MAKEFLAGS before
+	running a submake as that prevents a parallel build from staying
+	parallel when compiling the wrappers.  Instead, rewritten the code
+	to manually fire off a Master invocation.
+
+2010-02-11  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Source/GNUmakefile ($(GNUSTEP_OBJ_DIR)/NSObject.o): Removed
+	explicit dependency rule on header file - modern gnustep-makes
+	automatically compute dependencies on headers.
+	
 Thu Sep 17 10:00:00 2009  Richard Frith-Macdonald <rfm@gnu.org>
 
 	* Tools/WrapCreator/WCHeaderParwer.m: Allow multiple semicolons
@@ -27,6 +97,28 @@ Thu Mar 19 11:00:00 2009  Richard Frith-Macdonald <rfm@gnu.org>
 	Add new types for the MacOS 10.5 API.  The sizes of these types
 	vary depending on the address size of the processor.
 
+Wed Feb  4 13:37:34 2009  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Source/GNUmakefile (NEEDS_GUI): Set to NO.
+
+Fri Feb  1 14:26:07 2008  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Makefiles/GNUstep-Java.sh: Use /bin/sh instead of /bin/bash
+	which might not be available (suggestion from Yury Mishchenko
+	<Yury.Mishchenko@infor.com>).  Updated script for gnustep-make v2.
+
+Fri Feb  1 14:26:07 2008  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Tools/WrapCreator/Makefiles/search_header.sh: Use /bin/sh
+	instead of /bin/bash which might not be available (suggestion from
+	Yury Mishchenko <Yury.Mishchenko@infor.com>).  Updated script for
+	gnustep-make v2.  Added missing quoting.
+
+Fri Nov 30 03:04:27 2007  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Source/JIGS.h (GNUSTEP_JAVA_VERSION): Updated to 1.5.7
+	* Source/GNUmakefile (VERSION): Updated to 1.5.7
+	
 Fri Nov 30 03:04:27 2007  Nicola Pero  <nicola.pero@meta-innovation.com>
 
 	* GNUmakefile (VERSION): Version 1.5.7.
@@ -34,14 +126,263 @@ Fri Nov 30 03:04:27 2007  Nicola Pero  <nicola.pero@meta-innovation.com>
 	obsolete.
 	* make-release: Updated to take the release from subversion, not
 	cvs.
+
+Fri Nov 30 03:04:27 2007  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Documentation/Manual/Manual.dvi, Documentation/Manual/Manual.ps,
+	Documentation/Manual/Manual.ps.gz: New files, added pregenerated
+	so that there is no need to have LaTeX installed.
+
+Fri Nov 30 03:04:27 2007  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Makefiles/GNUmakefile (JIGS_MAKE_DIR): Replaced deprecated
+	INSTALL_ROOT_DIR with DESTDIR.
+
+Fri Nov 30 03:04:27 2007  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Tools/WrapCreator/GNUmakefile (JIGS_MAKE_DIR): Replaced
+	deprecated INSTALL_ROOT_DIR with DESTDIR.
+	
+Web Feb 14 12:36:33 2007  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make
+	(internal-java_wrapper-install_),
+	(internal-java_wrapper-uninstall_): Pass down
+	GNUSTEP_INSTALLATION_DIR or GNUSTEP_INSTALLATION_DOMAIN depending
+	on which is defined in the current run.	
+
+Web Feb 14 12:35:32 2007  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Examples/Java/SimpleGUI/README (GNUSTEP_INSTALLATION_DOMAIN):
+	Mention this instead of GNUSTEP_INSTALLATION_DIR.
+
+2006-10-09  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Wrappers/base/GNUmakefile: Do not set GNUSTEP_INSTALLATION_DIR.
+
+2006-10-09  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Wrappers/gui/GNUmakefile: Do not set GNUSTEP_INSTALLATION_DIR.
+
+2006-10-09  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Wrappers/libFoundation/GNUmakefile: Do not set
+	GNUSTEP_INSTALLATION_DIR.
+	
+Mon Oct  9 23:28:18 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Java/GNUmakefile: Do not set GNUSTEP_INSTALLATION_DIR.
 	
 Mon Oct  9 23:28:18 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
 
 	* GNUmakefile: Do not set GNUSTEP_INSTALLATION_DIR.
 
+Mon Oct  9 23:28:18 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Examples/Java/SimpleGUI/JavaApp/GNUmakefile: Do not set
+	GNUSTEP_INSTALLATION_DIR.
+
+Mon Oct  9 23:28:18 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Source/GNUmakefile: Do not set GNUSTEP_INSTALLATION_DIR.
+
+Mon Oct  9 23:28:18 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Tools/WrapCreator/GNUmakefile: Do not set
+	GNUSTEP_INSTALLATION_DIR.
+
+Mon Oct  9 23:28:18 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Examples/Java/SimpleGUI-action/JavaApp/GNUmakefile: Do not set
+	GNUSTEP_INSTALLATION_DIR.
+
+Mon Oct  9 23:28:18 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Tools/WrapCreator/Examples/NameTest/JavaApp/GNUmakefile: Do not
+	set GNUSTEP_INSTALLATION_DIR.
+	* Tools/WrapCreator/Examples/SimpleGUI-action/JavaApp/GNUmakefile:
+	Same change.
+	* Tools/WrapCreator/Examples/SimpleGUI/JavaApp/GNUmakefile: Same
+	change.
+	
+Fri Oct  6 08:36:58 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make: Use
+	GNUSTEP_INSTANCE, not
+	(obsolete) variable TARGET.
+
+Mon Oct  2 15:37:53 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make (WRAP_CREATOR): Do
+	not use opentool, which is now obsolete.
+	
+Thu Sep 14 14:30:00 2006  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* Source/JIGSMapper.m (JIGSJobjectArrayFromNSArray): Fixed problem
+	deallocating something that wasn't a local reference.
+
+Sat Sep  9 12:13:42 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Tools/WrapCreator/GNUmakefile (after-install): Do not install
+	java-wrapper.top.debug.template (Problem reported by YunSong Hwang
+	<hys545@dreamwiz.com>).
+
+Fri Sep  8 18:53:50 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Documentation/Manual/WrappingObjcLibraries.tex: Removed all
+	references to JavaWrapper_debug and to debug builds having
+	different names or directories than normal builds.
+	* Documentation/Manual/Manual/: Regenerated.
+
+Fri Sep  8 18:33:52 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	Use JavaWrapper as the name of the JavaWrapper directory no matter
+	if we're building with debug enabled or not.
+	* Tools/WrapCreator/Makefiles/java-wrapper.make
+	(internal-distclean): Do not remove the JavaWrapper_debug
+	directories and similar ones.
+	(JIGS_LONG_SUFFIX): Variable removed.
+	(WRAPPER_DIR_NAME): Do not append JIGS_LONG_SUFFIX.
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make
+	(JAVA_WRAPPER_TOP_TEMPLATE): Always use the same template no
+	matter if debug is enabled or not.
+	* Tools/WrapCreator/Makefiles/java-wrapper.top.debug.template:
+	File removed.
+
+Fri Sep  8 18:23:25 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Examples/Java/SimpleGUI-action/JavaApp/run: Updated library
+	paths to use gnu-gnu-gnu as library combo and ./obj as the obj dir
+	name.
+	
+Fri Sep  8 18:23:25 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Tools/WrapCreator/Examples/SimpleGUI/JavaApp/run: Updated
+	library paths to use gnu-gnu-gnu as library combo, ./obj as the
+	obj dir name, and JavaWrapper as the java wrapper name.
+	* Tools/WrapCreator/Examples/SimpleGUI-action/JavaApp/run: Same
+	change.
+	* Tools/WrapCreator/Examples/NameTest/JavaApp/run: Same change.
+
+	* Tools/WrapCreator/Examples/NameTest/JavaApp/GNUmakefile
+	(CLASSPATH): Do not add the path with JavaWrapper_debug.
+	* Tools/WrapCreator/Examples/SimpleGUI/JavaApp/GNUmakefile
+	(CLASSPATH): Same change.
+	* Tools/WrapCreator/Examples/SimpleGUI-action/JavaApp/GNUmakefile
+	(CLASSPATH): Same change.
+	
+Fri Sep  8 18:23:25 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Examples/Java/SimpleGUI/JavaApp/run: Updated library paths to
+	use gnu-gnu-gnu as library combo and ./obj as the obj dir name.
+
+Fri Sep  8 14:33:12 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Java/gnu/gnustep/java/JIGSLibraryLoader.java: Massive
+	simplification: do not load the gnustep-java-loader library;
+	removed all the debug/non-debug checks and code.
+	* Java/gnu/gnustep/java/JIGS.java: Updated comments.
+	
+Fri Sep  8 14:24:00 2006  Nicola Pero <nicola.pero@meta-innovation.com>
+	
+	* Source/JIGS.h (GNUSTEP_JAVA_VERSION): Updated to 1.5.6
+	
+Fri Sep  8 14:23:36 2006  Nicola Pero <nicola.pero@meta-innovation.com>
+
+	* Source/JIGSMapper.m (JIGSJobjectArrayFromNSArray): Fixed
+	creating a Java array from a large NSArray (> 16 elements).  We
+	now delete the local references to each Java element as we go,
+	rather than hoping that the JVM has space for enough local
+	references.
+	(JIGSInitNSArrayFromJobjectArray): Same change.
+
+Fri Sep  8 13:55:09 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Makefiles/GNUstep-Java.sh (jre_lib): Updated from 'classic' to
+	'server' to work with JDK 1.5.0.	
+
+Fri Sep  8 13:30:01 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+	
+	* Testing/Java/Base/NSArrayTest.java: Added more info on failure.	
+	
+Fri Sep  8 12:46:13 2006  Nicola Pero <nicola.pero@meta-innovation.com>
+
+	Updates for the simplification in gnustep-make whereby debug
+	and non-debug libs are now the same library.
+	* Source/Source/JIGSInit.m (JIGSInit): Do not set the JIGS_DEBUG
+	environment variable.
+
+	* Source/Source/GNUmakefile (SUBPROJECTS): Removed the 'loader'
+	subproject (used to read the JIGS_DEBUG env variable).
+
+	* Source/loader/: Directory removed.
+	* Source/loader/JIGSLibraryLoader.c: File removed.
+	* Source/loader/GNUmakefile: File removed.
+
 Fri Sep  8 12:45:03 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
 	
 	* GNUmakefile (VERSION): Version 1.5.6.
+	
+Fri Sep  8 12:37:41 2006  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* Documentation/Manual/WrappingObjcLibraries.tex
+	(subsection{Debugging or Non-Debugging}): Section removed.
+	* Documentation/Manual/AccessingJavaFromObjc.tex: Removed
+	reference to gnustep-java-loader.
+	* Documentation/Manual/Manual/: Regenerated.
+	
+2005-11-10  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Wrappers/base/gnustep-base.jigs: GSMimeDocument update. Added
+	GSXMLRPC
+
+2005-03-09  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Wrappers/base/gnustep-base.jigs: NSCharacterSets update.
+
+2005-02-29  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Wrappers/base/gnustep-base.jigs: remove NSPort close method
+	(doesn't exist).
+	
+Mon Sep 27 14:36:12 2004  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Wrappers/base/gnustep-base.jigs (NSRunLoop): Removed -init
+	initializer which does not exist.
+
+Wed May 16 11:55:00 2004  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* Source/JIGSMapper.m: JIGSIdFromJobject() retain and autorelease
+	where necessary ... the previous modification missed a case.
+
+Wed May 12 18:05:00 2004  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* Source/JIGSMapper.m: _JIGSMapperGetProxyFromProxiedJava() retain
+	and autorelease the ObjC object before returning it, so that a
+	java GC operation in another thread can't cause it to be
+	deallocated before the current thread uses it.
+
+Tue Feb 10 15:22:16 2004  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	Update for last gnustep-base.
+	* Wrappers/base/NSPropertyListSerialization.h: Turned additional
+	methods into a category, as gnustep-base already includes a
+	NSPropertyListSerialization class.
+	* Wrappers/base/NSPropertyListSerialization.m.add: The same.
+	* Wrappers/base/gnustep-base.h: Include
+	Foundation/NSPropertyList.h which is not included by
+	Foundation/Foundation.h.
+	
+2003-10-09  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Wrappers/base/gnustep-base.jigs: wrap setContentType in GSMime
+
+2003-09-25  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Wrappers/base/GSDebug.h: More GSDebugAllocation functions.
+	* Wrappers/base/GSDebug.m.add: idem.
+	* Wrappers/base/gnustep-base.jigs: Expose to Java.
 
 Mon Aug 25 18:00:00 2003  David Ayers  <d.ayers@inode.at>
 
@@ -49,11 +390,359 @@ Mon Aug 25 18:00:00 2003  David Ayers  <d.ayers@inode.at>
 	* Examples/Java/SimpleGUI-action/Library/SimpleGUI.h,
 	* Tools/WrapCreator/Examples/SimpleGUI/Library/SimpleGUI.h,
 	* Tools/WrapCreator/Examples/SimpleGUI-action/Library/SimpleGUI.h
-	* Wrappers/base/gnustep-base.h: Update to new header structure.
+	* Wrappers/base/gnustep-base.h: Update to new header structure.	
+
+Mon Aug 01 14:45:00 2003  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make: Tell the compiler
+	that the header we are preprocessing is an objective-c header, so
+	it can deal with it properly on MacOS-X systems with -fgnu-runtime
+	specified.
+	
+Tue Jul 29 15:15:05 2003  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Examples/Java/SimpleGUI-action/WrappingLibrary/Objc/SimpleGUI.m:
+	Updated #include.	
+
+Tue Jul 29 15:14:44 2003  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Examples/Java/SimpleGUI/WrappingLibrary/Objc/SimpleGUI.m:
+	Updated #include.
+
+Tue Jul 29 15:13:05 2003  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/WCClass.m ([WCClass -outputWrappers]): Update
+	generated #include to include from GNUstepJava.
+	* Tools/WrapCreator/WCLibrary.m ([WCLibrary +outputWrappers]):
+	Updated generated #include to include from GNUstepJava.
+
+	
+Tue Jul 29 15:10:06 2003  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Objc/main.m: Updated #include to use GNUstepJava as the
+	directory, not java.
+	
+Tue Jul 29 15:08:16 2003  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/GNUmakefile (libgnustep-java_HEADER_FILES_INSTALL_DIR):
+	Install headers in GNUstepJava.
+
+2003-07-28  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Wrappers/base/gnustep-base.jigs: wrap new convenience methods in
+	GSXML and GSMime
+
+Wed Jul 23 18:35:06 2003  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* Source/JIGSMapper.m: Create local reference to existing proxied
+	object before attempting to return it, so it can't be garbage
+	collected by another thread before we are done with it.
+
+2003-05-22  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Wrappers/base/gnustep-base.jigs: New parse error message
+	handling code
+
+Tue May 13 14:32:58 2003  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/ObjcRuntimeUtilities.m: Removed.
+	* Source/ObjcRuntimeUtilities.c, ObjcRuntimeUtilities2.m: New
+	files contained the code previously in ObjcRuntimeUtilities.m
+	* Source/ObjcRuntimeUtilities.h: Do not include Foundation/Foundation.h.
+	* Source/GNUmakefile: Updated for change.
+
+Sun May 11 07:21:06 2003  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* Source/JIGSInit.m (_jigs_lookup_class): Move creation of
+	NSString from supplied c-string inside exception handler in case
+	c-string content is garbage.
+	
+Sun May 11 07:21:06 2003  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* Source/JIGSInit.m (_jigs_lookup_class): Check to see if class
+	exists before trying to register it... just a bit nicer than
+	relying on catching an exception when trying to register a
+	non-existent class.
+	
+2003-02-21  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Wrappers/base/gnustep-base.jigs: Added escapedContent method to
+	GSXMLNode class
+
+2003-02-21  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Wrappers/base/gnustep-base.jigs: Wrapped
+	NSDistributedNotificationCenter and NSNotificationQueue
 
 Mon Feb 10 13:31:15 2003  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* GNUmakefile (VERSION): Version 1.5.5.
+	
+2003-01-09  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Wrappers/base/gnustep-base.jigs: Add NSCalendar date weekOfYear
+	method.
+	* Wrappers/base/gnustep-base.h: Include new GSCategories.h
+
+2002-11-27  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Wrappers/base/gnustep-base.jigs: Updated GSMime API.
+
+2002-09-25  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Wrappers/base/gnustep-base.jigs: Updated GSXML API.
+
+2002-08-27  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Wrappers/base/gnustep-base.jigs: Added GSXPath support
+	... written by Nicola Pero provides an API to use the xpath
+	support built into libxml from version 2.3 onwards.
+
+Tue Jul 16 17:22:28 2002  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Wrappers/base/gnustep-base.jigs: Added GSXML -setNamespace:,
+	from gnustep-base 1.4.0.
+
+Mon Jun 24 13:15:00 2002  Richard Frith-Macdonald <richard@brainstorm.co.uk>
+
+	* Wrappers/base/gnustep-base.jigs: GSMime API updated to include
+	some utilities and the document unparsing API.
+
+Mon May 27 06:30:00 2002  Richard Frith-Macdonald <richard@brainstorm.co.uk>
+
+	* Wrappers/base/gnustep-base.jigs: GSMime API dded, and resolved
+	some return value conflicts with XML parser.
+	
+Sun May  5 23:33:53 2002  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/JIGSInit.m (_jigs_lookup_class): Register/unregister the
+	current thread.
+
+Fri May  3 18:17:33 2002  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/JIGSProxySetup.m (_JIGS_prepare_method_struct): Fixed bug
+	in creating the selector signature - always use _C_ID for the
+	receiver, never _C_CLASS.
+
+Tue Apr 30 14:48:03 2002  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make (HEADER_FILE):
+	Fixed for new gnustep-make ... HEADER_FILES is no longer defined
+	by the Master invocation and must be defined manually in the
+	Instance invocation.
+	(WRAPPER_HEADER): Idem.
+	
+Thu Mar 21 15:36:36 2002  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make: Updated
+	internal-java_wrapper-all, internal-java_wrapper-install and
+	internal-java_wrapper-uninstall for gnustep-make from CVS; don't
+	include the instance part if this is not a java wrapper instance
+	invocation; use GNUSTEP_INSTANCE instead of
+	INTERNAL_java_wrapper_NAME.  Do not run any instance invocation on
+	make distclean.  Do not protect against multiple inclusions.
+
+Wed Jan 02 14:16:00 2002  Richard Frith-Macdonald <richard@brainstorm.co.uk>
+
+	* Wrappers/base/gnustep-base.jigs: GSXMLDocument API modified for
+	consistency etc Added GSMime wrappers too.
+
+Wed Jan 02 14:16:00 2002  Richard Frith-Macdonald <richard@brainstorm.co.uk>
+
+	* Wrappers/base/gnustep-base.jigs: GSXMLDocument API modified for
+	consistency Corrected error in last modification.
+
+Wed Jan  2 12:15:39 2002  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGSException.m (JIGSRaiseJExceptionFromNSException):
+	Make sure we can manage the case of null name or reason.
+
+Thu Dec 20 13:08:22 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Testing/Java/Base/NSExceptionTest.java: New test.
+	* Testing/Java/Base/GNUmakefile: Compile it.
+	* Testing/Java/Base/test-base: Run it.
+
+Fri Dec 14 12:13:00 2001  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Tools/WrapCreator/GNUmakefile: Don't try to install recently
+	deleted 'old' stuff.
+
+Thu Dec 13 11:27:59 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/Makefiles/old-java-wrapper.java.template:
+	Removed.
+	* Tools/WrapCreator/Makefiles/old-java-wrapper.make: Removed.
+	* Tools/WrapCreator/Makefiles/old-java-wrapper.objc.template:
+	Removed.
+	* Tools/WrapCreator/Makefiles/old-java-wrapper.readme.template:
+	Removed.
+	* Tools/WrapCreator/Makefiles/old-java-wrapper.top.debug.template:
+	Removed.
+	* Tools/WrapCreator/Makefiles/old-java-wrapper.top.template:
+	Removed.
+
+Thu Dec 13 11:18:55 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/GNUmakefile (after-install): Use MKINSTALLDIRS
+	when creating installation directories.
+
+Thu Dec 13 11:16:30 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Makefiles/GNUmakefile ($(JIGS_MAKE_DIR)): Use MKINSTALLDIRS not
+	MKDIRS when creating installation dirs.
+
+Thu Dec 13 11:13:03 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make
+	($(WRAPPER_DIR)/stamp-file): Use cp, not INSTALL_DATA, to copy
+	templates into the WRAPPER_DIR.
+
+Thu Dec 13 10:27:50 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make
+	(internal-java_wrapper-install): Pass down
+	GNUSTEP_INSTALLATION_DIR.
+	(internal-java_wrapper-uninstall): Idem.
+	($(WRAPPER_DIR)/stamp-file): Do not replace INSTALL_AS_USER and
+	INSTALL_AS_GROUP - now automatically exported by gnustep-make; do
+	not replace GNUSTEP_INSTALLATION_DIR - now passed down directly.
+	* Tools/WrapCreator/Makefiles/java-wrapper.top.template: Updated
+	for changes.
+	* Tools/WrapCreator/Makefiles/java-wrapper.top.debug.template:
+	Idem
+	
+Wed Dec 12 16:45:28 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make
+	($(WRAPPER_DIR)/stamp-file): Replace INSTALL_AS_USER and
+	INSTALL_AS_GROUP in the generated top level GNUmakefile.  Changed
+	line to be replaced by GNUSTEP_INSTALLATION_DIR to be prettier.
+	* Tools/WrapCreator/Makefiles/java-wrapper.top.template: Updated
+	for changes.
+	* Tools/WrapCreator/Makefiles/java-wrapper.top.debug.template:
+	Updated.
+	
+Thu Dec  6 16:05:46 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/GSJNIString.m (GSJNI_JStringFromNSString): Allocate
+	temporary unichar buffer on the heap rather than on the stack if
+	it is bigger than 10k.  Fixes crash for ObjC methods returning
+	huge strings.
+	
+2001-12-05 Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make:a filter out -MMD
+	and -MP flags directly rather than trying to turn off
+	AUTO_DEPENDENCIES
+
+2001-12-04 Richard frith-Macdonald <rfm@gnu.org>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make
+	(AUTO_DEPENDENCIES): Force to 'no' as this conflicts with the
+	production of the preprocessed header output needed for
+	WrapCreator.
+	
+Tue Nov 27 22:52:57 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Java/Base/Benchmarks/NSArray10Benchmark.java: New test.
+	* Testing/Java/Base/Benchmarks/GNUmakefile: Compile it.
+	* Testing/Java/Base/Benchmarks/benchmark-base: Run it.
+	
+Sun Nov 25 12:39:24 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Java/Base/Benchmarks/NSArray8Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/NSArray9Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/NSDictionary0Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/NSDictionary1Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/NSDictionary2Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/NSDictionary3Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/Hashtable0Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/Hashtable1Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/Hashtable2Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/Hashtable3Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/benchmark-base: Process first
+	argument if any; --help, -h or a benchmark name.  Added the new
+	benchmarks.
+	* Testing/Java/Base/Benchmarks/GNUmakefile: Compile the new files.
+	
+Sun Nov 25 12:13:00 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/NSObject.m
+	(Java_gnu_gnustep_base_NSObject_finalize_1native): #ifdefed out
+	the new code ... better use the stable one for now.
+
+Sun Nov 25 02:23:14 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/NSObject.m
+	(Java_gnu_gnustep_base_NSObject_finalize_1native): Rewritten in an
+	attempt to fix potential deadlocks and other weird bugs.  Not sure
+	it's stable yet.
+
+Sun Nov 25 01:38:45 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Java/Base/Benchmarks/benchmark-base: New file.
+	* Testing/Java/Base/Benchmarks/Driver.java: Rewritten to run with
+	an argument and run that single benchmark ... to avoid
+	interferences between benchmarks due to the garbage collector.
+	* Testing/Java/Base/Benchmarks/SecondaryThreadBenchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/ObjCMethodSecondThreadBenchmark.java:
+	New file.
+	* Testing/Java/Base/Benchmarks/ObjCToStringSecondThreadBenchmark.java:
+	New file.
+	* Testing/Java/Base/Benchmarks/ObjCNewObjectSecondThreadBenchmark.java:
+	New file.
+	* Testing/Java/Base/Benchmarks/GNUmakefile: Compile the new
+	secondary thread benchmakrs; use benchmark-base to run `make
+	benchmark'.
+	
+Sat Nov 24 18:28:53 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/NSObject.m
+	(Java_gnu_gnustep_base_NSObject_finalize_1native): Rewritten as to
+	register/unregister the thread and create autorelease pools only
+	once every forty invocations.
+	(JIGSFinalizeInit): New function.
+	* Source/JIGSMapper.m (_JIGSMapperInitialize): Call the function.
+	* Source/JIGSMapper.h: Declare it.
+	
+Sat Nov 24 16:02:08 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+	
+	* Source/JIGSMapper.m (_JIGSMapperRemoveJavaProxy): Moved JNI call
+	outside the critical region.
+	(JIGSJobjectArrayFromNSArray): Ensure that local capacity is
+	enough to manage all the objects in the array.
+	(JIGSInitNSArrayFromJobjectArray): Idem.
+	(_JIGSMapperInitialize): Cache the NSArray class pointer.
+	(JIGSNSArrayFromJobjectArray): Use it.
+
+Sat Nov 24 16:00:05 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Java/Base/NSArrayTest.java: Added test creating a big array.
+	
+Sat Nov 24 15:43:13 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/JIGSMapper.m: Redesigned and reimplemented from scratch
+	the table mapping Java proxy classes to ObjC classes and vice
+	versa.  The new table heavily outperforms the old one ... creating
+	from Java objects of subclasses - eg, NSArray as opposed to
+	NSObject - is much faster now.
+
+Sat Nov 24 02:01:09 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/JIGSInit.m (JIGSAutoreleasePoolClass): New variable
+	caching a pointer to the NSAutoreleasePool class.
+	(JIGSInit): Set up the variable.
+	* Source/JIGSNative.h (JIGS_ENTER, JIGS_ONLOAD_ENTER): Use the
+	cached pointer when creating the pool.
+
+	* Source/GSJNIString.m: Cache the NSString class.
+
+	* Source/JIGSMapper.m (_JIGSLongJavaClassNameForObjcClassName):
+	Reduced size of the critical region.
+	(_JIGSFirstJavaProxySuperClass): Idem.
+
+	* Source/JIGSMapper.m (_JIGSProxyJavaHash): Always return 1.
 
 Thu Nov 22 01:20:38 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
@@ -62,22 +751,335 @@ Thu Nov 22 01:20:38 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 	(RELEASE_DIR): Define.
 	* make-release: Modified to simply invoke `make cvs-snapshot'.
 	
+Wed Nov 21 15:48:23 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Testing/Java/Base/Benchmarks: New directory.
+	* Testing/Java/Base/Benchmarks/README: New file.
+	* Testing/Java/Base/Benchmarks/GNUmakefile: New file.
+	* Testing/Java/Base/Benchmarks/ArrayBenchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/Driver.java: New file.
+	* Testing/Java/Base/Benchmarks/EmptyBenchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/JavaMethodBenchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/JavaNewObjectBenchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/JavaToStringBenchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/NSArray0Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/NSArray1Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/NSArray2Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/NSArray3Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/NSArray4Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/NSArray5Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/NSArray6Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/NSArray7Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/ObjCMethodBenchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/ObjCNewObjectBenchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/ObjCToStringBenchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/StringComparisonBenchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/StringConcatenationBenchmark.java: 
+	New file.
+	* Testing/Java/Base/Benchmarks/Vector0Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/Vector1Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/Vector2Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/Vector3Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/Vector4Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/Vector5Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/Vector6Benchmark.java: New file.
+	* Testing/Java/Base/Benchmarks/Vector7Benchmark.java: New file.	
+
+Mon Nov 19 15:28:37 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make (SILENT_FLAGS):
+	Fixed adding multiple flags.
+
+Mon Nov 19 15:24:02 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make
+	($(WRAPPER_DIR)/stamp-file): Shortened messages about compiling
+	automatically the wrapper library.	
+
+Mon Nov 19 12:20:00 2001  Richard Frith-Macdonald <richard@brainstorm.co.uk>
+
+	* Wrappers/base/gnustep-base.jigs: Wrapped NSCalendarDate,
+	NSCharacterSet, NSDistriibutedLock, NSMutableCharacterSet,
+	NSFileHandle, NSPipe	
+
+Mon Sep 24 12:04:56 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/ObjcRuntimeUtilities.m (objc_EXPORT): Define it if not
+	defined.
+	(ObjcUtilities_new_class): Use `objc_EXPORT' rather than simply
+	`extern' to access libobjc internals symbols.
+	(ObjcUtilities_register_method_list): Idem.
+	* Source/JIGSProxySetup.m (objc_mutex_allocate): Do not declare as
+	it is declared in objc/thr.h which we include.
+
+Wed Sep 12 12:17:50 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGSInit.m (JIGSInitFromJava): New function.
+	(JIGSInit): Moved code to set program arguments into
+	JIGSInitFromJava, because it is code which must only be executed
+	from Java.  Do not create an autorelease pool if we are executing
+	no code.
+	* Source/JIGSInit.h (JIGSInitFromJava): Declare the new function.
+	* Source/JIGS.m (Java_gnu_gnustep_java_JIGS_initialize): Call
+	JIGSInitFromJava rather than JIGSInit.
+
+Wed Sep 12 11:11:28 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Testing/Objc/main.m (print_object): New function.
+	(test_primitive_type, main): Use print_object whenever printing an
+	object description using printf; removed all calls to
+	JIGSRegisterJavaClass as with the new JIGS engine those are not
+	needed any longer.
+
+Tue Sep 11 16:16:23 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Testing/Objc/main.m (main): Make sure we can manage nil results.
+
+Mon Sep 10 18:15:52 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make
+	(install-java_wrapper): Removed.
+	(uninstall-java_wrapper): Removed.
+	(internal-install-java-dirs): Removed.
+	(internal-java_wrapper-install, internal-java_wrapper-uninstall):
+	Modified to run the install code immediately if needed, without
+	using auxiliary targets, or do nothing; and do not run `make all'
+	as that is now already done by rules.make.	
+
+Wed Aug 29 13:36:47 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/WCMethod.m ([-outputJniMethodName]): In the
+	warning for the unresolved class name, give an example of a class
+	name mapping hints.
+
+Wed Aug 29 13:26:19 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/WCMethod.m ([-outputJniMethodName]): Made
+	warning produced when we find an unresolved class name as argument
+	to an overloaded java method extremely loudy in an attempt to
+	prevent people from ignoring it.	
+
+Fri Jul 27 14:50:12 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGSInit.m (JIGSInit): Setup JIGS_DEBUG according to
+	whether we are debugging or non-debugging, to prevent crashes when
+	the engine is started from the Objective-C side, and JIGS_DEBUG is
+	not set.
+
+Fri Jul 27 13:18:22 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Testing/Objc/main.m (main): Added test for calling a Java method
+	with two arguments from ObjC.
+
+Fri Jul 27 13:10:04 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGSProxyIMP.m (DO_PROCESS_ARGS): Fixed processing of
+	multiple arguments by removing inline function to process a single
+	argument, and processing arguments using a single big macro.  This
+	works around a va_arg problem with functions which was causing
+	incorrect arguments to be used.
+	
+Fri Jul 27 11:28:35 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Testing/Objc/main.m (main): Do not register the java.lang.System
+	class because now we hack the runtime to load it in automatically
+	when not found.  Try messaging a non-existing class to check that
+	the new code doesn't crash in that situation.
+		
+Fri Jul 27 11:18:51 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGSInit.m (_jigs_lookup_class): Wrap the attempt to
+	register the Java class in an exception handler to fail gracefully
+	if the Java class does not exist.
+	* Source/JIGSProxy.m (JIGSRegisterJavaClass): Detect Java
+	exceptions in GSJNI_SuperclassNameFromClassName and convert them
+	into ObjC exceptions.
+
+Fri Jul 27 10:26:00 2001  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* Source/GSJNIClass.m: GSJNI_SuperclassNameFromClassName() pop
+	stack on failure.
+
+Thu Jul 26 19:44:00 2001  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* Source/NSJavaVirtualMachine.m: New class method - 'JIGSInit' as
+	convenience for guile ... so we don't have to all the JIGSInit()
+	function.
+	* Source/JIGSInit.m: Added code to use _objc_lookup_class hook in
+	the runtime to automatically load in java classes when needed.
+
+Tue Jul 24 13:14:33 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/GNUmakefile, JIGS.h: Version is now 1.5.0.
+	
 Tue Jul 24 13:12:25 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GNUmakefile (VERSION): 1.5.0.
 	* NEWS: Added news for 1.5.0.
 	* TODO: Marked support for automatically extracting enumeration
 	constants from header files as done.
+
+Tue Jul 24 13:01:59 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Documentation/Manual/WrappingObjcLibraries.tex: Updated for new
+	enumeration support.
+
+Tue Jul 24 12:21:26 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/WCHeaderParser.m
+	([-parseEnumBodyUsingScanner:]): Fixed problem with enumerations
+	having a comma after the last item.
+	* Tools/WrapCreator/WCClass.m ([-outputWrappers]): Improved
+	indentation of javadoc comments for enumerations.
+
+Tue Jul 24 11:52:35 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/libFoundation/Foundation.jigs (enumerations): Removed
+	as WrapCreator now manages enumerations automatically.
 	
+Tue Jul 24 11:51:19 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/gnustep-base.jigs (enumerations): Removed as now
+	WrapCreator manages enumerations automatically.
+	
+Tue Jul 24 11:43:03 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	Implemented parsing ObjC header file for enumerations, and
+	automatical wrapping of them on request.
+	* Tools/WrapCreator/WCHeaderParser.h: New instance variables and
+	methods to support enumeration.
+	* Tools/WrapCreator/WCHeaderParser.m ([+initialize]): Prepare new
+	static variables used in enumeration parsing.
+	([-parseObjectiveC]): Moved the existing Objective-C class/method
+	declarations parsing code in here.
+	([-parseC]): New method with new parsing code to parse C
+	enum/typedef enum declarations in the C header code.
+	([-initWithHeaderFile:]): Invoke the parseXXX methods; set up
+	enumeration ivars.
+	([-parseEnumBodyUsingScanner:]): New method.
+	([-recordEnumeration:withDictionary:]): New method.
+	([-dictionaryForEnumeration:]): New method.
+	([-enumerationTypes]): New method.
+	(trimString): New function.
+	* Tools/WrapCreator/WCLibrary.m ([+initializeWithOptions:]):
+	Automatically load in as custom types all the enumerations parsed
+	by the header parser.
+	* Tools/WrapCreator/WCClass.h: Added ivar to record enumerations
+	for this class.
+	* Tools/WrapCreator/WCClass.m ([-initWithDictionary:]): Set the
+	enumeration ivar.
+	([-outputWrappers]): Generate automatically code wrapping all
+	enumerations for this class.
+	
+Tue Jul 24 11:17:27 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make
+	($(WRAPPER_DIR)/stamp-file): Pass the -P option to the
+	preprocessor, to avoid annoying preprocessor output about lines.
+	* Tools/WrapCreator/Compatibility.h: New file.
+	* Tools/WrapCreator/WCLibrary.h: Include it.
+	
+Mon Jul 16 13:34:28 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/gui/GNUmakefile (GNUSTEP_INSTALLATION_DIR): Install
+	into GNUSTEP_SYSTEM_ROOT.
+
+Mon Jul 16 13:32:20 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/libFoundation/GNUmakefile (GNUSTEP_INSTALLATION_DIR):
+	Install in GNUSTEP_SYSTEM_ROOT.
+	
+Mon Jul 16 13:31:49 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/GNUmakefile (GNUSTEP_INSTALLATION_DIR): Install in
+	GNUSTEP_SYSTEM_ROOT.
+
+Mon Jul 16 13:27:08 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/GNUmakefile: Install into GNUSTEP_SYSTEM_ROOT.
+
+Mon Jul 16 13:21:43 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.top.template
+	(SETINSTALLATIONDIRHERE): Added.
+	* Tools/WrapCreator/Makefiles/java-wrapper.top.debug.template
+	(SETINSTALLATIONDIRHERE): Added.
+	* Tools/WrapCreator/Makefiles/java-wrapper.make
+	($(WRAPPER_DIR)/stamp-file): Replace SETINSTALLATIONDIRHERE with
+	the GNUSTEP_INSTALLATION_DIR in the top GNUmakefile so that
+	GNUSTEP_INSTALLATION_DIR can be specified in the wrapper makefile,
+	and it gets propagated to the wrapper makefiles.  Rearranged
+	management of temporary files in sed rules to be simpler to
+	understand.
+
+Mon Jul  9 15:30:33 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Testing/Java/Base/NSDictionaryTest.java: Added tests for
+	removeObjectForKey () and mutableClone ().
+
+Wed Jun 20 16:45:34 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/gnustep-base.jigs (NSDate): Exposed
+	descriptionWithCalendarFormat:timeZone:locale:.
+	(NSTimeZone): New wrapper for this class.
+		
+Mon Jun 18 13:06:48 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/WCLibrary.m ([WCLibrary
+	+javaClassNameForObjcClassName:]): Added NSData and NSMutableData
+	to the hard-coded automaticallly mapped class names.
+
 Mon Jun 11 04:20:26 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* README (AUTHORS): Cite SKYRiX Software AG.
 
+Thu Jun  7 17:32:30 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Makefiles/jigs.make (ADDITIONAL_OBJC_LIBS): Link -lgnustep-java
+	before the jre libraries.
+	
 Thu Jun  7 15:55:06 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* TODO: Added investigating the topic of float arguments of
 	Java methods invoked from Objc.
 
+Thu Jun  7 15:48:17 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Testing/Objc/main.m (test_primitive_type): New function to test
+	passing various primitive types to Java.
+	* Testing/Objc/main.m (main): Call it.
+
+Thu Jun  7 14:57:33 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/JIGSProxyIMP.m (process_argument): tidied casts.
+
+2001-06-07 Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Source/JIGSProxyIMP.m: process_argument() changed vararg types
+	to stop GCC-3.0 objecting and aborting.  It doesn't like us
+	specifying the original types, but wants the promoted types to be
+	given.
+	
+Mon Jun  4 20:26:52 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Java/gnu/gnustep/java/JIGSLibraryLoader.java (loadingError): New
+	field registering problems in loading of libgnustep-java.
+	(tryLoading): register loading problems in loadingError.
+	(initialize): When we can't load libgnustep-java, print the record
+	of the problems we had before giving up.
+
+Mon Jun  4 17:44:52 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Makefiles/GNUmakefile (distclean): Remove *~.
+
+Mon Jun  4 16:45:29 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Makefiles/GNUmakefile (clean), (distclean), (check),
+	(uninstall): New targets.
+	* Makefiles/jigs.make: Use full path of GNUstep-Java.sh when
+	printing out error message.	
+	
 Mon Jun  4 15:48:02 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* GNUmakefile (SUBPROJECTS): Added Makefiles.
@@ -86,6 +1088,37 @@ Mon Jun  4 15:48:02 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 	* Makefiles/jigs.make: Moved here from Testing/Objc.
 	* Makefiles/GNUstep-Java.sh: Moved here from Testing/Objc.
 	* Makefiles/README: New file.
+		
+Mon Jun  4 15:48:02 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Objc/GNUstep-Java.sh: Moved to Makefiles/.
+	* Testing/Objc/jigs.make: Moved to Makefiles/.
+	* Testing/Objc/GNUmakefile: Include jigs.make from
+	GNUSTEP_MAKEFILES rather than from local dir.
+	* Testing/Objc/README: Updated.
+
+Wed May 23 13:18:40 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/libFoundation/Foundation.jigs: Provide explicit
+	declaration of removeObjectForKey: to solve conflicts between
+	NSMutableDictionary and NSUserDefault declarations.
+	
+Wed May 23 13:14:20 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/gnustep-base.jigs: Provide explicit declaration of
+	removeObjectForKey: to solve conflicts between NSMutableDictionary
+	and NSUserDefault declarations.
+	
+Tue May 22 02:51:39 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Objc/GNUstep-Java.sh: New script which sets up
+	everything to link and run stuff which starts a JVM.
+	* Testing/Objc/jigs.make: Trivialized - most code now in
+	GNUstep-Java.sh.
+	* Testing/Objc/openjavatool: Removed.
+	* Testing/Objc/GNUmakefile: Do not run openjavatool, but execute
+	the file directly.
+	* Testing/Objc/README: Rewritten.
 
 Tue May 22 00:27:18 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
@@ -98,52 +1131,778 @@ Mon May 21 02:58:23 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 	* INSTALL: Updated instructions to compile wrappers.
 	* PACKAGING: Updated for new, simpler, way of packaging wrappers.
 	* FAQ: Added comment about the gui library wrapping not working.
+
+Mon May 21 02:58:05 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/GNUmakefile, JIGS.h: Version is now 1.4.0.
+	
+Mon May 21 02:46:36 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Documentation/Manual/WrappingObjcLibraries.tex: Extensive
+	changes and updates everywhere for the new way of wrapping
+	libraries.
+
+Mon May 21 02:31:19 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Wrappers/gui/README: Updated.
+	* Wrappers/gui/GNUmakefile: Rewritten for new java-wrapper.make.
+	* Wrappers/gui/libgnustep-gui.jigs: Renamed to gnustep-gui.jigs.
+	* Wrappers/gui/gnustep-gui.h: Removed.
+	
+Mon May 21 02:21:33 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	Simplified and updated building process to the new
+	java-wrapper.make.
+	* Wrappers/libFoundation/GNUmakefile: Rewritten for new
+	java-wrapper.make.
+	* Wrappers/libFoundation/NSPropertyListSerialization.h: Protected
+	from multiple inclusions.
+	* Wrappers/libFoundation/NSPropList.m: Renamed to
+	NSPropertyListSerialization.m.
+	* Wrappers/libFoundation/GNUmakefile.wrapper: Removed.
+	* Wrappers/libFoundation/GNUmakefile.wrapper.objc.postamble:
+	Removed.
+	* Wrappers/libFoundation/GNUmakefile.wrapper.objc.preamble:
+	Updated.
+	* Wrappers/libFoundation/libFoundation.jigs: Moved to
+	Foundation.jigs.
+
+Mon May 21 02:21:33 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	Simplified and updated building process to the new
+	java-wrapper.make.
+	* Wrappers/base/GNUmakefile: Rewritten for new java-wrapper.make.
+	* Wrappers/base/NSPropertyListSerialization.h: Protected from
+	multiple inclusions.
+	* Wrappers/base/NSPropList.m: Renamed to
+	NSPropertyListSerialization.m.
+	* Wrappers/base/gnustep-base-wrapper.spec.in: Renamed to
+	gnustep-base-java-wrapper.spec.in.
+	* Wrappers/base/gnustep-base-wrapper-debug.spec.in: Renamed to
+	gnustep-base-java-wrapper.debug.spec.in.
+	* Wrappers/base/GNUmakefile.wrapper: Removed.
+	* Wrappers/base/GNUmakefile.wrapper.objc.postamble: Removed.
+	* Wrappers/base/GNUmakefile.wrapper.objc.preamble: Updated.
+	* Wrappers/base/libgnustep-base.jigs: Moved to gnustep-base.jigs;
+	added declarations for `next' and `prev' methods in GSXML classes
+	to prevent problems with conflicting types.
+	
+Mon May 21 02:18:24 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Wrappers/README: Updated.
+	* Wrappers/GNUmakefile: Removed as it's useless with the new
+	java-wrapper.make.  Please go into the appropriate subdirectory,
+	and compile stuff in there.
+
+Mon May 21 02:15:06 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	Building java wrappers made independent from building the library.
+	* Tools/WrapCreator/Makefiles/java-wrapper.make: Rewritten.
+	* Tools/WrapCreator/Makefiles/java-wrapper.top.template: Do not
+	set PACKAGE_NAME and VERSION.
+	* Tools/WrapCreator/Makefiles/java-wrapper.debug.top.template:
+	Idem.
+	* Tools/WrapCreator/Makefiles/java-wrapper.objc.template
+	(ADDITIONAL_LIB_DIRS): Removed.  (ADDITIONAL_INCLUDE_DIRS):
+	Updated for new java-wrapper.make.
+	* Tools/WrapCreator/Makefiles/search_header.sh: New tool to search
+	for headers.
+	* Tools/WrapCreator/GNUmakefile (after-install): Install
+	search_header.sh.
+
+Mon May 21 02:12:26 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/Examples/SimpleGUI/Library/GNUmakefile: Use
+	old-java-wrapper.make.
+	* Tools/WrapCreator/Examples/SimpleGUI-action/Library/GNUmakefile:
+	Idem.
+
+Mon May 21 02:07:01 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/Examples/NameTest/Library/libName.jigs: Moved
+	to Name.jigs.
+	* Tools/WrapCreator/Examples/NameTest/Library/GNUmakefile: Updated
+	for new java-wrapper.make.
+	* Tools/WrapCreator/Examples/NameTest/Library/GNUmakefile.wrapper.objc.preamble:
+	New file, needed for new java-wrapper.make.
+
+Fri May 18 01:08:45 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	Made a backup of the old java-wrapper makefiles before the planned
+	rewriting, so that legacy code can still use them simply by
+	including old-java-wrapper.make rather than java-wrapper.make.
+	* Tools/WrapCreator/Makefiles/old-java-wrapper.make: New file -
+	copy of java-wrapper.make, modified to include and process files
+	with name old-java-wrapper.xxx.yyy rather than
+	java-wrapper.xxx.yyy.
+	* Tools/WrapCreator/Makefiles/old-java-wrapper.java.template: New
+	file - copy of java-wrapper.java.template.
+	* Tools/WrapCreator/Makefiles/old-java-wrapper.objc.template: New
+	file - copy of java-wrapper.objc.template.
+	* Tools/WrapCreator/Makefiles/old-java-wrapper.readme.template:
+	New file - copy of java-wrapper.readme.template.
+	* Tools/WrapCreator/Makefiles/old-java-wrapper.top.debug.template:
+	New file - copy of java-wrapper.top.debug.template.
+	* Tools/WrapCreator/Makefiles/old-java-wrapper.top.template: New
+	file - copy of java-wrapper.top.template.
+	* Tools/WrapCreator/GNUmakefile: Install the old makefiles as
+	well.	
+
+Mon May 11 13:55:28 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/GNUmakefile (VERSION): Raise to 1.0.2.
+	* Wrappers/base/gnustep-base-wrapper.debug.spec.in: Renamed back
+	to gnustep-base-java-wrapper-debug.spec.in.
+
+Mon May  7 04:47:37 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/main.m (main): For libFoundation, disable
+	double-check of autoreleasing.
+	
+Mon May  7 04:40:37 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Objc/main.m: For libFoundation, redefine lossyCString to
+	be cString.
+
+Mon May  7 04:23:29 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/JIGSInit.m (JIGSInit): Allocate a global mutex for
+	libFoundation.  (GSRegisterCurrentThread),
+	(GSUnregisterCurrentThread): Implemented for libFoundation to lock
+	and unlock the mutex.
+	* Source/JIGSInit.h (GSRegisterCurrentThread),
+	(GSUnregisterCurrentThread): Declare for libFoundation.
+
+Mon May  7 03:38:24 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Wrappers/base/NSDictionary.m.add: Fixed - variables declared of
+	type NSArray instead of NSDictionary.
+	
+Mon May  7 03:26:30 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/Examples/NameTest: New directory.
+
+Mon May  7 00:33:42 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Wrappers/GNUmakefile: Added libFoundation support.
+	* Wrappers/libFoundation: New directory.
+
+Sun May  6 23:49:20 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/WCLibrary.m ([WCLibrary
+	+initializeWithOptions:]): Set verboseOutput at the beginning, so
+	that WCHeaderParser can access it during initialization.
+		
+Sun May  6 21:16:26 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Objc/main.m: Added testing of accessing Java objects'
+	instance variables from Objective-C by using key/value coding.
+	Code #ifdefed out.
+	
+Sun May  6 21:12:03 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Java/Base/NSKeyValueCodingTest.java: New test.
+	* Testing/Java/Base/GNUmakefile: Added the new test.
+	* Testing/Java/Base/test-base: Idem.
+
+Sun May  6 20:51:46 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/NSObject.m: Added native implementations of valueForKey
+	and takeValueForKey.
+	* Source/JIGSProxy.m
+	(_java_lang_Object__handleTakeValueForUnboundKey_),
+	(_java_lang_Object__handleQueryWithUnboundKey_): New functions
+	calling gnu.gnustep.java.JIGSKeyValueCoding methods to do
+	key/value coding.  (JIGSRegisterJavaRootClass): Register the two
+	functions as the handleTakeValue:forUnboundKey: and
+	handleQueryWithUnboundKey: methods of the Objective-C class
+	java.lang.Object.
+	
+Sun May  6 20:47:17 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Java/gnu/gnustep/base/NSObject.java (valueForKey),
+	(takeValueForKey): Added.
+	* Java/gnu/gnustep/java/JIGSKeyValueCoding.java: New class.
+	* Java/GNUmakefile: Compile the new class.
+
+Sun May  6 15:55:43 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/WCShortType.h: New file.
+	* Tools/WrapCreator/WCShortType.m: New file.
+	* Tools/WrapCreator/WCLongType.h: New file.
+	* Tools/WrapCreator/WCLongType.m: New file.
+	* Tools/WrapCreator/WCUnsignedLongType.h: New file.
+	* Tools/WrapCreator/WCUnsignedLongType.m: New file.
+	* Tools/WrapCreator/WCLongLongType.h: New file.
+	* Tools/WrapCreator/WCLongLongType.m: New file.
+	* Tools/WrapCreator/WCUnsignedLongLongType.h: New file.
+	* Tools/WrapCreator/WCUnsignedLongLongType.m: New file.
+	* Tools/WrapCreator/GNUmakefile (WrapCreator_OBJC_FILES): Added
+	the new files.
+	* Tools/WrapCreator/WCTypeLoader.m ([+typeWithObjcType:]): Added
+	code to recognize `short', `short int', `signed short', `signed
+	short int', `unsigned short int', `long', `long int', `signed
+	long', `signed long int', `unsigned long', `unsigned long int',
+	`long long', `long long int', `signed long long', `signed long
+	long int', `unsigned long long', `unsigned long long int'.
 	
 Sun May  6 00:49:16 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* NEWS: Updated/fixed news for 1.3.
 
+Sun May  6 00:39:22 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Documentation/Manual/ProgrammingInJava.tex (Numbers): Documented
+	the morphing of number objects.
+
+Sat May  5 23:56:50 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/WCTypeLoader.m (defaultMorphTypes): Added
+	morphing of Number<-->NSNumber.
+
+Sat May  5 23:39:46 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Java/Base/NSNumberTest.java: Removed testing of
+	booleans.
+	
+Sat May  5 23:37:42 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	Removed morphing of booleans, so that the morphing
+	Number<--->NSNumber is now total.
+	* Source/GSJNINumber.h (GSJNI_NSNumberFromJBoolean): Removed.
+	* Source/GSJNINumber.m (GSJNI_NSNumberFromJBoolean): Removed.
+	(GSJNI_JNumberFromNSNumber): Never convert to boolean.  Updated
+	caching code.
+	* Source/JIGSMapper.m (JIGSIdFromJobject): Do not morph booleans.
+	Updated caching code.
+
+Sat May  5 23:16:11 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Java/Base/NSNumberTest.java: Test passing back and forth
+	simple BigInteger objects.
+	
+Sat May  5 22:46:29 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	Simplified morphing of NSNumber and extended to generic
+	java.lang.Number classes.
+	* Source/GSJNINumber.h (GSJNI_NSNumberFromJNumber): New function
+	acting as a facade for all the other more specific number
+	conversion functions, which are now hidden; removed their
+	declaration.
+	* Source/GSJNINumber.m (GSJNI_NSNumberFromJNumber): Implemented.
+	Made all other functions morphing numbers from Java static;
+	updated caching code.
+	* Source/JIGSMapper.m (_JIGSMapperInitialize): Simplified, only
+	cache the java.lang.Number class rather than all the subclasses.
+	(JIGSIdFromJobject): Simplified and made quicker: call
+	GSJNI_JNumberFromNSNumber for any java.lang.Number object.  Do not
+	make any other check.
+	
 Sat May  5 21:47:51 2001  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* GNUmakefile (VERSION): Version is now 1.3.0
 	* NEWS: Added news for 1.3.0.
 	* TODO: Marked morphing NSNumber as Done!.
+
+Sat May  5 21:44:25 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/GNUmakefile, JIGS.h: Version is now 1.3.0
+	
+Sat May  5 21:40:31 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Java/Base/NSNumberTest.java: New test.
+	* Testing/Java/Base/GNUmakefile
+	(gnu.gnustep.base-test_JAVA_FILES): Added NSNumberTest.java.
+	* Testing/Java/Base/test-base (tests_to_run): Added NSNumberTest.
+
+Sat May  5 21:34:33 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Objc/main.m (main): Added (#ifdefed out) code to test
+	boolean/number morphing.
+
+Sat May  5 21:20:05 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	Implemented morphing of java.lang.Boolean and java.lang.Number
+	into and from NSNumber.
+	* Source/GSJNINumber.m: New file implementing the morphing
+	functions.
+	* Source/GSJNINumber.h: New file declaring the new functions.
+	* Source/GNUmakefile (libgnustep-java_HEADER_FILES): Added
+	GSJNINumber.h.  (libgnustep-java_OBJC_FILES): Added GSJNINumber.m.
+	* Source/GSJNI.h: Include GSJNINumber.h.
+	* Source/JIGSMapper.m (_JIGSMapperInitialize): Initialize class
+	cache for the classes we morph.  (JIGSJobjectFromId),
+	(JIGSIdFromJobject): Use the new GSJNINumber facilities to morph
+	booleans and numbers.	
+	
+Sat May  5 18:30:50 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Objc/GNUmakefile (check): Added to speed testing.
+
+Sat May  5 16:19:45 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Java/Base/GNUmakefile (after-distclean): Remove
+	test-base.log.
+	
+Sat May  5 16:17:26 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Objc/openjavatool (JAVA_HOME): Added for JDK 1.3.0.
+
+Sat May  5 16:09:02 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Java/Base/test-base: Log output from tests to test-base.log.
+	* Testing/Java/Base/NSProcessInfoTest.java: Fixed typo in output string.
+
+Sat May  5 15:47:09 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/GSJNIArray.h: Removed `inline' attributes without effect.
+	* Source/GSJNIArray.m: Idem.
+	* Source/GSJNIClass.h: Idem.
+	* Source/GSJNIClass.m: Idem.
+	* Source/GSJNIString.h: Idem.
+	* Source/GSJNIString.m: Idem.
+	* Source/JIGSMapper.h: Idem. 
+	* Source/JIGSMapper.m: Idem.
+	* Source/NSJavaVirtualMachine.h: Idem.
+	* Source/NSJavaVirtualMachine.m: Idem.
+	* Source/ObjcRuntimeUtilities.h: Idem.
+	* Source/ObjcRuntimeUtilities.m: Idem.
+	
+Sat May  5 02:14:27 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/JIGSSelectorMapping.m
+	(JIGSSelectorMappingFindClassJavaMethod): Fixed critical typo
+	generating random crashes - `Instance' where it should have been
+	`Class'.
+
+Fri Apr 27 12:54:04 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/GNUmakefile: Abort with an error if the
+	gnustep-base library is too old.
+
+Fri Apr 27 12:33:40 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Documentation/Manual/ProgrammingInJava.tex Updated for the new
+	support for java tools in gnustep-make.  (Compiling a Single
+	Class): Replaced the main method of the Pisa class with a generic
+	method.  Removed explanation of how to run the program, as it is
+	now a generic class and not a program.  (Creating Java Tools): New
+	section in which we turn the Pisa class into a program, and
+	explain how to use java-tool.make for this task.
+
+Thu Apr 26 12:45:23 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make
+	($(WRAPPER_DIR)/stamp-file): Clean up the obsolete Reference
+	javadoc documentation.
+	
+Thu Apr 26 12:20:00 2001  Richard Frith-Macdonald <richard@brainstorm.co.uk>
+
+	* Wrappers/base/libgnustep-base.jigs: Wrap GSXML classes.
+	* Wrappers/base/gnustep-base.h: include GSXML.h.
+
+Wed Apr 25 17:57:35 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Documentation/Manual/ProgrammingInJava.tex (Installing Java
+	classes where you like): New section explaining how to use the
+	JAVA_INSTALLATION_DIR make variable.
+
+Wed Apr 25 12:20:03 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/GNUmakefile (VERSION): Simply set this variable to
+	GNUSTEP_BASE_VERSION now that we have this variable.  Will only
+	work with newer gnustep-base.
 	
 Tue Apr 10 15:41:29 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* INSTALL: Simplified installation instructions - simply refer to
-	gnustep-objc.
+	gnustep-objc.	
 
 Mon Mar 19 15:01:42 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* make-release: Use explicit -d option when running CVS.
+
+Mon Mar 19 13:37:44 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/GNUmakefile (VERSION): Added code to set this
+	variable to match the one of the gnustep-base library we are
+	wrapping.
+		
+Mon Mar 19 11:59:27 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGSNative.h: Updated for change in gnustep base thread
+	support: calls to [NSThread +registerCurrentThread] and
+	[NSThread +unregisterCurrentThread] replaced with calls to the new
+	functions GSRegisterCurrentThread and GSUnregisterCurrentThread.
+	* Source/JIGS.m (Java_gnu_gnustep_java_JIGS_forceMultithreading):
+	Idem.
+
+	* Source/GNUmakefile ($(GNUSTEP_OBJ_DIR)/NSObject.o): Added
+	dependency on JIGSNative.h.
 
 Thu Feb 22 15:28:47 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* FAQ (2): Explain how to pass GNUSTEP_SYSTEM_ROOT and
 	GNUSTEP_LOCAL_ROOT to servlets.
 
+Wed Feb 21 15:24:35 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/WCUnsignedShortType.h: New file.
+	* Tools/WrapCreator/WCUnsignedShortType.m: New file.
+	* Tools/WrapCreator/GNUmakefile (WrapCreator_OBJC_FILES): Added
+	WCUnsignedShortType.m
+	* Tools/WrapCreator/WCTypeLoader.m ([+typeWithObjcType:]): Use the
+	new WCUnsignedShortType upon encountering a `unsigned short'.
+
+Mon Feb 19 11:21:54 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.objc.template
+	(VERSION): New variable.
+	* Tools/WrapCreator/Makefiles/java-wrapper.make
+	($(WRAPPER_DIR)/stamp-file): Replace VERSIONHERE with VERSION in
+	java-wrapper.objc.template.
+
+Mon Feb 19 11:17:41 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/GNUmakefile: Fixed setting VERSION at the right
+	moment.
+	
+Fri Feb  9 16:22:27 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/NSDictionary.java.add: New file.
+	* Wrappers/base/NSDictionary.m.add: New file.
+	* Wrappers/base/NSMutableDictionary.java.add: New file.
+	* Wrappers/base/libgnustep-base.jigs: Updated.
+	* Wrappers/base/libgnustep-base.jigs: Map setObject:forKey: to
+	setObjectForKey.
+	(NSDictionary): Add explicit declaration of objectForKey: to avoid
+	conflict with NSUserDefault's declaration. (NSMutableDictionary):
+	Idem for setObject:forKey: (NSUserDefaults): Fake the declaration
+	to avoid selector conflicts.
+	
+Fri Feb  9 15:40:34 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Testing/Java/Base/NSDictionaryTest.java: New test.
+	* Testing/Java/Base/GNUmakefile, Java/Base/test-base: Added test.
+
+Fri Feb  9 15:14:16 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/NSMutableData.java.add: Simplified.
+	* Wrappers/base/NSMutableData.m.add: Removed.
+	* Wrappers/base/NSMutableArray.java.add: Simplified.
+	* Wrappers/base/NSMutableArray.m.add: Removed.
+	* Wrappers/base/NSSet.m.add: New file.
+	* Wrappers/base/NSSet.java.add: New file.
+	* Wrappers/base/NSMutableSet.java.add: New file.
+	* Wrappers/base/NSCountedSet.java.add: New file.
+	* Wrappers/base/libgnustep-base.jigs: Updated.
+
+Fri Feb  9 15:04:20 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/*.handmade: Changed extension from .handmade to
+	.add.
+	* Wrappers/base/libgnustep-base.jigs: Updated as a consequence.
+
+Fri Feb  9 14:56:49 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/libgnustep-base.jigs (NSCountedSet): New wrapper.
+
+Fri Feb  9 14:39:09 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Testing/Java/Base/NSArrayTest.java: Added tests for NSArray
+	methods taking or returning a java object array.
+
+Fri Feb  9 14:32:47 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/NSData.m.handmade
+	(Java_gnu_gnustep_base_NSData_initWithBytes): Use the new function
+	JIGSInitNSDataFromJbyteArray.
+	* Wrappers/base/NSMutableData.m.handmade: Idem.
+	* Wrappers/base/NSArray.java.handmade: New file.
+	* Wrappers/base/NSArray.m.handmade: Idem.
+	* Wrappers/base/NSMutableArray.java.handmade: Idem.
+	* Wrappers/base/NSMutableArray.m.handmade: Idem.
+	* Wrappers/base/libgnustep-base.jigs: Include the new files.
+		
+Fri Feb  9 13:04:55 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/GSJNIArray.h (GSJNI_initNSDataFromJbyteArray): New function.
+	* Source/GSJNIArray.m (GSJNI_initNSDataFromJbyteArray): Implemented.
+	(GSJNI_NSDataFromJbyteArray): Call the new function.
+	* Source/JIGSMapper.h, JIGSMapper.h
+	(JIGSInitNSDataFromJbyteArray),
+	(JIGSInitNSArrayFromJobjectArray), (JIGSJobjectArrayFromNSArray),
+	(JIGSNSArrayFromJobjectArray): New functions.
+	
+Fri Feb  9 11:34:44 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Testing/Java/: Rearranged everything; updated most files.
+	* Testing/Java/Base/: New directory; all base tests moved there;
+	added check target running all tests in sequence.
+	* Testing/Java/Gui/: New directory; all gui tests moved there.
+
+Fri Feb  9 10:55:30 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Examples/Java/SimpleGUI-action/WrappingLibrary/Objc/SimpleGUI.m
+	(Java_SimpleGUI_initWithTitle): Updated for new way of wrapping
+	initializers.
+	* Examples/Java/SimpleGUI-action/WrappingLibrary/Java: Idem.
+	
+Fri Feb  9 10:52:51 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Examples/Java/SimpleGUI/WrappingLibrary/Objc/SimpleGUI.m
+	(Java_SimpleGUI_initWithTitle): Updated for new way of wrapping
+	initializers.
+	* Examples/Java/SimpleGUI/WrappingLibrary/Java/SimpleGUI.java:
+	Idem.
+
+Fri Feb  9 10:16:29 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/NSData.m.handmade: Updated for new way of wrapping
+	initializers.
+	* Wrappers/base/NSData.java.handmade: Idem.
+	* Wrappers/base/NSMutableData.java.handmade: Idem.
+	* Wrappers/base/NSMutableData.m.handmade: Idem.
+		
+Fri Feb  9 10:03:42 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/WCMethod.m ([-outputJavaWrapper]),
+	([-outputObjcWrapper]): Modified for new - fixed - way of wrapping
+	initializers.
+	
+Fri Feb  9 10:00:41 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Java/gnu/gnustep/base/NSObject.java: Made realObject protected;
+	updated comments about how to wrap constructors for subclasses.
+
+Fri Feb  9 09:50:38 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/NSObject.m
+	(Java_gnu_gnustep_base_NSObject_NSObject_1alloc): Do not add the
+	object to the mapping tables.  This must now be done by wrappers
+	for init methods - which should put in the tables the result of
+	the init method.
+
+Wed Feb  7 13:59:52 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Documentation/Manual/TitlePage.tex, .latex2html-init: Updated
+	date.
+	* Documentation/Manual/ProgrammingInJava.tex (Documenting Classes
+	Using Javadoc): New subsection.  (The General Idea): Quote the
+	quick reference documentation for the GNUstep Base Library
+	Wrappers.
+	* Documentation/Manual/WrappingObjcLibraries.tex (The Java
+	Subdirectory): Talk about the quick reference documentation.
+	(file to include in java code), (file to include in preamble java
+	code), (file to include in objective-c code): New subsubsections.
+	(Turning off the Generation of Quick Reference doc): New
+	subsection.  (Controlling the Quick Reference Documentation): New
+	section.
+
+Wed Feb  7 12:29:16 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/GNUmakefile.wrapper.java.preamble: Now install
+	into Developer/Base/Java/Reference; updated for change in java
+	wrap makefiles.
+	
+Wed Feb  7 12:26:56 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.java.template: Changed
+	default install to be into Developer/LIBRARYNAME/Java/Reference/.
+	* Tools/WrapCreator/Makefiles/java-wrapper.make
+	($(WRAPPER_DIR)/stamp-file): Accordingly, do not substitute
+	PACKAGEHERE in java-wrapper.java.template.
+
+Tue Feb  6 18:52:46 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/GNUmakefile.wrapper.java.preamble
+	(gnustep-base_JAVADOC_FILES): No need to add -public to flags for
+	javadoc.
+
+Tue Feb  6 18:49:58 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.java.template: Add
+	-public to ADDITIONAL_JAVADOCFLAGS.
+
+Tue Feb  6 18:35:28 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/gnustep-base-wrapper.spec.in (Summary,
+	description): Fixed.
+
 Tue Feb  6 18:33:15 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* NEWS: Added news for 1.2.
 
+Tue Feb  6 18:25:33 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGS.h, GNUmakefile: Version is now 1.2.0.
+
+Tue Feb  6 18:24:12 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Testing/Java/NSDataTest.java: New test.
+	* Testing/Java/GNUmakefile (gnu.gnustep.java-test_JAVA_FILES):
+	Added the new test.
+
+Tue Feb  6 18:18:09 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/NSData.m.handmade: New file.
+	* Wrappers/base/NSData.java.handmade: Idem.
+	* Wrappers/base/NSMutableData.m.handmade: Idem.
+	* Wrappers/base/NSMutableData.java.handmade: Idem.
+	* Wrappers/base/libgnustep-base.jigs: Include the new files.
+	* Wrappers/base/GNUmakefile.wrapper.java.preamble: Idem.
+
+Tue Feb  6 18:14:47 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/GNUmakefile: Install by default into
+	GNUSTEP_SYSTEM_ROOT.
+	
+Tue Feb  6 18:04:39 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+	
+	* Tools/WrapCreator/main.m (main): Added --no-javadoc option; use
+	new WCLibrary initializer.  (print_help_and_exit): Added
+	explanation of --no-javadoc option.
+	* Tools/WrapCreator/WCLibrary.m ([+initializeWithOptions:]):
+	Replaces the old initialize method to make it easier to add
+	options.  Also, added outputJavadoc support.
+	* Tools/WrapCreator/WCLibrary.m ([+outputJavadoc]): New method.
+	* Tools/WrapCreator/WCLibrary.h: Updated.
+	* Tools/WrapCreator/WCClass.m ([-outputWrappers]): If output of
+	javadoc is turned on, output tiny javadoc comment on the class as
+	being a wrapper for the corresponding objective-C class.
+	* Tools/WrapCreator/WCMethod.m ([WCMethod -outputJavaWrapper]): If
+	output of javadoc is turned on, output tiny javadoc comment on the
+	method as being a wrapper for the corresponding objective-c
+	method.
+	* Tools/WrapCreator/Makefiles/java-wrapper.make: Pass the
+	javadoc=no option down to WrapCreator.
+	($(WRAPPER_DIR)/stamp-file): Substitute JAVADOCHERE and
+	PACKAGEHERE in the Java GNUmakefile.
+	* Tools/WrapCreator/Makefiles/java-wrapper.java.template: set
+	javadoc variable; Set DOCUMENT_NAME, xxx_JAVADOC_FILES,
+	xxx_DOC_INSTALL_DIR; include documentation.make if javadoc is not
+	no.
+	
+Tue Feb  6 11:55:59 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Java/gnu/gnustep/base/NSObject.java: Added some short javadoc
+	comments.
+	* Java/gnu/gnustep/base/NSPoint.java: Idem.
+	* Java/gnu/gnustep/base/NSSize.java: Idem.
+	* Java/gnu/gnustep/base/NSRect.java: Idem.
+	* Java/gnu/gnustep/base/NSRange.java: Idem.
+	* Java/gnu/gnustep/base/NSException.java: Idem.
+	* Java/gnu/gnustep/base/NSSelector.java: Idem.
+	* Java/gnu/gnustep/base/GSInitializationType.java: Idem.
+	
+Mon Feb  5 16:15:48 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGSMapper.h, JIGSMapper.m (JIGSJbyteArrayFromNSData),
+	(JIGSNSDataFromJbyteArray): New functions.
+	* Source/GSJNIArray.h, GSJNIArray.m: New file.
+	* Source/GSJNI.h: Include GSJNIArray.h.
+	* Source/GNUmakefile: Added the new files.
+
+Mon Feb  5 15:09:27 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/WCLibrary.m (topLevelDirectory): New static
+	variable to hold the top level directory.
+	* Tools/WrapCreator/WCLibrary.m
+	([+initializeWithJigsFile:preprocessedHeaderFile:
+	headerFile:wrapDirectory:libraryName:verboseOutput:]): Set the new
+	static variable.
+	* Tools/WrapCreator/WCLibrary.h ([-fileWithRelativePath:]): New
+	method.
+	* Tools/WrapCreator/WCLibrary.m ([-fileWithRelativePath:]): Idem.
+
+	* Tools/WrapCreator/WCClass.h (fileWithPreambleJavaCode,
+	fileWithIncludedJavaCode, fileWithIncludedObjcCode): New ivars.
+	* Tools/WrapCreator/WCClass.m ([-initWithDictionary:]): Set the
+	new ivars by reading them from the .jigs file.
+	* Tools/WrapCreator/WCClass.m ([-outputWrappers]): Read the files
+	and include the custom code.
+	
 Fri Feb  2 11:03:20 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* FAQ: Removed warning about threads.
 
+Tue Jan 30 16:01:32 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/GNUmakefile (after-distclean): Added to clean out
+	.tar.gz files created by make rpm in the wrapper subdirs
+
 Tue Jan 30 15:56:20 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* PACKAGING: New file.
-	* TODO: New file.
+	* TODO: New file.	
 
 Thu Jan 25 16:20:50 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* NEWS: Added news for 1.1.
 
+Thu Jan 25 16:18:44 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Documentation/Manual/WrappingObjcLibraries.tex (Generating RPMs
+	for the Wrapper Library): New section.
+
+Thu Jan 25 15:46:30 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make
+	($(WRAPPER_DIR)/stamp-file): Output RPM dependency of the
+	debugging java wrapper package on the non debugging one.
+
+Thu Jan 25 14:47:19 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make: Use
+	java-wrapper.top.debug.template rather than
+	java.wrapper.top.template if debugging is enabled.
+	* Tools/WrapCreator/Makefiles/java-wrapper.top.debug.template: New
+	file with modified SUBPROJECTS and PACKAGE_NAME.
+	* Tools/WrapCreator/GNUmakefile (after-install): Install
+	java-wrapper.top.debug.template too.
+	
+Thu Jan 25 13:27:52 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/GNUmakefile.wrapper (java-wrapper): Copy
+	gnustep-base.h into the wrapper directory so it can be found when
+	building the RPM.
+	* Wrappers/base/GNUmakefile.wrapper.objc.postamble: New file to
+	add -I. to include flags.
+	
 Thu Jan 25 12:59:39 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GNUmakefile (VERSION): Version is now 1.1.0.
 
+Thu Jan 25 12:59:12 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGS.h, GNUmakefile: Version is now 1.1.0.
+
+Thu Jan 25 12:37:59 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Documentation/Manual/WrappingObjcLibraries.tex (Creating and
+	Compiling the Wrappers): Updated for the fact that now JIGS
+	automatically compiles and installs the wrappers for you.
+	(Turning on Generation of Java Wrappers): Explain how to stop JIGS
+	from automatically try to compile/install the java wrappers.
+
+Thu Jan 25 12:21:31 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make
+	($(WRAPPER_DIR)/stamp-file): Modified conditionals to always
+	enable automatical building of java wrappers, except if
+	BUILD_JAVA_WRAPPER_AUTOMATICALLY was explicitly set `no'.
+
+Thu Jan 25 12:05:32 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/GNUmakefile: Use the new
+	BUILD_JAVA_WRAPPER_AUTOMATICALLY feature.
+
+Thu Jan 25 12:01:28 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/GNUmakefile: Added PACKAGE_NAME and VERSION.
+	* Wrappers/base/gnustep-base-wrapper.spec.in: New file.
+	* Wrappers/base/gnustep-base-wrapper-debug.spec.in: New file.	
+	
 Thu Jan 25 11:32:06 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GNUmakefile (PACKAGE_NAME): Changed to gnustep-java.
@@ -154,10 +1913,118 @@ Thu Jan 25 11:32:06 2001  Nicola Pero  <nicola@brainstorm.co.uk>
 	* jigs-debug.spec.in: New file.
 	* INSTALL: Added comment about installing libobjc from RPM.
 
+Thu Jan 25 11:23:28 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/GNUmakefile (VERSION): New variable.
+		
+Wed Jan 24 17:18:43 2001  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/GNUmakefile (after-install): Prefix
+	installation paths with $(INSTALL_ROOT_DIR) so that it can be RPM
+	packaged.
+	* Tools/WrapCreator/Makefiles/java-wrapper.top.template
+	(PACKAGE_NAME): Changed wrapper package name from
+	$(PACKAGE_NAME)-wrap to $(PACKAGE_NAME)-wrapper. (VERSION): New
+	variable.
+	* Tools/WrapCreator/Makefiles/java-wrapper.make
+	(after-$(TARGET)-all): If BUILD_JAVA_WRAPPER_AUTOMATICALLY is yes,
+	then step into the wrapper dir and compile it automatically after
+	the library.
+	(install-java_wrapper): Idem for install.
+	(uninstall-java_wrapper): Idem for uninstall.	
+	* Tools/WrapCreator/Makefiles/java-wrapper.make
+	(WRAPPER_SPEC_IN_FILE): New variable. (WRAPPER_SCRIPT_IN_FILE):
+	New variable.
+	($(WRAPPER_DIR)/stamp-file): Also set VERSION in the top level
+	makefile; use PACKAGE_NAME rather than LIBRARY_NAME; copy the
+	.spec.in and script.in files for the wrapper into the wrapper dir;
+	made end message more verbose.
+
+Thu Jan 11 11:33:38 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/GNUmakefile (LIBRARIES_DEPEND_UPON): Update for changes
+	in the base/make library on CVS: link also against
+	CONFIG_SYSTEM_LIBS.
+	
+Mon Jan  8 15:49:42 2001  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Documentation/Manual/WrappingObjcLibraries.tex (Turning on
+	Generation of Java Wrappers): Added suggestion to use `-' when
+	including java.wrapper.
+	* Documentation/Manual/Manual/: Updated.	
+
+Thu Nov 30 12:18:20 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/main.m (main): Initialize NSProcessInfo if
+	building with GS_PASS_ARGUMENTS.
+
+Thu Nov 30 12:12:47 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Objc/main.m (main): Initialize NSProcessInfo if building
+	with GS_PASS_ARGUMENTS.
+
+Thu Nov 30 11:36:39 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	Patches by Helge Hess:
+	* Source/JIGSInit.m (JIGSInit): Added ifdef for initialization on
+	libFoundation.
+	* Source/JIGSMapper.h: Define GS_SIZEOF_VOIDP if compiling on
+	libFoundation.
+	* Source/GNUmakefile (libgnustep-java_HEADER_FILES_INSTALL_DIR):
+	Use $(GNUSTEP_FND_DIR) instead of hardcoding `gnustep'.
+	* Source/ObjcRuntimeUtilities.m
+	(ObjcUtilities_build_runtime_Objc_signature): Added ifdef for
+	libFoundation.
+	* Source/JIGSMapper.m (JIGSJobjectFromId): Use -isKindOfClass
+	instead of -isKindOf.	
+
+Thu Nov 30 11:26:14 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Wrappers/base/libgnustep-base.jigs (RunLoopEventType): Fixed
+	typo reported by Helge Hess <helge.hess@skyrix.com>.
+	
+Thu Nov 30 11:24:53 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	Patches by Helge Hess <helge.hess@skyrix.com>:
+	* Tools/WrapCreator/main.m (main): Initialize libFoundation if we
+	are building on libFoundation.
+	* Tools/WrapCreator/WCClass.m ([-description]): New method.
+
+Thu Nov 30 11:04:49 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	Patches by Helge Hess <helge.hess@skyrix.com>:
+	* Testing/Objc/jigs.make (JAVA_VM_LIBS): Added flags for Sun's JDK
+	1.3.
+	* Testing/Objc/main.m (main): Initialize libFoundation if we are
+	compiling for libFoundation.
+		
 Mon Nov 27 16:39:41 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* NEWS: Added news for 1.0.0.
 
+Mon Nov 27 16:37:13 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/JIGS.h: Version is now 1.0.0.	
+	
+Mon Nov 27 16:10:49 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Documentation/Manual/.latex2html-init: New file.
+	* Documentation/Manual/GNUmakefile: Idem.
+	* Documentation/Manual/Manual.tex: Idem.
+	* Documentation/Manual/TitlePage.tex: Idem.
+	* Documentation/Manual/Introduction.tex: Idem.
+	* Documentation/Manual/Overview.tex: Idem.
+	* Documentation/Manual/ProgrammingInJava.tex: Idem. 
+	* Documentation/Manual/WrappingObjcLibraries.tex: Idem.
+	* Documentation/Manual/AccessingJavaFromObjc.tex: Idem.
+	* Documentation/Manual/Manual/: New directory;
+	* Documentation/Manual/Manual/*: Generated from TeX source.
+
+Mon Nov 27 16:10:14 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Documentation/GNUmakefile: New file.
+	* Documentation/Manual/: New directory.	
+	
 Mon Nov 27 12:31:41 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* GNUmakefile (SUBPROJECTS): Added Documentation
@@ -169,23 +2036,312 @@ Mon Nov 27 12:19:06 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 Mon Nov 27 11:41:33 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* README: Rewritten the `What is JIGS?' section.
+	
+Tue Nov 21 14:06:03 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
+	* Java/gnu/gnustep/java/JIGS.java (forceMultithreading): New
+	method.
+
+Tue Nov 21 14:05:38 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/JIGS.m (Java_gnu_gnustep_java_JIGS_forceMultithreading):
+	Native implementation for the new Java API
+	JIGS.forceMultithreading ().
+	
+Tue Nov 21 12:38:27 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Examples/Java/SimpleGUI-action/WrappingLibrary/Objc/SimpleGUI.m
+	(JNI_OnLoad): Use the new thread-safe macros when
+	entering/exiting.	
+	
+Mon Nov 20 15:14:39 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Examples/Java/SimpleGUI/WrappingLibrary/Objc/SimpleGUI.m
+	(JNI_OnLoad): Use JIGS_ONLOAD_ENTER, JIGS_ONLOAD_EXIT for thread
+	safety.
+
+Mon Nov 20 15:13:29 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/WCLibrary.m ([+outputWrappers]): Output the
+	new macros JIGS_ONLOAD_ENTER and JIGS_ONLOAD_EXIT for thread
+	safety.
+	
+Mon Nov 20 15:11:53 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/JIGSNative.h (JIGS_ONLOAD_ENTER), (JIGS_ONLOAD_EXIT): New
+	macros to be used upon entering/exiting a JNI_OnLoad function.	
+	
+Mon Nov 20 14:47:23 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Java/gnu/gnustep/java/JIGS.java (loadLibrary): Synchronized
+	access to critical section.
+
+Thu Nov 16 10:58:02 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Java/NSButtonTest2.java: New test.
+	* Testing/Java/GNUmakefile: Added the new test.
+
+Wed Nov 15 17:31:06 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Java/NSButtonTest.java: New test.
+	* Testing/Java/GNUmakefile: Added the new test.
+
+Wed Nov 15 17:19:57 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Wrappers/gui/libgnustep-gui.jigs (enumerations): Added
+	NSButtonType, NSCellImagePosition.  (NSButton): New wrapper.
+	(NSCell): Added the NSCellImagePosition constants.  (NSBox),
+	(NSScrollView),
+	(NSWindow): Added explicit declaration of setContentView:.
+	
 Mon Nov 13 10:26:39 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* NEWS: Added news for 0.9.0.
+	
+Mon Nov 13 10:23:06 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
+	* Testing/Java/ThreadsTest.java: New test.
+	* Testing/Java/GNUmakefile: Added the new test.
+
+Mon Nov 13 10:11:17 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/JIGSInit.m (JIGSInit): Make sure the default thread is
+	initialized.
+	* Source/JIGSNative.h (JIGS_ENTER), (JIGS_EXIT),
+	(JIGS_EXIT_WITH_VALUE): Register/unregister the thread upon
+	entering/exiting from native code.
+	* Source/NSJavaVirtualMachine.m
+	([+startVirtualMachineWithClassPath: libraryPath:]): Register
+	NSJavaVirtualMachine for the NSThreadDidStartNotification and
+	NSThreadWillExitNotification.
+	* Source/NSJavaVirtualMachine.m (_attachCurrentThread:),
+	(_detachCurrentThread:): Implemented to manage the notifications.
+	* Source/NSJavaVirtualMachine.h, NSJavaVirtualMachine.m
+	(attachCurrentThread), (detachCurrentThread): New methods.
+	* Source/JIGS.h: Version is now 0.9.0.
+	
+Fri Nov 10 15:04:32 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Objc/jigs.make: Added flags for blackdown 1.3.0.
+
+Fri Nov  3 16:14:12 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Wrappers/base/libgnustep-base.jigs (NSArray): Added the NotFound
+	constant.
+	(NSRunLoop): Added the DefaultRunLoopMode constant.
+
+Fri Nov  3 16:00:55 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Wrappers/gui/libgnustep-gui.jigs (enumerations): Added
+	NSSelectionDirection.
+	(NSApplication), (NSBox), (NSView), (NSWindow): Added hardcoded
+	constants.  (NSWindow): Uncommented keyViewSelectionDirection.
+	
+Fri Nov  3 15:58:13 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Java/NSArrayTest.java: Test the NSArray.NotFound
+	constant.
+	* Testing/Java/NSWindowTest.java: Use the new NSWindow constants.
+
+Fri Nov  3 15:30:13 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/WCClass.m ([-initWithDictionary:]): Read the
+	`hardcoded constants' section in the .jigs file.
+	([-outputWrappers]): Added code to output the `hardcoded
+	constants'.
+	
 Fri Nov  3 12:29:34 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* FAQ: Added question and answer about portability.
 
+Thu Nov  2 16:06:57 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Wrappers/gui/libgnustep-gui.jigs: Created an `enumerations'
+	section, and moved enumerations from `types' section to it.
+	
+Thu Nov  2 16:05:35 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Wrappers/base/libgnustep-base.jigs: Moved RunLoopEventType from
+	types section to enumerations section.
+
+Thu Nov  2 16:01:24 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/WCLibrary.m
+	([+initializeWithJigsFile:preprocessedHeaderFile:
+	headerFile:wrapDirectory:libraryName:verboseOutput:]): Accept
+	enumerations and manage them as custom types with int primitive
+	type.
+
+Thu Nov  2 14:20:42 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Wrappers/base/libgnustep-base.jigs (NSNull), (NSPort),
+	(NSRunLoop),
+	(NSTimer): New wrappers.
+	
+Wed Nov  1 16:18:12 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Java/NSWindowTest.java: New test.
+	* Testing/Java/GNUmakefile: Added the new test.
+	
 Wed Nov  1 15:38:22 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* NEWS: Added news for 0.8.
 
+Wed Nov  1 15:35:47 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Wrappers/gui/libgnustep-gui.jigs Added types; uncommented lots
+	of methods which can be now safely wrapped thanks to fixes and
+	improvements in JIGS engine and wrapper tool.
+	
+Wed Nov  1 15:06:56 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/WCLibrary.m
+	([+initializeWithJigsFile:preprocessedHeaderFile:
+	headerFile:wrapDirectory:libraryName:verboseOutput:]): Some code
+	from ([+outputWrappers]) has been moved here, so that all the
+	classes to wrap are loaded in before the wrapping takes place.
+	([+javaClassNameForObjcClassName:]): New method made possible by
+	the afore mentioned rearranging of class loading.  All the code
+	trying to guess the class name mapping has been moved here from
+	[WCObjectType -javaArgumentType].
+	* Tools/WrapCreator/WCLibrary.h: Updated.
+	* Tools/WrapCreator/WCObjectType.h: Added ivar longJavaType.
+	* Tools/WrapCreator/WCObjectType.m ([-initWithObjcType:]): Ask the
+	library to do the mapping of class names.  ([-javaArgumentType]):
+	Moved most of the code to WCLibrary.m; now simply use the mapped
+	name.
+	* Tools/WrapCreator/WCMethod.m ([-outputJniMethodName]): Warn the
+	user if we don't have enough information to output a working
+	wrapper for this method and he needs to help us by adding a `class
+	method name mapping hints' section to his .jigs file.
+	
+Wed Nov  1 14:55:45 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make: Run WrapCreator
+	in silent mode if make is run with arguments `verbose=no'.
+	
+Wed Nov  1 11:49:30 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/JIGS.h: Version is now 0.8.0.
+
+Wed Nov  1 11:41:40 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Wrappers/base/libgnustep-base.jigs: Uncommented all the
+	overloaded methods.  This now works thanks to changes in the
+	WrapCreator tool.
+	(NSUserDefaults): Uncommented method returning NSData.
+	
+Wed Nov  1 11:32:49 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/WCMethod.m (convertToJNI): New function
+	converting class names to JNI convention for use in long JNI
+	native function names.
+	([-setOutputFullJniName:]): New method.  ([-outputJniMethodName]):
+	Added code to output a long jni method name if required.
+	* Tools/WrapCreator/WCMethod.h: Updated for the changes.
+	* Tools/WrapCreator/WCClass.m ([-outputWrappers]): Rewritten code
+	which outputs method wrappers so that it decides whether to use
+	the long JNI name or the short one for each wrapped method.
+	(setNeedsLongJniName): New function to support the new code in
+	([-outputWrappers]).
+	
+Wed Nov  1 11:20:32 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Java/NSArrayTest.java: Added test for overloaded indexOf
+	().
+
+Tue Oct 31 13:32:59 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Java/NSPropertyListSerializationTest.java: Added demo of
+	converting to/from NSData.
+
+Tue Oct 31 13:26:47 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Wrappers/base/libgnustep-base.jigs (NSData), (NSMutableData):
+	New wrappers.
+	* Wrappers/base/NSPropList.m ([+propertyListFromData:]),
+	([+dataFromPropertyList:]): New methods.
+	* Wrappers/base/NSPropertyListSerialization.h: Updated for the new
+	methods.
+	* Wrappers/base/libgnustep-base.jigs
+	(NSPropertyListSerialization): Wrap the new methods.
+	
+Fri Oct 20 17:31:09 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Java/NSPropertyListSerializationTest.java: New test.
+	* Testing/Java/GNUmakefile: Added the new test.
+
+Fri Oct 20 17:13:24 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Wrappers/base/GNUmakefile.wrapper: New file.
+	* Wrappers/base/GNUmakefile.wrapper.objc.preamble: New file.	
+	* Wrappers/base/NSPropList.m: New file.
+	* Wrappers/base/NSPropertyListSerialization.h: New file.
+	* Wrappers/base/libgnustep-base.jigs (NSPropertyListSerialization): New wrapper.
+	* Wrappers/base/gnustep-base.h: Include NSPropertyListSerialization.h.
+	
+Fri Oct 20 12:49:35 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Testing/Java/NSNotificationCenterTest.java: New test.
+	* Testing/Java/GNUmakefile: Added the new test.
+
+Fri Oct 20 12:44:14 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Wrappers/base/libgnustep-base.jigs (NSNotificationCenter): New
+	wrapper.
+	
+Fri Oct 20 12:40:29 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/WCHeaderParser.m
+	([+methodNameFromMethodDeclaration:]): New method.
+	* Tools/WrapCreator/WCHeaderParser.h: Declared the new method.
+	* Tools/WrapCreator/WCClass.m ([-initWithDictionary:]): Accept and
+	manage a `method declarations' option.
+	([-declarationOfMethod:isClassMethod:]): New method.
+	([-outputWrappers]): Use the new method; improved comment output.
+	* Tools/WrapCreator/WCClass.h: Declared the new method, added
+	related instance variables.
+	
+Wed Oct 18 10:44:49 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/JIGSNative.h (JIGS_EXIT_WITH_VALUE): Fixed.
+
+Tue Oct 17 14:37:25 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Tools/WrapCreator/WCTypeLoader.m: Use the new
+	JIGSNSStringFromJstring and JIGSJstringFromNSString functions when
+	morphing strings.
+
+Tue Oct 17 14:35:45 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Examples/Java/SimpleGUI-action/WrappingLibrary/Objc/SimpleGUI.m:
+	Use the new JIGSNSStringFromJstring function instead of the
+	low-levelish GSJNI_NSStringFromJString.
+	* Examples/Java/SimpleGUI-action/WrappingLibrary/Objc/SimpleGUI.m
+	(JNI_OnLoad): Fixed typo.
+
 Tue Oct 17 14:28:35 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* FAQ: Removed incorrect hints for java servlets.
+	
+Tue Oct 17 13:10:58 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
+	* Examples/Java/SimpleGUI/WrappingLibrary/Objc/SimpleGUI.m: Use
+	the new JIGSNSStringFromJstring functions instead of the
+	low-levelish GSJNI ones.
+
+Tue Oct 17 13:08:12 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/JIGSMapper.m (JIGSJstringFromNSString),
+	(JIGSNSStringFromJstring): New functions wrapping the GSJNI ones
+	but working with null and nil strings.
+	* Source/JIGSMapper.h: Declared the new functions.
+
+Wed Oct 11 15:59:20 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Wrappers/README: New file.
+	* Wrappers/GNUmakefile: New file.
+	
 Wed Oct 11 15:23:23 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 
 	* FAQ: New file.
@@ -194,15 +2350,254 @@ Wed Oct 11 15:23:23 2000  Nicola Pero  <n.pero@mi.flashnet.it>
 	* NEWS: New file obtained from the README file.
 	* README: Moved the news to the NEWS file.
 
+Tue Oct 10 17:33:26 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/JIGSMapper.m: New table to make reverse class
+	mapping. (_JIGSFirstJavaProxySuperClass): Rewritten.  Now
+	everything should work when class names are mapped from objc to
+	java in not-trivial ways.  (_JIGSMapperInitialize): Create the new
+	reverse table.  (JIGSClassFromThisClass),
+	(_JIGSAllocClassForThis): Rewritten to use the new
+	_JIGSFirstJavaProxyClass.  (JIGSRegisterJavaProxyClass): Insert
+	the class mapping in the reverse table too.
+	
+Fri Oct  6 17:16:51 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Source/JIGSProxySetup.m (convertSignature): Manage ':' for 
+	selectors.
+	* Source/JIGSProxyIMP.m (process_argument): Process selector 
+	argument.
+
+Fri Oct  6 17:14:53 2000  Nicola Pero  <n.pero@mi.flashnet.it>
+
+	* Java/gnu/gnustep/java/GSJNIMethods.java (signatureOfClass):
+	Return ':' for selectors.
+	
 Fri Oct  6 13:57:19 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* README: Added news for 0.7; rewritten the 'What is JIGS?'
 	paragraph.
 
+Fri Oct  6 13:11:30 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Testing/Java/NSSelectorTest.java: New test.
+	* Testing/Java/GNUmakefile: Added the new test.
+	* Testing/Objc/main.m (main): Added test for loading in overloaded
+	methods.
+
+Fri Oct  6 12:59:36 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/libgnustep-base.jigs: New entry for global method
+	name mapping; uncommented methods requiring selector morphing.
+	
+Fri Oct  6 12:58:06 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/Examples/SimpleGUI-action: New directory.
+	
+Fri Oct  6 12:41:40 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/WCType.h, WCType.m ([-javaArgumentType]): New
+	method.
+	* Tools/WrapCreator/WCIdType.m ([-javaArgumentType]): Implemented.
+	* Tools/WrapCreator/WCObjectType.m ([-javaArgumentType]): Implemented.
+	* Tools/WrapCreator/WCPrimitiveType.h: Added ivar for java
+	argument type.
+	* Tools/WrapCreator/WCPrimitiveType.m ([-javaArgumentType]):
+	Implemented.
+	* Tools/WrapCreator/WCBOOLType.m, WCCharType.m, WCIntType.m,
+	WCDoubleType.m: Set the java argument type ivar.
+	* Tools/WrapCreator/WCFloatType.m, WCUnsignedInt.m,
+	WCCustomType.m: Idem.
+	* Tools/WrapCreator/WCMorphType.h, WCMorphType.m: Added support
+	for java argument type.
+	* Tools/WrapCreator/WCTypeLoader.m: Updated for change in
+	WCMorphType; added automatic morphing of selectors.
+	* Tools/WrapCreator/WCMethod.h, WCMethod.m
+	([-outputJavaArgumentSignature]),
+	([-outputSelectorMapping]): New methods.
+	* Tools/WrapCreator/WCClass.m ([-outputWrappers]): Added code to
+	output file with the method mapping for this class.
+	* Tools/WrapCreator/WCLibrary.h, WCLibrary.m
+	([+selectorMapFileForClass:]): New method.
+	* Tools/WrapCreator/WCLibrary.m ([+outputWrappers]): Output a file
+	loading in all the selector mapping files for all classes; output
+	code into the library initialization routine to load in the
+	selector mappings.	
+	
+Fri Oct  6 11:38:30 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGS.h: Include JIGSSelectorMapping.h.  Version is now 0.7.0.
+	* Source/JIGSInit.m (JIGSInit): Call _JIGSSelectorMappingInitialize.
+	* Source/JIGSMapper.m, JIGSMapper.h
+	(_JIGSLongJavaClassNameForObjcClassName): New function.
+	* Source/JIGSProxySetup.m (_JIGS_prepare_method_struct): Manage
+	constructor method names here; they are always strimmed, except
+	for the one without arguments.  Use the new selector mapping API
+	for mapping the selectors.
+	* Source/JIGSSelectorMapping.h, JIGSSelectorMapping.m: Implemented
+	full selector mapping functionality.
+	
+Fri Oct  6 11:26:42 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Java/gnu/gnustep/java/GSJNIMethods.java (jniSignatureOfClass),
+	(getMethodArgumentSignature), (argumentSignature),
+	(parameterTypes), (nextClassFromJniSignature): New methods.
+	* Java/gnu/gnustep/base/NSSelector.java: New file.
+	* Java/GNUmakefile (gnu.gnustep.java_JAVA_FILES): Added NSSelector.
+	
+Mon Oct  2 15:59:56 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGSSelectorMapping.m (strim): Do not output the 'static'
+	keyword; do not output the return type.
+
+Mon Oct  2 11:58:24 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/GNUmakefile (libgnustep-java_HEADER_FILES): Added
+	JIGSSelectorMapping.h.  (libgnustep-java_OBJC_FILES): Added
+	JIGSSelectorMapping.m
+	* Source/JIGSSelectorMapping.m, JIGSSelectorMapping.h: New files.
+	* Source/JIGSSelectorMapping.m (strim), (mapJavaMethodName): Moved
+	here from JIGSProxySetup.m.  (mapJavaMethodName): Do not take the
+	selector table as argument, removed corresponding code.
+	* Source/JIGSProxySetup.m (_JIGS_prepare_method_struct): Moved
+	here code to check if the method was already registered in the
+	selector table.
+
+Mon Oct  2 10:35:20 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/Examples/SimpleGUI/JavaApp/run: Added support
+	for compiling and running the debug version of the example.
+	* Tools/WrapCreator/Examples/SimpleGUI/JavaApp/GNUmakefile
+	(CLASSPATH): Added path to debug version of SimpleGUI.
+	
+Mon Oct  2 10:24:36 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Examples/Java/SimpleGUI/JavaApp/run: Hacked in support for
+	running the Example with debug enabled.
+	* Examples/Java/SimpleGUI/WrappingLibrary/Java/SimpleGUI.java:
+	Updated loading the library to the new JIGS facility for that.
+
+Mon Oct  2 10:00:00 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGSInit.m (JIGSInit): Added workaround for systems without
+	/proc filesystem (Patch by Richard Frith-Macdonald).
+
+Fri Sep 29 18:39:04 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Testing/Objc/main.m (main): Improved message.
+
+Fri Sep 29 17:59:18 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Testing/Objc: New directory.
+	* Testing/Objc/GNUmakefile: New file.
+	* Testing/Objc/main.m: New file.
+	* Testing/Objc/jigs.make: New file.
+	* Testing/Objc/openjavatool: New file.
+	* Testing/Objc/README: New file.
+	
+Fri Sep 29 15:46:53 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Java/gnu/gnustep/java/JIGS.java: Don't call JIGS.initialize ()
+	to avoid a recursive loop when JIGSInit () is called from
+	objective-C.
+
+Fri Sep 29 15:46:29 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGS.m (Java_gnu_gnustep_java_JIGS_initialize): Do not
+	use an autorelease pool.
+
+Thu Sep 28 16:10:36 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGSProxySetup.h (struct _JIGSSelectorIDTable): Added the
+	method type.
+	* Source/JIGSProxySetup.m (_JIGS_prepare_method_struct): Set the
+	method type in the table.  (_JIGS_register_java_class_simple):
+	When putting the real selectors in the table, use any selector
+	regardless of type.  (mapJavaMethodName): Commented out code to
+	check if selector is already in use.  It should now be able to
+	work fine even in this case.
+	* Source/JIGSProxyIMP.m (_JIGS_id_IMP_JavaMethod),
+	(_JIGS_void_IMP_JavaMethod), (_JIGS_jdouble_IMP_JavaMethod),
+	(_JIGS_jfloat_IMP_JavaMethod), (_JIGS_jlong_IMP_JavaMethod),
+	(_JIGS_jint_IMP_JavaMethod), (_JIGS_jshort_IMP_JavaMethod),
+	(_JIGS_jchar_IMP_JavaMethod), (_JIGS_jboolean_IMP_JavaMethod),
+	(_JIGS_jbyte_IMP_JavaMethod): Use type saved in the table instead
+	of getting it from the selector.
+	
 Thu Sep 28 12:56:22 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* README: Added news for 0.6.
 
+Thu Sep 28 12:39:24 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Java/gnu/gnustep/java/JIGS.java: Added support for debug
+	libraries.  (static): Use JIGSLibraryLoader to load gnustep-java
+	at the beginning.  (loadLibrary): New method.
+	* Java/gnu/gnustep/java/JIGSLibraryLoader.java: New class.
+	* Java/GNUmakefile (gnu.gnustep.java_JAVA_FILES),
+	(gnu.gnustep.java_JAVA_JNI_FILES): Added JIGSLibraryLoader.java.
+
+Thu Sep 28 12:30:39 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGS.h: Updated version number to 0.6.
+	* Source/loader: New directory.
+	* Source/loader/GNUmakefile: New file.
+	* Source/loader/JIGSLibraryLoader.c: New file.
+	* Source/GNUmakefile: Added loader subproject.
+
+Thu Sep 28 11:54:58 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.objc.template: Added
+	setting of debug and profile flags to match the ones of the
+	wrapped library.
+	* Tools/WrapCreator/Makefiles/java-wrapper.java.template: Idem. 
+	* Tools/WrapCreator/Makefiles/java-wrapper.make
+	(before-$(TARGET)-all): Warn if trying to build the wrapper for a
+	static library.
+	 (WRAPPER_DIR): Add suffix if building a debug and/or profile
+	version.  ($(WRAPPER_DIR)/stamp-file): Set the info about debug
+	and profile in the GNUmakefiles we are generating; echo
+	instructions on how to compile the wrapper at the end;
+	(internal-java_wrapper-distclean): Remove JavaWrapper_debug and
+	similar directories in distclean.
+	* Tools/WrapCreator/WCClass.m ([-outputWrappers]): Made output
+	code invoke the new JIGS.loadLibrary () facility rather than the
+	bare System.loadLibrary () to allow debug libraries to be wrapped;
+	output import of gnu.gnustep.java.JIGS to allow this.
+
+Tue Sep 26 15:47:18 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Testing/Java/NSTaskTest.java: Added test for NSTask.
+	* Testing/Java/GNUmakefile: Added the new test.
+
+Tue Sep 26 15:30:27 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/libgnustep-base.jigs (NSBundle), (NSTask): New
+	wrappers.
+
+Tue Sep 26 13:09:55 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/libgnustep-base.jigs (types): New section, mapping
+	NSTimeInterval to double.  (NSDate): Uncommented most methods, as
+	now permitted by the mapping of NSTimeInterval.  (NSProcessInfo):
+	Expose setProcessName:.
+	
+Tue Sep 26 12:55:46 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Testing/Java/NSDateTest.java: Added a quick test for the
+	NSTimeInterval mapping to double.
+	* Testing/Java/GNUmakefile: Added the new test.
+
+Tue Sep 26 12:27:43 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/WCLibrary.m ([+outputWrappers]): Read the
+	custom type mapping and create the appropriate WCCustomType
+	objects.
+	* Tools/WrapCreator/WCCustomType.m: New file.
+	* Tools/WrapCreator/WCCustomType.h: New file.
+	* Tools/WrapCreator/GNUmakefile (WrapCreator_OBJC_FILES): Added
+	WCCustomType.m
+	
 Tue Sep 26 10:50:20 BST 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* INSTALL: Completely simplified and rewritten the part on 
@@ -213,29 +2608,266 @@ Wed Sep  6 03:43:41 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* README: Added news for 0.5.
 
+Wed Sep  6 02:37:35 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/WCLibrary.m ([+prerequisiteLibraries]): New
+	method.
+	* Tools/WrapCreator/WCLibrary.h: Declared the method.
+	* Tools/WrapCreator/WCClass.m ([-prerequisiteLibraries]): New
+	method.
+	* Tools/WrapCreator/WCClass.h: Declared the new method.
+	* Tools/WrapCreator/WCClass.m ([-outputWrappers]): Output commands
+	to load in any prerequisite library native wrappers before the
+	library native wrapper.
+	
+Wed Sep  6 01:36:59 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGS.h: Updated version number to 0.5.
+	* Source/JIGSProxyIMP.m (_JIGS_jboolean_IMP_JavaMethod),
+	(_JIGS_jbyte_IMP_JavaMethod), (_JIGS_jchar_IMP_JavaMethod),
+	(_JIGS_jshort_IMP_JavaMethod), (_JIGS_jint_IMP_JavaMethod),
+	(_JIGS_jlong_IMP_JavaMethod), (_JIGS_jfloat_IMP_JavaMethod),
+	(_JIGS_jdouble_IMP_JavaMethod), (_JIGS_void_IMP_JavaMethod),
+	(_JIGS_id_IMP_JavaMethod): Use the type of the selector in our
+	internal class cache table rather than the type of the selector
+	passed in the invocation, which could be NULL.
+	* Source/JIGSProxySetup.m (mapJavaMethodName): Ignore selectors
+	found in use but with NULL type.
+
+Wed Sep  6 01:35:55 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Testing/Java/NSApplicationTest.java: New file.
+	* Testing/Java/GNUmakefile: Added the new test.
+
+Tue Sep  5 23:37:07 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/libgnustep-base.jigs (NSNotification): New
+	wrapper.
+	(NSDate): New (partial) wrapper.
+
+Tue Sep  5 19:46:47 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/gui/libgnustep-gui.jigs: New file.
+	* Wrappers/gui/GNUmakefile: New file.
+	* Wrappers/gui/GNUmakefile.wrapper.objc.preamble: New file.
+	* Wrappers/gui/README: New file.
+	* Wrappers/gui/gnustep-gui.h: New file.
+	
+Tue Sep  5 19:45:06 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/gui: New directory.
+	
+Tue Sep  5 16:06:54 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Testing/Java/NSProcessInfoTest.java: New file.
+	* Testing/Java/GNUmakefile: Added the new test.
+	* Testing/Java/README: Added comment about setting the library
+	path before running the java tests.
+
+Tue Sep  5 15:59:02 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/WCDoubleType.h, WCDoubleType.m, WCFloatType.h,
+	WCFloatType.m: New files.
+	* Tools/WrapCreator/GNUmakefile: Added the new files.
+	* Tools/WrapCreator/WCTypeLoader.m ([+typeWithObjcType:]): Added
+	float and double type.	
+
+Tue Sep  5 15:49:00 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/libgnustep-base.jigs (NSProcessInfo),
+	(NSUserDefaults): New wrappers.
+
+Sat Aug 19 22:28:17 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Testing/Java/NSArrayTest.java: New file.
+	* Testing/Java/GNUmakefile: Added the new test.
+
+Sat Aug 19 20:37:01 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/libgnustep-base.jigs (NSArray): Uncommented some
+	methods which now work due to fixes in java/Source.
+
+Sat Aug 19 20:29:04 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/Examples/SimpleGUI/Library/SimpleGUI.m
+	([+new]): Removed.
+	* Tools/WrapCreator/Examples/SimpleGUI/Library/SimpleGUI.h: Idem.
+	* Tools/WrapCreator/Examples/SImpleGUI/Library/libSimpleGUI.jigs:
+	Removed wrapping of method new.
+	
+Sat Aug 19 20:26:15 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGSMapper.m (JIGSCreateNewJavaProxy): Retain the object
+	we are proxying.
+	* Source/NSObject.m (Java_gnu_gnustep_base_NSObject_clone):
+	Autorelease the object to return.
+	(Java_gnu_gnustep_base_NSObject_mutableClone): Idem.
+
+Sat Aug 19 20:22:39 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Examples/Java/SimpleGUI/Library/SimpleGUI.m ([+new]): Removed.
+	* Examples/Java/SimpleGUI/Library/SimpleGUI.h: Idem.
+	* Examples/Java/SimpleGUI/WrappingLibrary/Java/SimpleGUI.java
+	(createNew): Idem.
+	* Examples/Java/SimpleGUI/WrappingLibrary/Objc/SimpleGUI.m
+	(Java_SimpleGUI_createNew): Idem.
+
+Fri Aug 18 22:59:07 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/libgnustep-base.jigs (NSSet), (NSMutableSet): New
+	wrappers.
+	
 Fri Aug 18 20:37:23 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* README: Added news for 0.4.
 	* INSTALL: Updated.
 	* Wrappers: New directory.
 
+Fri Aug 18 20:08:11 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base: New directory.
+
+Fri Aug 18 20:01:10 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Wrappers/base/libgnustep-base.jigs: New file.
+	* Wrappers/base/GNUmakefile: New file.
+	* Wrappers/base/gnustep-base.h: New file.
+	
+Fri Aug 18 18:19:10 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/WCPrimitiveType.m ([-initWithObjcType:]):
+	Fixed typo/bug preventing primitive types from being wrapped.
+
+Fri Aug 18 17:22:34 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGS.h (GNUSTEP_JAVA_VERSION): Updated to 0.4.
+	(GNUSTEP_JAVA_MAJOR_VERSION), (GNUSTEP_JAVA_MINOR_VERSION),
+	(GNUSTEP_JAVA_SUBMINOR_VERSION): New preprocessor defines.
+
+Fri Aug 18 17:14:10 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	Major speed up of WrapCreator, by parsing the header file 
+	only once.
+	* Tools/WrapCreator/WCHeaderParser.m ([-initWithHeaderFile:]):
+	Parse the whole header file once, saving all the method
+	declarations.
+	([-declarationOfMethod:isClassMethod:]): Moved all the parsing
+	code to [-initWithHeaderFile:].  (skipObjcType): Made function
+	inline.
+	* Tools/WrapCreator/WCHeaderParser.h: Added two ivars to store the
+	parsed methods.
+	* Tools/WrapCreator/WCLibrary.m
+	([+initializeWithJigsFile:preprocessedHeaderFile:
+	headerFile:wrapDirectory:libraryName:verboseOutput:]): Set verbose
+	output before anything else, so it can be accessed by
+	WCHeaderParser during initialization.
+	
+Fri Aug 18 16:05:10 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/WCClass.m ([-initWithDictionary:]): Fixed
+	typo/bug when objective-c name is not specified.
+
+Sun Aug 13 15:00:30 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make (java-wrapper):
+	Depend on a stamp file rather than on GNUmakefile.
+	($(WRAPPER_DIR)/GNUmakefile): Changed to
+	$(WRAPPER_DIR)/stamp-file; create stamp-file at the end.
+	
+Sat Aug 12 13:08:46 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGSInit.m (JIGSInit): Create an autorelease pool on
+	entry, destroy it on exit.
+	* Source/JIGSMapper.m (JIGSRegisterJavaProxyClass): Idem.
+	
 Sat Aug  5 16:05:07 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* GNUmakefile (SUBPROJECTS): Compile Tools from top level 
 	make too.
 
+Sat Aug  5 15:57:17 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/GNUmakefile: New file.
+
+Sat Aug  5 15:47:55 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/Examples/SimpleGUI/JavaApp/run: Use
+	ld_library_path.sh to set the LD_LIBRARY_PATH before going on.
+	
+Sat Aug  5 15:46:27 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make (WRAP_CREATOR):
+	Use opentool to run WrapCreator more safely.
+	
+Sat Aug  5 15:43:02 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Examples/Java/SimpleGUI/JavaApp/run: Invoke ld_lib_path.sh to
+	load the library path.
+	
 Fri Aug  4 23:56:35 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* README: Added news for 0.3.
 	* INSTALL: Updated.
 	* Tool/WrapCreator: New tool.
 
+Fri Aug  4 21:18:08 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGS.h (GNUSTEP_JAVA_VERSION): Updated to 0.3.	
+
+Thu Aug  3 11:18:38 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Examples/Java/SimpleGUI/WrappingLibrary/Objc/SimpleGUI.m:
+	Updated for the change of the macro names from
+	JAVA_EXIT_WITH_FAILURE_VALUE to JAVA_EXIT_WITH_VALUE.
+
+Thu Aug  3 11:14:15 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGSNative.h: Removed JIGS_EXIT_WITH_FAILURE_VALUE; added
+	JIGS_EXIT_WITH_VALUE.
+	* Source/NSObject.m: Updated for the new macros.
+	
 Wed Aug  2 23:27:27 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* README: Added description of 0.2, simplified.
 	* INSTALL: Fixed some bugs, more info on installing 
 	a shared libobjc.
 
+Wed Aug  2 19:24:39 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	Added example of wrapping a class method.
+	* Examples/Java/SimpleGUI/Library/SimpleGUI.m ([SimpleGUI +new]):
+	New method.
+	* Examples/Java/SimpleGUI/Library/SimpleGUI.h: Idem.
+	* Examples/Java/SimpleGUI/WrappingLibrary/Java/SimpleGUI.java:
+	(createNew): Idem.
+	* Examples/Java/SimpleGUI/WrappingLibrary/Objc/SimpleGUI.m
+	(Java_SimpleGUI_createNew): Idem.
+
+Wed Aug  2 19:10:03 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	Fixes and changings to allow subclassing in java an objective-C
+	class and exposing static methods:
+	* Source/JIGSMapper.m (JIGSRegisterJavaProxyClass): Fixed big bug
+	due to a typo.  (_JIGSFirstJavaProxySuperClass): New Function.
+	(JIGSClassFromThisClass): New function. (_JIGSAllocClassForThis):
+	New function.
+	* Source/JIGSMapper.h: Declare the new functions.
+	* Source/NSObject.m
+	(Java_gnu_gnustep_base_NSObject_NSObject_1alloc): Use
+	_JIGSAllocClassForThis rather than JIGSClassOfThis.
+	(Java_gnu_gnustep_base_NSObject_NSObject_1new): Idem.
+	* Source/JIGSClass.h: Removed.
+	* Source/JIGSClass.m: Removed.
+	* Source/JIGS.h: Do not include JIGSClass.h.  Updated version to
+	0.2.
+	* Source/GNUmakefile (libgnustep-java_OBJC_FILES): Removed
+	JIGSClass.m.  (libgnustep-java_HEADER_FILES): Removed JIGSClass.h.
+
+Wed Aug  2 18:42:31 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Testing/Java/NSObjectSubclassTest.java: New file.
+	* Testing/Java/GNUmakefile: Added the new test.
+	
 Mon Jul 31 17:26:15 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* README: Fixed download URL.
@@ -252,10 +2884,42 @@ Mon Jul 31 15:29:50 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 	* make-release: New file.
 	* make-snapshot: New file.
 
+Mon Jul 31 13:59:34 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGS.h: Define GNUSTEP_JAVA_VERSION.
+
 Mon Jul 31 12:35:08 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* Testing/: New directory.
 
+Mon Jul 31 12:34:50 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Testing/Java/GNUmakefile: New file. 
+	* Testing/Java/NSObjectTest.java: New file. 
+	* Testing/Java/README: New file. 
+	
+Mon Jul 31 11:31:07 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Examples/Java/SimpleGUI/WrappingLibrary/Objc/GNUmakefile: Use
+	$(FND_LIBS) etc instead of -lgnustep-base etc.
+
+Mon Jul 31 11:17:28 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/GNUmakefile: Install by default in
+	$(GNUSTEP_SYSTEM_ROOT); changed header installation directory to
+	be gnustep/java; (LIBRARIES_DEPEND_UPON): Use $(OBJC_LIBS),
+	$(FND_LIBS).
+	
+Mon Jul 31 11:13:25 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Java/GNUmakefile (GNUSTEP_INSTALLATION_DIR): Install by default
+	in $(GNUSTEP_SYSTEM_ROOT).
+
+Mon Jul 31 09:37:27 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Examples/Java/SimpleGUI/WrappingLibrary/Objc/SimpleGUI.m: Fixed
+	include.
+	
 Sat Jul 29 16:19:07 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 
 	* COPYING.LIB: New file.
@@ -270,3 +2934,88 @@ Sat Jul 29 12:38:12 2000  Nicola Pero  <nicola@brainstorm.co.uk>
 	* INSTALL: New file.
 	* GNUmakefile: New file.
 
+Sat Jul 29 12:25:42 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/GNUmakefile: New file.
+	* Source/JIGSMapper.m: New file.
+	* Source/JIGSMapper.h: New file.
+	* Source/NSObject.m: New file.
+	* Source/JIGS.h: include NSJavaVirtualMachine.h too.
+	* Source/JIGSProxy.m (_java_lang_Object__dealloc_): Updated
+	function name to match the one in JIGSMapper.
+	* Source/JIGSProxyIMP.m (_JIGS_id_IMP_JavaMethod): Idem.	
+
+Fri Jul 28 12:19:00 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Java/GNUmakefile: Removed adding ./ to CLASSPATH, the make
+	package now does it for us.
+
+Fri Jul 28 15:30:12 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGS.h: New file.
+	* Source/JIGS.m: New file.
+
+Fri Jul 28 12:55:58 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/java.lang.Object.h: New file.
+	* Source/JIGSNative.h: New file.
+	
+Fri Jul 28 12:47:16 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGSInit.h: New file.
+	* Source/JIGSInit.m: New file.
+
+Fri Jul 28 12:44:30 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGSProxyIMP.m (_JIGS_id_IMP_JavaMethod): After the
+	constructor is succesful, insert the objects in the JIGSMapper
+	table.
+	* Source/JIGSProxy.m (_java_lang_Object__dealloc_): Remove the
+	object from the JIGSMapper table.
+	
+Thu Jul 27 16:09:52 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGSException.m (JIGSRaiseNSExceptionFromJException):
+	Fixed critical typo/bug; fixed leakage of the local reference to
+	the raised java exception.
+	* Source/JIGSProxyIMP.m (_JIGS_id_IMP_JavaMethod): PushLocalFrame
+	to get memory for the local reference to the returned object.
+
+Thu Jul 27 11:44:13 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGSProxyIMP.h: New file.
+	* Source/JIGSProxyIMP.m: New file.
+	* Source/JIGSProxySetup.m: New file.
+	* Source/JIGSProxySetup.h: New file.
+	* Source/JIGSProxy.h: New file.
+	* Source/JIGSProxy.m: New file.
+
+Thu Jul 27 11:36:59 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/ObjcRuntimeUtilities.m: Added missing include.
+
+Thu Jul 27 11:33:40 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/GSJNICache.h (GSJNI_NewClassCache): Renamed function to
+	be shorter and make code more readable.  Updated all calls to the
+	function.
+
+Wed Jul 26 12:56:55 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/JIGSClass.m: New file.
+	* Source/JIGSClass.h: New file.
+
+Wed Jul 26 12:49:12 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Java/gnu/gnustep/base/NSObject.java: Rewritten constructor code.
+	* Java/gnu/gnustep/base/GSInitializationType.java: New class.
+	* Java/GNUmakefile: Added GSInitializationType.java
+	
+Mon Jul 24 11:19:34 2000  Nicola Pero  <nicola@brainstorm.co.uk>
+
+	* Source/GSJNIClass.m (GSJNI_NSStringFromClassOfObject):
+	Simplified; removed unused global reference cache.
+	* Source/GSJNIClass.m (GSJNI_NStringFromJClass): New function.
+	* Source/GSJNIClass.m (GSJNI_SuperclassNameFromClassName): New
+	function.
+	* Source/GSJNIClass.h: Added declarations of new functions.
