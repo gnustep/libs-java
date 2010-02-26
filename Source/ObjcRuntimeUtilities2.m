@@ -29,17 +29,28 @@
 
 #include <Foundation/Foundation.h>
 
-const char *ObjcUtilities_build_runtime_Objc_signature (const char 
-							       *types)
+const char *ObjcUtilities_build_runtime_Objc_signature (const char *types)
 {
+#if defined(LIB_FOUNDATION_LIBRARY)
   NSMethodSignature *sig;
   
   sig = [NSMethodSignature signatureWithObjCTypes: types];
-  
-#if defined GNUSTEP_BASE_VERSION || defined(LIB_FOUNDATION_LIBRARY)
   return [sig methodType];
 #else
-# error "Don't know how to get method signature on this platform!"
+  NSMethodSignature	*sig;
+  NSMutableString	*str;
+  unsigned		count;
+  unsigned		index;
+  
+  sig = [NSMethodSignature signatureWithObjCTypes: types];
+  str = [NSMutableString stringWithCapacity: 128];
+  [str appendFormat: @"%s", [sig methodReturnType]];
+  count = [sig numberOfArguments];
+  for (index = 0; index < count; index++)
+    {
+      [str appendFormat: @"%s", [sig getArgumentTypeAtIndex: index]];
+    }
+  return [str UTF8String];
 #endif  
 }
 
