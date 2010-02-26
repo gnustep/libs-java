@@ -1,3 +1,7 @@
+2010-02-26  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* ObjcRuntimeUtilities2.m: Implement for OSX
+
 2010-02-13  Nicola Pero  <nicola.pero@meta-innovation.com>
 
 	* Makefiles/GNUmakefile: Rewritten.
