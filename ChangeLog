@@ -1,3 +1,8 @@
+2010-04-14  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Source/JIGSProxyIMP.m: workaround for buggy objc_skip_argspec()
+	in the objc runtime.
+
 2010-02-26  Richard Frith-Macdonald <rfm@gnu.org>
 
 	* ObjcRuntimeUtilities2.m: Implement for OSX

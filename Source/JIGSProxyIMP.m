@@ -154,14 +154,31 @@ find_selector_in_selIDTable (int k, SEL aSelector)
  * Processing of arguments
  */
 
+/* Skip past an argument and also any offset information
+ * and type qualifiers before the next.
+ */
+static inline const char *
+skip_argspec(const char *ptr)
+{
+  if (ptr != NULL)
+    {
+      if (*ptr == '+') ptr++;
+      while (isdigit(*ptr)) ptr++;
+      ptr = objc_skip_typespec(ptr);
+      if (*ptr == '+') ptr++;
+      while (isdigit(*ptr)) ptr++;
+      ptr = objc_skip_type_qualifiers(ptr);
+    }
+  return ptr;
+}
 /*
  * Macros to process the whole list of arguments
  */
 
 #define INIT_PROCESS_ARGS              \
-      type = objc_skip_argspec (type); \
-      type = objc_skip_argspec (type); \
-      type = objc_skip_argspec (type); \
+      type = skip_argspec (type); \
+      type = skip_argspec (type); \
+      type = skip_argspec (type); \
                                        \
       va_start (ap, sel);              \
       i = 0;
@@ -235,7 +252,7 @@ else\
 		 format: @"_JIGS_IMP_JavaMethod - "\
 		 @"unrecognized Objc type"];\
   }\
-type = objc_skip_argspec (type);\
+type = skip_argspec (type);\
 i++; }
 
 #define END_PROCESS_ARGS va_end(ap);
