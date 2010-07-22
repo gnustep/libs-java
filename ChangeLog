@@ -1,3 +1,7 @@
+2010-07-22  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Wrappers/base/gnustep-base.h: Remove ancient GSCategories.h include
+	
 2010-04-14  Richard Frith-Macdonald <rfm@gnu.org>
 
 	* Source/JIGSProxyIMP.m: workaround for buggy objc_skip_argspec()
