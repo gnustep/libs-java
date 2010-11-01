@@ -33,24 +33,75 @@ static NSCharacterSet *endMethod = nil;
 static NSCharacterSet *whiteSpaceOrEndMethod = nil;
 static NSCharacterSet *whiteSpaceOrAtSymbol = nil;
 static NSCharacterSet *whiteSpaceOrBeginEnum = nil;
+static NSCharacterSet *whiteSpaceOrOpenParenthesis = nil;
+static NSCharacterSet *whiteSpaceOrPointerSymbol = nil;
 static NSCharacterSet *endEnumBodyKey = nil;
 static NSCharacterSet *endEnumBodyValue = nil;
 static NSCharacterSet *atSymbol = nil;
 static NSCharacterSet *endClassName = nil;
 static NSCharacterSet *subclassSymbol = nil;
+static NSCharacterSet *pointerSymbol = nil;
 
-static inline void skipObjcType (NSScanner *scanner)
+static inline void skipParenthesisBlockIfAny (NSScanner *scanner)
 {
   /* Skip spaces */
   [scanner scanCharactersFromSet: whiteSpace intoString: NULL];
   
-  /* Look for the return type now */
+  /* Look for the closing bracket now */
   if ([scanner scanCharactersFromSet: openBracket intoString: NULL] == YES)
     {
       [scanner scanUpToCharactersFromSet: closeBracket  intoString: NULL];
       [scanner scanCharactersFromSet: closeBracket intoString: NULL];
     }
 }
+
+static inline void skipObjcType (NSScanner *scanner)
+{
+  skipParenthesisBlockIfAny(scanner);
+}
+
+
+static inline NSArray * getPropertyAttributes (NSScanner * scanner)
+{
+  NSString * attributesList = @"";
+
+  /* Skip spaces */
+  [scanner scanCharactersFromSet: whiteSpace intoString: NULL];
+  
+  /* Look for the closing bracket now */
+  if ([scanner scanCharactersFromSet: openBracket intoString: NULL] == YES)
+    {
+      [scanner scanUpToCharactersFromSet: closeBracket  intoString: &attributesList];
+      [scanner scanCharactersFromSet: closeBracket intoString: NULL];
+    }
+
+	NSArray * attributes = [attributesList componentsSeparatedByString:@","];
+	NSMutableArray * trimmed = [ NSMutableArray arrayWithCapacity: [attributes count] ];
+	int i, count = [attributes count];
+	for (i = 0; i < count; i++)
+    {
+			[ trimmed addObject: [ [attributes objectAtIndex: i] stringByTrimmingSpaces ] ];
+		}
+  return trimmed;
+}
+
+static inline NSString * getPropertyType (NSScanner *scanner)
+{
+  /* Skip spaces */
+  [scanner scanCharactersFromSet: whiteSpace intoString: NULL];
+
+  /* Capture the property type, which may be a pointer */
+  NSString * type;
+  [scanner scanUpToCharactersFromSet: whiteSpaceOrPointerSymbol  intoString: &type];
+  if ([scanner scanCharactersFromSet: pointerSymbol intoString: NULL] == YES)
+    {
+      [scanner scanCharactersFromSet: pointerSymbol intoString: NULL];
+      return [type stringByAppendingFormat: @"*"];
+    }
+
+  return type;
+}
+
 
 /* We remove any space character from the string */
 static NSString *trimString (NSString *string)
@@ -100,7 +151,9 @@ static NSString *trimString (NSString *string)
       closeBracket = [NSCharacterSet characterSetWithCharactersInString: @")"];
 
       plusMinusOrEndClass = [NSCharacterSet 
-			      characterSetWithCharactersInString: @"+-@"];
+                              characterSetWithCharactersInString: @"+-@"];
+      endClassName = [NSCharacterSet 
+                              characterSetWithCharactersInString: @"+-@;"];
       argOrEndMethod = [NSCharacterSet characterSetWithCharactersInString: @":;"];
       endMethod = [NSCharacterSet characterSetWithCharactersInString: @";"];
       endEnumBodyKey = [NSCharacterSet characterSetWithCharactersInString: 
@@ -109,6 +162,7 @@ static NSString *trimString (NSString *string)
 					   @",}"];
       atSymbol = [NSCharacterSet characterSetWithCharactersInString: @"@"];
       subclassSymbol = [NSCharacterSet characterSetWithCharactersInString: @":"];
+      pointerSymbol = [NSCharacterSet characterSetWithCharactersInString: @"*"];
 
       tmpSet = [[NSCharacterSet whitespaceAndNewlineCharacterSet] mutableCopy];
       [tmpSet addCharactersInString: @";"];
@@ -130,16 +184,28 @@ static NSString *trimString (NSString *string)
       endClassName = [tmpSet copy];
       RELEASE (tmpSet);
 
+      tmpSet = [[NSCharacterSet whitespaceAndNewlineCharacterSet] mutableCopy];
+      [tmpSet addCharactersInString: @"("];
+      whiteSpaceOrOpenParenthesis = [tmpSet copy];
+      RELEASE (tmpSet);
+
+      tmpSet = [[NSCharacterSet whitespaceAndNewlineCharacterSet] mutableCopy];
+      [tmpSet addCharactersInString: @"*"];
+      whiteSpaceOrPointerSymbol = [tmpSet copy];
+      RELEASE (tmpSet);
+
       RETAIN (whiteSpace);
       RETAIN (openBracket);
       RETAIN (closeBracket);
       RETAIN (plusMinusOrEndClass);
+      RETAIN (endClassName);
       RETAIN (argOrEndMethod);
       RETAIN (endMethod);
       RETAIN (endEnumBodyKey);
       RETAIN (endEnumBodyValue);
       RETAIN (atSymbol);
       RETAIN (subclassSymbol);
+      RETAIN (pointerSymbol);
     }
 }
 
@@ -297,92 +363,146 @@ static NSString *trimString (NSString *string)
 	}
      
       if ([WCLibrary verboseOutput] == YES)
-	{
-	  printf ("X");
-	  fflush (stdout);
-	}
- 
+        {
+          fflush (stdout);
+        }
+
+      NSString *classname;
+      [scanner scanUpToCharactersFromSet: endClassName 
+               intoString: &classname];
+
+      if ([WCLibrary verboseOutput] == YES)
+        {
+          printf("Found class : %s\n", [classname cString]);
+        }
+
+      /* Now check if next character it is a ; */
+      if ([scanner scanCharactersFromSet: endMethod 
+                   intoString: &string] == YES)
+        {
+          // With stumbled on a forward declaration. Skip it. It has no method we can use.
+          continue;
+        }
+
       /* Loop on the list of methods */
-      while (1)	
-	{
-	  int argument;
-	  
-	  /* Look for method declaration */
-	  [scanner scanUpToCharactersFromSet: plusMinusOrEndClass 
-		   intoString: NULL];
-	  /* Save the starting index */
-	  startIndex = [scanner scanLocation];
-	  /* Read the +/- */
-	  [scanner scanCharactersFromSet: plusMinusOrEndClass 
-		   intoString: &string];
-	  /* @end */
-	  if ([string isEqualToString: @"@"] == YES)
-	    {
-	      [scanner scanUpToCharactersFromSet: whiteSpace 
-		       intoString: &string];
-	      
-	      if (([string isEqualToString: @"private"] == NO) 
-		  && ([string isEqualToString: @"protected"] == NO)
-		  && ([string isEqualToString: @"public"] == NO))
-		{
-		  methodName = nil;
-		  break;
-		}
-	      else
-		{
-		  continue;
-		}
-	    }
-	  if ([string isEqualToString: @"+"] == YES)
-	    {
-	      isClassMethod = YES;
-	    }
-	  else if ([string isEqualToString: @"-"] == YES)
-	    {
-	      isClassMethod = NO;
-	    }
-	  else
-	    {
-	      [NSException raise: @"WCHeaderParserException"
-			   format: @"Could not parse the header file"];
-	    }
-	  /* Skip return type */
-	  skipObjcType (scanner);
-	  methodName = [NSMutableString new];
-	  argument = 0;
-	  while (1)
-	    {
-	      /* Skip spaces */
-	      [scanner scanCharactersFromSet: whiteSpace intoString: NULL];
-	      
-	      /* Read method name component */
-	      [scanner scanUpToCharactersFromSet: argOrEndMethod  
-		       intoString: &string];
+      while (1) 
+        {
+          int argument;
+          
+          /* Look for method declaration */
+          [scanner scanUpToCharactersFromSet: plusMinusOrEndClass 
+                   intoString: NULL];
+          /* Save the starting index */
+          startIndex = [scanner scanLocation];
+          /* Read the +/- */
+          [scanner scanCharactersFromSet: plusMinusOrEndClass 
+                   intoString: &string];
+          /* @end */
+          if ([string isEqualToString: @"@"] == YES)
+            {
+              [scanner scanUpToCharactersFromSet: whiteSpaceOrOpenParenthesis 
+                       intoString: &string];
+               if ([string isEqualToString: @"property"] == YES)
+                {
+                  NSArray * attributes = getPropertyAttributes(scanner);
+                  NSString * propertyType = getPropertyType(scanner);
 
-	      [methodName appendString: [string stringByTrimmingSpaces]];
-	      
-	      [scanner scanCharactersFromSet: argOrEndMethod 
-		       intoString: &string];
-	      if (argument == 0)
-		{
-		  if ([string isEqualToString: @";"])
-		    {
-		      break;
-		    }
-		}
-	      
-	      if ([string isEqualToString: @":"])
-		{
-		  [methodName appendString: @":"];
-		}
-	      else
-		{
-		  methodName = nil;
-		  break;
-		}
+                  NSString * propertyName;
+                  [scanner scanUpToString: @";"
+                    intoString: &propertyName];
 
-	      /* Skip argument type */
-	      skipObjcType (scanner);
+                  // Create getter
+                  NSMutableString * accessorName = [NSString stringWithFormat: @"-(%@) %@;", propertyType, propertyName];
+
+                  [instanceMethods setObject: accessorName  forKey: propertyName];
+
+                  if ([WCLibrary verboseOutput] == YES)
+                    {
+                      printf(" %s for property %s\n", [accessorName cString], [propertyName cString]);
+                    }
+
+                  // Create setter for property that can be assigned
+                  if (! [attributes containsObject: @"readonly"])
+                    {
+                      NSString * capital = [[propertyName substringToIndex:1] uppercaseString];
+                      NSString * rest = [propertyName substringFromIndex:1];
+                      NSString * methodName = [NSString stringWithFormat: @"set%@%@:", capital, rest];
+                      NSString * accessorName = [NSString stringWithFormat: @"-(void) %@(%@) %@;", methodName, propertyType, propertyName];
+
+                      [instanceMethods setObject: accessorName  forKey: methodName];
+
+                      if ([WCLibrary verboseOutput] == YES)
+                        {
+                          printf(" %s for property %s\n", [accessorName cString], [propertyName cString]);
+                        }
+                    }
+
+                  continue;
+                }
+              else if (([string isEqualToString: @"end"] == YES))
+                {
+                  methodName = nil;
+                  if ([WCLibrary verboseOutput] == YES)
+                    {
+                      printf("\n@%s - end of class\n", [string cString]);
+                    }
+                  break;
+                }
+              else
+                {
+                  continue;
+                }
+            }
+          if ([string isEqualToString: @"+"] == YES)
+            {
+              isClassMethod = YES;
+            }
+          else if ([string isEqualToString: @"-"] == YES)
+            {
+              isClassMethod = NO;
+            }
+          else
+            {
+              [NSException raise: @"WCHeaderParserException"
+                           format: @"Could not parse the header file"];
+            }
+          /* Skip return type */
+          skipObjcType (scanner);
+          methodName = [NSMutableString new];
+          argument = 0;
+          while (1)
+            {
+              /* Skip spaces */
+              [scanner scanCharactersFromSet: whiteSpace intoString: NULL];
+              
+              /* Read method name component */
+              [scanner scanUpToCharactersFromSet: argOrEndMethod  
+                       intoString: &string];
+
+              [methodName appendString: [string stringByTrimmingSpaces]];
+              
+              [scanner scanCharactersFromSet: argOrEndMethod 
+                       intoString: &string];
+              if (argument == 0)
+                {
+                  if ([string isEqualToString: @";"])
+                    {
+                      break;
+                    }
+                }
+              
+              if ([string isEqualToString: @":"])
+                {
+                  [methodName appendString: @":"];
+                }
+              else
+                {
+                  methodName = nil;
+                  break;
+                }
+
+              /* Skip argument type */
+              skipObjcType (scanner);
       
 	      /* Skip spaces */
 	      [scanner scanCharactersFromSet: whiteSpace intoString: NULL];
@@ -394,44 +514,49 @@ static NSString *trimString (NSString *string)
 	      /* Skip spaces */
 	      [scanner scanCharactersFromSet: whiteSpace intoString: NULL];
       
-	      /* Now check if next character it is a ; */
-	      if ([scanner scanCharactersFromSet: endMethod 
-			   intoString: &string] == YES)
-		{
-		  if ([string length] > 0)
-		    {
-		      break;
-		    }
-		  else
-		    {
+              /* Now check if next character it is a ; */
+              if ([scanner scanCharactersFromSet: endMethod 
+                           intoString: &string] == YES)
+                {
+                  if ([string isEqualToString: @";"])
+                    {
+                      break;
+                    }
+                  else
+                    {
 
-		      [NSException raise: @"WCHeaderParserException"
-			format: @"Error while parsing the header file"];
-		    }
-		}
-	      argument++;
-	    }
-	  if (methodName != nil)
-	    {
-	      NSRange methodDeclarationRange;
-	      int endIndex = [scanner scanLocation];
-	      
-	      methodDeclarationRange = NSMakeRange (startIndex, 
-						    (endIndex - startIndex));
-	      
-	      
-	      string = [header substringWithRange: methodDeclarationRange];
-	      
-	      if (isClassMethod == YES)
-		{
-		  [classMethods setObject: string  forKey: methodName];
-		}
-	      else
-		{
-		  [instanceMethods setObject: string  forKey: methodName];
-		}
-	    }
-	}
+                      [NSException raise: @"WCHeaderParserException"
+                                   format: @"Error while parsing the header file : found '%@' instead of ';'", string];
+                    }
+                }
+              argument++;
+            }
+          if (methodName != nil)
+            {
+              NSRange methodDeclarationRange;
+              int endIndex = [scanner scanLocation];
+              
+              methodDeclarationRange = NSMakeRange (startIndex, 
+                                                    (endIndex - startIndex));
+              
+              
+              string = [header substringWithRange: methodDeclarationRange];
+              
+              if (isClassMethod == YES)
+                {
+                  [classMethods setObject: string  forKey: methodName];
+                }
+              else
+                {
+                  [instanceMethods setObject: string  forKey: methodName];
+                }
+
+              if ([WCLibrary verboseOutput] == YES)
+                {
+                  printf(" %s Signature for JIGS files : %s", [string cString], [methodName cString]);
+                }
+            }
+        }
     }
 
   if ([WCLibrary verboseOutput] == YES)
@@ -978,6 +1103,10 @@ if ([scanner isAtEnd]) break;
       [NSException raise: @"WCHeaderParserException"
 		   format: @"Could not find method %@ in the header file", 
 		   objcMethodName];
+    }
+  if ([WCLibrary verboseOutput] == YES)
+    {
+      printf ("Found method %s\n", [returnString cString]);  
     }
 
   return returnString;
