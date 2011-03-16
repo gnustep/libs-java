@@ -1,3 +1,8 @@
+2011-03-16  Wolfgang Lux  <wolfgang.lux@gmail.com>
+
+	* Tools/WrapCreator/Makefiles/java-wrapper.make: Avoid
+	non-portable use of sed inline editing.
+
 2010-07-22  Richard Frith-Macdonald <rfm@gnu.org>
 
 	* Wrappers/base/gnustep-base.h: Remove ancient GSCategories.h include

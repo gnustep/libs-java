@@ -214,14 +214,14 @@ $(WRAPPER_DIR)/stamp-file:: $(JIGS_FILE)
 	$(MKDIRS) $(WRAPPER_DIR) $(JAVA_WRAPPER_DIR) $(OBJC_WRAPPER_DIR); \
 	cp $(GNUSTEP_MAKEFILES)/$(JAVA_WRAPPER_TOP_TEMPLATE) $(WRAPPER_DIR)/GNUmakefile; \
 	cp $(GNUSTEP_MAKEFILES)/java-wrapper.readme.template $(WRAPPER_DIR)/README; \
-	cp $(GNUSTEP_MAKEFILES)/java-wrapper.java.template   $(JAVA_WRAPPER_DIR)/GNUmakefile; \
-	sed -i -e 's/JAVADOCHERE/$(javadoc)/g' -e 's/REPLACEME/$(LIBRARY_NAME)/g' \
-	        $(JAVA_WRAPPER_DIR)/GNUmakefile; \
-	cp $(GNUSTEP_MAKEFILES)/java-wrapper.objc.template $(OBJC_WRAPPER_DIR)/GNUmakefile; \
-	sed -i  -e 's/VERSIONHERE/$(VERSION)/g' -e 's/REPLACEME/$(LIBRARY_NAME)/g' \
-                -e 's/REPLACEWITHSHORTNAME/$(JAVA_WRAPPER_NAME)/g'                 \
-                -e 's/REPLACEWITHLIBRARYHEADERFLAGS/$(subst /,\/,$(LIBRARY_HEADER_FLAGS))/g' \
-	     $(OBJC_WRAPPER_DIR)/GNUmakefile$(END_ECHO)
+	sed -e 's/JAVADOCHERE/$(javadoc)/g' -e 's/REPLACEME/$(LIBRARY_NAME)/g' \
+	    $(GNUSTEP_MAKEFILES)/java-wrapper.java.template \
+	    > $(JAVA_WRAPPER_DIR)/GNUmakefile; \
+	sed  -e 's/VERSIONHERE/$(VERSION)/g' -e 's/REPLACEME/$(LIBRARY_NAME)/g' \
+             -e 's/REPLACEWITHSHORTNAME/$(JAVA_WRAPPER_NAME)/g'                 \
+             -e 's/REPLACEWITHLIBRARYHEADERFLAGS/$(subst /,\/,$(LIBRARY_HEADER_FLAGS))/g' \
+	     $(GNUSTEP_MAKEFILES)/java-wrapper.objc.template \
+	     > $(OBJC_WRAPPER_DIR)/GNUmakefile$(END_ECHO)
 	$(ECHO_JIGS_COPYING_CUSTOM_GNUMAKEFILES)if [ -f GNUmakefile.wrapper.java.preamble ]; then \
 	  cp GNUmakefile.wrapper.java.preamble $(JAVA_WRAPPER_DIR)/GNUmakefile.preamble; \
         fi; \
