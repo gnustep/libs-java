@@ -39,7 +39,7 @@ GNUstep based java packages or apps.]
 
    make
 
-[Warning: you need to have installed JIGS (step 7) before you can
+[Warning: you need to have installed JIGS (step 4) before you can
 compile any wrapper]
 
 6) Install the base library wrapper:  Become root, then type: 
