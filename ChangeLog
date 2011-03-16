@@ -1,5 +1,9 @@
 2011-03-16  Wolfgang Lux  <wolfgang.lux@gmail.com>
 
+	* INSTALL: Fix typo.
+
+2011-03-16  Wolfgang Lux  <wolfgang.lux@gmail.com>
+
 	* Tools/WrapCreator/Makefiles/java-wrapper.make: Avoid
 	non-portable use of sed inline editing.
 
