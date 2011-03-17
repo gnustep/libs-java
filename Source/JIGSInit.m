@@ -23,6 +23,9 @@
 
 #include "JIGS.h"
 #include "JIGSSelectorMapping.h"
+#if defined(__APPLE__) && (GS_FAKE_MAIN || defined(GS_PASS_ARGUMENTS))
+#include <crt_externs.h>
+#endif
 
 /* For the GNU runtime, which is very slow in class method invocation, 
    we use this pointer to the NSAutoreleasePool class, to be used by 
@@ -133,7 +136,11 @@ void JIGSInitFromJava (JNIEnv *env)
        * and program name (eg, from the /proc filesystem).
        */
 #if GS_FAKE_MAIN || defined(GS_PASS_ARGUMENTS)
+#ifdef __APPLE__
+      char **environ = *_NSGetEnviron();
+#else
       extern char **environ;
+#endif
       static char  *args[2] = { "java", 0 };
       
       [NSProcessInfo initializeWithArguments: args
