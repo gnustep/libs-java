@@ -1,5 +1,10 @@
 2011-03-17  Wolfgang Lux  <wolfgang.lux@gmail.com>
 
+	* Source/JIGSInit.m (JIGSInitFromJava): Avoid link error on
+	Darwin/OS X when -base is configured with --enable-fake-main.
+
+2011-03-17  Wolfgang Lux  <wolfgang.lux@gmail.com>
+
 	* Source/JIGSInit.m (JIGSInitFromJava): Fix improper GS_FAKE_MAIN
 	check.
 
