@@ -1,3 +1,8 @@
+2011-03-17  Wolfgang Lux  <wolfgang.lux@gmail.com>
+
+	* Source/JIGSInit.m (JIGSInitFromJava): Fix improper GS_FAKE_MAIN
+	check.
+
 2011-03-16  Wolfgang Lux  <wolfgang.lux@gmail.com>
 
 	* INSTALL: Fix typo.

@@ -132,7 +132,7 @@ void JIGSInitFromJava (JNIEnv *env)
        * not used if on your system GNUstep can reliably get the args 
        * and program name (eg, from the /proc filesystem).
        */
-#if defined(GS_FAKE_MAIN) || defined(GS_PASS_ARGUMENTS)
+#if GS_FAKE_MAIN || defined(GS_PASS_ARGUMENTS)
       extern char **environ;
       static char  *args[2] = { "java", 0 };
       
