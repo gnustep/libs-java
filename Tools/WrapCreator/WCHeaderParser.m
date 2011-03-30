@@ -580,7 +580,7 @@ static NSString *trimString (NSString *string)
   int scopeDepth = 0;
   int length = [header length];
   /* we parse most of the header accessing the unichars directly */
-  unichar *buffer = objc_malloc (sizeof (unichar) * length);
+  unichar *buffer = malloc (sizeof (unichar) * length);
   /* location is the next character we will read */
   int location;
   /* When we find something interesting, then we use a scanner to do 
@@ -916,7 +916,7 @@ if ([scanner isAtEnd]) break;
 	}
     }
   
-  objc_free (buffer);
+  free (buffer);
 }
 
 /* The following method parses the core of the enum (the part between 

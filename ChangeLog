@@ -1,3 +1,12 @@
+2011-03-30  Wolfgang Lux  <wolfgang.lux@gmail.com>
+
+	* Source/JIGSMapper.m (_JIGSClassMapInsert):
+	* Source/ObjcRuntimeUtilities.c (ObjcUtilities_new_class,
+	ObjcUtilities_alloc_method_list):
+	* Tools/WrapCreator/WCHeaderParser.m (-parseC): Replace obsolete
+	calls to objc_malloc(), objc_calloc(), and objc_free() by
+	malloc(), calloc(), and free(), respectively.
+
 2011-03-17  Wolfgang Lux  <wolfgang.lux@gmail.com>
 
 	* Source/JIGSInit.m (JIGSInitFromJava): Avoid link error on

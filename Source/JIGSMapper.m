@@ -184,7 +184,7 @@ static objc_mutex_t _JIGSProxiedObjCClassMapWriteLock = NULL;
 /* We only insert in the table, never remove.  */
 static inline void _JIGSClassMapInsert (jclass java, Class objc)
 {
-  _JIGSClassMap new = objc_malloc (sizeof (struct _JIGSClassNode_));
+  _JIGSClassMap new = malloc (sizeof (struct _JIGSClassNode_));
 
   new->javaClass = java;
   new->objcClass = objc;
