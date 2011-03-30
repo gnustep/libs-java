@@ -47,6 +47,7 @@
 #define	OBJC_VERSION	8
 
 #include "ObjcRuntimeUtilities.h"
+#include <stdlib.h>
 #include <string.h>
 
 #ifndef objc_EXPORT
@@ -89,13 +90,13 @@ BOOL ObjcUtilities_new_class (const char *name,
   //
   // Prepare a fake module containing only this class.
   //
-  module = objc_calloc (1, sizeof (Module));
+  module = calloc (1, sizeof (Module));
   module->version = OBJC_VERSION;
   module->size = sizeof (Module);
-  module->name = objc_malloc (strlen (name) + 15);
+  module->name = malloc (strlen (name) + 15);
   strcpy ((char*)module->name, "GNUstep-Proxy-");
   strcat ((char*)module->name, name);
-  module->symtab = objc_calloc (1, sizeof (Symtab));
+  module->symtab = calloc (1, sizeof (Symtab));
   
   symtab = module->symtab;
   symtab->sel_ref_cnt = 0;
@@ -103,7 +104,7 @@ BOOL ObjcUtilities_new_class (const char *name,
   symtab->cls_def_cnt = 1; // We are defining a single class.
   symtab->cat_def_cnt = 0; // But no categories 
   // Allocate space for two classes (the class and its meta class)
-  symtab->defs[0] = objc_calloc (2, sizeof (struct objc_class));
+  symtab->defs[0] = calloc (2, sizeof (struct objc_class));
   symtab->defs[1] = 0;    // NULL terminate the list.
   
   //
@@ -120,7 +121,7 @@ BOOL ObjcUtilities_new_class (const char *name,
   // need to force it with a (void *)
   new_class->super_class = (void *)superclassName;
 
-  new_class->name = objc_malloc (strlen (name) + 1);
+  new_class->name = malloc (strlen (name) + 1);
   strcpy ((char*)new_class->name, name);
   new_class->version = 0;
   new_class->info = _CLS_CLASS;
@@ -136,7 +137,7 @@ BOOL ObjcUtilities_new_class (const char *name,
       size = sizeof (struct objc_ivar_list);
       size += (ivarNumber - 1) * sizeof (struct objc_ivar);
 
-      new_class->ivars = (struct objc_ivar_list*) objc_malloc (size);
+      new_class->ivars = (struct objc_ivar_list*) malloc (size);
       new_class->ivars->ivar_count = ivarNumber;
       
       va_start (ap, ivarNumber);
@@ -186,7 +187,7 @@ MethodList *ObjcUtilities_alloc_method_list (int count)
   int extra;
 
   extra = (sizeof (struct objc_method)) * (count - 1);
-  ml = objc_calloc (1, sizeof(MethodList) + extra);
+  ml = calloc (1, sizeof(MethodList) + extra);
   ml->method_count = count;  
   return ml;
 }
