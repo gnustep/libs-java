@@ -1,3 +1,12 @@
+2011-05-02  Wolfgang Lux  <wolfgang.lux@gmail.com>
+
+	* Makefiles/GNUmakefile:
+	* Makefiles/GNUstep-Java.csh: Convert GNUstep-Java.sh to C shell
+	syntax.
+
+	* Makefiles/GNUstep-Java.sh: Fix apparent typo, which had the
+	effect of making all machines appear using an x86 cpu.
+
 2011-03-30  Wolfgang Lux  <wolfgang.lux@gmail.com>
 
 	* Source/JIGSMapper.m (_JIGSClassMapInsert):

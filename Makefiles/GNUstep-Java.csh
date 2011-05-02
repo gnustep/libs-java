@@ -1,6 +1,6 @@
-#! /bin/sh
+#! /bin/csh
 #
-# GNUstepJava.sh
+# GNUstepJava.csh
 #
 # Sets up all the variables needed to allow Objective-c stuff to find
 # the Java libraries needed to start a JVM in your Objc code.
@@ -8,6 +8,8 @@
 # Copyright (C) 2001 Free Software Foundation, Inc.
 #
 # Author: Nicola Pero <n.pero@mi.flashnet.it>
+#
+# Conversion to C-shell syntax: Wolfgang Lux <wolfgang.lux@gmail.com>
 #
 # This file is part of JIGS, the GNUstep Java Interface
 #
@@ -30,22 +32,20 @@
 ###
 
 # Set JAVA_HOME to point to the root of the Java installation
-if [ -z "$JAVA_HOME" ]; then
-  if [ -z "$JDK_HOME" ]; then
-    if [ -z "$JAVAC" ]; then
-      JAVA_HOME=`which javac  | sed "s/bin\/javac//g"`;
+if ( ! ${?JAVA_HOME} ) then
+  if ( ! ${?JDK_HOME} ) then
+    if ( ! ${?JAVAC} ) then
+      setenv JAVA_HOME `which javac  | sed "s/bin\/javac//g"`
     else 
-      JAVA_HOME=`which $JAVAC | sed "s/bin\/javac//g"`;
-    fi;
-  else 
-    JAVA_HOME=$JDK_HOME; 
-  fi
-fi
-
-export JAVA_HOME;
+      setenv JAVA_HOME `which $JAVAC | sed "s/bin\/javac//g"`
+    endif
+  else
+    setenv JAVA_HOME "$JDK_HOME"
+  endif
+endif
 
 # Get the /lib dir into the jre installation
-jre_lib="$JAVA_HOME/jre/lib"
+set jre_lib = "$JAVA_HOME/jre/lib"
 
 ###
 ### Determine the libraries needed to link and run native code starting
@@ -56,60 +56,58 @@ jre_lib="$JAVA_HOME/jre/lib"
 # which flags to use exactly; the following works on SUN JDK 1.5.0
 # but what about other platforms.
 
-# PS: For older Sun's JDK, try using 'export JIGS_VM_TYPE=classic'
+# PS: For older Sun's JDK, try using 'setenv JIGS_VM_TYPE classic'
 # before sourcing this script
 
 # If no JIGS_THREAD_TYPE was set, use native_threads as a guess
-if [ -z "$JIGS_THREAD_TYPE" ]; then
-  JIGS_THREAD_TYPE=native_threads;
-fi
+if ( ! ${?JIGS_THREAD_TYPE} ) then
+  setenv JIGS_THREAD_TYPE native_threads
+endif
 
 # If no JIGS_VM_TYPE was set, use classic as a guess
-if [ -z "$JIGS_VM_TYPE" ]; then
-  JIGS_VM_TYPE=server;
-fi
+if ( ! ${?JIGS_VM_TYPE} ) then
+  setenv JIGS_VM_TYPE server
+endif
 
 # For gnustep-make v2, we need to get the values of all the
-# GNUSTEP_HOST_CPU variable.  This seems to be the most
-# backwards-compatible way of doing it.  In gnustep-make v1, it will
-# just source GNUstep.sh again with no changes.
-GNUSTEP_SH_EXPORT_ALL_VARIABLES=yes
-. $GNUSTEP_MAKEFILES/GNUstep.sh
-unset GNUSTEP_SH_EXPORT_ALL_VARIABLES
+# GNUSTEP_HOST_CPU variable.
+set GNUSTEP_HOST_CPU = "`gnustep-config --variable=GNUSTEP_HOST_CPU`"
 
 # Convert the GNUSTEP_HOST_CPU into JAVA_CPU
-case "$GNUSTEP_HOST_CPU" in
-    ix86) JAVA_CPU=i386;;
-    *)    JAVA_CPU=$GNUSTEP_HOST_CPU;;
-esac
+switch ( "$GNUSTEP_HOST_CPU" )
+case ix86:
+  setenv JAVA_CPU i386
+  breaksw
+default:
+  setenv JAVA_CPU "$GNUSTEP_HOST_CPU"
+  breaksw
+endsw
 
 # Export the libraries needed to start a JVM
-JIGS_VM_LIBS="-ljava -ljvm -lhpi"
-export JIGS_VM_LIBS;
+setenv JIGS_VM_LIBS "-ljava -ljvm -lhpi"
 
-jre_cpu="$jre_lib/$JAVA_CPU"
+set jre_cpu = "$jre_lib/$JAVA_CPU"
 
 # Export the -L flags needed
-JIGS_VM_LIBDIRS="-L$jre_cpu -L$jre_cpu/$JIGS_THREAD_TYPE -L$jre_cpu/$JIGS_VM_TYPE"
-export JIGS_VM_LIBDIRS;
+setenv JIGS_VM_LIBDIRS "-L$jre_cpu -L$jre_cpu/$JIGS_THREAD_TYPE -L$jre_cpu/$JIGS_VM_TYPE"
 
 # Now put the same paths into the appropriate LD_LIBRARY_PATH-like variable
-j_lib_paths="$jre_cpu:$jre_cpu/$JIGS_THREAD_TYPE:$jre_cpu/$JIGS_VM_TYPE"
+set j_lib_paths = "${jre_cpu}:${jre_cpu}/${JIGS_THREAD_TYPE}:${jre_cpu}/${JIGS_VM_TYPE}"
 
 ##
 ## Following part is Java environment independent again.
 ##
 
-case "$GNUSTEP_HOST_OS" in
+switch ( "$GNUSTEP_HOST_OS" )
 
-   *)
-    if [ -z "$LD_LIBRARY_PATH" ]; then
-      LD_LIBRARY_PATH="$j_lib_paths"
-    else
-      if ( echo ${LD_LIBRARY_PATH}| grep -v "${j_lib_paths}" >/dev/null );then
-	LD_LIBRARY_PATH="$j_lib_paths:$LD_LIBRARY_PATH"
-      fi
-    fi
-    export LD_LIBRARY_PATH;;
+default:
+  if ( ! ${?LD_LIBRARY_PATH} ) then
+    setenv LD_LIBRARY_PATH "$j_lib_paths"
+  else
+    echo ${LD_LIBRARY_PATH} | grep "${j_lib_paths}" >/dev/null
+    if ( $status != 0 ) then
+      setenv LD_LIBRARY_PATH "${j_lib_paths}:$LD_LIBRARY_PATH"
+    endif
+  endif
 
-esac
+endsw

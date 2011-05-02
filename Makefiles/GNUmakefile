@@ -39,10 +39,11 @@ $(JIGS_MAKE_DIR):
 
 install:: $(JIGS_MAKE_DIR)
 	$(ECHO_NOTHING)$(INSTALL_DATA) jigs.make $(JIGS_MAKE_DIR); \
-	$(INSTALL_PROGRAM) -m 755 GNUstep-Java.sh $(JIGS_MAKE_DIR)$(END_ECHO)
+	$(INSTALL_PROGRAM) -m 755 GNUstep-Java.sh $(JIGS_MAKE_DIR); \
+	$(INSTALL_PROGRAM) -m 755 GNUstep-Java.csh $(JIGS_MAKE_DIR)$(END_ECHO)
 
 
 uninstall::
-	$(ECHO_NOTHING)rm -f $(JIGS_MAKE_DIR)/GNUstep-Java.sh $(JIGS_MAKE_DIR)/jigs.make$(END_ECHO)
+	$(ECHO_NOTHING)rm -f $(JIGS_MAKE_DIR)/GNUstep-Java.sh $(JIGS_MAKE_DIR)/GNUstep-Java.csh $(JIGS_MAKE_DIR)/jigs.make$(END_ECHO)
 
 include $(GNUSTEP_MAKEFILES)/rules.make
