@@ -22,6 +22,7 @@
    */ 
 
 #include <jni.h>
+#include <pthread.h>
 #include <Foundation/Foundation.h>
 #include "gnu/gnustep/base/NSObject.h"
 #include "JIGS.h"
@@ -97,11 +98,11 @@ Java_gnu_gnustep_base_NSObject_equals (JNIEnv *env, jobject this,
  */
 #endif
 
-objc_mutex_t JIGSFinalizeListLock = NULL;
+pthread_mutex_t JIGSFinalizeListLock;
 
 void JIGSFinalizeInit ()
 {
-  JIGSFinalizeListLock = objc_mutex_allocate ();
+  pthread_mutex_init (&JIGSFinalizeListLock, NULL);
 }
 
 JNIEXPORT void JNICALL 
@@ -123,7 +124,7 @@ Java_gnu_gnustep_base_NSObject_finalize_1native (JNIEnv *env,
   /* Only use the list if nobody else (not even this thread) holds the
      lock.  This is to prevent concurrent and recursive calls from 
      messing all up.  */
-  lock_count = objc_mutex_trylock (JIGSFinalizeListLock);
+  lock_count = pthread_mutex_trylock (&JIGSFinalizeListLock);
   
   if (lock_count == 1)
     {
@@ -170,14 +171,14 @@ Java_gnu_gnustep_base_NSObject_finalize_1native (JNIEnv *env,
 	      GSUnregisterCurrentThread ();
 	    }	
 	}
-      objc_mutex_unlock (JIGSFinalizeListLock);
+      pthread_mutex_unlock (&JIGSFinalizeListLock);
     }
   else
     {
       if (lock_count > 1)
 	{
 	  /* We locked it but we don't want to ... release the lock.  */
-	  objc_mutex_unlock (JIGSFinalizeListLock);
+	  pthread_mutex_unlock (&JIGSFinalizeListLock);
 	}
 
       /* Release the object immediately and manually.  */

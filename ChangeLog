@@ -1,3 +1,18 @@
+2011-05-17  Wolfgang Lux  <wolfgang.lux@gmail.com>
+
+	* Source/JIGSInit.m:
+	* Source/JIGSMapper.m:
+	* Source/JIGSProxyIMP.m:
+	* Source/JIGSProxySetup.m:
+	* Source/JIGSSelectorMapping.m:
+	* Source/NSObject.m:
+	Use pthread mutexes instead of Objective C runtime mutexes, since
+	not all runtimes support them.
+
+	* Source/JIGSProxySetup.h:
+	* Source/ObjcRuntimeUtilities.h:
+	No longer #include <objc/thr.h>
+
 2011-05-02  Wolfgang Lux  <wolfgang.lux@gmail.com>
 
 	* Makefiles/GNUmakefile:

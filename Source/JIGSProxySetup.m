@@ -31,6 +31,7 @@
 #include "java.lang.Object.h"
 #include <string.h>
 #include "JIGSSelectorMapping.h"
+#include <pthread.h>
 #include <Foundation/NSDebug.h>
 
 static jclass GSJNIMethods = NULL;
@@ -40,7 +41,7 @@ static jclass GSJNIMethods = NULL;
  * This table is private to JavaProxySetup.m and JavaProxyIMP.m
  */
 struct _JIGSSelectorIDTable *_JIGS_selIDTable = NULL;
-objc_mutex_t _JIGS_selIDTableLock = NULL;
+pthread_mutex_t _JIGS_selIDTableLock;
 
 /*
  * Each of these variables store the @encoding for that particular 
@@ -512,7 +513,7 @@ BOOL _JIGS_register_java_class_simple
 
 #define CLEAN_ZERO(X)   NSLog (@#X);
 #define CLEAN_ONE       (*env)->PopLocalFrame (env, NULL); 
-#define CLEAN_TWO       objc_mutex_unlock (_JIGS_selIDTableLock);
+#define CLEAN_TWO       pthread_mutex_unlock (&_JIGS_selIDTableLock);
 #define CLEAN_THREE     [pool release]; 
 #define CLEAN_FOUR      return NO;
 
@@ -547,7 +548,7 @@ BOOL _JIGS_register_java_class_simple
 
   if (_JIGS_selIDTable == NULL)
     {
-      _JIGS_selIDTableLock = objc_mutex_allocate ();
+      pthread_mutex_init (&_JIGS_selIDTableLock, NULL);
       _JIGS_selIDTable = (struct _JIGSSelectorIDTable *)NSZoneMalloc 
 	(NSDefaultMallocZone (), sizeof (struct _JIGSSelectorIDTable));      
       _JIGS_selIDTable->classCount = 0;
@@ -557,7 +558,7 @@ BOOL _JIGS_register_java_class_simple
     }
 
   // Lock the table 
-  objc_mutex_lock (_JIGS_selIDTableLock);
+  pthread_mutex_lock (&_JIGS_selIDTableLock);
   // We will create a certain amount of temporary objects. 
   // Clean them up at end of the work.
   pool = [NSAutoreleasePool new];
@@ -859,7 +860,7 @@ BOOL _JIGS_register_java_class_simple
 
 #undef CLEAN_FAIL_EXIT
   (*env)->PopLocalFrame (env, NULL);
-  objc_mutex_unlock (_JIGS_selIDTableLock);
+  pthread_mutex_unlock (&_JIGS_selIDTableLock);
   [pool release];
   return YES;
 }
