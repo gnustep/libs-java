@@ -28,6 +28,7 @@
 #include "GSJNI.h"
 #include <objc/objc-api.h>
 #include <string.h>
+#include <pthread.h>
 
 /* Selector Mapping Table.  
    This table is sort of a usual map table, only it is meant to be 
@@ -61,7 +62,7 @@ typedef struct java_selector
  **/
 
 /* Lock protecting the table*/
-static objc_mutex_t JIGSSelectorMappingLock = NULL;
+static pthread_mutex_t JIGSSelectorMappingLock;
 
 /* The table itself, divided into two tables.  One, for class
    selectors, the other one, for instance one.  The reason why we do a
@@ -197,7 +198,7 @@ static jSEL resolveJavaSelector (JNIEnv *env, jSEL selector)
 
 static void JIGSSelectorMappingTableCreate ()
 {
-  JIGSSelectorMappingLock = objc_mutex_allocate ();
+  pthread_mutex_init (&JIGSSelectorMappingLock, NULL);
   /* The table is only 'created' when something is first added to it */
 }
 
@@ -214,7 +215,7 @@ static void JIGSSelectorMappingAddInstanceEntry (SEL selector,
 {
   jSEL newJavaSelector;
 
-  objc_mutex_lock (JIGSSelectorMappingLock);
+  pthread_mutex_lock (&JIGSSelectorMappingLock);
   /* Resize table */
   if (JIGSInstanceSelMapTable == NULL)
     {
@@ -247,7 +248,7 @@ static void JIGSSelectorMappingAddInstanceEntry (SEL selector,
   (JIGSInstanceSelMapTable[instanceEntries - 1]).javaSelector 
     = newJavaSelector;
 
-  objc_mutex_unlock (JIGSSelectorMappingLock);
+  pthread_mutex_unlock (&JIGSSelectorMappingLock);
 }
 
 static void JIGSSelectorMappingAddClassEntry (SEL selector, 
@@ -258,7 +259,7 @@ static void JIGSSelectorMappingAddClassEntry (SEL selector,
 {
   jSEL newJavaSelector;
 
-  objc_mutex_lock (JIGSSelectorMappingLock);
+  pthread_mutex_lock (&JIGSSelectorMappingLock);
   /* Resize table */
   if (JIGSClassSelMapTable == NULL)
     {
@@ -290,19 +291,19 @@ static void JIGSSelectorMappingAddClassEntry (SEL selector,
     }
   (JIGSClassSelMapTable[classEntries - 1]).javaSelector = newJavaSelector;
 
-  objc_mutex_unlock (JIGSSelectorMappingLock);
+  pthread_mutex_unlock (&JIGSSelectorMappingLock);
 }
 
 static jSEL JIGSSelectorMappingFindInstanceSelector (JNIEnv *env, SEL selector)
 {
   int i;
 
-  objc_mutex_lock (JIGSSelectorMappingLock);
+  pthread_mutex_lock (&JIGSSelectorMappingLock);
   for (i = 0; i < instanceEntries; i++)
     {
       if (sel_eq ((JIGSInstanceSelMapTable[i]).objcSelector, selector))
 	{                                                      
-	  objc_mutex_unlock (JIGSSelectorMappingLock);
+	  pthread_mutex_unlock (&JIGSSelectorMappingLock);
 	  if (((JIGSInstanceSelMapTable[i]).javaSelector)->unresolved == YES)
 	    {
 	      (JIGSInstanceSelMapTable[i]).javaSelector = 
@@ -313,7 +314,7 @@ static jSEL JIGSSelectorMappingFindInstanceSelector (JNIEnv *env, SEL selector)
 	}                                                      
     }
   /* Not found */
-  objc_mutex_unlock (JIGSSelectorMappingLock);
+  pthread_mutex_unlock (&JIGSSelectorMappingLock);
   return NULL;
 }
 
@@ -321,12 +322,12 @@ static jSEL JIGSSelectorMappingFindClassSelector (JNIEnv *env, SEL selector)
 {
   int i;
 
-  objc_mutex_lock (JIGSSelectorMappingLock);
+  pthread_mutex_lock (&JIGSSelectorMappingLock);
   for (i = 0; i < classEntries; i++)
     {
       if (sel_eq ((JIGSClassSelMapTable[i]).objcSelector, selector))
 	{                                                      
-	  objc_mutex_unlock (JIGSSelectorMappingLock);
+	  pthread_mutex_unlock (&JIGSSelectorMappingLock);
 	  if (((JIGSClassSelMapTable[i]).javaSelector)->unresolved == YES)
 	    {
 	      (JIGSClassSelMapTable[i]).javaSelector = 
@@ -338,7 +339,7 @@ static jSEL JIGSSelectorMappingFindClassSelector (JNIEnv *env, SEL selector)
     }
   
   /* Not found */
-  objc_mutex_unlock (JIGSSelectorMappingLock);
+  pthread_mutex_unlock (&JIGSSelectorMappingLock);
   return NULL;
 }
 
@@ -365,7 +366,7 @@ JIGSSelectorMappingFindInstanceJavaMethod (JNIEnv *env,
 {
   int i;
   
-  objc_mutex_lock (JIGSSelectorMappingLock);
+  pthread_mutex_lock (&JIGSSelectorMappingLock);
   for (i = 0; i < instanceEntries; i++)
     {
       if (!strcmp (((JIGSInstanceSelMapTable[i]).javaSelector)->name, 
@@ -380,13 +381,13 @@ JIGSSelectorMappingFindInstanceJavaMethod (JNIEnv *env,
 	  if (!strcmp (((JIGSInstanceSelMapTable[i]).javaSelector)->signature, 
 		       javaSignature))
 	    {
-	      objc_mutex_unlock (JIGSSelectorMappingLock);
+	      pthread_mutex_unlock (&JIGSSelectorMappingLock);
 	      return (JIGSInstanceSelMapTable[i]).objcSelector;	
 	    }
 	}                                                      
     }
   /* Not found */
-  objc_mutex_unlock (JIGSSelectorMappingLock);
+  pthread_mutex_unlock (&JIGSSelectorMappingLock);
   return NULL;
 }
 
@@ -397,7 +398,7 @@ static SEL JIGSSelectorMappingFindClassJavaMethod (JNIEnv *env,
 {
   int i;
   
-  objc_mutex_lock (JIGSSelectorMappingLock);
+  pthread_mutex_lock (&JIGSSelectorMappingLock);
   for (i = 0; i < classEntries; i++)
     {
       if (!strcmp (((JIGSClassSelMapTable[i]).javaSelector)->name, 
@@ -412,13 +413,13 @@ static SEL JIGSSelectorMappingFindClassJavaMethod (JNIEnv *env,
 	  if (!strcmp (((JIGSClassSelMapTable[i]).javaSelector)->signature, 
 		       javaSignature))
 	    {
-	      objc_mutex_unlock (JIGSSelectorMappingLock);
+	      pthread_mutex_unlock (&JIGSSelectorMappingLock);
 	      return (JIGSClassSelMapTable[i]).objcSelector;	
 	    }
 	}                                                      
     }
   /* Not found */
-  objc_mutex_unlock (JIGSSelectorMappingLock);
+  pthread_mutex_unlock (&JIGSSelectorMappingLock);
   return NULL;
 }
 

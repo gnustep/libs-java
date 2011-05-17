@@ -23,6 +23,7 @@
 
 #include "JIGS.h"
 #include "JIGSSelectorMapping.h"
+#include <pthread.h>
 #if defined(__APPLE__) && (GS_FAKE_MAIN || defined(GS_PASS_ARGUMENTS))
 #include <crt_externs.h>
 #endif
@@ -34,17 +35,17 @@ Class JIGSAutoreleasePoolClass = Nil;
 
 #if defined(LIB_FOUNDATION_LIBRARY)
 /* Use a global lock. */
-static objc_mutex_t JIGSLock = NULL;
+static pthread_mutex_t JIGSLock;
 
 BOOL GSRegisterCurrentThread (void)
 {
-  objc_mutex_lock (JIGSLock);
+  pthread_mutex_lock (&JIGSLock);
   return YES;
 }
 
 void GSUnregisterCurrentThread (void)
 {
-  objc_mutex_unlock (JIGSLock);
+  pthread_mutex_unlock (&JIGSLock);
 }
 #endif /* LIB_FOUNDATION_LIBRARY */
 
@@ -182,7 +183,7 @@ void JIGSInit (JNIEnv *env)
       GSCurrentThread ();
 
 #if defined(LIB_FOUNDATION_LIBRARY)
-      JIGSLock = objc_mutex_allocate ();
+      pthread_mutex_init (&JIGSLock, NULL);
 #endif     
 
       // Get the JavaVM to register it with NSJavaVirtualMachine

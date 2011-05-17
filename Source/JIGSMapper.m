@@ -27,18 +27,19 @@
 #include "JIGSProxy.h"
 #include "NSJavaVirtualMachine.h"
 #include <objc/Object.h>
+#include <pthread.h>
 
 /***
  *** Table mapping real objc objects to their java proxies 
  ***/
 static NSMapTable* _JIGSProxiedObjcMap = NULL; 
-static objc_mutex_t _JIGSProxiedObjcMapLock = NULL;
+static pthread_mutex_t _JIGSProxiedObjcMapLock;
 
 static inline jobject _JIGSMapperGetProxyFromProxiedObjc (JNIEnv *env, id objc)
 {
   jobject java;
   
-  objc_mutex_lock (_JIGSProxiedObjcMapLock);
+  pthread_mutex_lock (&_JIGSProxiedObjcMapLock);
   java = NSMapGet (_JIGSProxiedObjcMap, objc);
   if (java != NULL)
     {
@@ -56,7 +57,7 @@ static inline jobject _JIGSMapperGetProxyFromProxiedObjc (JNIEnv *env, id objc)
        */
       java = (*env)->NewLocalRef (env, java);
     }
-  objc_mutex_unlock (_JIGSProxiedObjcMapLock);
+  pthread_mutex_unlock (&_JIGSProxiedObjcMapLock);
   return java;
 }
 
@@ -70,9 +71,9 @@ void _JIGSMapperAddJavaProxy (JNIEnv *env, id objc, jobject java)
       return;
     }  
 
-  objc_mutex_lock (_JIGSProxiedObjcMapLock);
+  pthread_mutex_lock (&_JIGSProxiedObjcMapLock);
   NSMapInsert (_JIGSProxiedObjcMap, objc, weak_java);
-  objc_mutex_unlock (_JIGSProxiedObjcMapLock);
+  pthread_mutex_unlock (&_JIGSProxiedObjcMapLock);
 }
 
 /* Warning - the following might be called by finalize without an
@@ -82,12 +83,12 @@ void _JIGSMapperRemoveJavaProxy (JNIEnv *env, id objc)
 {
   jobject weak_java;
 
-  objc_mutex_lock (_JIGSProxiedObjcMapLock);
+  pthread_mutex_lock (&_JIGSProxiedObjcMapLock);
 
   weak_java = NSMapGet (_JIGSProxiedObjcMap, objc);
   NSMapRemove (_JIGSProxiedObjcMap, objc);
 
-  objc_mutex_unlock (_JIGSProxiedObjcMapLock);
+  pthread_mutex_unlock (&_JIGSProxiedObjcMapLock);
 
   (*env)->DeleteWeakGlobalRef (env, weak_java); 
 }
@@ -96,7 +97,7 @@ void _JIGSMapperRemoveJavaProxy (JNIEnv *env, id objc)
  *** Table mapping real java objects to their objc proxies 
  ***/
 static NSMapTable* _JIGSProxiedJavaMap = NULL; 
-static objc_mutex_t _JIGSProxiedJavaMapLock = NULL;
+static pthread_mutex_t _JIGSProxiedJavaMapLock;
 
 /* To compare two java references, we need to use JNI's IsSameObject.  */
 BOOL _JIGSProxyJavaIsEqual (NSMapTable *table, const void *a, const void *b)
@@ -130,24 +131,24 @@ static inline id _JIGSMapperGetProxyFromProxiedJava (jobject java)
 {
   id objc;
   
-  objc_mutex_lock (_JIGSProxiedJavaMapLock);
+  pthread_mutex_lock (&_JIGSProxiedJavaMapLock);
   objc = NSMapGet (_JIGSProxiedJavaMap, java);
-  objc_mutex_unlock (_JIGSProxiedJavaMapLock);
+  pthread_mutex_unlock (&_JIGSProxiedJavaMapLock);
   return objc;
 }
 
 void _JIGSMapperAddObjcProxy (JNIEnv *env, jobject java, id objc)
 {
-  objc_mutex_lock (_JIGSProxiedJavaMapLock);
+  pthread_mutex_lock (&_JIGSProxiedJavaMapLock);
   NSMapInsert (_JIGSProxiedJavaMap, java, objc);
-  objc_mutex_unlock (_JIGSProxiedJavaMapLock);
+  pthread_mutex_unlock (&_JIGSProxiedJavaMapLock);
 }
 
 void _JIGSMapperRemoveObjcProxy (JNIEnv* env, jobject java)
 {
-  objc_mutex_lock (_JIGSProxiedJavaMapLock);
+  pthread_mutex_lock (&_JIGSProxiedJavaMapLock);
   NSMapRemove (_JIGSProxiedJavaMap, java);
-  objc_mutex_unlock (_JIGSProxiedJavaMapLock);
+  pthread_mutex_unlock (&_JIGSProxiedJavaMapLock);
 }
 
 /***
@@ -179,7 +180,7 @@ static _JIGSClassMap _JIGSProxiedObjCClassMap = NULL;
    assignment/comparison to be an atomic operation.  We also perform
    the minimal possible number of JNI calls when looking up stuff in
    the table.  */
-static objc_mutex_t _JIGSProxiedObjCClassMapWriteLock = NULL;
+static pthread_mutex_t _JIGSProxiedObjCClassMapWriteLock;
 
 /* We only insert in the table, never remove.  */
 static inline void _JIGSClassMapInsert (jclass java, Class objc)
@@ -190,7 +191,7 @@ static inline void _JIGSClassMapInsert (jclass java, Class objc)
   new->objcClass = objc;
   new->next = NULL;
   
-  objc_mutex_lock (_JIGSProxiedObjCClassMapWriteLock);
+  pthread_mutex_lock (&_JIGSProxiedObjCClassMapWriteLock);
 
   if (_JIGSProxiedObjCClassMap == NULL)
     {
@@ -208,7 +209,7 @@ static inline void _JIGSClassMapInsert (jclass java, Class objc)
       iter->next = new;
     }
 
-  objc_mutex_unlock (_JIGSProxiedObjCClassMapWriteLock);
+  pthread_mutex_unlock (&_JIGSProxiedObjCClassMapWriteLock);
 }
 
 
@@ -391,7 +392,7 @@ void _JIGSMapperInitialize (JNIEnv *env)
   _JIGSProxiedObjcMap = NSCreateMapTable (NSNonOwnedPointerMapKeyCallBacks, 
 					  NSNonOwnedPointerMapValueCallBacks, 
 					  20);
-  _JIGSProxiedObjcMapLock = objc_mutex_allocate ();
+  pthread_mutex_init (&_JIGSProxiedObjcMapLock, NULL);
   
   JIGSJavaReferenceMapKeyCallBacks = NSNonOwnedPointerMapKeyCallBacks;
   JIGSJavaReferenceMapKeyCallBacks.isEqual = _JIGSProxyJavaIsEqual;
@@ -400,9 +401,9 @@ void _JIGSMapperInitialize (JNIEnv *env)
   _JIGSProxiedJavaMap = NSCreateMapTable (JIGSJavaReferenceMapKeyCallBacks, 
 					  NSNonOwnedPointerMapValueCallBacks, 
 					  20);
-  _JIGSProxiedJavaMapLock = objc_mutex_allocate ();
+  pthread_mutex_init (&_JIGSProxiedJavaMapLock, NULL);
 
-  _JIGSProxiedObjCClassMapWriteLock = objc_mutex_allocate ();
+  pthread_mutex_init (&_JIGSProxiedObjCClassMapWriteLock, NULL);
 
   JIGSFinalizeInit ();
   

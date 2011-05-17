@@ -26,6 +26,7 @@
 #include "java.lang.Object.h"
 #include "JIGSException.h"
 #include "JIGSMapper.h"
+#include <pthread.h>
 #include "JIGSSelectorMapping.h"
 #include <objc/objc.h>
 #include <objc/objc-api.h>
@@ -33,7 +34,7 @@
 
 // From JIGSProxySetup.m
 extern struct _JIGSSelectorIDTable *_JIGS_selIDTable;
-extern objc_mutex_t _JIGS_selIDTableLock;
+extern pthread_mutex_t _JIGS_selIDTableLock;
 extern char _JAVA_BOOLEAN;
 extern char _JAVA_BYTE;
 extern char _JAVA_CHAR;
@@ -67,8 +68,8 @@ extern char _JAVA_DOUBLE;
       return;                                                  \
     }                                                          
 
-#define LOCK_THE_TABLE objc_mutex_lock (_JIGS_selIDTableLock)
-#define UNLOCK_THE_TABLE objc_mutex_unlock (_JIGS_selIDTableLock)
+#define LOCK_THE_TABLE pthread_mutex_lock (&_JIGS_selIDTableLock)
+#define UNLOCK_THE_TABLE pthread_mutex_unlock (&_JIGS_selIDTableLock)
 
 #define CHECK_UNLOCK(condition, message, fail_return)      \
   if (condition)                                           \
