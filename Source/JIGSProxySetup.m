@@ -120,8 +120,8 @@ convertSignature (char signature)
  * Return NO upon exception thrown (this should never happen).
  */
 
-BOOL _JIGS_prepare_method_struct
-(JNIEnv *env, MethodList *ml, int index, jobject jmethod, BOOL isConstructor, 
+static BOOL _JIGS_prepare_method_struct
+(JNIEnv *env, Class class, jobject jmethod, BOOL isConstructor, 
  BOOL isStatic, const char *className, struct _JIGSSelectorID *tableEntry,
  // This two last arguments are used to check the name against names of 
  // methods which have not yet been registered
@@ -449,8 +449,8 @@ BOOL _JIGS_prepare_method_struct
       [NSException raise: @"Java Interface Error"
 		   format: @"Unrecognized return type to IMP for java method"];
     }  
-  ObjcUtilities_insert_method_in_list (ml, index, method_name, method_types, 
-					 methodIMP);
+  class_addMethod (class, sel_registerName (method_name),
+		   methodIMP, method_types);
   
   tableEntry->numberOfArgs = numberOfArguments;
   tableEntry->selector = (void *)strdup (method_name); 
@@ -490,11 +490,10 @@ BOOL _JIGS_prepare_method_struct
 BOOL _JIGS_register_java_class_simple
 (JNIEnv *env, NSString *className, NSString *superclassName, BOOL isRootClass)
 {
-  MethodList *ml;
   int i;
   int count;
   int classCount;
-  Class class;
+  Class class, metaClass, superClass;
   jclass javaClass;
   static jclass java_lang_Class = NULL;
   static jmethodID GSJNIMethods_getStaticMethods = NULL;
@@ -528,23 +527,31 @@ BOOL _JIGS_register_java_class_simple
     CLEAN_FAIL_EXIT (Trying to register unknown java class);
 
   // Create the Objective-C proxy class.
-  if (isRootClass == NO)
+  superClass = (Class)objc_lookUpClass ([superclassName cString]);
+  if (superClass == Nil)
     {
-      if (ObjcUtilities_new_class (cClassName, 
-				   [superclassName cString], 0) == NO)
-	CLEAN_FAIL_EXIT (ObjcUtilities_new_class returned NO);   
-    }
-  else
-    {
-      if (ObjcUtilities_new_class (cClassName, [superclassName cString], 1, 
-				   "realObject", @encode(jobject)) == NO)
-	CLEAN_FAIL_EXIT (ObjcUtilities_new_class returned NO on RootClass);   
+      CLEAN_FAIL_EXIT (objc_lookUpClass returned Nil);   
     }
 
-  class = NSClassFromString (className);
-
+  class = objc_allocateClassPair (superClass, cClassName, 0);
   if (class == Nil)
-    CLEAN_FAIL_EXIT (Class was created but could not be loaded);
+    {
+      CLEAN_FAIL_EXIT (objc_allocateClassPair returned Nil);   
+    }
+
+  if (isRootClass == YES)
+    {
+      char *type;
+      NSUInteger size, align;
+	
+      type = @encode(jobject);
+      NSGetSizeAndAlignment (type, &size, &align);
+      class_addIvar (class, "realObject", size, align, type);
+    }
+  
+  objc_registerClassPair (class);
+
+  metaClass = object_getClass (class);
 
   if (_JIGS_selIDTable == NULL)
     {
@@ -597,7 +604,7 @@ BOOL _JIGS_register_java_class_simple
   // MetaClass Table (used for dispatching static methods)
   metaclassTable = &((struct _JIGSSelectorIDEntry *)
 		     (_JIGS_selIDTable->classTable))[classCount - 1];
-  metaclassTable->class = class->class_pointer;
+  metaclassTable->class = metaClass;
   metaclassTable->javaClass = javaClass; // This is already a global ref
 
   // NB: If something in the next part throws an exception, 
@@ -651,8 +658,6 @@ BOOL _JIGS_register_java_class_simple
     }
   else // (count > 0) 
     {
-      ml = ObjcUtilities_alloc_method_list (count);
-      
       metaclassTable->selIDCount = count;
       metaclassTable->selIDTable = (struct _JIGSSelectorID *)NSZoneMalloc 
 	(NSDefaultMallocZone (), sizeof (struct _JIGSSelectorID) * count);
@@ -672,7 +677,7 @@ BOOL _JIGS_register_java_class_simple
 	    }
 	  
 	  if (_JIGS_prepare_method_struct 
-	      (env, ml, i, jmethod, NO, YES, cClassName, 
+	      (env, metaClass, jmethod, NO, YES, cClassName, 
 	       &((metaclassTable->selIDTable)[i]), metaclassTable, i) == NO)
 	    {
 	      (*env)->PopLocalFrame (env, NULL);
@@ -681,8 +686,6 @@ BOOL _JIGS_register_java_class_simple
 
 	  (*env)->PopLocalFrame (env, NULL);
 	}  
-      // Register the static methods 
-      ObjcUtilities_register_method_list (class->class_pointer, ml);
       /* NSLog (@"Updating internal table for static methods: %d", count); */
       // Now we replace each method name with its selector
       for (i = 0; i < count; i++)
@@ -691,7 +694,7 @@ BOOL _JIGS_register_java_class_simple
 
 	  NSDebugLog (@"Class Method: %s", 
 		      (char *)(metaclassTable->selIDTable)[i].selector); 
-	  tmpSelector = sel_get_any_uid 
+	  tmpSelector = sel_getUid 
 	    ((char *)(metaclassTable->selIDTable)[i].selector);
 	  NSZoneFree (NSDefaultMallocZone (), 
 		      (void *)(metaclassTable->selIDTable[i].selector));
@@ -740,8 +743,6 @@ BOOL _JIGS_register_java_class_simple
     }
   else // (count > 0) 
     {
-      ml = ObjcUtilities_alloc_method_list (count);
-
       classTable->selIDCount = count;
       classTable->selIDTable = (struct _JIGSSelectorID *)NSZoneMalloc 
 	(NSDefaultMallocZone (), sizeof (struct _JIGSSelectorID) * count);
@@ -760,7 +761,7 @@ BOOL _JIGS_register_java_class_simple
 	      CLEAN_FAIL_EXIT (Exception in GetObjectArrayElement);
 	    }
 	  if (_JIGS_prepare_method_struct 
-	      (env, ml, i, jmethod, YES, NO, cClassName, 
+	      (env, class, jmethod, YES, NO, cClassName, 
 	       &((classTable->selIDTable)[i]), classTable, i) == NO)
 	    {
 	      (*env)->PopLocalFrame (env, NULL);
@@ -768,10 +769,6 @@ BOOL _JIGS_register_java_class_simple
 	    }
 	  (*env)->PopLocalFrame (env, NULL);
 	}
-      /* printf ("REALLY Registering constructor methods: %d\n", count); */
-      // Register the constructors 
-      ObjcUtilities_register_method_list (class, ml);
-      /* NSLog (@"Updating internal table for static methods: %d", count); */
     }
   
   /*
@@ -800,8 +797,6 @@ BOOL _JIGS_register_java_class_simple
     {
       int oldCount = classTable->selIDCount;
 
-      ml = ObjcUtilities_alloc_method_list (count);
-
       classTable->selIDCount += count;
       if (classTable->selIDTable == NULL)
 	{
@@ -829,7 +824,7 @@ BOOL _JIGS_register_java_class_simple
 	      CLEAN_FAIL_EXIT (Exception in GetObjectArrayElement);
 	    }
 	  if (_JIGS_prepare_method_struct 
-	      (env, ml, i, jmethod, NO, NO, cClassName, 
+	      (env, class, jmethod, NO, NO, cClassName, 
 	       &((classTable->selIDTable)[i + oldCount]), classTable, 
 	       i + oldCount) == NO)
 	    {
@@ -838,9 +833,6 @@ BOOL _JIGS_register_java_class_simple
 	    }
 	  (*env)->PopLocalFrame (env, NULL);
 	}  
-      /* printf ("REALLY Registering instance methods: %d\n", count); */
-      // Register the instance methods 
-      ObjcUtilities_register_method_list (class, ml);
     }
 
   /* NSLog(@"Registering instance methods with internal selector->ID table");*/
@@ -851,7 +843,7 @@ BOOL _JIGS_register_java_class_simple
 
       NSDebugLog (@"Instance method: %s", 
 	     (char *)(classTable->selIDTable)[i].selector);
-      tmpSelector = sel_get_any_uid 
+      tmpSelector = sel_getUid 
 	((char *)(classTable->selIDTable)[i].selector);
       NSZoneFree (NSDefaultMallocZone (), 
 		  (void *)(classTable->selIDTable[i].selector));
