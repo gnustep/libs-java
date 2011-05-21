@@ -1,5 +1,10 @@
 2011-05-21  Wolfgang Lux  <wolfgang.lux@gmail.com>
 
+	* Source/JIGSInit.m: Include <objc/hooks.h> when compiling with
+	the GNUstep Objective C runtime.
+
+2011-05-21  Wolfgang Lux  <wolfgang.lux@gmail.com>
+
 	* Source/ObjcRuntimeUtilities.h:
 	* Source/JIGSProxy.m:
 	* Source/JIGSProxySetup.h:
