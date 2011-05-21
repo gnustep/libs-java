@@ -1,5 +1,11 @@
 2011-05-21  Wolfgang Lux  <wolfgang.lux@gmail.com>
 
+	* Testing/Objc/main.m (main, test_primitive_type): Register Java
+	classes manually, since automatic registration does not work for
+	the GNUstep Objective C runtime.
+
+2011-05-21  Wolfgang Lux  <wolfgang.lux@gmail.com>
+
 	* Source/JIGSInit.m: Include <objc/hooks.h> when compiling with
 	the GNUstep Objective C runtime.
 
