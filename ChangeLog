@@ -1,3 +1,8 @@
+2011-05-21  Wolfgang Lux  <wolfgang.lux@gmail.com>
+
+	* Source/JIGSProxySetup.m (_JIGS_register_java_class_simple): Fix
+	incorrect type in argument to ObjcUtilities_new_class.
+
 2011-05-17  Wolfgang Lux  <wolfgang.lux@gmail.com>
 
 	* Source/JIGSInit.m:

@@ -537,7 +537,7 @@ BOOL _JIGS_register_java_class_simple
   else
     {
       if (ObjcUtilities_new_class (cClassName, [superclassName cString], 1, 
-				   @"realObject", @encode(jobject)) == NO)
+				   "realObject", @encode(jobject)) == NO)
 	CLEAN_FAIL_EXIT (ObjcUtilities_new_class returned NO on RootClass);   
     }
 
