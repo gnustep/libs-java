@@ -10,7 +10,10 @@
 	* Source/JIGSSelectorMapping.m: Update to use new Objective C API
 	for registering proxy classes.
 
-	* Source/ObjcRuntimeUtilities.c: Deleted.
+	* Source/GNUmakefile:
+	* Source/ObjcRuntimeUtilities.c: Deleted ObjcRuntimeUtilities.c,
+	since its functions have been superseded by the new Objective C
+	API.
 
 2011-05-21  Wolfgang Lux  <wolfgang.lux@gmail.com>
 
