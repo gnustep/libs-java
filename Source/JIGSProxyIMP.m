@@ -28,9 +28,6 @@
 #include "JIGSMapper.h"
 #include <pthread.h>
 #include "JIGSSelectorMapping.h"
-#include <objc/objc.h>
-#include <objc/objc-api.h>
-#include <objc/encoding.h>
 
 // From JIGSProxySetup.m
 extern struct _JIGSSelectorIDTable *_JIGS_selIDTable;
@@ -132,8 +129,8 @@ find_selector_in_selIDTable (int k, SEL aSelector)
 
   for (i = 0; i < _JIGS_selIDTable->classTable[k].selIDCount; i++)
     {
-      if (sel_eq (_JIGS_selIDTable->classTable[k].selIDTable[i].selector, 
-		  aSelector))  
+      if (sel_isEqual (_JIGS_selIDTable->classTable[k].selIDTable[i].selector, 
+		       aSelector))  
 	{                                                      
 	  return i;	
 	}                                                      
@@ -145,7 +142,7 @@ find_selector_in_selIDTable (int k, SEL aSelector)
  * Get the java receiver if needed
  */
 #define GET_RECEIVER                                      \
-    if (CLS_ISMETA(class) == NO)                          \
+    if (class_isMetaClass(class) == NO)                   \
       {                                                   \
 	jrcv = ((_java_lang_Object *)rcv)->realObject;    \
       }
@@ -271,7 +268,7 @@ i++; }
  */
 
 #define RUN_JAVA_METHOD(type)                                   \
-      if (CLS_ISMETA (class))                                   \
+      if (class_isMetaClass (class))                            \
 	{                                                       \
 	  if (numberOfArgs == 0)                                \
 	    ret = (*env)->CallStatic##type##Method              \
@@ -321,7 +318,7 @@ i++; }
 jboolean _JIGS_jboolean_IMP_JavaMethod (id rcv, SEL sel, ...)
 {
   const char *type;
-  Class class = (Class)(rcv->class_pointer);
+  Class class = object_getClass (rcv);
   jclass javaClass = NULL;
   jmethodID jmethod = NULL;
   int i;
@@ -365,7 +362,7 @@ jboolean _JIGS_jboolean_IMP_JavaMethod (id rcv, SEL sel, ...)
 jbyte _JIGS_jbyte_IMP_JavaMethod (id rcv, SEL sel, ...)
 {
   const char *type;
-  Class class = (Class)(rcv->class_pointer);
+  Class class = object_getClass (rcv);
   jclass javaClass = NULL;
   jmethodID jmethod = NULL;
   int i;
@@ -410,7 +407,7 @@ jbyte _JIGS_jbyte_IMP_JavaMethod (id rcv, SEL sel, ...)
 jchar _JIGS_jchar_IMP_JavaMethod (id rcv, SEL sel, ...)
 {
   const char *type;
-  Class class = (Class)(rcv->class_pointer);
+  Class class = object_getClass (rcv);
   jclass javaClass = NULL;
   jmethodID jmethod = NULL;
   int i;
@@ -455,7 +452,7 @@ jchar _JIGS_jchar_IMP_JavaMethod (id rcv, SEL sel, ...)
 jshort _JIGS_jshort_IMP_JavaMethod (id rcv, SEL sel, ...)
 {
   const char *type;
-  Class class = (Class)(rcv->class_pointer);
+  Class class = object_getClass (rcv);
   jclass javaClass = NULL;
   jmethodID jmethod = NULL;
   int i;
@@ -500,7 +497,7 @@ jshort _JIGS_jshort_IMP_JavaMethod (id rcv, SEL sel, ...)
 jint _JIGS_jint_IMP_JavaMethod (id rcv, SEL sel, ...)
 {
   const char *type;
-  Class class = (Class)(rcv->class_pointer);
+  Class class = object_getClass (rcv);
   jclass javaClass = NULL;
   jmethodID jmethod = NULL;
   int i;
@@ -545,7 +542,7 @@ jint _JIGS_jint_IMP_JavaMethod (id rcv, SEL sel, ...)
 jlong _JIGS_jlong_IMP_JavaMethod (id rcv, SEL sel, ...)
 {
   const char *type;
-  Class class = (Class)(rcv->class_pointer);
+  Class class = object_getClass (rcv);
   jclass javaClass = NULL;
   jmethodID jmethod = NULL;
   int i;
@@ -590,7 +587,7 @@ jlong _JIGS_jlong_IMP_JavaMethod (id rcv, SEL sel, ...)
 jfloat _JIGS_jfloat_IMP_JavaMethod (id rcv, SEL sel, ...)
 {
   const char *type;
-  Class class = (Class)(rcv->class_pointer);
+  Class class = object_getClass (rcv);
   jclass javaClass = NULL;
   jmethodID jmethod = NULL;
   int i;
@@ -635,7 +632,7 @@ jfloat _JIGS_jfloat_IMP_JavaMethod (id rcv, SEL sel, ...)
 jdouble _JIGS_jdouble_IMP_JavaMethod (id rcv, SEL sel, ...)
 {
   const char *type;
-  Class class = (Class)(rcv->class_pointer);
+  Class class = object_getClass (rcv);
   jclass javaClass = NULL;
   jmethodID jmethod = NULL;
   int i;
@@ -680,7 +677,7 @@ jdouble _JIGS_jdouble_IMP_JavaMethod (id rcv, SEL sel, ...)
 void _JIGS_void_IMP_JavaMethod (id rcv, SEL sel, ...)
 {
   const char *type; 
-  Class class = (Class)(rcv->class_pointer);
+  Class class = object_getClass (rcv);
   jclass javaClass = NULL;
   jmethodID jmethod = NULL;
   int i;
@@ -714,7 +711,7 @@ void _JIGS_void_IMP_JavaMethod (id rcv, SEL sel, ...)
 
   PROCESS_ARGS;
   
-  if (CLS_ISMETA (class))
+  if (class_isMetaClass (class))
     {
       // Static method
       if (numberOfArgs == 0)
@@ -748,7 +745,7 @@ void _JIGS_void_IMP_JavaMethod (id rcv, SEL sel, ...)
 id _JIGS_id_IMP_JavaMethod (id rcv, SEL sel, ...)
 {
   const char *type;
-  Class class = (Class)(rcv->class_pointer);
+  Class class = object_getClass (rcv);
   jclass javaClass = NULL;
   jmethodID jmethod = NULL;
   int i;

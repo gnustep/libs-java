@@ -26,8 +26,6 @@
 #ifndef __JIGSProxySetup_h_GNUSTEP_JAVA_INCLUDE
 #define __JIGSProxySetup_h_GNUSTEP_JAVA_INCLUDE
 
-#include <objc/objc-api.h>
-
 #include "GSJNI.h"
 
 /*

@@ -468,7 +468,7 @@ static inline jclass _JIGSMapperGetBestJavaProxyClass (Class objcClass)
 	  break;
 	}
 
-      objcClass = class_get_super_class (objcClass);
+      objcClass = class_getSuperclass (objcClass);
       if (objcClass == Nil)
 	{
 	  result = NULL;

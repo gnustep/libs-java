@@ -26,7 +26,6 @@
 #include "JIGSSelectorMapping.h"
 #include "JIGSMapper.h"
 #include "GSJNI.h"
-#include <objc/objc-api.h>
 #include <string.h>
 #include <pthread.h>
 
@@ -301,7 +300,7 @@ static jSEL JIGSSelectorMappingFindInstanceSelector (JNIEnv *env, SEL selector)
   pthread_mutex_lock (&JIGSSelectorMappingLock);
   for (i = 0; i < instanceEntries; i++)
     {
-      if (sel_eq ((JIGSInstanceSelMapTable[i]).objcSelector, selector))
+      if (sel_isEqual ((JIGSInstanceSelMapTable[i]).objcSelector, selector))
 	{                                                      
 	  pthread_mutex_unlock (&JIGSSelectorMappingLock);
 	  if (((JIGSInstanceSelMapTable[i]).javaSelector)->unresolved == YES)
@@ -325,7 +324,7 @@ static jSEL JIGSSelectorMappingFindClassSelector (JNIEnv *env, SEL selector)
   pthread_mutex_lock (&JIGSSelectorMappingLock);
   for (i = 0; i < classEntries; i++)
     {
-      if (sel_eq ((JIGSClassSelMapTable[i]).objcSelector, selector))
+      if (sel_isEqual ((JIGSClassSelMapTable[i]).objcSelector, selector))
 	{                                                      
 	  pthread_mutex_unlock (&JIGSSelectorMappingLock);
 	  if (((JIGSClassSelMapTable[i]).javaSelector)->unresolved == YES)
@@ -533,7 +532,7 @@ void JIGSRegisterJavaProxySelector (JNIEnv *env, SEL selector,
 						      javaSignature);
 	  if (s != NULL)
 	    {
-	      if (sel_eq (s, selector))
+	      if (sel_isEqual (s, selector))
 		{
 		  return;
 		}
@@ -574,7 +573,7 @@ void JIGSRegisterJavaProxySelector (JNIEnv *env, SEL selector,
 	  
 	  if (s != NULL)
 	    {
-	      if (sel_eq (s, selector))
+	      if (sel_isEqual (s, selector))
 		{
 		  return;
 		}
@@ -637,7 +636,7 @@ void JIGSRegisterJavaProxySelectors (JNIEnv *env, int count,
 
   for (i = 0; i < count; i++)
     {
-      selector = sel_get_any_uid (list[i].objcName);
+      selector = sel_getUid (list[i].objcName);
 
       if (list[i].javaName != NULL)
 	{
@@ -784,13 +783,13 @@ static SEL JIGSTryMethodName (JNIEnv *env, const char *method_name,
   jSEL jSelector;
 
   /* Check if this selector is known to the objective-C runtime */
-  selector = sel_get_any_uid (method_name);
+  selector = sel_getUid (method_name);
 
   if (selector == NULL)
     {
       /* The selector is not known to the objective-C runtime, so 
 	 we register it. */
-      selector = sel_register_typed_name (method_name, objcSignature);
+      selector = GSSelectorFromNameAndTypes (method_name, objcSignature);
     }
   else // selector != NULL
     {
@@ -833,7 +832,7 @@ const char *JIGSRegisterObjcProxySelector (JNIEnv *env,
   if (selector != NULL)
     {
       /* Now that's great !  It's already in the table - use it. */
-      return sel_get_name (selector);
+      return sel_getName (selector);
     }
 
   /* Not in the table.  All right, we need to choose an objc name then. 
@@ -855,7 +854,7 @@ const char *JIGSRegisterObjcProxySelector (JNIEnv *env,
 	  NSLog (@"JIGS CRITICAL: SelectorMapping: Could not register long selector!");
 	  NSLog (@"               Ignoring and going on.");
 	  /* Force it - FIXME */
-	  selector = sel_register_typed_name (method_name, objcSignature);
+	  selector = GSSelectorFromNameAndTypes (method_name, objcSignature);
 	}
     }
 

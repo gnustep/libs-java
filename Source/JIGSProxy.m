@@ -50,8 +50,9 @@ void _java_lang_Object__dealloc_ (id rcv, SEL sel)
   // Following code is the equivalent of [super dealloc]
   if (super_dealloc == 0)
     {
-      super_dealloc = get_imp (NSClassFromString (@"NSObject"), 
-			       @selector (dealloc));
+      super_dealloc =
+	class_getMethodImplementation (NSClassFromString (@"NSObject"), 
+				       @selector (dealloc));
     }
   super_dealloc (rcv, sel);
 }
@@ -106,8 +107,9 @@ id _java_lang_Object__handleQueryWithUnboundKey_ (id rcv, SEL sel,
   // return [super handleQueryWithUnboundKey: key]
   if (super_handleQuery == 0)
     {
-      super_handleQuery = get_imp (NSClassFromString (@"NSObject"), 
-				   @selector (handleQueryWithUnboundKey:));
+      super_handleQuery =
+	class_getMethodImplementation (NSClassFromString (@"NSObject"), 
+				       @selector (handleQueryWithUnboundKey:));
     }
   return super_handleQuery (rcv, sel, key);
 }
@@ -162,7 +164,7 @@ void _java_lang_Object__handleTakeValueForUnboundKey_ (id rcv, SEL sel,
   // [super handleTakeValue: value  ofUnboundKey: key]
   if (super_handleTakeValue == 0)
     {
-      super_handleTakeValue = get_imp 
+      super_handleTakeValue = class_getMethodImplementation 
 	(NSClassFromString (@"NSObject"), 
 	 @selector (handleTakeValue:forUnboundKey:));
     }
@@ -175,7 +177,7 @@ void _java_lang_Object__handleTakeValueForUnboundKey_ (id rcv, SEL sel,
  */
 void JIGSRegisterJavaRootClass (JNIEnv *env)
 {
-  MethodList *ml;
+  Class class;
   const char *signature;
 
   // Save pointer to JIGSKeyValueCoding class
@@ -194,29 +196,24 @@ void JIGSRegisterJavaRootClass (JNIEnv *env)
  
   // Add to it the custom dealloc, handleQueryWithUnboundKey: and
   // handleTakeValue:forUnboundKey: methods
-  ml = ObjcUtilities_alloc_method_list (3);
+  class = NSClassFromString (@"java.lang.Object");
 
   /* dealloc */
   signature = ObjcUtilities_build_runtime_Objc_signature ("v@:");
-  ObjcUtilities_insert_method_in_list (ml, 0, "dealloc", signature, 
-				       (IMP)_java_lang_Object__dealloc_);
+  class_addMethod (class, sel_registerName ("dealloc"), 
+		   (IMP)_java_lang_Object__dealloc_, signature);
 
   /* handleQueryWithUnboundKey: */
   signature = ObjcUtilities_build_runtime_Objc_signature ("@@:@");
-  ObjcUtilities_insert_method_in_list 
-    (ml, 1, "handleQueryWithUnboundKey:", 
-     signature, 
-     (IMP)_java_lang_Object__handleQueryWithUnboundKey_);
+  class_addMethod (class, sel_registerName ("handleQueryWithUnboundKey:"),
+		   (IMP)_java_lang_Object__handleQueryWithUnboundKey_, 
+		   signature);
 
   /* handleTakeValue:forUnboundKey: */
   signature = ObjcUtilities_build_runtime_Objc_signature ("v@:@@");
-  ObjcUtilities_insert_method_in_list 
-    (ml, 2, "handleTakeValue:forUnboundKey:", 
-     signature, 
-     (IMP)_java_lang_Object__handleTakeValueForUnboundKey_);
-
-  ObjcUtilities_register_method_list (NSClassFromString (@"java.lang.Object"),
-				      ml);
+  class_addMethod (class, sel_registerName ("handleTakeValue:forUnboundKey:"),
+		   (IMP)_java_lang_Object__handleTakeValueForUnboundKey_, 
+		   signature);
 }
 
 

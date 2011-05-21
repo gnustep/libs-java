@@ -25,7 +25,6 @@
 #ifndef __JIGSProxyIMP_h_GNUSTEP_JAVA_INCLUDE
 #define __JIGSProxyIMP_h_GNUSTEP_JAVA_INCLUDE
 
-#include <objc/objc-api.h>
 #include <jni.h>
 /*
  * The design of the forwarding routines for the GNUstep Java
