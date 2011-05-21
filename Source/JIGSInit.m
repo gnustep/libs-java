@@ -27,6 +27,9 @@
 #if defined(__APPLE__) && (GS_FAKE_MAIN || defined(GS_PASS_ARGUMENTS))
 #include <crt_externs.h>
 #endif
+#ifdef __GNUSTEP_RUNTIME__
+#include <objc/hooks.h>
+#endif
 
 /* For the GNU runtime, which is very slow in class method invocation, 
    we use this pointer to the NSAutoreleasePool class, to be used by 
