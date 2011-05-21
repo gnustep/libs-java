@@ -134,6 +134,10 @@ test_primitive_type (int type, JNIEnv *env)
       }
     }
 
+  printf ("Now loading class %s...", print_object (javaClassName));
+  JIGSRegisterJavaClass (env, javaClassName);
+  printf ("ok\n");
+
   printf ("Looking up class %s...\n", print_object (javaClassName));
   myClass = NSClassFromString (javaClassName);
     
@@ -288,13 +292,9 @@ int main (int argc, char **argv, char **penv)
   JIGSInit (env);
   printf ("ok\n");
 
-/** registering the class manually is no longer needed **/
-
-/*
   printf ("Now loading the java.lang.System class...");
   JIGSRegisterJavaClass (env, @"java.lang.System");
   printf ("ok\n");
-*/
 
   printf ("Now asking for the java.lang.System class pointer...");
   javaLangSystem = NSClassFromString (@"java.lang.System");
@@ -415,6 +415,7 @@ int main (int argc, char **argv, char **penv)
 
   /* Testing overloaded methods */
   printf ("Now testing overloaded methods by loading in the java.lang.StringBuffer class...");
+  JIGSRegisterJavaClass (env, @"java.lang.StringBuffer");
   aClass = NSClassFromString (@"java.lang.StringBuffer"); 
   if (aClass == Nil)
     {
@@ -437,6 +438,7 @@ int main (int argc, char **argv, char **penv)
   test_primitive_type (7, env);
 
   /* Test a method with two parameters */
+  JIGSRegisterJavaClass (env, @"java.lang.Math");
   {
     Class javaLangMath = NSClassFromString (@"java.lang.Math");
     SEL selector = NSSelectorFromString (@"min::");
