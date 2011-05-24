@@ -68,3 +68,11 @@ after-install::
 	                Makefiles/java-wrapper.objc.template \
 	                Makefiles/java-wrapper.java.template $(JIGS_MAKE_DIR); \
 	$(INSTALL_PROGRAM) -m 755 Makefiles/search_header.sh $(JIGS_MAKE_DIR)$(END_ECHO)
+before-uninstall::
+	$(ECHO_NOTHING)rm -f \
+	      $(JIGS_MAKE_DIR)/java-wrapper.make \
+	      $(JIGS_MAKE_DIR)/java-wrapper.top.template \
+	      $(JIGS_MAKE_DIR)/java-wrapper.readme.template \
+	      $(JIGS_MAKE_DIR)/java-wrapper.objc.template \
+	      $(JIGS_MAKE_DIR)/java-wrapper.java.template \
+	      $(JIGS_MAKE_DIR)/search_header.sh$(END_ECHO)

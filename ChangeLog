@@ -1,3 +1,8 @@
+2011-05-24  Wolfgang Lux  <wolfgang.lux@gmail.com>
+
+	* Tools/WrapCreator/GNUmakefile: Remove files copied into
+	$(GNUSTEP_MAKEFILES) upon uninstall.
+
 2011-05-21  Wolfgang Lux  <wolfgang.lux@gmail.com>
 
 	* Testing/Objc/main.m (main, test_primitive_type): Register Java
