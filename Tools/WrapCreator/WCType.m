@@ -4,19 +4,19 @@
 
    Author:  Nicola Pero <nicola@brainstorm.co.uk>
    Date: August 2000
-   
+
    This file is part of JIGS, the GNUstep Java Interface.
-   
+
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation; either version 2 of the License, or
    (at your option) any later version.
-   
+
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-   
+
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA. */
@@ -62,7 +62,7 @@ NSString *normalizeObjcType (NSString *objcType)
 
 @implementation WCType
 
-+ (void) initialize 
++ (void) initialize
 {
   if (self == [WCType class])
     {
@@ -70,9 +70,9 @@ NSString *normalizeObjcType (NSString *objcType)
     }
 }
 
-+ (id) sharedTypeWithObjcType: (NSString *)name
++ (WCType *) sharedTypeWithObjcType: (NSString *)name
 {
-  WCType *t; 
+  WCType *t;
 
   name = [name stringByTrimmingSpaces];
   name = normalizeObjcType (name);
@@ -92,7 +92,7 @@ NSString *normalizeObjcType (NSString *objcType)
   for (i = 0; i < [registeredTypes count]; i++)
     {
       WCType *t = [registeredTypes objectAtIndex: i];
-      
+
       if ([t->objcType isEqualToString: name] == YES)
 	{
 	  return t;
@@ -116,11 +116,11 @@ NSString *normalizeObjcType (NSString *objcType)
   /* Safety check */
   t = [isa existingSharedTypeWithObjcType: type];
   if (t != nil)
-    { 
+    {
       RELEASE (self);
       return t;
     }
-  else 
+  else
     {
       ASSIGN (objcType, type);
       [registeredTypes addObject: self];
@@ -131,6 +131,7 @@ NSString *normalizeObjcType (NSString *objcType)
 - (void) dealloc
 {
   RELEASE (objcType);
+  [super dealloc];
 }
 
 - (NSString *) description
