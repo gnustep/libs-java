@@ -1,3 +1,9 @@
+2011-08-21  Niels Grewe <niels.grewe@halbordnung.de>
+
+	* Tools/WrapCreator/WCType.m: Adjust definition of
+	+sharedTypeWithObjcType: to match its declaration. Add missing
+	[super dealloc] call.
+
 2011-05-24  Wolfgang Lux  <wolfgang.lux@gmail.com>
 
 	* Tools/WrapCreator/GNUmakefile: Remove files copied into
