@@ -412,7 +412,7 @@ classes = (
 			  "pathsForResourcesOfType:inDirectory:",
 			  //"pathForResource:ofType:inDirectory:",
 			  "pathForResource:ofType:",
-			  "localizedStringForKey:value:table:",
+			  //"localizedStringForKey:value:table:",
 			  "resourcePath",
 			  "bundleVersion",
 			  "setBundleVersion:",
@@ -529,7 +529,8 @@ classes = (
     
     "instance methods" = ("countForObject:",
 			  "purge:",
-			  "unique:");
+//			  "unique:"
+			);
     
     "initializers" = ("init", 
 		      "initWithCapacity:",
