@@ -78,7 +78,11 @@ _jigs_lookup_class (const char* name)
   CREATE_AUTORELEASE_POOL(pool);
   Class		c;
 
+#if	defined(__GNU_LIBOBJC__)
+  objc_setGetUnknownClassHandler(_original_lookup_class);
+#else
   _objc_lookup_class = _original_lookup_class;
+#endif
 
   NS_DURING
     {
@@ -112,7 +116,11 @@ _jigs_lookup_class (const char* name)
     }
   NS_ENDHANDLER
 
+#if	defined(__GNU_LIBOBJC__)
+  objc_setGetUnknownClassHandler(_jigs_lookup_class);
+#else
   _objc_lookup_class = _jigs_lookup_class;
+#endif
   RELEASE(pool);
   if (registeredThread) GSUnregisterCurrentThread ();
   return c;
@@ -205,8 +213,13 @@ void JIGSInit (JNIEnv *env)
       _JIGSMapperInitialize (env);
       _JIGSBaseStructInitialize (env);
 
+#if	defined(__GNU_LIBOBJC__)
+      _original_lookup_class
+	= objc_setGetUnknownClassHandler(_jigs_lookup_class);
+#else
       _original_lookup_class = _objc_lookup_class;
       _objc_lookup_class = _jigs_lookup_class;
+#endif
       RELEASE (pool);
     }
 }
