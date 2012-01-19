@@ -1,3 +1,8 @@
+2012-01-19  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Source/JIGSInit.m: Use class lookup callback setter function if
+	working with modern runtime.
+
 2011-08-21  Niels Grewe <niels.grewe@halbordnung.de>
 
 	* Tools/WrapCreator/WCType.m: Adjust definition of
