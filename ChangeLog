@@ -1,3 +1,10 @@
+2013-01-28  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	Version 1.6.0 supports modern Objective-C runtimes.
+	* GNUmakefile (VERSION): Version 1.6.0.
+	* Source/GNUmakefile: Version 1.6.0.
+	* Source/JIGS.h: Version 1.6.0.
+
 2012-01-19  Richard Frith-Macdonald <rfm@gnu.org>
 
 	* Source/JIGSInit.m: Use class lookup callback setter function if
