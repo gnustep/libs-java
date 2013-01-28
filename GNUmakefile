@@ -43,8 +43,8 @@ include $(GNUSTEP_MAKEFILES)/common.make
 
 PACKAGE_NAME = jigs
 # Keep it in sync manually with Source/JIGS.h and Source/GNUmakefile
-VERSION = 1.5.9
-PACKAGE_VERSION = 1.5.9
+VERSION = 1.6.0
+PACKAGE_VERSION = 1.6.0
 SVN_BASE_URL = svn+ssh://svn.gna.org/svn/gnustep/libs
 SVN_MODULE_NAME = java
 
