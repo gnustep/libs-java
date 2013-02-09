@@ -43,7 +43,7 @@ static void setNeedsLongJniName (NSMutableArray *jniNames,
 				 WCMethod *method)
 {
   NSString *jniMethodName;
-  int index;
+  NSUInteger index;
 
   /* Get the short jni name of the method we are wrapping */
   jniMethodName = [jniNames objectAtIndex: 0];

@@ -120,7 +120,7 @@ BOOL _JIGSProxyJavaIsEqual (NSMapTable *table, const void *a, const void *b)
  * A solution would be for JNI to provide a hash function for
  * jobjects.  */
 
-unsigned int _JIGSProxyJavaHash (NSMapTable *table, const void *a)
+NSUInteger _JIGSProxyJavaHash (NSMapTable *table, const void *a)
 {
   return 1;
 }
