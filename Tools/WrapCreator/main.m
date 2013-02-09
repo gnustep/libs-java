@@ -26,7 +26,7 @@
 
 static void print_warning_and_exit (NSString *message)
 {
-  NSLog (message);
+  NSLog (@"%@", message);
   exit (1);
 }
 

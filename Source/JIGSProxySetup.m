@@ -693,9 +693,9 @@ BOOL _JIGS_register_java_class_simple
 	  SEL tmpSelector;
 
 	  NSDebugLog (@"Class Method: %s", 
-		      (char *)(metaclassTable->selIDTable)[i].selector); 
+	    (char *)(void*)(metaclassTable->selIDTable)[i].selector); 
 	  tmpSelector = sel_getUid 
-	    ((char *)(metaclassTable->selIDTable)[i].selector);
+	    ((char *)(void*)(metaclassTable->selIDTable)[i].selector);
 	  NSZoneFree (NSDefaultMallocZone (), 
 		      (void *)(metaclassTable->selIDTable[i].selector));
 	  (metaclassTable->selIDTable)[i].selector = tmpSelector;
@@ -842,9 +842,9 @@ BOOL _JIGS_register_java_class_simple
       SEL tmpSelector;
 
       NSDebugLog (@"Instance method: %s", 
-	     (char *)(classTable->selIDTable)[i].selector);
+        (char *)(void*)(classTable->selIDTable)[i].selector);
       tmpSelector = sel_getUid 
-	((char *)(classTable->selIDTable)[i].selector);
+	((char *)(void*)(classTable->selIDTable)[i].selector);
       NSZoneFree (NSDefaultMallocZone (), 
 		  (void *)(classTable->selIDTable[i].selector));
       (classTable->selIDTable)[i].selector = tmpSelector;

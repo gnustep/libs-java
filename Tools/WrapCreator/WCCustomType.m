@@ -35,7 +35,7 @@
     {
       NSLog (@"WARNING: WCCustomType: trying to map %@ to itself!", aType);
       RELEASE (self);
-      return [WCType sharedTypeWithObjcType: aType];
+      return (id)[WCType sharedTypeWithObjcType: aType];
     }
 
   /* Get the primitive type we are typedefing */
