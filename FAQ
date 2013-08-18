@@ -17,36 +17,35 @@ current plans to port JIGS to JNI 1.1.
 2. Can I use JIGS to access Objective-C libraries inside a Java servlet ? 
 =========================================================================
 
-Yes!  You're welcome to do it.  Here are a few hints: you need to make sure
-that:
+Yes!  That is a well-tested scenario.  Here are a few hints: you need
+to make sure that:
 
  * your java servlet has the classpath set so that it can access the
-   java classes you want to use.  In apache, this is controlled by the
-   file jserv.properties, where you need to add something like the
-   following two lines:
+   java classes you want to use. Usually, this means the System and
+   Local Libraries/Java directories, which by default are at
 
-     wrapper.classpath=/usr/GNUstep/System/Libraries/Java
-     wrapper.classpath=/usr/GNUstep/Local/Libraries/Java
+     /usr/GNUstep/System/Library/Libraries/Java
 
- * your java servlet has the library path set so that it can load in
-   the gnustep libraries.  In apache, this is again controlled by the
-   file jserv.properties, where you need to add something like the
-   following line:
+   and
 
-    wrapper.env.copy=LD_LIBRARY_PATH
+     /usr/GNUstep/Local/Library/Libraries/Java.
 
-   then, you need to `. /usr/GNUstep/System/Makefiles/GNUstep.sh'
-   before starting apache.
+   So, make sure these two directories are in your CLASSPATH. If
+   GNUstep is installed somewhere else, these directories might be
+   somewhere else (for example, /usr/lib/GNUstep/Libraries/Java and
+   /usr/local/lib/GNUstep/Libraries/Java are common on Unix).
 
- * you pass GNUSTEP_SYSTEM_ROOT to the java servlet -- the GNUstep
-   Base Library needs GNUSTEP_SYSTEM_ROOT to access some files, such
-   as character sets.  To make it work, add the following lines to
-   jserv.properties:
+ * your java servlet has the linker/library path set so that it can
+   load the GNUstep libraries. The easiest way to do this is to add
+   
+     /usr/GNUstep/System/Library/Libraries
 
-   wrapper.env.copy=GNUSTEP_SYSTEM_ROOT
-   wrapper.env.copy=GNUSTEP_LOCAL_ROOT
+   and
 
- * the NSLog output of your java servlets goes into httpsd_error_log.  
+     /usr/GNUstep/Local/Library/Libraries
+
+   to your linker path (/etc/ld.so.conf under GNU/Linux), or source
+   GNUstep.sh before you start Tomcat.
 
 3. What about user defaults ? - they are all saved under 'java'
 ===============================================================
@@ -72,22 +71,22 @@ GNU Objective-C runtime.
 
 In general, JIGS should be as portable as GNUstep and the GNU
 Objective-C runtime - wherever you can run the GNUstep base library
-with the GNU Objective-C runtime compiled as shared you should also be
-able to run JIGS (assuming you have a JDK 1.2 environment).  This
-means once the GNUstep base library is ported (even without working
-Distributed Objects), JIGS should be ported as well - and if not, at
-least it should be possible to port it without particular hassle.
+with the GNU Objective-C runtime compiled as a shared library you
+should also be able to run JIGS (assuming you have a JNI 1.2
+environment).  This means that, once the GNUstep base library is
+ported (even without working Distributed Objects), JIGS should work as
+well - and if not, at least it should be possible to port it without
+too much troubles.
 
-This is the theory - in practice, up to now I only have reports of
-JIGS running on GNU/Linux i386 and GNU/Linux ppc.  If you have
-experiences running (or trying to run) JIGS on a different machine and
-os, I <n.pero@mi.flashnet.it> would be happy to hear about your
-experience.
+This is the theory - in practice, JIGS is currently mostly used on
+GNU/Linux i386.  If you have experiences running (or trying to run)
+JIGS on a different machine and OS, we would be happy to hear about
+your experience.
 
 6. Which core libraries are wrapped ?
 =====================================
 
-The base library is mostly wrapped, and works nicely.  The gui library
+The base library is wrapped, and works nicely.  The gui library
 wrapper instead is experimental and hackish and not very useful as it
 stands.
 
@@ -96,4 +95,9 @@ stands.
 
 The best way to submit bug reports and fixes is to email them to
 bug-gnustep@gnu.org.
+
+The best way to submit bug reports and fixes is to follow the
+guidelines for reporting GNUstep bugs described on the GNUstep Wiki
+(http://wiki.gnustep.org/index.php/Report_Bugs) or on the general
+GNUstep Web site (http://www.gnustep.org).
 
