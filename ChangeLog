@@ -1,3 +1,10 @@
+2013-08-18  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* GNUmakefile (VERSION, PACKAGE_VERSION): Version 1.6.1.
+	* Source/JIGS.h (GNUSTEP_JAVA_VERSION,
+	GNUSTEP_JAVA_SUBMINOR_VERSION): Version 1.6.1.
+	* Source/GNUmakefile (VERSION): Version 1.6.1.
+
 2013-02-09  Richard Frith-Macdonald <rfm@gnu.org>
 
 	* Tools/WrapCreator/main.m:
