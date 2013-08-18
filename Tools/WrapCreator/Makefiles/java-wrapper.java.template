@@ -21,8 +21,12 @@ include $(GNUSTEP_MAKEFILES)/java.make
 ifneq ($(javadoc),no)
   # If you need, override the following in your
   # GNUmakefile.wrapper.java.preamble
-  Reference_JAVADOC_FILES = $(JW_FILE_LIST)
-  Reference_DOC_INSTALL_DIR = Developer/REPLACEME/Java/
+  ifeq ($(Reference_JAVADOC_FILES),)
+    Reference_JAVADOC_FILES = $(JW_FILE_LIST)
+  endif
+  ifeq ($(Reference_DOC_INSTALL_DIR),)
+    Reference_DOC_INSTALL_DIR = Developer/REPLACEME/Java/
+  endif
   ADDITIONAL_JAVADOCFLAGS += -public
   include $(GNUSTEP_MAKEFILES)/documentation.make
 endif

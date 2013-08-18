@@ -1,5 +1,13 @@
 2013-08-18  Nicola Pero  <nicola.pero@meta-innovation.com>
 
+	* Tools/WrapCreator/Makefiles/java-wrapper.java.template
+	(Reference_JAVADOC_FILES, Reference_DOC_INSTALL_DIR): Fixed
+	overriding these variables in GNUmakefile.wrapper.preamble.  In
+	particular, this fixes building the gnustep-base wrapper
+	documentation.
+
+2013-08-18  Nicola Pero  <nicola.pero@meta-innovation.com>
+
 	* GNUmakefile (VERSION, PACKAGE_VERSION): Version 1.6.1.
 	* Source/JIGS.h (GNUSTEP_JAVA_VERSION,
 	GNUSTEP_JAVA_SUBMINOR_VERSION): Version 1.6.1.
