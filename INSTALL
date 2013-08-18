@@ -1,14 +1,7 @@
 INSTALLATION INSTRUCTIONS
 =========================
 
-To have the full functionality, you need to install a shared
-Objective-C runtime library; the libobjc provided with older gcc is
-static.  Please refer to the GNUstep website for more information on
-installing a shared libobjc.
-
-1) Make sure you have gnustep installed (optionally but strongly
-   recommended - with a shared libobjc - such as the gnustep-objc),
-   and that it is working.
+1) Make sure you have gnustep installed.
    
 2) Make sure your java environment is well configured.  
    At least one of the following should be true: 
@@ -16,7 +9,7 @@ installing a shared libobjc.
   * typing 'javac' at the shell prompt should run the java compiler
   (ie, you have set up your PATH environment variable);
 
-  * $JAVA_HOME or $JDK_HOME are set to the base of your java development
+  * $JAVA_HOME is set to the base of your java development
   environment distribution (so that for example javac would be located in
   $JAVA_HOME/bin/javac).  
 

@@ -1,3 +1,10 @@
+Release Notes for JIGS version 1.6
+==================================
+
+Support for modern Objective-C runtimes.  General portability
+improvements.  Improvements to the building process including parallel
+building.
+
 Release Notes for JIGS version 1.5
 ==================================
 
