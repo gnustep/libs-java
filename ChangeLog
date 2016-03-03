@@ -1,3 +1,13 @@
+2016-03-03  Richard Frith-Macdonald <rfm@gnu.org>
+
+	* Tools/WrapCreator/WCTypeLoader.m: Allow for 'instancetype' used by
+	generics.
+	* Tools/WrapCreator/WCVoidType.h: Fix incorrect guard check
+	* GNUmakefile (VERSION, PACKAGE_VERSION): Version 1.6.3.
+	* Source/JIGS.h (GNUSTEP_JAVA_VERSION,
+	GNUSTEP_JAVA_SUBMINOR_VERSION): Version 1.6.3.
+	* Source/GNUmakefile (VERSION): Version 1.6.3.
+
 2013-08-18  Nicola Pero  <nicola@nicola.brainstorm.co.uk>
 
 	* GNUmakefile (VERSION, PACKAGE_VERSION): Version 1.6.2.

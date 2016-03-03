@@ -4,24 +4,24 @@
 
    Author:  Nicola Pero <nicola@brainstorm.co.uk>
    Date: August 2000
-   
+
    This file is part of JIGS, the GNUstep Java Interface.
-   
+
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation; either version 2 of the License, or
    (at your option) any later version.
-   
+
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-   
+
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA. */
 
-/* This class knows all the WCType concrete subclasses, and creates 
+/* This class knows all the WCType concrete subclasses, and creates
    the right one for the right objective-C type. */
 
 #include "WCBOOLType.h"
@@ -50,35 +50,35 @@
 #define DEFAULT_MORPHTYPES_NUMBER 7
 
 static const struct morphType
-{ 
-  NSString *objcName; 
-  NSString *javaName; 
+{
+  NSString *objcName;
+  NSString *javaName;
   NSString *jniName;
   NSString *javaArgumentType;
-  NSString *java2objc; 
-  NSString *objc2java; 
+  NSString *java2objc;
+  NSString *objc2java;
 } defaultMorphTypes[DEFAULT_MORPHTYPES_NUMBER] = {
-  { @"NSString *", @"String", @"jstring", @"Ljava.lang.String;", 
+  { @"NSString *", @"String", @"jstring", @"Ljava.lang.String;",
     @"JIGSNSStringFromJstring", @"JIGSJstringFromNSString" },
 
-  { @"NSNumber *", @"Number", @"jobject", @"Ljava.lang.Number;", 
+  { @"NSNumber *", @"Number", @"jobject", @"Ljava.lang.Number;",
     @"GSJNI_NSNumberFromJNumber", @"GSJNI_JNumberFromNSNumber" },
 
-  { @"NSPoint", @"NSPoint", @"jobject", @"Lgnu.gnustep.base.NSPoint;", 
+  { @"NSPoint", @"NSPoint", @"jobject", @"Lgnu.gnustep.base.NSPoint;",
     @"JIGSNSPointConvertToStruct", @"JIGSNSPointConvertToJobject" },
 
-  { @"NSSize", @"NSSize", @"jobject", @"Lgnu.gnustep.base.NSSize;", 
+  { @"NSSize", @"NSSize", @"jobject", @"Lgnu.gnustep.base.NSSize;",
     @"JIGSNSSizeConvertToStruct", @"JIGSNSSizeConvertToJobject" },
 
-  { @"NSRect", @"NSRect", @"jobject", @"Lgnu.gnustep.base.NSRect;", 
+  { @"NSRect", @"NSRect", @"jobject", @"Lgnu.gnustep.base.NSRect;",
     @"JIGSNSRectConvertToStruct", @"JIGSNSRectConvertToJobject" },
 
-  { @"NSRange", @"NSRange", @"jobject", @"Lgnu.gnustep.base.NSRange;", 
+  { @"NSRange", @"NSRange", @"jobject", @"Lgnu.gnustep.base.NSRange;",
     @"JIGSNSRangeConvertToStruct", @"JIGSNSRangeConvertToJobject" },
 
-  { @"SEL", @"NSSelector", @"jobject", @"Lgnu.gnustep.base.NSSelector;", 
+  { @"SEL", @"NSSelector", @"jobject", @"Lgnu.gnustep.base.NSSelector;",
     @"JIGSSELFromNSSelector", @"JIGSNSSelectorFromSEL" }
-  
+
 };
 
 @implementation WCTypeLoader
@@ -97,6 +97,12 @@ static const struct morphType
     {
       t = [[WCIdType alloc] initWithObjcType: @"id"];
     }
+  else if ([name isEqualToString: @"instancetype"] == YES)
+    {
+      /* For generics 'instancetype' is #defined to be an id
+       */
+      t = [[WCIdType alloc] initWithObjcType: @"id"];
+    }
   else if ([name isEqualToString: @"NSInteger"] == YES)
     {
       t = [[WCNSIntegerType alloc] initWithObjcType: @"NSInteger"];
@@ -113,13 +119,13 @@ static const struct morphType
     {
       t = [[WCBOOLType alloc] initWithObjcType: @"BOOL"];
     }
-  else if (([name isEqualToString: @"int"] == YES) 
-      || ([name isEqualToString: @"signed"] == YES) 
+  else if (([name isEqualToString: @"int"] == YES)
+      || ([name isEqualToString: @"signed"] == YES)
       || ([name isEqualToString: @"signed int"] == YES))
     {
       t = [[WCIntType alloc] initWithObjcType: name];
     }
-  else if (([name isEqualToString: @"unsigned int"] == YES) 
+  else if (([name isEqualToString: @"unsigned int"] == YES)
       || ([name isEqualToString: @"unsigned"] == YES))
     {
       t = [[WCUnsignedIntType alloc] initWithObjcType: name];
@@ -201,14 +207,14 @@ static const struct morphType
 	      break;
 	    }
 	}
-    }  
+    }
   if (t == nil && [name hasSuffix: @"*"] == YES)
     {
-      /* name is a wrapped objective-C class */ 
+      /* name is a wrapped objective-C class */
       t = [[WCObjectType alloc] initWithObjcType: name];
     }
   if (t == nil)
-    {  
+    {
       [NSException raise: NSGenericException
 		  format: @"Unknown objective-C type %@", name];
     }
@@ -217,4 +223,4 @@ static const struct morphType
 
 @end
 
-  
+
