@@ -21,7 +21,7 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA. */
 
-#ifndef __WCCVoidType_h_GNUSTEP_WrapCreator_INCLUDE
+#ifndef __WCVoidType_h_GNUSTEP_WrapCreator_INCLUDE
 #define __WCVoidType_h_GNUSTEP_WrapCreator_INCLUDE
 
 #include "WCType.h"
