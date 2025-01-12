@@ -11,7 +11,10 @@ INSTALLATION INSTRUCTIONS
 
   * $JAVA_HOME is set to the base of your java development
   environment distribution (so that for example javac would be located in
-  $JAVA_HOME/bin/javac).  
+  $JAVA_HOME/bin/javac).
+
+  * Make certain that the $JAVA_OS variable is also set.  If this or the
+  JAVA_HOME variable are not set properly, lib-jigs will not build properly.
 
 [Please note that you may switch at any time to a different Java environment
 simply by resetting the old shell variables to new values appropriate for

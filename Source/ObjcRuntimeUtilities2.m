@@ -27,7 +27,8 @@
  * be compiled using the Objective-C compiler.
  */
 
-#include <Foundation/Foundation.h>
+#import <Foundation/NSMethodSignature.h>
+#import <Foundation/NSString.h>
 
 const char *ObjcUtilities_build_runtime_Objc_signature (const char *types)
 {
@@ -53,10 +54,3 @@ const char *ObjcUtilities_build_runtime_Objc_signature (const char *types)
   return [str UTF8String];
 #endif  
 }
-
-
-
-
-
-
-
